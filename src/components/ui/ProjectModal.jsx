@@ -1,8 +1,13 @@
 import React from 'react';
 import { X, ExternalLink, Star, GitFork, CheckCircle2, Layers, Cpu } from 'lucide-react';
 import { Github } from './BrandIcons';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/data/translations';
 
 const ProjectModal = ({ project, onClose }) => {
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.en;
+
   if (!project) return null;
 
   return (
@@ -43,22 +48,22 @@ const ProjectModal = ({ project, onClose }) => {
           <div className="flex items-center gap-4 py-2 px-4 rounded-xl bg-slate-900/80 border border-slate-800/80">
             <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400">
               <Star className="w-4 h-4 fill-amber-400/20" />
-              <span>{project.stars} Stars</span>
+              <span>{project.stars} {t.modal?.stars || 'Stars'}</span>
             </div>
             <span className="text-slate-700">|</span>
             <div className="flex items-center gap-1.5 text-xs font-mono text-cyan-400">
               <GitFork className="w-4 h-4" />
-              <span>{project.forks} Forks</span>
+              <span>{project.forks} {t.modal?.forks || 'Forks'}</span>
             </div>
             <span className="text-slate-700">|</span>
-            <span className="text-xs font-mono text-emerald-400">✓ Open Source</span>
+            <span className="text-xs font-mono text-emerald-400">✓ {t.modal?.openSource || 'Open Source'}</span>
           </div>
 
           {/* Key Engineering Highlights */}
           <div>
             <h4 className="text-sm font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2 mb-3">
               <Cpu className="w-4 h-4 text-cyan-400" />
-              <span>Key Architecture & Engineering Highlights</span>
+              <span>{t.modal?.highlightsTitle || 'Key Architecture & Engineering Highlights'}</span>
             </h4>
             <div className="space-y-2.5">
               {project.highlights?.map((hl, index) => (
@@ -74,15 +79,15 @@ const ProjectModal = ({ project, onClose }) => {
           <div>
             <h4 className="text-sm font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2 mb-3">
               <Layers className="w-4 h-4 text-cyan-400" />
-              <span>Technologies Used</span>
+              <span>{t.modal?.techTitle || 'Technologies Used'}</span>
             </h4>
             <div className="flex flex-wrap gap-2">
-              {project.tech.map((t, idx) => (
+              {project.tech?.map((tItem, idx) => (
                 <span
                   key={idx}
                   className="px-3 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700/80 text-cyan-300"
                 >
-                  {t}
+                  {tItem}
                 </span>
               ))}
             </div>
@@ -98,17 +103,19 @@ const ProjectModal = ({ project, onClose }) => {
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-white text-xs font-mono font-medium transition-all"
           >
             <Github className="w-4 h-4" />
-            <span>View GitHub Repo</span>
+            <span>{t.work?.viewGithub || 'View GitHub Repo'}</span>
           </a>
-          <a
-            href={project.liveDemo}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-mono font-semibold transition-all shadow-md shadow-cyan-500/20"
-          >
-            <ExternalLink className="w-4 h-4" />
-            <span>Experience Live Demo</span>
-          </a>
+          {project.liveDemo && project.liveDemo !== project.githubUrl && (
+            <a
+              href={project.liveDemo}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-mono font-semibold transition-all shadow-md shadow-cyan-500/20"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>{t.work?.viewDemo || 'Experience Live Demo'}</span>
+            </a>
+          )}
         </div>
       </div>
     </div>

@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/data/translations';
 
 const Preloader = ({ onComplete }) => {
+  const { lang } = useLanguage();
   const [showHello, setShowHello] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const hasCompletedRef = useRef(false);
 
   const textRef = useRef(null);
   const circleRef = useRef(null);
   const pencilRef = useRef(null);
   const animFrameRef = useRef(null);
+
+  const safeComplete = () => {
+    if (hasCompletedRef.current) return;
+    hasCompletedRef.current = true;
+    onComplete();
+  };
 
   // Circumference for r = 42
   const radius = 42;
@@ -74,13 +84,13 @@ const Preloader = ({ onComplete }) => {
       const timer = setTimeout(() => {
         setFadeOut(true);
         setTimeout(() => {
-          onComplete();
+          safeComplete();
         }, 750);
       }, 4450);
 
       return () => clearTimeout(timer);
     }
-  }, [showHello, onComplete]);
+  }, [showHello]);
 
   return (
     <div
@@ -188,11 +198,11 @@ const Preloader = ({ onComplete }) => {
       <button
         onClick={() => {
           setFadeOut(true);
-          setTimeout(onComplete, 250);
+          setTimeout(safeComplete, 250);
         }}
         className="absolute bottom-8 text-xs font-mono text-[#555555] hover:text-[#d8c8a8] transition-colors cursor-pointer uppercase tracking-widest"
       >
-        [ Skip Intro ]
+        {lang === 'vi' ? '[ Bỏ qua ]' : '[ Skip Intro ]'}
       </button>
     </div>
   );
