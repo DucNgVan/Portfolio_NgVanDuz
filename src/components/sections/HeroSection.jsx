@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { personalInfo } from '@/data/portfolioData';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/data/translations';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 
 const HeroSection = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.en;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -16,15 +21,15 @@ const HeroSection = () => {
   };
 
   const navLinks = [
-    { label: 'WORK', href: '#work' },
-    { label: 'ABOUT', href: '#about' },
-    { label: 'EXPERTISE', href: '#expertise' },
-    { label: 'ACHIEVEMENTS', href: '#achievements' },
-    { label: 'CONTACT', href: '#contact' },
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.expertise, href: '#expertise' },
+    { label: t.nav.work, href: '#work' },
+    { label: t.nav.achievements, href: '#achievements' },
+    { label: t.nav.contact, href: '#contact' },
   ];
 
-  // Letters for "SOFTWARE"
-  const softwareLetters = "SOFTWARE".split("");
+  // Letters for kinetic display
+  const softwareLetters = (t.hero.titleWord1 || "SOFTWARE").split("");
 
   return (
     <section
@@ -40,7 +45,7 @@ const HeroSection = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 lg:gap-12">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-10">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -51,16 +56,21 @@ const HeroSection = () => {
               <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#0D0D0D] transition-all duration-200 group-hover:w-full"></span>
             </a>
           ))}
+          {/* Header language toggle */}
+          <LanguageSwitcher variant="nav" />
         </nav>
 
-        {/* Hamburger Menu Button (Right) */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 text-[#0D0D0D] hover:opacity-70 transition-opacity"
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        {/* Mobile controls */}
+        <div className="flex md:hidden items-center gap-2">
+          <LanguageSwitcher variant="nav" />
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 text-[#0D0D0D] hover:opacity-70 transition-opacity"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </header>
 
       {/* Mobile Drawer Menu */}
@@ -108,7 +118,7 @@ const HeroSection = () => {
           ))}
         </div>
 
-        {/* "ENGINEERING" */}
+        {/* Second Word Display */}
         <h2 
           className="font-bebas text-[11vw] sm:text-[9.5vw] leading-[0.85] tracking-wider text-[#0D0D0D] mt-2 sm:mt-4"
           style={{
@@ -116,16 +126,16 @@ const HeroSection = () => {
             transition: 'transform 0.15s ease-out',
           }}
         >
-          ENGINEERING
+          {t.hero.titleWord2 || "ENGINEERING"}
         </h2>
 
         {/* Subtitle: VISUALS • CODE • ARCHITECTURE */}
         <div className="flex items-center justify-center gap-3 sm:gap-6 mt-6 sm:mt-8 text-xs sm:text-sm font-semibold tracking-widest text-[#0D0D0D] uppercase font-sans">
-          <span>VISUALS</span>
+          <span>{t.hero.subtitleVisuals}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#0D0D0D]"></span>
-          <span>CODE</span>
+          <span>{t.hero.subtitleCode}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#0D0D0D]"></span>
-          <span>ARCHITECTURE</span>
+          <span>{t.hero.subtitleArch}</span>
         </div>
 
         {/* SCROLL TO EXPLORE INDICATOR */}
@@ -133,7 +143,7 @@ const HeroSection = () => {
           href="#about"
           className="inline-flex flex-col items-center gap-2 mt-8 sm:mt-12 text-[11px] font-mono tracking-widest text-[#333333] hover:text-[#0D0D0D] transition-colors group cursor-pointer"
         >
-          <span className="tracking-[0.2em]">SCROLL TO EXPLORE</span>
+          <span className="tracking-[0.2em]">{t.hero.scrollExplore}</span>
           {/* Animated Scroll Mouse Pin Icon */}
           <div className="w-5 h-8 rounded-full border-2 border-[#0D0D0D] flex items-start justify-center p-1 group-hover:scale-105 transition-transform">
             <div className="w-1 h-2 bg-[#0D0D0D] rounded-full animate-bounce"></div>
@@ -171,7 +181,7 @@ const HeroSection = () => {
               </defs>
               <text fontSize="9.2" fontWeight="600" letterSpacing="2.8" fill="currentColor">
                 <textPath href="#circlePath" startOffset="0%">
-                  LET'S WORK TOGETHER • LET'S WORK TOGETHER •
+                  {t.hero.rotatingBadge || "LET'S WORK TOGETHER • LET'S WORK TOGETHER •"}
                 </textPath>
               </text>
             </svg>
@@ -184,7 +194,7 @@ const HeroSection = () => {
 
           {/* Location Caption */}
           <span className="text-[10px] font-mono tracking-widest text-[#555555] uppercase">
-            BASED IN VIETNAM
+            {t.hero.basedIn || "BASED IN VIETNAM"}
           </span>
         </div>
       </div>

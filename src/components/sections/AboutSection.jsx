@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import { Laptop } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/portfolioData';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/data/translations';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 
 const AboutSection = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.en;
   const [hoveredCard, setHoveredCard] = useState(false);
-
-  const metadata = [
-    { label: "BASED", value: "VIETNAM" },
-    { label: "DEGREE", value: "BSC (HONS) SOFTWARE ENG" },
-    { label: "ALMA MATER", value: "UNIVERSITY OF GREENWICH" },
-    { label: "GRADED CREDITS", value: "240 CREDITS" },
-    { label: "TOP SCORES", value: "96/100 (MATHS & ANALYTICS)" },
-    { label: "CORE STACK", value: "REACT / VUE / NODE / JAVA" },
-  ];
 
   return (
     <section id="about" className="relative py-24 sm:py-32 bg-[#080808] text-[#f4efea] overflow-hidden">
@@ -24,7 +19,7 @@ const AboutSection = () => {
         <div className="text-center mb-16 sm:mb-20">
           <ScrollReveal direction="down">
             <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-[#f4efea]">
-              ABOUT ME
+              {t.about.sectionTitle}
             </h2>
           </ScrollReveal>
           
@@ -98,9 +93,9 @@ const AboutSection = () => {
 
                 {/* Status footer inside card */}
                 <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-[#888888]">
-                  <span>GREENWICH GRADUATE</span>
+                  <span>{t.about.badgeGrad}</span>
                   <span className="text-[#d8c8a8] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> AVAILABLE
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> {t.about.badgeAvailable}
                   </span>
                 </div>
               </div>
@@ -113,15 +108,15 @@ const AboutSection = () => {
             {/* Eyebrow */}
             <ScrollReveal direction="left" delay={0.1}>
               <div className="flex items-center gap-2 text-xs font-mono text-[#888888] tracking-widest mb-4">
-                <span>—— WHO AM I ?</span>
+                <span>{t.about.eyebrow}</span>
               </div>
             </ScrollReveal>
 
             {/* Main Statement Headline */}
             <ScrollReveal direction="up" delay={0.2}>
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-8">
-                I BUILD <span className="text-[#d8c8a8]">DIGITAL WORLDS</span> WHERE <br />
-                <span className="text-[#d8c8a8]">DESIGN MEETS CODE</span>.
+                {t.about.headlinePart1} <span className="text-[#d8c8a8]">{t.about.headlinePart2}</span> {t.about.headlinePart3} <br />
+                <span className="text-[#d8c8a8]">{t.about.headlinePart4}</span>
               </h3>
             </ScrollReveal>
 
@@ -129,17 +124,17 @@ const AboutSection = () => {
             <ScrollReveal direction="up" delay={0.3}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#a0a0a0] leading-relaxed mb-12">
                 <p>
-                  I'm <strong className="text-white font-medium">{personalInfo.name}</strong> — a fresh Software Engineering graduate from the <strong className="text-[#d8c8a8] font-medium">University of Greenwich</strong> with 240 graded credits and a First-Class Honours track. I have a genuine passion for turning architectural designs and algorithms into clean, robust web and mobile applications.
+                  {t.about.bioP1}
                 </p>
                 <p>
-                  Backed by top academic distinctions (96/100 in Mathematics for CS, 96/100 in Web Analytics, 95/100 in Computer Systems) and hands-on school IT internship experience, I focus on building maintainable full-stack software with modern tools like React, Vue.js, Node.js, and Docker microservices.
+                  {t.about.bioP2}
                 </p>
               </div>
             </ScrollReveal>
 
             {/* Metadata Grid with Staggered Entrance */}
             <ScrollStagger className="grid grid-cols-2 sm:grid-cols-3 gap-y-6 gap-x-8 pt-8 border-t border-[#1f1f1f]">
-              {metadata.map((item, idx) => (
+              {t.about.metadata.map((item, idx) => (
                 <ScrollStaggerItem key={idx} direction="up">
                   <div className="text-[11px] font-mono tracking-widest text-[#666666] uppercase mb-1">
                     {item.label}

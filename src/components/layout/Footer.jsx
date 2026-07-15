@@ -1,8 +1,13 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { personalInfo } from '@/data/portfolioData';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/data/translations';
 
 const Footer = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.en;
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -22,7 +27,7 @@ const Footer = () => {
 
           {/* Tagline */}
           <div className="text-xs font-mono tracking-wider text-[#666666]">
-            CRAFTED WITH PRECISION • REACT & TAILWIND
+            {t.footer?.tagline || 'CRAFTED WITH PRECISION • REACT & TAILWIND'}
           </div>
 
           {/* Back to top */}
@@ -30,7 +35,7 @@ const Footer = () => {
             onClick={scrollToTop}
             className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#262626] hover:border-[#d8c8a8] text-[#888888] hover:text-[#d8c8a8] text-xs font-mono transition-all cursor-pointer group"
           >
-            <span>BACK TO TOP</span>
+            <span>{t.footer?.backToTop || 'BACK TO TOP'}</span>
             <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
 
@@ -38,7 +43,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="mt-8 pt-6 border-t border-[#111111] text-center text-[11px] font-mono text-[#444444]">
-          © 2026 {personalInfo.name}. All rights reserved. Open for new opportunities and collaborations!
+          © 2026 {personalInfo.name}. {t.footer?.copyright || 'All rights reserved. Open for new opportunities and collaborations!'}
         </div>
       </div>
     </footer>
