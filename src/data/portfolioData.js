@@ -1,15 +1,15 @@
 export const personalInfo = {
   name: "Nguyen Van Duc",
-  role: "Junior Software Engineer",
+  role: "Full-Stack Software Engineering Intern",
   degree: "BSc (Hons) in Software Engineering",
   university: "University of Greenwich",
-  status: "Open to Junior Software Engineer & Full-Stack Opportunities",
-  location: "Da Nang, Viet Nam",
+  status: "Open to Full-Stack & Software Engineering Internship Opportunities",
+  location: "Da Nang, Viet Nam (Hybrid / Remote Ready)",
   email: "ducnv179.wk@gmail.com",
   phone: "078.855.1709",
   github: "https://github.com/DucNgVan",
   linkedin: "https://linkedin.com/in/ducngvan",
-  bio: "A fresh Software Engineering graduate from the University of Greenwich with a solid foundation in computer science and modern software design. Equipped with hands-on full-stack development experience in React, Next.js, Vue.js, Node.js, and Java/Android through real university capstone projects, hackathons, and an academic IT internship.",
+  bio: "Software Engineering student at the University of Greenwich with a solid foundation in computer science and full-stack development (Web & Application). Seeking a Full-Stack / Software Engineer Internship to contribute to production software, collaborate in high-performing teams, and build long-term value.",
   stats: [
     { label: "Degree Standing", value: "BSc (Hons)", suffix: " Greenwich" },
     { label: "University Honor", value: "Top 3", suffix: " Student 2024" },
@@ -17,10 +17,10 @@ export const personalInfo = {
     { label: "Major Awards", value: "4", suffix: " honors" }
   ],
   terminalCommands: [
-    { cmd: "whoami", output: "Junior Software Engineer (BSc Hons Graduate, University of Greenwich)" },
-    { cmd: "cat education.txt", output: "BSc (Hons) Software Engineering · University of Greenwich · Graduated 2024" },
+    { cmd: "whoami", output: "Full-Stack Software Engineering Intern (Greenwich Student)" },
+    { cmd: "cat education.txt", output: "BSc (Hons) Software Engineering · University of Greenwich" },
     { cmd: "cat honors.txt", output: "Top 3 Student Greenwich 2024 · 2nd Prize Impact Innovation 199 Hospital · Best Club 2024 · LG Dream Code Finalist" },
-    { cmd: "git status", output: "On branch main. Ready to contribute to engineering teams!" }
+    { cmd: "git status", output: "On branch main. Ready for Full-Stack Internship!" }
   ]
 };
 

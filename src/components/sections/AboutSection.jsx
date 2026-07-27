@@ -92,9 +92,9 @@ const AboutSection = () => {
                 </div>
 
                 {/* Status footer inside card */}
-                <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-[#888888]">
-                  <span>{t.about.badgeGrad}</span>
-                  <span className="text-[#d8c8a8] flex items-center gap-1">
+                <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 pt-3 border-t border-white/5 text-[10px] sm:text-[11px] font-mono text-[#888888]">
+                  <span className="text-[#a0a0a0] leading-snug">{t.about.badgeGrad}</span>
+                  <span className="text-[#d8c8a8] flex items-center gap-1.5 shrink-0 font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> {t.about.badgeAvailable}
                   </span>
                 </div>
@@ -139,7 +139,7 @@ const AboutSection = () => {
                   <div className="text-[11px] font-mono tracking-widest text-[#666666] uppercase mb-1">
                     {item.label}
                   </div>
-                  <div className="text-sm font-bold text-[#d8c8a8] font-mono">
+                  <div className="text-sm font-bold text-[#d8c8a8] font-mono leading-snug break-words">
                     {item.value}
                   </div>
                 </ScrollStaggerItem>
