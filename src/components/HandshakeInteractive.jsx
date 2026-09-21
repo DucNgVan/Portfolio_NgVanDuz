@@ -59,17 +59,17 @@ const HandshakeInteractive = () => {
       </div>
 
       <h3 className="font-syne text-xl sm:text-2xl font-bold text-white mb-2">
-        Hãy Cùng Nhau Bắt Tay!
+        Let's Shake Hands!
       </h3>
       <p className="text-[#888888] text-xs sm:text-sm max-w-md mx-auto mb-6">
-        Một cái bắt tay là khởi đầu của mọi cơ hội hợp tác và dự án tuyệt vời. Nhấn vào bên dưới để bắt tay nhé!
+        A handshake marks the beginning of great partnerships and meaningful projects. Click below to connect!
       </p>
 
       {/* HANDSHAKE ANIMATION STAGE */}
       <div 
         onClick={triggerHandshake}
         className="relative h-44 w-full flex items-center justify-center cursor-pointer group select-none rounded-2xl bg-[#0a0a0a] border border-[#1f1f1f] hover:border-[#d8c8a8]/40 transition-all mb-6 overflow-hidden"
-        title="Nhấn để bắt tay"
+        title="Click to shake hands"
       >
         {/* Shockwave circles on handshake */}
         {isShaking && (
@@ -124,7 +124,7 @@ const HandshakeInteractive = () => {
                 strokeLinecap="round"
               />
             </svg>
-            <div className="text-[11px] font-mono text-[#aaaaaa] mt-1">Bạn (Khách ghé thăm)</div>
+            <div className="text-[11px] font-mono text-[#aaaaaa] mt-1">You (Visitor)</div>
           </div>
 
           {/* Sparkle icon at contact point */}
@@ -182,7 +182,7 @@ const HandshakeInteractive = () => {
                 strokeLinecap="round"
               />
             </svg>
-            <div className="text-[11px] font-mono text-[#d8c8a8] mt-1">Tôi (Developer)</div>
+            <div className="text-[11px] font-mono text-[#d8c8a8] mt-1">Me (Developer)</div>
           </div>
 
         </div>
@@ -191,7 +191,7 @@ const HandshakeInteractive = () => {
         {!isShaking && !hasShaken && (
           <div className="absolute bottom-2 inset-x-0 text-center">
             <span className="text-[10px] font-mono tracking-widest text-[#d8c8a8] bg-[#111111]/90 px-3 py-1 rounded-full border border-[#d8c8a8]/30 shadow uppercase">
-              ✦ Chạm vào để bắt tay
+              ✦ Click to shake hands
             </span>
           </div>
         )}
@@ -206,11 +206,11 @@ const HandshakeInteractive = () => {
         {isShaking ? (
           <>
             <Sparkles className="w-4 h-4 animate-spin" />
-            <span>Đang bắt tay... Rất hân hạnh!</span>
+            <span>Shaking hands... Pleasure to meet you!</span>
           </>
         ) : (
           <>
-            <span>🤝 Bắt tay hợp tác ngay</span>
+            <span>🤝 Let's Connect & Shake Hands</span>
             {shakeCount > 0 && (
               <span className="text-xs bg-black/20 px-2 py-0.5 rounded-full font-mono">
                 ({shakeCount})
@@ -224,7 +224,7 @@ const HandshakeInteractive = () => {
       {hasShaken && (
         <div className="mt-4 p-3 rounded-xl bg-[#1a1a1a] border border-[#d8c8a8]/40 text-[#d8c8a8] text-xs font-mono flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2">
           <Check className="w-4 h-4 text-emerald-400" />
-          <span>Bắt tay thành công! Rất vui được kết nối và làm việc cùng bạn.</span>
+          <span>Handshake confirmed! Excited to connect and collaborate with you.</span>
         </div>
       )}
 

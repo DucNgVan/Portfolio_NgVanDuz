@@ -27,7 +27,7 @@ const ProjectModal = ({ project, onClose }) => {
           <button
             onClick={onClose}
             className="p-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-400 transition-colors"
-            aria-label="Đóng cửa sổ"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -58,7 +58,7 @@ const ProjectModal = ({ project, onClose }) => {
           <div>
             <h4 className="text-sm font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2 mb-3">
               <Cpu className="w-4 h-4 text-cyan-400" />
-              <span>Điểm nổi bật về kiến trúc & kỹ thuật</span>
+              <span>Key Architecture & Engineering Highlights</span>
             </h4>
             <div className="space-y-2.5">
               {project.highlights?.map((hl, index) => (
@@ -74,7 +74,7 @@ const ProjectModal = ({ project, onClose }) => {
           <div>
             <h4 className="text-sm font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2 mb-3">
               <Layers className="w-4 h-4 text-cyan-400" />
-              <span>Công nghệ sử dụng</span>
+              <span>Technologies Used</span>
             </h4>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t, idx) => (
@@ -98,7 +98,7 @@ const ProjectModal = ({ project, onClose }) => {
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-white text-xs font-mono font-medium transition-all"
           >
             <Github className="w-4 h-4" />
-            <span>Xem GitHub Repo</span>
+            <span>View GitHub Repo</span>
           </a>
           <a
             href={project.liveDemo}
@@ -107,7 +107,7 @@ const ProjectModal = ({ project, onClose }) => {
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-mono font-semibold transition-all shadow-md shadow-cyan-500/20"
           >
             <ExternalLink className="w-4 h-4" />
-            <span>Trải nghiệm Live Demo</span>
+            <span>Experience Live Demo</span>
           </a>
         </div>
       </div>

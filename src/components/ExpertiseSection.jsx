@@ -35,7 +35,7 @@ const ExpertiseSection = () => {
       category: 'DEVELOPMENT',
       iconText: '</>',
       title: 'Creative Development',
-      description: 'Xây dựng các giao diện web mượt mà, tốc độ cao, responsive chuẩn chỉ với React, JavaScript và các công nghệ frontend hiện đại.',
+      description: 'Building ultra-fluid, lightning-fast, and fully responsive interfaces using React, JavaScript, and modern frontend design systems.',
       tags: ['REACT', 'JAVASCRIPT', 'TAILWIND CSS', 'TYPESCRIPT'],
       floatBadge: 'JS',
       badgeColor: 'bg-[#F7DF1E] text-black',
@@ -45,7 +45,7 @@ const ExpertiseSection = () => {
       category: 'MOTION',
       iconText: '%',
       title: 'Motion & Interaction',
-      description: 'Biến những trang web tĩnh thành các trải nghiệm sống động, lôi cuốn thông qua chuyển động tinh tế và các vi tương tác (micro-interactions).',
+      description: 'Transforming static web pages into captivating digital journeys through deliberate motion choreography and nuanced micro-interactions.',
       tags: ['FRAMER MOTION', 'CANVAS', 'KINETIC TYPE', 'SMOOTH SCROLL'],
       floatBadge: '⚛️',
       badgeColor: 'bg-[#61DAFB] text-black',
@@ -54,8 +54,8 @@ const ExpertiseSection = () => {
       id: '03',
       category: 'UI / UX & SOFT SKILLS',
       iconText: '✦',
-      title: 'UI / UX & Kỹ Năng Mềm',
-      description: 'Thiết kế hệ thống giao diện có cấu trúc chặt chẽ, đồng thời sở hữu kỹ năng làm việc nhóm, giao tiếp tiếng Anh (IELTS 7.0) và giải quyết vấn đề nhanh chóng.',
+      title: 'UI / UX & Soft Skills',
+      description: 'Designing cohesive design systems with structured ergonomics, backed by strong teamwork, English proficiency (IELTS 7.0), and agile problem-solving.',
       tags: ['IELTS 7.0', 'TEAMWORK', 'AGILE/SCRUM', 'PROBLEM SOLVING'],
       floatBadge: 'UX',
       badgeColor: 'bg-[#10B981] text-white',
@@ -65,7 +65,7 @@ const ExpertiseSection = () => {
       category: 'MODERN STACK',
       iconText: '⚡',
       title: 'Modern Web Apps & Architecture',
-      description: 'Phát triển các ứng dụng toàn diện với kiến trúc component rõ ràng, tích hợp RESTful/GraphQL APIs, xử lý dữ liệu thời gian thực và tối ưu hiệu năng.',
+      description: 'Architecting scalable web applications with clean component boundaries, RESTful/GraphQL API integrations, real-time data streaming, and performance optimization.',
       tags: ['NODE.JS', 'POSTGRESQL', 'DOCKER', 'REST APIS'],
       floatBadge: 'API',
       badgeColor: 'bg-[#EC4899] text-white',
@@ -88,7 +88,7 @@ const ExpertiseSection = () => {
                 EXPERTISE & SKILLS
               </span>
               <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-white">
-                CHUYÊN MÔN & KỸ NĂNG CỐT LÕI
+                CORE EXPERTISE & SKILLS
               </h2>
             </div>
             <p className="text-xs font-mono text-[#888888] tracking-widest mt-2 sm:mt-0 uppercase">
@@ -175,7 +175,7 @@ const ExpertiseSection = () => {
                   <button 
                     onClick={handleLike}
                     className="flex items-center gap-1 hover:scale-110 transition-transform"
-                    title="Thả tim"
+                    title="Like"
                   >
                     <Heart className={`w-4 h-4 ${hasLiked ? 'fill-rose-300 text-rose-300' : 'text-white'}`} />
                   </button>

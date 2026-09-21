@@ -156,7 +156,7 @@ const HeroSection = () => {
           <a
             href="#contact"
             className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center group cursor-pointer"
-            title="Liên hệ / Let's Work Together"
+            title="Let's Work Together"
           >
             {/* Rotating circular SVG text */}
             <svg

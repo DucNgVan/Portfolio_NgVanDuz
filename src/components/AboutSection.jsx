@@ -129,10 +129,10 @@ const AboutSection = () => {
             <ScrollReveal direction="up" delay={0.3}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#a0a0a0] leading-relaxed mb-12">
                 <p>
-                  Tôi là <strong className="text-white font-medium">{personalInfo.name}</strong> — một kỹ sư phần mềm trẻ đam mê kiến tạo trải nghiệm web hiện đại, thích biến những ý tưởng, giao diện và hiệu ứng chuyển động thành những sản phẩm đáng nhớ.
+                  I'm <strong className="text-white font-medium">{personalInfo.name}</strong> — a software engineer and creative coder passionate about crafting modern web experiences, turning ideas, fluid interactions, and expressive motion into memorable digital products.
                 </p>
                 <p>
-                  Tôi quan tâm đến từng chi tiết nhỏ: nhịp điệu typography, độ trễ và nhịp thở của một vi tương tác, cùng cảm giác mượt mà làm sống dậy cả một ứng dụng kỹ thuật số.
+                  I care deeply about the nuances: typographic rhythm, latency, the breathing room of micro-interactions, and that seamless tactile fluidity that brings digital software to life.
                 </p>
               </div>
             </ScrollReveal>

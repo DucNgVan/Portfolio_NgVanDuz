@@ -139,7 +139,7 @@ const WorkSection = () => {
                     className="inline-flex items-center gap-1.5 text-xs font-mono text-[#d8c8a8] hover:underline cursor-pointer group/btn"
                   >
                     <Info className="w-3.5 h-3.5" />
-                    <span>Chi tiết kiến trúc</span>
+                    <span>Architecture Details</span>
                   </button>
 
                   <div className="flex items-center gap-2">
@@ -148,7 +148,7 @@ const WorkSection = () => {
                       target="_blank"
                       rel="noreferrer"
                       className="p-2.5 rounded-xl bg-[#181818] hover:bg-[#252525] border border-[#333333] hover:border-[#d8c8a8] text-[#cccccc] hover:text-white transition-all"
-                      title="Xem trên GitHub"
+                      title="View on GitHub"
                     >
                       <Github className="w-4 h-4" />
                     </a>
@@ -157,7 +157,7 @@ const WorkSection = () => {
                       target="_blank"
                       rel="noreferrer"
                       className="p-2.5 rounded-xl bg-[#d8c8a8] hover:bg-[#e2d5bd] text-[#0D0D0D] font-bold transition-all shadow"
-                      title="Xem Live Demo"
+                      title="View Live Demo"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>

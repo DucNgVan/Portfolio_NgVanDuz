@@ -49,7 +49,7 @@ const ContactSection = () => {
               GET IN TOUCH
             </span>
             <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-white">
-              LIÊN HỆ & BẮT TAY HỢP TÁC
+              GET IN TOUCH & CONNECT
             </h2>
             <div className="w-24 h-[2px] bg-[#d8c8a8] mx-auto mt-3"></div>
           </ScrollReveal>
@@ -66,10 +66,10 @@ const ContactSection = () => {
           {/* Left: Contact Info Cards (Slide in from Left) */}
           <ScrollReveal direction="right" delay={0.2} className="lg:col-span-5 space-y-4 text-left">
             <h3 className="font-syne text-xl font-bold text-white mb-2">
-              Thông tin liên hệ trực tiếp
+              Direct Contact Information
             </h3>
             <p className="text-xs sm:text-sm text-[#888888] mb-6">
-              Bạn có thể sao chép nhanh email hoặc số điện thoại bên dưới:
+              Feel free to copy my direct contact details or send a message:
             </p>
 
             {/* Email Card */}
@@ -79,7 +79,7 @@ const ContactSection = () => {
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#666666] uppercase">Email cá nhân</div>
+                  <div className="text-[11px] font-mono text-[#666666] uppercase">Direct Email</div>
                   <div className="text-sm font-semibold text-[#f4efea] group-hover:text-[#d8c8a8] transition-colors">
                     {personalInfo.email}
                   </div>
@@ -89,7 +89,7 @@ const ContactSection = () => {
               <button
                 onClick={() => handleCopy(personalInfo.email, 'email')}
                 className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#888888] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
-                title="Sao chép Email"
+                title="Copy Email"
               >
                 {copiedField === 'email' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -102,7 +102,7 @@ const ContactSection = () => {
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#666666] uppercase">Số điện thoại</div>
+                  <div className="text-[11px] font-mono text-[#666666] uppercase">Phone Number</div>
                   <div className="text-sm font-semibold text-[#f4efea] group-hover:text-[#d8c8a8] transition-colors">
                     {personalInfo.phone}
                   </div>
@@ -112,7 +112,7 @@ const ContactSection = () => {
               <button
                 onClick={() => handleCopy(personalInfo.phone, 'phone')}
                 className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#888888] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
-                title="Sao chép Số điện thoại"
+                title="Copy Phone Number"
               >
                 {copiedField === 'phone' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -125,7 +125,7 @@ const ContactSection = () => {
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#666666] uppercase">Khu vực làm việc</div>
+                  <div className="text-[11px] font-mono text-[#666666] uppercase">Location</div>
                   <div className="text-sm font-semibold text-[#f4efea]">
                     {personalInfo.location}
                   </div>
@@ -135,7 +135,7 @@ const ContactSection = () => {
               <button
                 onClick={() => handleCopy(personalInfo.location, 'location')}
                 className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#888888] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
-                title="Sao chép Địa chỉ"
+                title="Copy Location"
               >
                 {copiedField === 'location' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -143,7 +143,7 @@ const ContactSection = () => {
 
             {/* Social Channels */}
             <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222]">
-              <div className="text-[11px] font-mono text-[#666666] uppercase mb-3">Mạng xã hội & Nền tảng</div>
+              <div className="text-[11px] font-mono text-[#666666] uppercase mb-3">Social Channels & Profiles</div>
               <div className="flex items-center gap-3">
                 <a
                   href={personalInfo.github}
@@ -175,10 +175,10 @@ const ContactSection = () => {
           <ScrollReveal direction="left" delay={0.25} className="lg:col-span-7">
             <div className="p-7 sm:p-8 rounded-3xl bg-[#111111] border border-[#222222] text-left">
               <h3 className="font-syne text-xl font-bold text-white mb-2">
-                Gửi Tin Nhắn Nhanh
+                Send a Quick Message
               </h3>
               <p className="text-xs sm:text-sm text-[#888888] mb-6">
-                Tôi sẽ phản hồi bạn qua email trong thời gian sớm nhất:
+                I'll get back to you as soon as possible:
               </p>
 
               {formSubmitted ? (
@@ -186,9 +186,9 @@ const ContactSection = () => {
                   <div className="w-12 h-12 rounded-full bg-[#d8c8a8]/20 text-[#d8c8a8] flex items-center justify-center mx-auto mb-3">
                     <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-white mb-1">Đã gửi tin nhắn thành công!</h4>
+                  <h4 className="text-lg font-bold text-white mb-1">Message sent successfully!</h4>
                   <p className="text-xs sm:text-sm text-[#d8c8a8]">
-                    Cảm ơn bạn đã liên hệ. Tôi sẽ phản hồi lại bạn sớm nhé!
+                    Thank you for reaching out. I will respond to your email promptly!
                   </p>
                 </div>
               ) : (
@@ -196,12 +196,12 @@ const ContactSection = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
-                        Tên của bạn *
+                        Your Name *
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="Ví dụ: Hoàng Long"
+                        placeholder="e.g. John Doe"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans"
@@ -210,12 +210,12 @@ const ContactSection = () => {
 
                     <div>
                       <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
-                        Email liên hệ *
+                        Your Email *
                       </label>
                       <input
                         type="email"
                         required
-                        placeholder="tenban@congty.com"
+                        placeholder="john@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans"
@@ -225,11 +225,11 @@ const ContactSection = () => {
 
                   <div>
                     <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
-                      Chủ đề
+                      Subject
                     </label>
                     <input
                       type="text"
-                      placeholder="Cơ hội việc làm / Hợp tác dự án..."
+                      placeholder="Job Opportunity / Project Collaboration..."
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans"
@@ -238,12 +238,12 @@ const ContactSection = () => {
 
                   <div>
                     <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
-                      Nội dung tin nhắn *
+                      Message *
                     </label>
                     <textarea
                       required
                       rows={4}
-                      placeholder="Nội dung bạn muốn trao đổi..."
+                      placeholder="Write your message here..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans resize-none"
@@ -255,7 +255,7 @@ const ContactSection = () => {
                     className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#d8c8a8] hover:bg-[#e2d5bd] text-[#0d0d0d] font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 shadow"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Gửi tin nhắn</span>
+                    <span>Send Message</span>
                   </button>
                 </form>
               )}

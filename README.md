@@ -17,30 +17,30 @@
 
 ---
 
-## 📖 Giới thiệu / Overview
+## 📖 Overview
 
-Trang Portfolio cá nhân của **Nguyễn Văn Đức** — Kỹ sư phần mềm đam mê kiến tạo trải nghiệm web hiện đại, tốc độ cao và giàu tính tương tác. Dự án được phát triển bằng **React 18**, **Vite**, **Tailwind CSS** và **Framer Motion**, mang phong cách thiết kế Cyberpunk & Modern Brutalism độc đáo.
+Personal developer portfolio for **Nguyen Van Duc** — a software engineer passionate about engineering high-performance, interactive, and beautifully designed digital experiences. Built with **React 18**, **Vite**, **Tailwind CSS**, and **Framer Motion**, showcasing a distinctive Cyberpunk & Modern Brutalism aesthetic.
 
-> Personal developer portfolio showcasing featured projects, fullstack capabilities, technical expertise, university honors, and an interactive contact experience.
-
----
-
-## ✨ Điểm nổi bật / Features
-
-- 🖥️ **Kinetic Hero & Terminal Simulator**: Giao diện mở đầu ấn tượng với kinetic typography và giả lập cửa sổ terminal tương tác (`whoami`, `git status`,...).
-- 🎨 **Modern Cyberpunk / Brutalism Aesthetic**: Phối màu tối trầm (dark mode) kết hợp các điểm nhấn ánh sáng tinh tế và đường nét công nghệ sắc nét.
-- 🎯 **Interactive Project Showcase**: Danh sách dự án nổi bật với modal chi tiết, liên kết mã nguồn GitHub và bản live demo thực tế.
-- 📊 **Skills & Expertise Matrix**: Trực quan hóa năng lực kỹ thuật (Frontend, Backend, DevOps, Tools) và kỹ năng mềm với thanh đo cấp độ sinh động.
-- 🏆 **Achievements & Education Timeline**: Lộ trình học tập, giải thưởng nghiên cứu khoa học, hackathon và danh hiệu sinh viên tiêu biểu.
-- 🤝 **Interactive Handshake & Confetti**: Hiệu ứng kết nối tương tác độc đáo khi người dùng bắt tay hợp tác cùng pháo hoa giấy chúc mừng.
-- ⚡ **Siêu mượt mà & Tối ưu hiệu năng**: Tối ưu bundle size, lazy loading, render 60 FPS mượt mà nhờ Framer Motion & Vite.
-- 📱 **Fully Responsive**: Hiển thị hoàn hảo trên mọi thiết bị (Desktop, Tablet, Mobile).
+> An interactive developer portfolio highlighting featured projects, full-stack architecture capabilities, academic honors, technical skills matrix, and a celebratory interactive contact experience.
 
 ---
 
-## 🛠️ Công nghệ sử dụng / Tech Stack
+## ✨ Features
 
-| Danh mục | Công nghệ |
+- 🖥️ **Kinetic Hero & Terminal Simulator**: Eye-catching opening hero section with kinetic typography and an interactive terminal environment (`whoami`, `cat passion.txt`, `git status`).
+- 🎨 **Modern Cyberpunk / Brutalism Aesthetic**: Refined dark mode palette balanced with warm champagne gold accents, micro-glows, and crisp technical typography.
+- 🎯 **Interactive Project Showcase**: Curated production projects with deep-dive architectural modal view, live metrics, tech tags, and direct demo/GitHub links.
+- 📊 **Skills & Competency Matrix**: Visual breakdown of Frontend, Backend, DevOps tools, and practical soft skills with animated proficiency meters.
+- 🏆 **Academic Honors & Timeline**: University honors, scientific research accolades, hackathon distinctions, and leadership milestones.
+- 🤝 **Interactive Handshake & Confetti**: Tactile collaborative handshake feature triggering multi-stage celebratory confetti physics.
+- ⚡ **Lightning Fast & Ultra Smooth**: Highly optimized bundle size, lazy-loaded components, and 60 FPS motion powered by Framer Motion and Vite.
+- 📱 **Fully Responsive**: Seamlessly adapted for mobile devices, tablets, laptops, and ultra-wide displays.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
 | :--- | :--- |
 | **Core Framework** | [React 18](https://react.dev/), [Vite 6](https://vitejs.dev/) |
 | **Styling** | [Tailwind CSS 3](https://tailwindcss.com/), [PostCSS](https://postcss.org/), [Autoprefixer](https://github.com/postcss/autoprefixer) |
@@ -50,96 +50,97 @@ Trang Portfolio cá nhân của **Nguyễn Văn Đức** — Kỹ sư phần m�
 
 ---
 
-## 🚀 Cài đặt & Chạy cục bộ / Getting Started
+## 🚀 Getting Started
 
-### Điều kiện tiên quyết (Prerequisites)
-- [Node.js](https://nodejs.org/) (phiên bản 18.x trở lên)
-- Trình quản lý gói `npm`, `pnpm` hoặc `yarn`
+### Prerequisites
+- [Node.js](https://nodejs.org/) (version 18.x or higher)
+- Package manager: `npm`, `pnpm`, or `yarn`
 
-### Các bước cài đặt (Installation)
+### Installation & Setup
 
-1. **Clone repository về máy**:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/DucNgVan/Portfolio_NgVanDuz.git
    cd Portfolio_NgVanDuz
    ```
 
-2. **Cài đặt các gói phụ thuộc (dependencies)**:
+2. **Install dependencies**:
    ```bash
    npm install
    ```
 
-3. **Khởi chạy môi trường phát triển (Dev Server)**:
+3. **Start development server**:
    ```bash
    npm run dev
    ```
-   *Mở trình duyệt tại địa chỉ: `http://localhost:5173`*
+   *Open your browser and navigate to: `http://localhost:5173`*
 
-4. **Đóng gói dự án cho môi trường sản xuất (Build Production)**:
+4. **Build for production**:
    ```bash
    npm run build
    ```
 
-5. **Xem thử bản build (Preview)**:
+5. **Preview production build**:
    ```bash
    npm run preview
    ```
 
 ---
 
-## 📁 Cấu trúc thư mục / Project Structure
+## 📁 Project Structure
 
 ```text
 Portfolio_NgVanDuz/
-├── public/                 # Static assets
+├── public/                 # Static public assets
 ├── src/
-│   ├── components/         # Các thành phần giao diện React
-│   │   ├── AboutSection.jsx          # Giới thiệu bản thân & thống kê
-│   │   ├── AchievementsSection.jsx   # Giải thưởng & thành tích học tập
-│   │   ├── BrandIcons.jsx            # Biểu tượng thương hiệu công nghệ
-│   │   ├── ContactSection.jsx        # Biểu mẫu liên hệ & mạng xã hội
-│   │   ├── CustomCursor.jsx          # Con trỏ chuột tương tác tuỳ biến
-│   │   ├── ExperienceSection.jsx     # Kinh nghiệm làm việc & dự án
-│   │   ├── ExpertiseSection.jsx      # Ma trận kỹ năng Tech & Soft skills
-│   │   ├── Footer.jsx                # Chân trang & bản quyền
-│   │   ├── HandshakeInteractive.jsx  # Hiệu ứng bắt tay tương tác
-│   │   ├── HeroSection.jsx           # Hero banner & Terminal
-│   │   ├── Navbar.jsx                # Thanh điều hướng nổi
-│   │   ├── ParticleBackground.jsx    # Hiệu ứng hạt nền tương tác
-│   │   ├── Preloader.jsx             # Màn hình chờ khởi động
-│   │   ├── ProjectModal.jsx          # Cửa sổ chi tiết dự án
-│   │   ├── ScrollReveal.jsx          # Hiệu ứng cuộn hiển thị
-│   │   └── WorkSection.jsx           # Khu vực trưng bày dự án
+│   ├── components/         # React UI Components
+│   │   ├── AboutSection.jsx          # Bio, editorial portrait card & metadata
+│   │   ├── AchievementsSection.jsx   # Academic honors, scholarships & awards
+│   │   ├── BrandIcons.jsx            # Custom SVG brand icons (GitHub, LinkedIn)
+│   │   ├── ContactSection.jsx        # Direct contact cards, quick message form
+│   │   ├── CustomCursor.jsx          # Difference blend-mode custom cursor
+│   │   ├── ExperienceSection.jsx     # Technical matrix & tabbed skill explorer
+│   │   ├── ExpertiseSection.jsx      # Core services with interactive hover card
+│   │   ├── Footer.jsx                # Page footer & back-to-top button
+│   │   ├── HandshakeInteractive.jsx  # Interactive handshake with canvas confetti
+│   │   ├── HeroSection.jsx           # Kinetic typography & hero header
+│   │   ├── Navbar.jsx                # Floating glassmorphism navbar
+│   │   ├── ParticleBackground.jsx    # Interactive background canvas
+│   │   ├── Preloader.jsx             # Apple-inspired cursive handwriting loader
+│   │   ├── ProjectModal.jsx          # Architectural detail project modal
+│   │   ├── ScrollReveal.jsx          # Viewport scroll animation wrappers
+│   │   └── WorkSection.jsx           # Colossal work section & GitHub cards
 │   ├── data/
-│   │   └── portfolioData.js          # Dữ liệu nội dung tập trung (thông tin, dự án, skills)
-│   ├── styles/                       # Tệp CSS tuỳ biến
-│   ├── App.jsx                       # Thành phần gốc của ứng dụng
-│   └── main.jsx                      # Điểm khởi chạy React DOM
-├── index.html              # Tệp HTML chính tích hợp SEO & Fonts
-├── package.json            # Cấu hình dự án và dependencies
-├── tailwind.config.js      # Cấu hình Tailwind CSS tuỳ biến
-├── vite.config.js          # Cấu hình Vite bundler
-└── README.md               # Tài liệu hướng dẫn dự án
+│   │   └── portfolioData.js          # Centralized data model (profile, projects, skills)
+│   ├── styles/                       # Global stylesheet & custom CSS utilities
+│   ├── App.jsx                       # Root application component
+│   └── main.jsx                      # Application entry point
+├── index.html              # HTML shell with SEO & font imports
+├── package.json            # Project configuration and dependencies
+├── tailwind.config.js      # Tailwind theme configuration
+├── vite.config.js          # Vite build pipeline setup
+└── README.md               # Project documentation
 ```
 
 ---
 
-## ⚙️ Tùy biến dữ liệu / Customization
+## ⚙️ Customization
 
-Bạn có thể dễ dàng thay đổi toàn bộ nội dung của website chỉ bằng việc cập nhật tệp:
+All portfolio content is structured and centralized in a single configuration file:  
 👉 `src/data/portfolioData.js`
 
-- **Thông tin cá nhân**: `personalInfo` (Họ tên, vai trò, bio, email, mạng xã hội,...)
-- **Kỹ năng chuyên môn**: `techSkills` (Frontend, Backend, DevOps)
-- **Kỹ năng mềm**: `softSkills`
-- **Dự án nổi bật**: `githubProjects` (Tên dự án, công nghệ, link GitHub, live demo)
-- **Thành tích**: `achievements` (Học bổng, giải thưởng, hackathon)
+You can customize:
+- **Personal Information**: `personalInfo` (Name, role, bio, location, email, social links)
+- **Technical Skills**: `techSkills` (Frontend, Backend, DevOps, Tools)
+- **Soft Skills**: `softSkills` (Proficiency scores, tags, descriptions)
+- **Featured Projects**: `githubProjects` (Titles, descriptions, tech stack, metrics, live links)
+- **Academic Honors**: `achievements` (Scholarships, awards, hackathons)
 
 ---
 
-## 📬 Liên hệ / Contact
+## 📬 Contact
 
-- **Tác giả**: Nguyễn Văn Đức (DucNgVan)
+- **Author**: Nguyen Van Duc (DucNgVan)
 - **GitHub**: [@DucNgVan](https://github.com/DucNgVan)
 - **Email**: contact.developer@example.com
 - **LinkedIn**: [Nguyen Van Duc](https://linkedin.com/in/ducngvan)
@@ -147,5 +148,5 @@ Bạn có thể dễ dàng thay đổi toàn bộ nội dung của website chỉ
 ---
 
 <div align="center">
-  <sub>Được thiết kế và lập trình với ❤️ bởi <b>Nguyen Van Duc</b>. Tặng kèm giấy phép <a href="./LICENSE">MIT License</a>.</sub>
+  <sub>Designed & developed with ❤️ by <b>Nguyen Van Duc</b>. Licensed under the <a href="./LICENSE">MIT License</a>.</sub>
 </div>

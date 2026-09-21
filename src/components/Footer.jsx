@@ -30,7 +30,7 @@ const Footer = () => {
             onClick={scrollToTop}
             className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#262626] hover:border-[#d8c8a8] text-[#888888] hover:text-[#d8c8a8] text-xs font-mono transition-all cursor-pointer group"
           >
-            <span>LÊN ĐẦU TRANG</span>
+            <span>BACK TO TOP</span>
             <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
 
@@ -38,7 +38,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="mt-8 pt-6 border-t border-[#111111] text-center text-[11px] font-mono text-[#444444]">
-          © 2026 {personalInfo.name}. All rights reserved. Sẵn sàng cho các dự án và cơ hội hợp tác mới!
+          © 2026 {personalInfo.name}. All rights reserved. Open for new opportunities and collaborations!
         </div>
       </div>
     </footer>

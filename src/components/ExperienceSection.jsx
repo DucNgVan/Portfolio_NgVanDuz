@@ -71,18 +71,18 @@ const ExperienceSection = () => {
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-xs uppercase tracking-widest mb-4 shadow-sm shadow-cyan-500/20">
             <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span>Khu vực Năng Lực Cốt Lõi</span>
+            <span>Core Competency Matrix</span>
           </div>
           
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Kinh Nghiệm Chuyên Ngành & <br className="hidden sm:inline" />
+            Technical Expertise & <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
-              Kỹ Năng Mềm Thực Chiến
+              Practical Soft Skills
             </span>
           </h2>
           
           <p className="mt-4 text-slate-400 text-sm sm:text-base leading-relaxed">
-            Hội tụ kiến trúc công nghệ hiện đại, các dự án mã nguồn mở thực tế trên GitHub cùng năng lực làm việc nhóm, tư duy giải quyết vấn đề và quản lý dự án Agile.
+            Bridging robust engineering architecture, open-source projects on GitHub, and cross-functional leadership, agile workflows, and critical problem solving.
           </p>
         </div>
 
@@ -122,7 +122,7 @@ const ExperienceSection = () => {
               }`}
             >
               <HeartHandshake className="w-4 h-4" />
-              <span>🧠 Kỹ Năng Mềm ({softSkills.length})</span>
+              <span>🧠 Soft Skills ({softSkills.length})</span>
             </button>
           </div>
         </div>
@@ -133,9 +133,9 @@ const ExperienceSection = () => {
             {/* Filter Pills */}
             <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono text-slate-400">Phân loại:</span>
+                <span className="text-xs font-mono text-slate-400">Category:</span>
                 {[
-                  { id: 'all', label: 'Tất cả' },
+                  { id: 'all', label: 'All' },
                   { id: 'frontend', label: 'Frontend & UI' },
                   { id: 'backend', label: 'Backend & APIs' },
                   { id: 'devops', label: 'DevOps & Tools' },
@@ -156,7 +156,7 @@ const ExperienceSection = () => {
 
               <div className="text-xs font-mono text-cyan-400 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Rê chuột vào thanh kỹ năng để xem thông số</span>
+                <span>Hover over skills to inspect metrics</span>
               </div>
             </div>
 
@@ -184,7 +184,7 @@ const ExperienceSection = () => {
 
                   {/* Level Percentage & Experience */}
                   <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-                    <span>Kinh nghiệm: <span className="text-slate-200">{skill.experience}</span></span>
+                    <span>Experience: <span className="text-slate-200">{skill.experience}</span></span>
                     <span className="text-cyan-400 font-bold">{skill.level}%</span>
                   </div>
 
@@ -202,8 +202,8 @@ const ExperienceSection = () => {
                   {/* Hover status hint */}
                   {hoveredSkill === skill.name && (
                     <div className="mt-3 pt-2.5 border-t border-slate-800/70 text-[11px] font-mono text-cyan-300/90 flex items-center justify-between animate-in fade-in">
-                      <span>✓ Đã kiểm chứng qua dự án</span>
-                      <span>Sẵn sàng ứng dụng</span>
+                      <span>✓ Production Verified</span>
+                      <span>Ready to Deploy</span>
                     </div>
                   )}
                 </div>
@@ -221,7 +221,7 @@ const ExperienceSection = () => {
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Tìm kiếm dự án, công nghệ (React, Node...)..."
+                  placeholder="Search projects, technologies (React, Node...)..."
                   value={projectSearch}
                   onChange={(e) => setProjectSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono"
@@ -230,7 +230,7 @@ const ExperienceSection = () => {
 
               <div className="text-xs font-mono text-slate-400 flex items-center gap-2 self-start sm:self-auto">
                 <FolderGit2 className="w-4 h-4 text-cyan-400" />
-                <span>Hiển thị <span className="text-white font-bold">{filteredProjects.length}</span> dự án</span>
+                <span>Showing <span className="text-white font-bold">{filteredProjects.length}</span> projects</span>
               </div>
             </div>
 
@@ -287,7 +287,7 @@ const ExperienceSection = () => {
                       className="inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer group/btn"
                     >
                       <Info className="w-3.5 h-3.5" />
-                      <span className="underline-offset-4 group-hover/btn:underline">Chi tiết kiến trúc</span>
+                      <span className="underline-offset-4 group-hover/btn:underline">Architecture Details</span>
                     </button>
 
                     <div className="flex items-center gap-2">
@@ -325,7 +325,7 @@ const ExperienceSection = () => {
           </div>
         )}
 
-        {/* ================= TAB 3: SOFT SKILLS (KỸ NĂNG MỀM) ================= */}
+        {/* ================= TAB 3: SOFT SKILLS ================= */}
         {activeTab === 'softskills' && (
           <div className="space-y-8 animate-in fade-in duration-300">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -362,7 +362,7 @@ const ExperienceSection = () => {
                       {/* Proficiency Meter */}
                       <div className="mb-4">
                         <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-1.5">
-                          <span>Mức độ tự tin & ứng dụng:</span>
+                          <span>Proficiency & Confidence:</span>
                           <span className="text-indigo-400 font-bold">{skill.score}%</span>
                         </div>
                         <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">

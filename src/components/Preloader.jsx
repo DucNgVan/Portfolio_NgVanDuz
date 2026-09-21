@@ -192,7 +192,7 @@ const Preloader = ({ onComplete }) => {
         }}
         className="absolute bottom-8 text-xs font-mono text-[#555555] hover:text-[#d8c8a8] transition-colors cursor-pointer uppercase tracking-widest"
       >
-        [ Bỏ qua / Skip ]
+        [ Skip Intro ]
       </button>
     </div>
   );

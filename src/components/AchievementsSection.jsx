@@ -12,10 +12,10 @@ const iconMap = {
 
 const AchievementsSection = () => {
   const stats = [
-    { label: "GPA Tích lũy Đại học", value: "3.75", max: "/4.0", desc: "Tốt nghiệp Giỏi / Xuất sắc", icon: GraduationCap },
-    { label: "Giải thưởng & Hackathon", value: "03+", max: " giải", desc: "Cấp trường & Doanh nghiệp", icon: Trophy },
-    { label: "Kỳ Học bổng Xuất sắc", value: "05", max: " kỳ", desc: "Top 3% sinh viên toàn khoa", icon: Award },
-    { label: "Hoạt động & Cộng đồng", value: "200+", max: " sv", desc: "Đào tạo kỹ thuật tân sinh viên", icon: Star },
+    { label: "Cumulative University GPA", value: "3.75", max: "/4.0", desc: "High Distinction Honors", icon: GraduationCap },
+    { label: "Awards & Hackathons", value: "03+", max: " wins", desc: "University & Corporate Level", icon: Trophy },
+    { label: "Excellence Scholarships", value: "05", max: " sems", desc: "Top 3% of CS Faculty", icon: Award },
+    { label: "Community & Mentoring", value: "200+", max: " devs", desc: "Mentored Freshmen Students", icon: Star },
   ];
 
   return (
@@ -29,7 +29,7 @@ const AchievementsSection = () => {
               HONORS & RECOGNITION
             </span>
             <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-[#0D0D0D]">
-              THÀNH TÍCH NỔI BẬT THỜI ĐẠI HỌC
+              ACADEMIC HONORS & NOTABLE MILESTONES
             </h2>
             <div className="w-24 h-[2px] bg-[#0D0D0D] mx-auto mt-3"></div>
           </ScrollReveal>
@@ -104,9 +104,9 @@ const AchievementsSection = () => {
 
                   <div className="pt-3 border-t border-[#EAE3D8] flex items-center justify-between text-xs font-mono text-[#666666]">
                     <span className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Minh chứng trường cấp
+                      <CheckCircle2 className="w-3.5 h-3.5" /> University Certified
                     </span>
-                    <span className="text-[#8C6D3F]">Dấu ấn đại học</span>
+                    <span className="text-[#8C6D3F]">Academic Milestone</span>
                   </div>
                 </div>
               </ScrollStaggerItem>

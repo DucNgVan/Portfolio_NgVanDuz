@@ -32,10 +32,10 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { id: 'home', label: 'Trang chủ', icon: User },
-    { id: 'experience', label: 'Kinh nghiệm & Kỹ năng', icon: Code2 },
-    { id: 'achievements', label: 'Thành tích nổi bật', icon: Award },
-    { id: 'contact', label: 'Liên hệ', icon: Send },
+    { id: 'home', label: 'Home', icon: User },
+    { id: 'experience', label: 'Skills & Experience', icon: Code2 },
+    { id: 'achievements', label: 'Honors & Awards', icon: Award },
+    { id: 'contact', label: 'Contact', icon: Send },
   ];
 
   return (
@@ -52,7 +52,7 @@ const Navbar = () => {
           <a
             href="#home"
             className="flex items-center gap-2.5 group cursor-pointer"
-            aria-label="Về trang chủ"
+            aria-label="Back to home"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/30 border border-cyan-500/40 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 group-hover:scale-105 transition-all shadow-sm shadow-cyan-500/20">
               <Terminal className="w-5 h-5 text-cyan-400 group-hover:rotate-6 transition-transform" />
@@ -101,7 +101,7 @@ const Navbar = () => {
               <div className="absolute inset-[1px] bg-slate-950 rounded-[11px] transition-all group-hover:bg-slate-900/70"></div>
               <span className="relative z-10 flex items-center gap-2 text-cyan-300 group-hover:text-white">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
-                <span>Bắt tay hợp tác</span>
+                <span>Let's Connect</span>
               </span>
             </a>
           </div>
@@ -148,7 +148,7 @@ const Navbar = () => {
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium text-sm shadow-md shadow-cyan-500/30"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>🤝 Bắt tay hợp tác ngay</span>
+                  <span>🤝 Let's Collaborate</span>
                 </a>
               </div>
             </div>

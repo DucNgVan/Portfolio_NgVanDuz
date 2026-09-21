@@ -35,22 +35,22 @@ function App() {
 
       {/* 3. Main Sections */}
       <main>
-        {/* Trang chủ: Hero with Cream Background & Kinetic SOFTWARE (Screenshot 3) */}
+        {/* Home: Hero with Cream Background & Kinetic Typography */}
         <HeroSection />
 
-        {/* Giới thiệu: About Me with Portrait Card & Metadata Grid (Screenshot 4) */}
+        {/* About: About Me with Portrait Card & Metadata Grid */}
         <AboutSection />
 
-        {/* Dự án: Colossal WORK with Liquid Droplets & GitHub Repos (Screenshot 6) */}
+        {/* Work: Colossal WORK with Liquid Droplets & GitHub Repos */}
         <WorkSection />
 
-        {/* Chuyên môn: Expertise with Floating Purple Card & Tech Badges (Screenshot 5) */}
+        {/* Expertise: Skills with Floating Purple Card & Tech Badges */}
         <ExpertiseSection />
 
-        {/* Thành tích nổi bật trong Đại học */}
+        {/* Highlights & Academic Honors */}
         <AchievementsSection />
 
-        {/* Liên hệ & Hiệu ứng Bắt tay Hợp tác */}
+        {/* Contact & Interactive Handshake */}
         <ContactSection />
       </main>
 
