@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trophy, Award, Flame, Star, GraduationCap, Calendar, CheckCircle2 } from 'lucide-react';
-import { achievements } from '../data/portfolioData';
-import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
+import { achievements } from '@/data/portfolioData';
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 
 const iconMap = {
   Award: Award,

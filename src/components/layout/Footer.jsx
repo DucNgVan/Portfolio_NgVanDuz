@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo } from '@/data/portfolioData';
 
 const Footer = () => {
   const scrollToTop = () => {

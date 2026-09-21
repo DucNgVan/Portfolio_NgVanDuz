@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo } from '@/data/portfolioData';
 
 const HeroSection = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ const HeroSection = () => {
       onMouseMove={handleMouseMove}
       className="relative min-h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-6 sm:p-10 lg:p-14 select-none overflow-hidden"
     >
-      {/* 1. TOP NAVIGATION (Header matching Screenshot 3) */}
+      {/* 1. TOP NAVIGATION (Header) */}
       <header className="w-full flex items-center justify-between z-30">
         {/* Signature Logo: nguyen van duc in elegant cursive */}
         <a href="#home" className="font-hand text-3xl sm:text-4xl text-[#0D0D0D] hover:opacity-75 transition-opacity">

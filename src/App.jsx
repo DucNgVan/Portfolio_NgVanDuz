@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import Preloader from './components/Preloader';
-import CustomCursor from './components/CustomCursor';
-import HeroSection from './components/HeroSection';
-import AboutSection from './components/AboutSection';
-import WorkSection from './components/WorkSection';
-import ExpertiseSection from './components/ExpertiseSection';
-import AchievementsSection from './components/AchievementsSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
+
+// Layout components
+import { Footer } from '@/components/layout';
+
+// Modular UI components
+import { CustomCursor, Preloader } from '@/components/ui';
+
+// Page sections
+import {
+  HeroSection,
+  AboutSection,
+  WorkSection,
+  ExpertiseSection,
+  AchievementsSection,
+  ContactSection,
+} from '@/components/sections';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -27,7 +34,7 @@ function App() {
         style={{ scaleX }}
       />
 
-      {/* 1. Preloader Screen (Screenshot 1 & 2) */}
+      {/* 1. Preloader Screen */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
       {/* 2. Custom Smooth Difference Cursor */}

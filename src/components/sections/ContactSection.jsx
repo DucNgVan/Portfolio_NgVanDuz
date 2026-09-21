@@ -8,10 +8,10 @@ import {
   Check, 
   ExternalLink,
 } from 'lucide-react';
-import { Github, Linkedin } from './BrandIcons';
-import { personalInfo } from '../data/portfolioData';
-import HandshakeInteractive from './HandshakeInteractive';
-import { ScrollReveal } from './ScrollReveal';
+import { Github, Linkedin } from '@/components/ui/BrandIcons';
+import { personalInfo } from '@/data/portfolioData';
+import HandshakeInteractive from '@/components/ui/HandshakeInteractive';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 const ContactSection = () => {
   const [copiedField, setCopiedField] = useState(null);

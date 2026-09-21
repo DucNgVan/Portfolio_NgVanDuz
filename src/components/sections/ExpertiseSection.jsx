@@ -4,7 +4,7 @@ import {
   Heart, 
   ThumbsUp, 
 } from 'lucide-react';
-import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 
 const ExpertiseSection = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
@@ -97,7 +97,7 @@ const ExpertiseSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* MAIN LIST OF EXPERTISE ROWS WITH STAGGERED SLIDE-IN (Screenshot 5) */}
+        {/* MAIN LIST OF EXPERTISE ROWS WITH STAGGERED SLIDE-IN */}
         <ScrollStagger staggerDelay={0.12} className="space-y-4 relative">
           {services.map((item) => {
             const isHovered = hoveredRow === item.id;
@@ -160,7 +160,7 @@ const ExpertiseSection = () => {
             );
           })}
 
-          {/* FLOATING INTERACTIVE PURPLE CARD & TECH LOGOS ON HOVER (Screenshot 5) */}
+          {/* FLOATING INTERACTIVE PURPLE CARD & TECH LOGOS ON HOVER */}
           {hoveredRow && (
             <div
               className="hidden sm:flex pointer-events-auto absolute z-40 transition-transform duration-150 ease-out flex-col items-center"

@@ -20,9 +20,9 @@ import {
   TrendingUp,
   Boxes
 } from 'lucide-react';
-import { Github } from './BrandIcons';
-import { techSkills, githubProjects, softSkills } from '../data/portfolioData';
-import ProjectModal from './ProjectModal';
+import { Github } from '@/components/ui/BrandIcons';
+import { techSkills, githubProjects, softSkills } from '@/data/portfolioData';
+import ProjectModal from '@/components/ui/ProjectModal';
 
 const iconMap = {
   Globe: Globe,

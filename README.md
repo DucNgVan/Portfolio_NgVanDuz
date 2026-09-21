@@ -93,33 +93,45 @@ Personal developer portfolio for **Nguyen Van Duc** — a software engineer pass
 Portfolio_NgVanDuz/
 ├── public/                 # Static public assets
 ├── src/
-│   ├── components/         # React UI Components
-│   │   ├── AboutSection.jsx          # Bio, editorial portrait card & metadata
-│   │   ├── AchievementsSection.jsx   # Academic honors, scholarships & awards
-│   │   ├── BrandIcons.jsx            # Custom SVG brand icons (GitHub, LinkedIn)
-│   │   ├── ContactSection.jsx        # Direct contact cards, quick message form
-│   │   ├── CustomCursor.jsx          # Difference blend-mode custom cursor
-│   │   ├── ExperienceSection.jsx     # Technical matrix & tabbed skill explorer
-│   │   ├── ExpertiseSection.jsx      # Core services with interactive hover card
-│   │   ├── Footer.jsx                # Page footer & back-to-top button
-│   │   ├── HandshakeInteractive.jsx  # Interactive handshake with canvas confetti
-│   │   ├── HeroSection.jsx           # Kinetic typography & hero header
-│   │   ├── Navbar.jsx                # Floating glassmorphism navbar
-│   │   ├── ParticleBackground.jsx    # Interactive background canvas
-│   │   ├── Preloader.jsx             # Apple-inspired cursive handwriting loader
-│   │   ├── ProjectModal.jsx          # Architectural detail project modal
-│   │   ├── ScrollReveal.jsx          # Viewport scroll animation wrappers
-│   │   └── WorkSection.jsx           # Colossal work section & GitHub cards
+│   ├── components/         # Modular Component Architecture
+│   │   ├── layout/         # Shell & Global Layout components
+│   │   │   ├── Navbar.jsx            # Floating glassmorphism navbar
+│   │   │   ├── Footer.jsx            # Site footer & back-to-top button
+│   │   │   └── index.js              # Layout barrel export
+│   │   ├── sections/       # Page Section components
+│   │   │   ├── HeroSection.jsx       # Kinetic typography hero & interactive header
+│   │   │   ├── AboutSection.jsx      # Bio statement & metadata metrics grid
+│   │   │   ├── WorkSection.jsx       # Featured project showcase & live cards
+│   │   │   ├── ExpertiseSection.jsx  # Core competencies & interactive hover card
+│   │   │   ├── AchievementsSection.jsx # Academic honors, awards & scholarships
+│   │   │   ├── ExperienceSection.jsx # Technical skills matrix & project filters
+│   │   │   ├── ContactSection.jsx    # Contact cards & quick message form
+│   │   │   └── index.js              # Sections barrel export
+│   │   ├── ui/             # Reusable UI & Interactive widgets
+│   │   │   ├── BrandIcons.jsx        # SVG brand marks (GitHub, LinkedIn)
+│   │   │   ├── CustomCursor.jsx      # Fluid difference blend-mode cursor
+│   │   │   ├── HandshakeInteractive.jsx # Interactive handshake & confetti physics
+│   │   │   ├── ParticleBackground.jsx# Canvas interactive node constellation
+│   │   │   ├── Preloader.jsx         # Apple-inspired cursive handwriting intro
+│   │   │   ├── ProjectModal.jsx      # Deep-dive architecture modal
+│   │   │   ├── ScrollReveal.jsx      # Viewport motion and stagger wrappers
+│   │   │   └── index.js              # UI barrel export
+│   │   └── index.js        # Root components barrel export
 │   ├── data/
-│   │   └── portfolioData.js          # Centralized data model (profile, projects, skills)
-│   ├── styles/                       # Global stylesheet & custom CSS utilities
-│   ├── App.jsx                       # Root application component
+│   │   └── portfolioData.js          # Centralized data store (profile, skills, projects)
+│   ├── lib/
+│   │   └── utils.js                  # Tailwind class merge utility (cn)
+│   ├── styles/                       # Global design system & keyframe styles
+│   │   └── index.css
+│   ├── App.jsx                       # Master page composition
 │   └── main.jsx                      # Application entry point
-├── index.html              # HTML shell with SEO & font imports
-├── package.json            # Project configuration and dependencies
-├── tailwind.config.js      # Tailwind theme configuration
-├── vite.config.js          # Vite build pipeline setup
-└── README.md               # Project documentation
+├── jsconfig.json           # IDE path alias configuration (@/*)
+├── index.html              # HTML entry with SEO & typography CDN
+├── package.json            # Dependencies & scripts
+├── postcss.config.js       # PostCSS plugins
+├── tailwind.config.js      # Tailwind design system configuration
+├── vite.config.js          # Vite configuration with path aliases
+└── README.md               # Technical project documentation
 ```
 
 ---

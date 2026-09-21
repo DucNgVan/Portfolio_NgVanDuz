@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ExternalLink, Star, GitFork, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Github } from './BrandIcons';
-import { githubProjects } from '../data/portfolioData';
-import ProjectModal from './ProjectModal';
-import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
+import { Github } from '@/components/ui/BrandIcons';
+import { githubProjects } from '@/data/portfolioData';
+import ProjectModal from '@/components/ui/ProjectModal';
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 
 const WorkSection = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -36,7 +36,7 @@ const WorkSection = () => {
         </div>
       </ScrollReveal>
 
-      {/* 2. COLOSSAL "WORK" SECTION HEADER WITH DROPLETS (Screenshot 6) */}
+      {/* 2. COLOSSAL "WORK" SECTION HEADER WITH DROPLETS */}
       <div className="flex flex-col items-center justify-center text-center px-4 mb-20 relative">
         {/* Eyebrow */}
         <ScrollReveal direction="down">

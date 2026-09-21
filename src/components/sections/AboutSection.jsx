@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Laptop } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { personalInfo } from '../data/portfolioData';
-import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
+import { personalInfo } from '@/data/portfolioData';
+import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 
 const AboutSection = () => {
   const [hoveredCard, setHoveredCard] = useState(false);
@@ -20,7 +20,7 @@ const AboutSection = () => {
     <section id="about" className="relative py-24 sm:py-32 bg-[#080808] text-[#f4efea] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
         
-        {/* SECTION TITLE WITH ANIMATED GOLD ACCENT LINE (Screenshot 4) */}
+        {/* SECTION TITLE WITH ANIMATED GOLD ACCENT LINE */}
         <div className="text-center mb-16 sm:mb-20">
           <ScrollReveal direction="down">
             <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-[#f4efea]">
@@ -40,7 +40,7 @@ const AboutSection = () => {
         {/* MAIN CONTENT GRID: Portrait Card + Editorial Statement */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* LEFT: Portrait Card with Floating Icon Stack (Screenshot 4) */}
+          {/* LEFT: Portrait Card with Floating Icon Stack */}
           <div className="lg:col-span-5 flex justify-center">
             <ScrollReveal direction="zoom" delay={0.15} className="w-full max-w-sm">
               <div
@@ -74,7 +74,7 @@ const AboutSection = () => {
                   </div>
                 </div>
 
-                {/* Floating Mini Icon Stack on Right side of Card (Screenshot 4) */}
+                {/* Floating Mini Icon Stack on Right side of Card */}
                 <div className="absolute right-4 bottom-8 flex flex-col gap-3 z-20">
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: 5 }}
@@ -107,7 +107,7 @@ const AboutSection = () => {
             </ScrollReveal>
           </div>
 
-          {/* RIGHT: Editorial Statement & Information (Screenshot 4) */}
+          {/* RIGHT: Editorial Statement & Information */}
           <div className="lg:col-span-7 flex flex-col justify-center text-left">
             
             {/* Eyebrow */}
@@ -137,7 +137,7 @@ const AboutSection = () => {
               </div>
             </ScrollReveal>
 
-            {/* Metadata Grid with Staggered Entrance (Screenshot 4) */}
+            {/* Metadata Grid with Staggered Entrance */}
             <ScrollStagger className="grid grid-cols-2 sm:grid-cols-3 gap-y-6 gap-x-8 pt-8 border-t border-[#1f1f1f]">
               {metadata.map((item, idx) => (
                 <ScrollStaggerItem key={idx} direction="up">
