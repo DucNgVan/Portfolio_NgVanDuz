@@ -9,11 +9,11 @@ const AboutSection = () => {
 
   const metadata = [
     { label: "BASED", value: "VIETNAM" },
-    { label: "FOCUS", value: "WEB / MOTION / FULLSTACK" },
-    { label: "BUILDING WEBSITES", value: "3+ YEARS" },
-    { label: "MINDSET", value: "ALWAYS LEARNING" },
-    { label: "PROJECTS DONE", value: "15+ REPOS" },
-    { label: "EDUCATION", value: "UNIVERSITY (GPA 3.75)" },
+    { label: "DEGREE", value: "BSC (HONS) SOFTWARE ENG" },
+    { label: "ALMA MATER", value: "UNIVERSITY OF GREENWICH" },
+    { label: "GRADED CREDITS", value: "240 CREDITS" },
+    { label: "TOP SCORES", value: "96/100 (MATHS & ANALYTICS)" },
+    { label: "CORE STACK", value: "REACT / VUE / NODE / JAVA" },
   ];
 
   return (
@@ -98,7 +98,7 @@ const AboutSection = () => {
 
                 {/* Status footer inside card */}
                 <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-[#888888]">
-                  <span>SOFTWARE ENGINEERING</span>
+                  <span>GREENWICH GRADUATE</span>
                   <span className="text-[#d8c8a8] flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> AVAILABLE
                   </span>
@@ -129,10 +129,10 @@ const AboutSection = () => {
             <ScrollReveal direction="up" delay={0.3}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#a0a0a0] leading-relaxed mb-12">
                 <p>
-                  I'm <strong className="text-white font-medium">{personalInfo.name}</strong> — a software engineer and creative coder passionate about crafting modern web experiences, turning ideas, fluid interactions, and expressive motion into memorable digital products.
+                  I'm <strong className="text-white font-medium">{personalInfo.name}</strong> — a fresh Software Engineering graduate from the <strong className="text-[#d8c8a8] font-medium">University of Greenwich</strong> with 240 graded credits and a First-Class Honours track. I have a genuine passion for turning architectural designs and algorithms into clean, robust web and mobile applications.
                 </p>
                 <p>
-                  I care deeply about the nuances: typographic rhythm, latency, the breathing room of micro-interactions, and that seamless tactile fluidity that brings digital software to life.
+                  Backed by top academic distinctions (96/100 in Mathematics for CS, 96/100 in Web Analytics, 95/100 in Computer Systems) and hands-on school IT internship experience, I focus on building maintainable full-stack software with modern tools like React, Vue.js, Node.js, and Docker microservices.
                 </p>
               </div>
             </ScrollReveal>

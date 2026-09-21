@@ -12,10 +12,10 @@ const iconMap = {
 
 const AchievementsSection = () => {
   const stats = [
-    { label: "Cumulative University GPA", value: "3.75", max: "/4.0", desc: "High Distinction Honors", icon: GraduationCap },
-    { label: "Awards & Hackathons", value: "03+", max: " wins", desc: "University & Corporate Level", icon: Trophy },
-    { label: "Excellence Scholarships", value: "05", max: " sems", desc: "Top 3% of CS Faculty", icon: Award },
-    { label: "Community & Mentoring", value: "200+", max: " devs", desc: "Mentored Freshmen Students", icon: Star },
+    { label: "Graded Credits", value: "240", max: " pts", desc: "BSc (Hons) Greenwich", icon: GraduationCap },
+    { label: "Top Module Marks", value: "96%", max: " /100", desc: "MATH1179 & COMP1810", icon: Award },
+    { label: "First-Class Modules", value: "11+", max: " subjs", desc: "Scored 70+ / 100", icon: Trophy },
+    { label: "School IT Internship", value: "01", max: " role", desc: "Hands-on Industry Prep", icon: Flame },
   ];
 
   return (
@@ -29,7 +29,7 @@ const AchievementsSection = () => {
               HONORS & RECOGNITION
             </span>
             <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-[#0D0D0D]">
-              ACADEMIC HONORS & NOTABLE MILESTONES
+              ACADEMIC HONORS & GREENWICH MILESTONES
             </h2>
             <div className="w-24 h-[2px] bg-[#0D0D0D] mx-auto mt-3"></div>
           </ScrollReveal>
