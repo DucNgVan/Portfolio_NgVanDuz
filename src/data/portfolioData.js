@@ -9,6 +9,7 @@ export const personalInfo = {
   phone: "078.855.1709",
   github: "https://github.com/DucNgVan",
   linkedin: "https://linkedin.com/in/ducngvan",
+  avatar: "/avatar.jpg",
   bio: "Software Engineering student at the University of Greenwich with a solid foundation in computer science and full-stack development (Web & Application). Seeking a Full-Stack / Software Engineer Internship to contribute to production software, collaborate in high-performing teams, and build long-term value.",
   stats: [
     { label: "Degree Standing", value: "BSc (Hons)", suffix: " Greenwich" },

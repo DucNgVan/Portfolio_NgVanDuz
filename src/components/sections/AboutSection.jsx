@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Laptop } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/portfolioData';
+import profileImg from '@/assets/images/profile.jpg';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
@@ -33,10 +34,10 @@ const AboutSection = () => {
         </div>
 
         {/* MAIN CONTENT GRID: Portrait Card + Editorial Statement */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* LEFT: Portrait Card with Floating Icon Stack */}
-          <div className="lg:col-span-5 flex justify-center">
+          <div className="lg:col-span-5 flex justify-center lg:justify-start">
             <ScrollReveal direction="zoom" delay={0.15} className="w-full max-w-sm">
               <div
                 onMouseEnter={() => setHoveredCard(true)}
@@ -55,37 +56,34 @@ const AboutSection = () => {
 
                 {/* Portrait Graphic */}
                 <div className="relative my-auto flex items-center justify-center">
-                  <div className="w-52 h-52 sm:w-60 sm:h-60 rounded-full overflow-hidden bg-[#181818] border border-[#2c2c2c] flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    <svg
-                      className="w-40 h-40 text-[#d8c8a8] opacity-80"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                    >
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                      <circle cx="12" cy="7" r="4" />
-                    </svg>
+                  <div className="w-52 h-52 sm:w-60 sm:h-60 rounded-full overflow-hidden bg-[#181818] border-2 border-[#2c2c2c] group-hover:border-[#d8c8a8]/60 flex items-center justify-center shadow-2xl transition-all duration-500 relative">
+                    <img
+                      src={profileImg}
+                      alt={personalInfo.name}
+                      className="w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-500"
+                      loading="eager"
+                    />
+                    <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 pointer-events-none" />
                   </div>
                 </div>
 
-                {/* Floating Mini Icon Stack on Right side of Card */}
-                <div className="absolute right-4 bottom-8 flex flex-col gap-3 z-20">
+                {/* Floating Mini Icon Stack - Positioned vertically centered on right side, away from all text */}
+                <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-20 pointer-events-none">
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: 5 }}
-                    className="w-8 h-8 rounded-lg bg-[#1a1a1a] border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1a1a1a]/90 backdrop-blur border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow pointer-events-auto"
                   >
                     &lt;/&gt;
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: -5 }}
-                    className="w-8 h-8 rounded-lg bg-[#1a1a1a] border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1a1a1a]/90 backdrop-blur border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow pointer-events-auto"
                   >
                     %
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: 5 }}
-                    className="w-8 h-8 rounded-lg bg-[#1a1a1a] border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1a1a1a]/90 backdrop-blur border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow pointer-events-auto"
                   >
                     <Laptop className="w-3.5 h-3.5" />
                   </motion.div>
@@ -103,7 +101,7 @@ const AboutSection = () => {
           </div>
 
           {/* RIGHT: Editorial Statement & Information */}
-          <div className="lg:col-span-7 flex flex-col justify-center text-left">
+          <div className="lg:col-span-7 flex flex-col justify-start text-left">
             
             {/* Eyebrow */}
             <ScrollReveal direction="left" delay={0.1}>
@@ -122,7 +120,7 @@ const AboutSection = () => {
 
             {/* Two Columns of Editorial Bio Text */}
             <ScrollReveal direction="up" delay={0.3}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#a0a0a0] leading-relaxed mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#a0a0a0] leading-relaxed">
                 <p>
                   {t.about.bioP1}
                 </p>
@@ -132,23 +130,34 @@ const AboutSection = () => {
               </div>
             </ScrollReveal>
 
-            {/* Metadata Grid with Staggered Entrance */}
-            <ScrollStagger className="grid grid-cols-2 sm:grid-cols-3 gap-y-6 gap-x-8 pt-8 border-t border-[#1f1f1f]">
-              {t.about.metadata.map((item, idx) => (
-                <ScrollStaggerItem key={idx} direction="up">
-                  <div className="text-[11px] font-mono tracking-widest text-[#666666] uppercase mb-1">
-                    {item.label}
-                  </div>
-                  <div className="text-sm font-bold text-[#d8c8a8] font-mono leading-snug break-words">
-                    {item.value}
-                  </div>
-                </ScrollStaggerItem>
-              ))}
-            </ScrollStagger>
-
           </div>
 
         </div>
+
+        {/* FULL WIDTH HORIZONTAL DIVIDER */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full h-px bg-[#222222] mt-16 sm:mt-20 mb-8 sm:mb-10 origin-left"
+        />
+
+        {/* FULL WIDTH METADATA SPECIFICATIONS (1-LINE PER ITEM) */}
+        <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-3 sm:gap-y-3.5">
+          {t.about.metadata.map((item, idx) => (
+            <ScrollStaggerItem key={idx} direction="up">
+              <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#1c1c1c] group hover:border-[#d8c8a8]/40 transition-colors">
+                <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#777777] uppercase shrink-0">
+                  {item.label}:
+                </span>
+                <span className="text-xs sm:text-sm font-bold text-[#d8c8a8] font-mono leading-normal">
+                  {item.value}
+                </span>
+              </div>
+            </ScrollStaggerItem>
+          ))}
+        </ScrollStagger>
 
       </div>
     </section>

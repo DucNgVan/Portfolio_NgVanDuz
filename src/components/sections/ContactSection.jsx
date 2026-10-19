@@ -7,6 +7,9 @@ import {
   Copy, 
   Check, 
   ExternalLink,
+  Loader2,
+  AlertCircle,
+  RotateCcw,
 } from 'lucide-react';
 import { Github, Linkedin } from '@/components/ui/BrandIcons';
 import { personalInfo } from '@/data/portfolioData';
@@ -18,7 +21,9 @@ const ContactSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.en;
   const [copiedField, setCopiedField] = useState(null);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionState, setSubmissionState] = useState('idle'); // 'idle' | 'success' | 'error'
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,30 +37,64 @@ const ContactSection = () => {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormSubmitted(true);
-
-    // Construct mailto link so the message is deliverable directly to Nguyen Van Duc
+  const handleMailtoFallback = () => {
     const emailSubject = encodeURIComponent(formData.subject || `Portfolio Contact from ${formData.name}`);
     const emailBody = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    const mailtoLink = `mailto:${personalInfo.email}?subject=${emailSubject}&body=${emailBody}`;
+    window.location.href = `mailto:${personalInfo.email}?subject=${emailSubject}&body=${emailBody}`;
+  };
 
-    // Open mail client after smooth UI transition
-    setTimeout(() => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmissionState('idle');
+    setErrorMessage('');
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 'c992a23f-917f-4b31-82dd-e2d83c8c47af';
+
+    if (accessKey) {
       try {
-        window.location.href = mailtoLink;
-      } catch (err) {
-        console.warn('Could not launch mail client', err);
-      }
-    }, 800);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject || `Portfolio Contact from ${formData.name}`,
+            message: formData.message,
+            from_name: `${formData.name} (via Portfolio)`,
+            replyto: formData.email,
+          }),
+        });
 
-    setTimeout(() => {
-      setFormSubmitted(false);
+        const data = await response.json();
+
+        if (data.success) {
+          setSubmissionState('success');
+          setFormData({ name: '', email: '', subject: '', message: '' });
+        } else {
+          setSubmissionState('error');
+          setErrorMessage(data.message || 'Error occurred while sending message.');
+        }
+      } catch (err) {
+        console.error('Contact submission error:', err);
+        setSubmissionState('error');
+        setErrorMessage(err.message || 'Network error occurred. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      // Fallback: If no Web3Forms access key is configured yet, launch native mail client
+      handleMailtoFallback();
+      setSubmissionState('success');
+      setIsSubmitting(false);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 4500);
+    }
   };
 
   return (
@@ -196,18 +235,45 @@ const ContactSection = () => {
                 {t.contact?.formSub || "I'll get back to you as soon as possible:"}
               </p>
 
-              {formSubmitted ? (
+              {submissionState === 'success' ? (
                 <div className="py-12 px-6 rounded-2xl bg-[#181818] border border-[#d8c8a8]/40 text-center animate-in fade-in duration-200">
                   <div className="w-12 h-12 rounded-full bg-[#d8c8a8]/20 text-[#d8c8a8] flex items-center justify-center mx-auto mb-3">
                     <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-white mb-1">{t.contact?.successHeading || 'Message sent successfully!'}</h4>
-                  <p className="text-xs sm:text-sm text-[#d8c8a8]">
+                  <h4 className="text-lg font-bold text-white mb-1">
+                    {t.contact?.successHeading || 'Message sent successfully!'}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-[#d8c8a8] mb-6">
                     {t.contact?.successSub || 'Thank you for reaching out. I will respond to your email promptly!'}
                   </p>
+                  <button
+                    onClick={() => setSubmissionState('idle')}
+                    className="px-6 py-2.5 rounded-xl bg-[#222222] hover:bg-[#2c2c2c] border border-[#333333] text-xs font-mono text-[#d8c8a8] transition-colors cursor-pointer inline-flex items-center gap-2"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>{t.contact?.sendAnother || 'Send Another Message'}</span>
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {submissionState === 'error' && (
+                    <div className="p-4 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-3">
+                      <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <div className="font-bold mb-0.5">{t.contact?.errorHeading || 'Failed to send message'}</div>
+                        <div>{errorMessage || t.contact?.errorSub}</div>
+                        <button
+                          type="button"
+                          onClick={handleMailtoFallback}
+                          className="mt-2 text-xs font-mono underline text-[#d8c8a8] hover:text-white inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          {t.contact?.fallbackMail || 'Open in Mail Client'}
+                          <ExternalLink className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
@@ -216,10 +282,11 @@ const ContactSection = () => {
                       <input
                         type="text"
                         required
+                        disabled={isSubmitting}
                         placeholder={t.contact?.namePlaceholder || 'e.g. John Doe'}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans"
+                        className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans disabled:opacity-50"
                       />
                     </div>
 
@@ -230,10 +297,11 @@ const ContactSection = () => {
                       <input
                         type="email"
                         required
+                        disabled={isSubmitting}
                         placeholder={t.contact?.emailPlaceholder || 'john@example.com'}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans"
+                        className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans disabled:opacity-50"
                       />
                     </div>
                   </div>
@@ -244,10 +312,11 @@ const ContactSection = () => {
                     </label>
                     <input
                       type="text"
+                      disabled={isSubmitting}
                       placeholder={t.contact?.subjectPlaceholder || 'Job Opportunity / Project Collaboration...'}
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans"
+                      className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans disabled:opacity-50"
                     />
                   </div>
 
@@ -257,21 +326,42 @@ const ContactSection = () => {
                     </label>
                     <textarea
                       required
+                      disabled={isSubmitting}
                       rows={4}
                       placeholder={t.contact?.messagePlaceholder || 'Write your message here...'}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans resize-none disabled:opacity-50"
                     ></textarea>
                   </div>
 
-                  <button
-                    type="submit"
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#d8c8a8] hover:bg-[#e2d5bd] text-[#0d0d0d] font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 shadow"
-                  >
-                    <Send className="w-4 h-4" />
-                    <span>{t.contact?.sendButton || 'Send Message'}</span>
-                  </button>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#d8c8a8] hover:bg-[#e2d5bd] text-[#0d0d0d] font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 shadow disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>{t.contact?.sendingButton || 'Sending Message...'}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>{t.contact?.sendButton || 'Send Message'}</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleMailtoFallback}
+                      className="text-xs font-mono text-[#777777] hover:text-[#d8c8a8] transition-colors cursor-pointer text-center sm:text-right"
+                    >
+                      {t.contact?.fallbackMail || 'Open in Mail Client'} ↗
+                    </button>
+                  </div>
                 </form>
               )}
             </div>
