@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { 
-  ArrowUpRight, 
   Code2, 
   Users, 
   Cpu, 
   Zap, 
   Kanban, 
   Globe, 
-  CheckCircle2, 
-  Layers, 
   Sparkles,
+  Layers,
   Terminal,
-  Compass
+  Server,
+  Wrench,
+  Check
 } from 'lucide-react';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 import { techSkills, softSkills as rawSoftSkills } from '@/data/portfolioData';
@@ -26,6 +26,12 @@ const iconMap = {
   Globe: Globe,
 };
 
+const domainIcons = {
+  '01': Code2,
+  '02': Server,
+  '03': Wrench,
+};
+
 const ExpertiseSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.en;
@@ -35,23 +41,20 @@ const ExpertiseSection = () => {
     {
       id: '01',
       category: 'CLIENT-SIDE',
-      iconText: '</>',
       skills: techSkills.frontend,
-      tags: ['REACT.JS', 'NEXT.JS', 'JAVASCRIPT', 'TAILWIND CSS', 'VUE.JS'],
+      tags: ['REACT.JS', 'NEXT.JS 14', 'TYPESCRIPT', 'TAILWIND CSS', 'THREE.JS / 3D'],
     },
     {
       id: '02',
       category: 'SERVER & DATABASE',
-      iconText: '⚡',
       skills: techSkills.backend,
-      tags: ['NODE.JS', 'EXPRESS', 'JAVA OOP', 'REST APIS', 'SQL / POSTGRESQL'],
+      tags: ['NODE.JS', 'EXPRESS', 'POSTGRESQL (3NF)', 'MONGODB', 'REDIS', 'JAVA'],
     },
     {
       id: '03',
       category: 'DEVOPS & WORKFLOW',
-      iconText: '✦',
       skills: techSkills.devopsAndTools,
-      tags: ['GIT & GITHUB', 'DOCKER', 'POSTMAN', 'AGILE / SCRUM'],
+      tags: ['GIT FLOW', 'DOCKER COMPOSE', 'POSTMAN', 'FIREBASE', 'AGILE / SCRUM'],
     },
   ];
 
@@ -71,14 +74,6 @@ const ExpertiseSection = () => {
     };
   });
 
-  const tickerItems = t.expertise?.ticker || [
-    'FULL-STACK WEB',
-    'TEAM COLLABORATION',
-    'AGILE & SCRUM',
-    'PROBLEM SOLVING',
-    'TECHNICAL ENGLISH',
-  ];
-
   return (
     <section
       id="expertise"
@@ -90,14 +85,14 @@ const ExpertiseSection = () => {
         <ScrollReveal direction="up">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 pb-6 border-b border-[#0D0D0D]/15">
             <div>
-              <span className="text-xs font-mono tracking-[0.25em] text-[#666666] uppercase mb-2 block">
+              <span className="text-xs font-mono tracking-[0.25em] text-[#666666] uppercase mb-2 block font-semibold">
                 {t.expertise?.eyebrow || 'SKILLS & EXPERTISE'}
               </span>
               <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-[#0D0D0D]">
-                {t.expertise?.title || 'SKILLS & COMPETENCY MATRIX'}
+                {t.expertise?.title || 'TECHNICAL COMPETENCY MATRIX'}
               </h2>
-              <p className="text-xs sm:text-sm text-[#666666] mt-2 max-w-xl">
-                {t.expertise?.subtitle || 'Tailored for a Software Engineering Graduate — combining practical full-stack fundamentals with strong teamwork, adaptability, and analytical problem-solving.'}
+              <p className="text-xs sm:text-sm text-[#444444] mt-2 max-w-2xl font-medium leading-relaxed">
+                {t.expertise?.subtitle || 'Curated for a Full-Stack Intern & Junior Software Engineer — combining practical full-stack fundamentals with clean architecture, adaptability, and analytical problem-solving.'}
               </p>
             </div>
 
@@ -107,7 +102,7 @@ const ExpertiseSection = () => {
                 onClick={() => setActiveTab('all')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                   activeTab === 'all'
-                    ? 'bg-[#0D0D0D] text-[#F4EFEA] font-bold shadow'
+                    ? 'bg-[#0D0D0D] text-[#F4EFEA] font-bold shadow-xs'
                     : 'text-[#666666] hover:text-[#0D0D0D]'
                 }`}
               >
@@ -117,7 +112,7 @@ const ExpertiseSection = () => {
                 onClick={() => setActiveTab('technical')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                   activeTab === 'technical'
-                    ? 'bg-[#0D0D0D] text-[#F4EFEA] font-bold shadow'
+                    ? 'bg-[#0D0D0D] text-[#F4EFEA] font-bold shadow-xs'
                     : 'text-[#666666] hover:text-[#0D0D0D]'
                 }`}
               >
@@ -127,7 +122,7 @@ const ExpertiseSection = () => {
                 onClick={() => setActiveTab('softskills')}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                   activeTab === 'softskills'
-                    ? 'bg-[#0D0D0D] text-[#F4EFEA] font-bold shadow'
+                    ? 'bg-[#0D0D0D] text-[#F4EFEA] font-bold shadow-xs'
                     : 'text-[#666666] hover:text-[#0D0D0D]'
                 }`}
               >
@@ -137,126 +132,68 @@ const ExpertiseSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* 1. TECHNICAL FOUNDATIONS (CHUYÊN NGÀNH TIÊU CHUẨN KỸ SƯ PHẦN MỀM) */}
+        {/* 1. TECHNICAL FOUNDATIONS (NO PERCENTAGE BARS, REPLACED BY TIERS & PRACTICAL CONTEXT) */}
         {(activeTab === 'all' || activeTab === 'technical') && (
           <div className="mb-16">
-            <div className="flex items-center gap-2 mb-6 text-xs font-mono text-[#8C6D3F] uppercase tracking-wider">
+            <div className="flex items-center gap-2 mb-6 text-xs font-mono text-[#8C6D3F] uppercase tracking-wider font-semibold">
               <Code2 className="w-4 h-4" />
-              <span>{t.expertise?.techHeading || 'Technical Foundations (Curated for Junior Software Engineer)'}</span>
+              <span>{t.expertise?.techHeading || 'Technical Foundations (Categorized by Production & Project Application)'}</span>
             </div>
 
             <ScrollStagger staggerDelay={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-              {domainCategories.map((domain) => (
-                <ScrollStaggerItem key={domain.id} direction="up" className="h-full flex">
-                  <div
-                    className="p-6 sm:p-7 rounded-2xl bg-[#FFFFFF] border border-[#E5DEC9] hover:border-[#BFA882] transition-all duration-300 flex flex-col justify-between w-full h-full group hover:-translate-y-1 shadow-sm hover:shadow-xl"
-                  >
-                    <div className="flex-1 flex flex-col">
-                      {/* Top Header */}
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-[11px] font-mono tracking-widest text-[#888888] uppercase">
-                          {domain.id} / {domain.category}
-                        </span>
-                        <div className="w-8 h-8 rounded-lg bg-[#FAF8F5] border border-[#E5DEC9] flex items-center justify-center font-mono text-xs font-bold text-[#8C6D3F] group-hover:border-[#BFA882] transition-all">
-                          {domain.iconText}
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-xl font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[3.25rem] flex items-center">
-                        {domain.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="text-xs sm:text-sm text-[#555555] leading-relaxed mb-6 flex-1">
-                        {domain.description}
-                      </p>
-
-                      {/* Skill Items with Realistic Levels */}
-                      <div className="space-y-3 mb-6">
-                        {domain.skills.map((s, idx) => (
-                          <div key={idx} className="space-y-1">
-                            <div className="flex items-center justify-between text-xs font-mono">
-                              <span className="text-[#333333] font-medium">{s.name}</span>
-                              <span className="text-[#888888]">{s.level}%</span>
-                            </div>
-                            <div className="w-full h-1.5 rounded-full bg-[#EFE9DF] overflow-hidden">
-                              <div
-                                className="h-full rounded-full bg-gradient-to-r from-[#BFA882] to-[#8C6D3F]"
-                                style={{ width: `${s.level}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Bottom Tags */}
-                    <div className="pt-4 border-t border-[#EAE3D8] flex flex-wrap gap-1.5 mt-auto">
-                      {domain.tags.map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FAF8F5] text-[#666666] border border-[#E5DEC9]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </ScrollStaggerItem>
-              ))}
-            </ScrollStagger>
-          </div>
-        )}
-
-        {/* 2. DEDICATED SOFT SKILLS SECTION (NƠI THỂ HIỆN KỸ NĂNG MỀM) */}
-        {(activeTab === 'all' || activeTab === 'softskills') && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2 text-xs font-mono text-[#8C6D3F] uppercase tracking-wider">
-                <Users className="w-4 h-4" />
-                <span>{t.expertise?.softHeading || 'Professional Soft Skills & Engineering Mindset'}</span>
-              </div>
-              <span className="text-[11px] font-mono text-[#888888] uppercase hidden sm:inline">
-                {t.expertise?.softCount || '[ 5 Core Competencies ]'}
-              </span>
-            </div>
-
-            <ScrollStagger staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-              {softSkillsList.map((item) => {
-                const IconComponent = iconMap[item.icon] || Sparkles;
+              {domainCategories.map((domain) => {
+                const DomainIcon = domainIcons[domain.id] || Layers;
 
                 return (
-                  <ScrollStaggerItem key={item.id} direction="up" className="h-full flex">
-                    <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E5DEC9] hover:border-[#BFA882] transition-all duration-300 flex flex-col justify-between w-full h-full group hover:-translate-y-1 shadow-sm hover:shadow-xl">
+                  <ScrollStaggerItem key={domain.id} direction="up" className="h-full flex">
+                    <div
+                      className="p-6 sm:p-7 rounded-2xl bg-[#FFFFFF] border border-[#E5DEC9] hover:border-[#8C6D3F] transition-all duration-300 flex flex-col justify-between w-full h-full group hover:-translate-y-1 shadow-sm hover:shadow-xl"
+                    >
                       <div className="flex-1 flex flex-col">
-                        {/* Header: Icon & Badge */}
+                        {/* Top Header */}
                         <div className="flex items-center justify-between mb-4">
-                          <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#E5DEC9] flex items-center justify-center text-[#8C6D3F] group-hover:scale-105 group-hover:border-[#BFA882] transition-all">
-                            <IconComponent className="w-5 h-5" />
-                          </div>
-                          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E5DEC9] text-[#8C6D3F] font-medium">
-                            {item.badge}
+                          <span className="text-[11px] font-mono tracking-widest text-[#777777] uppercase font-semibold">
+                            {domain.id} / {domain.category}
                           </span>
+                          <div className="w-9 h-9 rounded-xl bg-[#FAF8F5] border border-[#E5DEC9] flex items-center justify-center text-[#8C6D3F] group-hover:border-[#8C6D3F] group-hover:scale-105 transition-all">
+                            <DomainIcon className="w-4 h-4" />
+                          </div>
                         </div>
 
-                        {/* Title */}
-                        <h4 className="text-lg font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[3.25rem] flex items-center">
-                          {item.title}
-                        </h4>
+                        {/* Domain Title */}
+                        <h3 className="text-xl font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[3rem] flex items-center">
+                          {domain.title}
+                        </h3>
 
                         {/* Description */}
-                        <p className="text-xs sm:text-sm text-[#555555] leading-relaxed mb-6 font-sans flex-1">
-                          {item.description}
+                        <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-6 font-medium">
+                          {domain.description}
                         </p>
+
+                        {/* Technology items with practical tier badge & project context (No fake percentages!) */}
+                        <div className="space-y-3.5 mb-6">
+                          {domain.skills.map((s, idx) => (
+                            <div key={idx} className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#EDE5DC] hover:border-[#8C6D3F]/40 transition-colors">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-xs font-mono font-bold text-[#111111]">{s.name}</span>
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#E5DEC9] text-[#8C6D3F] font-semibold">
+                                  {s.tier || s.highlight}
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-[#555555] font-sans leading-snug">
+                                {s.experience}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
 
-                      {/* Tag Chips */}
+                      {/* Bottom Key Tags */}
                       <div className="pt-4 border-t border-[#EAE3D8] flex flex-wrap gap-1.5 mt-auto">
-                        {item.tags?.map((tag, tagIdx) => (
+                        {domain.tags.map((tag, idx) => (
                           <span
-                            key={tagIdx}
-                            className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FAF8F5] text-[#666666] border border-[#E5DEC9]"
+                            key={idx}
+                            className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#444444] border border-[#E5DEC9] font-medium"
                           >
                             {tag}
                           </span>
@@ -270,17 +207,66 @@ const ExpertiseSection = () => {
           </div>
         )}
 
-        {/* BOTTOM TICKER */}
-        <ScrollReveal direction="fade" delay={0.2}>
-          <div className="mt-16 pt-6 border-t border-[#0D0D0D]/15 flex flex-wrap items-center justify-center sm:justify-between gap-4 text-xs font-mono tracking-widest text-[#666666] uppercase">
-            {tickerItems.map((item, idx) => (
-              <React.Fragment key={idx}>
-                <span>{item}</span>
-                {idx < tickerItems.length - 1 && <span className="text-[#BFA882]">✦</span>}
-              </React.Fragment>
-            ))}
+        {/* 2. DEDICATED SOFT SKILLS SECTION (WITHOUT ARBITRARY 1-100 NUMBER SCORES) */}
+        {(activeTab === 'all' || activeTab === 'softskills') && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#8C6D3F] uppercase tracking-wider font-semibold">
+                <Users className="w-4 h-4" />
+                <span>{t.expertise?.softHeading || 'Professional Soft Skills & Engineering Mindset'}</span>
+              </div>
+              <span className="text-[11px] font-mono text-[#666666] uppercase hidden sm:inline font-medium">
+                {t.expertise?.softCount || '[ 5 Core Competencies ]'}
+              </span>
+            </div>
+
+            <ScrollStagger staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+              {softSkillsList.map((item) => {
+                const IconComponent = iconMap[item.icon] || Sparkles;
+
+                return (
+                  <ScrollStaggerItem key={item.id} direction="up" className="h-full flex">
+                    <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E5DEC9] hover:border-[#8C6D3F] transition-all duration-300 flex flex-col justify-between w-full h-full group hover:-translate-y-1 shadow-sm hover:shadow-xl">
+                      <div className="flex-1 flex flex-col">
+                        {/* Header: Icon & Badge */}
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#E5DEC9] flex items-center justify-center text-[#8C6D3F] group-hover:scale-105 group-hover:border-[#8C6D3F] transition-all">
+                            <IconComponent className="w-5 h-5" />
+                          </div>
+                          <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E5DEC9] text-[#8C6D3F] font-semibold">
+                            {item.badge}
+                          </span>
+                        </div>
+
+                        {/* Title */}
+                        <h4 className="text-lg font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[3rem] flex items-center">
+                          {item.title}
+                        </h4>
+
+                        {/* Description */}
+                        <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-6 font-sans flex-1 font-medium">
+                          {item.description}
+                        </p>
+                      </div>
+
+                      {/* Tag Chips */}
+                      <div className="pt-4 border-t border-[#EAE3D8] flex flex-wrap gap-1.5 mt-auto">
+                        {item.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#555555] border border-[#E5DEC9]"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </ScrollStaggerItem>
+                );
+              })}
+            </ScrollStagger>
           </div>
-        </ScrollReveal>
+        )}
 
       </div>
     </section>

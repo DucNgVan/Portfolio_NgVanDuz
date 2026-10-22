@@ -1,48 +1,122 @@
 export const personalInfo = {
   name: "Nguyen Van Duc",
   role: "Full-Stack Software Engineering Intern",
+  headline: "Software Engineering Student · Full-Stack Developer",
   degree: "BSc (Hons) in Software Engineering",
-  university: "University of Greenwich",
-  status: "Open to Full-Stack & Software Engineering Internship Opportunities",
+  university: "University of Greenwich (Vietnam Campus)",
+  status: "Open to Full-Stack / Software Engineering Internship Opportunities",
   location: "Da Nang, Viet Nam (Hybrid / Remote Ready)",
   email: "ducnv179.wk@gmail.com",
   phone: "078.855.1709",
   github: "https://github.com/DucNgVan",
   linkedin: "https://linkedin.com/in/ducngvan",
+  resumeUrl: "/NguyenVanDuc_CV.pdf",
   avatar: "/avatar.jpg",
-  bio: "Software Engineering student at the University of Greenwich with a solid foundation in computer science and full-stack development (Web & Application). Seeking a Full-Stack / Software Engineer Internship to contribute to production software, collaborate in high-performing teams, and build long-term value.",
+  bio: "Final-year Software Engineering student at the University of Greenwich with a strong foundation in modern web and application development. Experienced in engineering full-stack platforms — ranging from interactive 3D web applications with Next.js and Three.js to modular backend architectures featuring PostgreSQL, Redis, and Docker. Seeking a Full-Stack / Software Engineer Internship to deliver reliable code, contribute to production products, and grow with an engineering team.",
   stats: [
     { label: "Degree Standing", value: "BSc (Hons)", suffix: " Greenwich" },
-    { label: "University Honor", value: "Top 3", suffix: " Student 2024" },
-    { label: "Completed Projects", value: "10+", suffix: " repos" },
-    { label: "Major Awards", value: "4", suffix: " honors" }
+    { label: "Academic Standing", value: "Top 3", suffix: " Student 2024" },
+    { label: "Featured Projects", value: "04", suffix: " Key Repos" },
+    { label: "Major Honors", value: "04", suffix: " Awards" }
   ],
   terminalCommands: [
-    { cmd: "whoami", output: "Full-Stack Software Engineering Intern (Greenwich Student)" },
+    { cmd: "whoami", output: "Nguyen Van Duc · Full-Stack Software Engineering Intern" },
     { cmd: "cat education.txt", output: "BSc (Hons) Software Engineering · University of Greenwich" },
-    { cmd: "cat honors.txt", output: "Top 3 Student Greenwich 2024 · 2nd Prize Impact Innovation 199 Hospital · Best Club 2024 · LG Dream Code Finalist" },
-    { cmd: "git status", output: "On branch main. Ready for Full-Stack Internship!" }
+    { cmd: "cat honors.txt", output: "Top 3 Student Greenwich 2024 · 2nd Prize Impact Innovation 199 Hospital · LG Dream Code Finalist · Best Club President 2024" },
+    { cmd: "git status", output: "On branch main. Ready for Full-Stack Internship in Da Nang & Remote!" }
   ]
 };
 
 export const techSkills = {
   frontend: [
-    { name: "React.js & Next.js", level: 82, experience: "Capstone & Team Projects", color: "from-cyan-500 to-blue-500", highlight: "Core Frontend" },
-    { name: "JavaScript (ES6+) / TypeScript", level: 80, experience: "Full-Stack Development", color: "from-yellow-400 to-amber-500", highlight: "Languages" },
-    { name: "HTML5 / CSS3 / Tailwind CSS", level: 85, experience: "Responsive Web & UI Design", color: "from-teal-400 to-cyan-500", highlight: "Styling & UI" },
-    { name: "Vue.js", level: 78, experience: "Coursework Web Apps", color: "from-emerald-400 to-teal-500", highlight: "Frontend Framework" },
+    { 
+      name: "React.js & Next.js 14", 
+      tier: "Core / Production", 
+      experience: "App Router, SSR/CSR, Hooks & State Management in NÉT and Nomadix", 
+      highlight: "Core Frontend" 
+    },
+    { 
+      name: "TypeScript & Modern JavaScript (ES6+)", 
+      tier: "Core / Production", 
+      experience: "Type-safe interfaces, async patterns, and clean modular codebases", 
+      highlight: "Languages" 
+    },
+    { 
+      name: "Tailwind CSS & Responsive UI", 
+      tier: "Core / Production", 
+      experience: "Component-driven design, responsive layouts, and accessibility standards", 
+      highlight: "Styling & UI" 
+    },
+    { 
+      name: "Three.js / 3D Web Graphics", 
+      tier: "Applied Project", 
+      experience: "Interactive 360° product visualizer and dynamic material rendering (NÉT)", 
+      highlight: "Creative Dev" 
+    },
+    { 
+      name: "Vue.js 3", 
+      tier: "Applied Project", 
+      experience: "Reactivity system, Single File Components in IT Helpdesk Library", 
+      highlight: "Frontend Framework" 
+    },
   ],
   backend: [
-    { name: "Node.js & Express", level: 80, experience: "RESTful Backend APIs", color: "from-emerald-500 to-green-600", highlight: "Server Runtime" },
-    { name: "Java & OOP Principles", level: 78, experience: "Academic & Android", color: "from-blue-600 to-indigo-700", highlight: "Core CS" },
-    { name: "RESTful APIs & Microservices Basics", level: 78, experience: "Service Integration", color: "from-pink-500 to-rose-600", highlight: "Architecture" },
-    { name: "SQL & Databases (PostgreSQL / SQLite)", level: 75, experience: "Data Modeling & Queries", color: "from-yellow-500 to-emerald-500", highlight: "Databases" },
+    { 
+      name: "Node.js & Express", 
+      tier: "Core / Production", 
+      experience: "Modular RESTful APIs, middleware architecture, validation and error handling", 
+      highlight: "Server Runtime" 
+    },
+    { 
+      name: "PostgreSQL & Relational SQL", 
+      tier: "Core / Production", 
+      experience: "28-table 3NF relational schema, Knex migrations, indexes & query tuning", 
+      highlight: "Relational DB" 
+    },
+    { 
+      name: "MongoDB & Mongoose", 
+      tier: "Applied Project", 
+      experience: "Document data modeling, schema indexing & aggregation pipelines (Helpdesk)", 
+      highlight: "NoSQL DB" 
+    },
+    { 
+      name: "Redis Caching & Session Store", 
+      tier: "Applied Project", 
+      experience: "In-memory query caching, token storage and rate-limiting patterns", 
+      highlight: "In-Memory Cache" 
+    },
+    { 
+      name: "Java & Android SDK", 
+      tier: "Applied Project", 
+      experience: "OOP principles, Activities, Fragments, and Firebase sync (M-Hike App)", 
+      highlight: "Mobile Dev" 
+    },
   ],
   devopsAndTools: [
-    { name: "Git & GitHub Version Control", level: 85, experience: "Git Flow & Pull Requests", color: "from-orange-600 to-red-500", highlight: "VCS & Git Flow" },
-    { name: "Docker (Basics & Containers)", level: 72, experience: "Local Containerization", color: "from-violet-500 to-purple-600", highlight: "DevOps Basics" },
-    { name: "Android Studio & Mobile Dev", level: 75, experience: "Coursework Projects", color: "from-blue-500 to-cyan-600", highlight: "Mobile Dev" },
-    { name: "Postman & API Testing", level: 80, experience: "API Validation & Debugging", color: "from-amber-500 to-orange-500", highlight: "Testing" }
+    { 
+      name: "Git & GitHub Version Control", 
+      tier: "Core / Production", 
+      experience: "Git Flow, structured branch strategies, pull request reviews and clean commits", 
+      highlight: "VCS & Git Flow" 
+    },
+    { 
+      name: "Docker & Docker Compose", 
+      tier: "Applied Project", 
+      experience: "Multi-container local environments (Node API + PostgreSQL + Redis)", 
+      highlight: "DevOps & Containers" 
+    },
+    { 
+      name: "Postman & HTTP Testing", 
+      tier: "Core / Production", 
+      experience: "API contract testing, automated test collections and environment variables", 
+      highlight: "API Testing" 
+    },
+    { 
+      name: "Firebase (Auth & Cloud Firestore)", 
+      tier: "Applied Project", 
+      experience: "Real-time snapshot listeners, NoSQL rules, and authentication flows", 
+      highlight: "Cloud & BaaS" 
+    }
   ]
 };
 
@@ -51,45 +125,40 @@ export const softSkills = [
     id: "teamwork",
     title: "Team Collaboration & Peer Code Review",
     badge: "Agile Team Player",
-    score: 92,
-    description: "Experienced in collaborating across university hackathons and group engineering projects using Git pull requests, code reviews, constructive feedback, and structured task division.",
-    tags: ["Git Flow", "Teamwork", "Peer Review", "Active Listening"],
+    description: "Experienced in collaborating across university hackathons and group engineering projects using Git pull requests, constructive code reviews, structured task breakdowns, and active communication.",
+    tags: ["Git Flow", "Teamwork", "Peer Review", "Active Communication"],
     icon: "Users"
   },
   {
     id: "analytical-problem-solving",
     title: "Analytical Thinking & Problem Solving",
     badge: "Core Engineering Mindset",
-    score: 90,
-    description: "Ability to break down complex architectural requirements into actionable, clean, and testable modules. Strong foundation in logic, data structures, and algorithmic debugging.",
-    tags: ["Deductive Logic", "Root Cause Analysis", "Debugging", "Clean Code"],
+    description: "Ability to dissect complex application requirements into decoupled, testable modules. Strong foundation in data structures, algorithms, and systematic root-cause debugging.",
+    tags: ["Root Cause Analysis", "Modular Design", "Debugging", "Clean Code"],
     icon: "Cpu"
   },
   {
     id: "adaptability",
     title: "Fast Learner & Growth Mindset",
     badge: "Continuous Evolution",
-    score: 94,
-    description: "Quick to pick up new frameworks, libraries, and design patterns. Enthusiastic about staying current with modern web standards and engineering best practices.",
-    tags: ["Self-starter", "Fast Learner", "Graduate Mindset", "Tech Curiosity"],
+    description: "Rapidly grasps new frameworks, design patterns, and SDKs through hands-on implementation. Passionate about modern web standards, software architecture, and iterative improvements.",
+    tags: ["Quick Learner", "Continuous Growth", "Curiosity", "Self-starter"],
     icon: "Zap"
   },
   {
     id: "agile-project-mgmt",
     title: "Agile & Scrum Workflow",
     badge: "Iterative Delivery",
-    score: 85,
-    description: "Practiced sprint planning, backlog grooming, daily standups, and retrospective workflows in capstone and team competition environments.",
+    description: "Practiced sprint planning, backlog grooming, daily standups, and retrospective workflows during capstone development and hackathon prototyping sprints.",
     tags: ["Agile/Scrum", "Sprint Planning", "Task Ownership", "Jira/Trello"],
     icon: "Kanban"
   },
   {
     id: "academic-english",
     title: "Technical English & Documentation",
-    badge: "International Standard",
-    score: 88,
-    description: "Comfortable reading and writing software documentation, architecture blueprints, API specifications (Swagger/Postman), and communicating in international team settings.",
-    tags: ["Technical Specs", "English Communication", "Documentation"],
+    badge: "British Standard",
+    description: "Comfortable writing clear software documentation, architecture blueprints, API specifications (Postman/OpenAPI), and collaborating in international English-medium environments.",
+    tags: ["Technical Specs", "English Communication", "Architecture Docs"],
     icon: "Globe"
   }
 ];
@@ -97,68 +166,86 @@ export const softSkills = [
 export const githubProjects = [
   {
     id: 1,
-    title: "Nomadix — All-in-One Travel & Community App",
-    category: "Final Year Capstone Project",
-    description: "Nomadix is a full-featured travel platform developed as the Final Year Project (FYP) at the University of Greenwich. It allows users to compare flights and hotels, build custom personalized itineraries, and exchange real-world travel stories with an active community.",
-    tech: ["React.js", "Node.js", "Express", "Tailwind CSS", "MongoDB", "REST APIs"],
-    stars: 5,
-    forks: 2,
-    githubUrl: "https://github.com/DucNgVan/Nomadix_TravelApplication_FYP_UniversityOfGreenwich_NguyenVanDuc",
-    liveDemo: "https://github.com/DucNgVan/Nomadix_TravelApplication_FYP_UniversityOfGreenwich_NguyenVanDuc",
-    highlights: [
-      "Final Year Project synthesizing Software Engineering study at Greenwich",
-      "Interactive itinerary planning engine allowing drag-and-drop schedule creation",
-      "Integrated multi-criteria flight and hotel comparison service with responsive UI",
-      "Social travel feed with user reviews, image uploads, and destination bookmarks"
-    ]
-  },
-  {
-    id: 2,
     title: "NÉT — Sustainable Ocean Net & 3D Interactive Craft",
     category: "Full-Stack Web & 3D Interactive Platform",
+    tagline: "Eco-commerce platform transforming marine ghost nets into bespoke products with real-time 3D preview & AI studio.",
     description: "Innovative sustainable e-commerce and interactive 3D craft platform created for VecomNet's Tsunami Team. Transforms discarded ocean ghost nets into bespoke bags & charms, featuring real-time 3D model customization, AI story studio, and a transparent digital eco-passport.",
-    tech: ["Next.js", "React", "Three.js / 3D", "Tailwind CSS", "REST APIs", "Vercel"],
-    stars: 5,
-    forks: 2,
+    tech: ["Next.js 14", "TypeScript", "Three.js / 3D", "Tailwind CSS", "AI Studio", "Firebase", "Vercel"],
+    statusBadge: "Live Production Demo",
+    statusType: "live",
     githubUrl: "https://github.com/DucNgVan/VecomNet-s_Tsunami_Team",
     liveDemo: "https://vecom-net-s-tsunami-team.vercel.app/",
+    problem: "Marine ghost nets pollute ocean ecosystems, while sustainable products often lack interactive, engaging digital experiences for modern consumers.",
+    solution: "Built a responsive Next.js 14 web platform combining Three.js 3D model customizers, an AI charm studio pipeline, and a transparent digital eco-passport verifying net recovery coordinates.",
+    myRole: "Full-Stack Developer (3D visualizer integration, responsive design, AI studio connection & Vercel deployment)",
     highlights: [
-      "Engineered interactive 3D product visualizer allowing 360-degree rotation and real-time custom color preview",
-      "Built an AI-assisted custom bag designer studio with dynamic configuration options",
-      "Integrated a verifiable digital eco-passport displaying marine net recovery metrics and GPS batch identification",
+      "Engineered interactive 3D product visualizer allowing 360-degree rotation and real-time custom color rendering via Three.js",
+      "Integrated AI-assisted custom bag designer studio with dynamic configuration options",
+      "Built a verifiable digital eco-passport showing marine net recovery metrics and GPS batch identification",
       "Optimized responsive UI/UX and smooth animations deployed seamlessly on Vercel"
     ]
   },
   {
-    id: 3,
-    title: "Web2 Dynamic Web Application",
-    category: "Full-Stack Single Page App",
-    description: "Modern component-based dynamic single page web application engineered for Web Programming coursework at the University of Greenwich, leveraging reactive state management and seamless RESTful data binding.",
-    tech: ["Vue.js", "JavaScript (ES6+)", "HTML5", "CSS3", "REST APIs"],
-    stars: 4,
-    forks: 1,
-    githubUrl: "https://github.com/DucNgVan/Web2_Programming_Gre",
-    liveDemo: "https://github.com/DucNgVan/Web2_Programming_Gre",
+    id: 2,
+    title: "Nomadix — Travel Platform & Scalable Backend Architecture",
+    category: "Final Year Capstone (FYP) · Backend Architecture",
+    tagline: "Scalable backend architecture with 28 relational tables, Redis caching, JWT auth & Docker containerization.",
+    description: "Full-featured travel platform backend engineered as the Final Year Project (FYP) at the University of Greenwich. Features a modular RESTful API architecture handling itinerary planning, flight/hotel comparison services, user communities, and secure session management.",
+    tech: ["Node.js", "Express", "PostgreSQL (3NF)", "Redis", "Docker Compose", "JWT Auth", "RESTful APIs"],
+    statusBadge: "Backend Complete · Mobile in Progress",
+    statusType: "repo",
+    githubUrl: "https://github.com/DucNgVan/FinalYearProject_TravelingApplication_Mobileapp_Greenwich",
+    liveDemo: null,
+    problem: "Travelers struggle with fragmented tools for itineraries, bookings, and community reviews, demanding a unified and resilient data service.",
+    solution: "Architected a modular Node.js/Express REST backend backed by a 28-table 3NF PostgreSQL database, Redis caching layer, and Dockerized multi-service setup.",
+    myRole: "Backend & Data Architect (Database 3NF modeling, migration scripts, JWT refresh token rotation, Redis caching & integration tests)",
     highlights: [
-      "Reactive single-page architecture built with Vue 3 component tree and reactive stores",
-      "Strict compliance with User Interface Design principles and accessibility standards",
-      "Robust data synchronization and interactive user workflows"
+      "Designed a normalized 28-table 3NF PostgreSQL schema with Knex migrations and relational indexing",
+      "Implemented secure JWT authentication with refresh token rotation and role-based access control",
+      "Integrated Redis in-memory caching layer to optimize high-frequency itinerary and lookup queries",
+      "Orchestrated 3-service local environment with Docker Compose and automated API integration test suites"
+    ]
+  },
+  {
+    id: 3,
+    title: "IT Helpdesk Response Library (MEVN Stack)",
+    category: "Full-Stack Enterprise Support Platform",
+    tagline: "Enterprise ticket resolution platform with 8 RESTful endpoints, MongoDB schema, and Vue 3 reactive dashboard.",
+    description: "Component-based dynamic web application engineered for enterprise IT support workflows. Enables support technicians to manage incident tickets, query an organized solution response knowledge base, and track resolution metrics.",
+    tech: ["Vue.js 3", "Node.js", "Express", "MongoDB", "Mongoose", "RESTful APIs"],
+    statusBadge: "REST APIs & Single Page App",
+    statusType: "repo",
+    githubUrl: "https://github.com/DucNgVan/Web2_Programming_Gre",
+    liveDemo: null,
+    problem: "IT helpdesk teams face repetitive incident inquiries without an organized, searchable response repository and structured resolution workflows.",
+    solution: "Developed a reactive single-page dashboard with Vue 3 communicating with an Express/MongoDB backend providing 8 RESTful endpoints for ticket and response management.",
+    myRole: "Full-Stack Developer (Vue 3 frontend state management, Express API routes, MongoDB schema & automated HTTP tests)",
+    highlights: [
+      "Engineered 8 RESTful API endpoints for ticket lifecycle, category indexing, and response library searches",
+      "Designed MongoDB data schema with Mongoose models, validation, and query filtering",
+      "Built reactive Vue 3 dashboard adhering to accessibility guidelines and responsive UI patterns",
+      "Created automated API test collections (api_test.http) for rapid endpoint verification"
     ]
   },
   {
     id: 4,
-    title: "Native Android Hiking & Trail Tracker App",
-    category: "Native Mobile Application",
-    description: "Native Android application engineered in Java for mobile application development coursework, helping outdoor enthusiasts plan, record, and log hiking trails with offline SQLite persistence.",
-    tech: ["Java", "Android Studio", "SQLite Database", "Mobile UI/UX", "XML Layouts"],
-    stars: 3,
-    forks: 1,
+    title: "M-Hike — Trail Tracker & Outdoor Journal",
+    category: "Native Android Mobile Application",
+    tagline: "Native Android mobile app with real-time Cloud Firestore sync, Firebase Auth, and offline trail observation logging.",
+    description: "Native Android mobile application engineered in Java for outdoor enthusiasts to plan hiking trails, record GPS waypoints, log environmental observations, and synchronize expedition journals in real time.",
+    tech: ["Java", "Android SDK", "Cloud Firestore", "Firebase Auth", "Real-time Sync", "Material Design"],
+    statusBadge: "Native Mobile App",
+    statusType: "repo",
     githubUrl: "https://github.com/DucNgVan/HikingAndroiApplication_COMP1785_GRE",
-    liveDemo: "https://github.com/DucNgVan/HikingAndroiApplication_COMP1785_GRE",
+    liveDemo: null,
+    problem: "Hikers and field researchers need a dedicated mobile journal to record trail conditions and observations reliably during outdoor expeditions.",
+    solution: "Engineered a native Java Android application integrating Firebase Authentication and Cloud Firestore real-time snapshot listeners for persistent cloud sync.",
+    myRole: "Android Developer (Java activities/fragments architecture, FirestoreHelper sync, dynamic form validation & UI)",
     highlights: [
-      "Architected native Android activities and fragments with clean separation of concerns",
-      "Implemented local SQLite database caching for offline trail observations and condition logs",
-      "Dynamic input validation with customized forms and material design aesthetics"
+      "Implemented real-time cloud data synchronization using Cloud Firestore addSnapshotListener for instant updates",
+      "Built secure authentication workflows and profile management with Firebase Authentication",
+      "Structured clean Android Activity/Fragment architecture with custom input validation for trail logs",
+      "Implemented graceful empty states and sample dataset upload handlers for seamless onboarding"
     ]
   }
 ];
@@ -168,6 +255,7 @@ export const achievements = [
     year: "2024",
     title: "Top 3 Student of University of Greenwich 2024",
     organization: "University of Greenwich",
+    verificationLabel: "University Certified",
     description: "Recognized among the Top 3 Students of the University of Greenwich in 2024 for outstanding academic commitment, software engineering capabilities, and active student community contributions.",
     category: "Academic Honor",
     badge: "Top 3 Student 2024",
@@ -178,6 +266,7 @@ export const achievements = [
     year: "2024",
     title: "Second Place (2nd Prize Winner) — Impact Innovation Bootcamp",
     organization: "199 Hospital (Ministry of Public Security)",
+    verificationLabel: "Competition Verified",
     description: "Achieved Second Place at the Impact Innovation Bootcamp organized by 199 Hospital, innovating practical technology solutions under fast-paced hackathon prototyping sprints.",
     category: "Hackathon & Innovation",
     badge: "2nd Prize Winner",
@@ -188,7 +277,8 @@ export const achievements = [
     year: "2024",
     title: "The Best Club of 2024 — Greenwich Newspaper Group",
     organization: "University of Greenwich Student Community",
-    description: "Awarded 'The Best Club of 2024' with Greenwich Newspaper Group, demonstrating strong team leadership, media creation, project organization, and collaborative impact across university initiatives.",
+    verificationLabel: "Campus Leadership",
+    description: "Awarded 'The Best Club of 2024' as Club President with Greenwich Newspaper Group, demonstrating strong team leadership, media creation, project organization, and collaborative impact.",
     category: "Leadership & Club",
     badge: "Best Club 2024",
     color: "from-emerald-400 to-teal-600",
@@ -196,11 +286,12 @@ export const achievements = [
   },
   {
     year: "2024",
-    title: "The Final Round of LG Dream Code Challenge",
+    title: "National Finalist — LG Dream Code Challenge",
     organization: "LG Electronics",
+    verificationLabel: "National Finalist",
     description: "Advanced to the Final Round of the prestigious LG Dream Code Challenge, competing among top nationwide engineering students in algorithmic problem solving and software programming.",
     category: "National Competition",
-    badge: "Final Round Finalist",
+    badge: "National Finalist",
     color: "from-violet-400 to-purple-600",
     icon: "Flame"
   }

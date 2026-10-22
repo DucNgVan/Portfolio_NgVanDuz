@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Laptop } from 'lucide-react';
+import { Laptop, FileText, Send, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/portfolioData';
 import profileImg from '@/assets/images/profile.jpg';
@@ -48,9 +48,12 @@ const AboutSection = () => {
                 <div className="absolute top-0 right-0 w-48 h-48 bg-[#d8c8a8]/10 rounded-full blur-3xl pointer-events-none"></div>
 
                 {/* Name Tag on Top of Card */}
-                <div className="relative z-10">
+                <div className="relative z-10 flex items-center justify-between">
                   <span className="font-syne font-bold text-lg tracking-wider text-[#f4efea] uppercase">
                     {personalInfo.name}
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1c1c1c] text-[#d8c8a8] border border-[#333333]">
+                    BSc (Hons)
                   </span>
                 </div>
 
@@ -67,31 +70,34 @@ const AboutSection = () => {
                   </div>
                 </div>
 
-                {/* Floating Mini Icon Stack - Positioned vertically centered on right side, away from all text */}
+                {/* Floating Mini Icon Stack - Centered on right side */}
                 <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-20 pointer-events-none">
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: 5 }}
                     className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1a1a1a]/90 backdrop-blur border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow pointer-events-auto"
+                    title="Code"
                   >
                     &lt;/&gt;
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: -5 }}
                     className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1a1a1a]/90 backdrop-blur border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow pointer-events-auto"
+                    title="Architecture"
                   >
-                    %
+                    SQL
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: 5 }}
                     className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1a1a1a]/90 backdrop-blur border border-[#333333] flex items-center justify-center text-[#d8c8a8] text-xs font-mono shadow pointer-events-auto"
+                    title="Full-Stack"
                   >
                     <Laptop className="w-3.5 h-3.5" />
                   </motion.div>
                 </div>
 
                 {/* Status footer inside card */}
-                <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 pt-3 border-t border-white/5 text-[10px] sm:text-[11px] font-mono text-[#888888]">
-                  <span className="text-[#a0a0a0] leading-snug">{t.about.badgeGrad}</span>
+                <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 pt-3 border-t border-white/5 text-[11px] font-mono text-[#aaaaaa]">
+                  <span className="text-[#cccccc] leading-snug">{t.about.badgeGrad}</span>
                   <span className="text-[#d8c8a8] flex items-center gap-1.5 shrink-0 font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> {t.about.badgeAvailable}
                   </span>
@@ -100,12 +106,12 @@ const AboutSection = () => {
             </ScrollReveal>
           </div>
 
-          {/* RIGHT: Editorial Statement & Information */}
+          {/* RIGHT: Editorial Statement & Clear Professional Profile */}
           <div className="lg:col-span-7 flex flex-col justify-start text-left">
             
             {/* Eyebrow */}
             <ScrollReveal direction="left" delay={0.1}>
-              <div className="flex items-center gap-2 text-xs font-mono text-[#888888] tracking-widest mb-4">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#a3a3a3] tracking-widest mb-4">
                 <span>{t.about.eyebrow}</span>
               </div>
             </ScrollReveal>
@@ -118,15 +124,37 @@ const AboutSection = () => {
               </h3>
             </ScrollReveal>
 
-            {/* Two Columns of Editorial Bio Text */}
+            {/* Two Columns of Editorial Bio Text with Improved WCAG Contrast */}
             <ScrollReveal direction="up" delay={0.3}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-[#a0a0a0] leading-relaxed">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm sm:text-base text-[#d1d5db] leading-relaxed">
                 <p>
                   {t.about.bioP1}
                 </p>
                 <p>
                   {t.about.bioP2}
                 </p>
+              </div>
+
+              {/* Action Buttons in About Me */}
+              <div className="flex flex-wrap items-center gap-4 mt-8 pt-4">
+                <a
+                  href={personalInfo.resumeUrl}
+                  download="NguyenVanDuc_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#d8c8a8] text-[#080808] font-mono text-xs font-bold hover:bg-[#e4d7bc] transition-all shadow-md hover:-translate-y-0.5"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>{t.about.downloadCvBtn || "Download Resume (PDF)"}</span>
+                </a>
+
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#181818] border border-[#333333] hover:border-[#d8c8a8] text-white font-mono text-xs font-medium transition-all"
+                >
+                  <Send className="w-3.5 h-3.5 text-[#d8c8a8]" />
+                  <span>{t.nav.contact}</span>
+                </a>
               </div>
             </ScrollReveal>
 
@@ -140,15 +168,15 @@ const AboutSection = () => {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full h-px bg-[#222222] mt-16 sm:mt-20 mb-8 sm:mb-10 origin-left"
+          className="w-full h-px bg-[#262626] mt-16 sm:mt-20 mb-8 sm:mb-10 origin-left"
         />
 
-        {/* FULL WIDTH METADATA SPECIFICATIONS (1-LINE PER ITEM) */}
-        <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-3 sm:gap-y-3.5">
+        {/* FULL WIDTH METADATA SPECIFICATIONS */}
+        <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-3 sm:gap-y-4">
           {t.about.metadata.map((item, idx) => (
             <ScrollStaggerItem key={idx} direction="up">
-              <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#1c1c1c] group hover:border-[#d8c8a8]/40 transition-colors">
-                <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#777777] uppercase shrink-0">
+              <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#222222] group hover:border-[#d8c8a8]/50 transition-colors">
+                <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#a0a0a0] uppercase shrink-0">
                   {item.label}:
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-[#d8c8a8] font-mono leading-normal">

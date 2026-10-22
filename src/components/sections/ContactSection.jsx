@@ -7,9 +7,8 @@ import {
   Copy, 
   Check, 
   ExternalLink,
-  Loader2,
-  AlertCircle,
-  RotateCcw,
+  FileText,
+  AlertCircle
 } from 'lucide-react';
 import { Github, Linkedin } from '@/components/ui/BrandIcons';
 import { personalInfo } from '@/data/portfolioData';
@@ -89,7 +88,6 @@ const ContactSection = () => {
         setIsSubmitting(false);
       }
     } else {
-      // Fallback: If no Web3Forms access key is configured yet, launch native mail client
       handleMailtoFallback();
       setSubmissionState('success');
       setIsSubmitting(false);
@@ -104,7 +102,7 @@ const ContactSection = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <ScrollReveal direction="down">
-            <span className="text-xs font-mono tracking-[0.25em] text-[#888888] uppercase mb-2 block">
+            <span className="text-xs font-mono tracking-[0.25em] text-[#a3a3a3] uppercase mb-2 block font-semibold">
               {t.contact?.eyebrow || 'GET IN TOUCH'}
             </span>
             <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-white">
@@ -117,23 +115,23 @@ const ContactSection = () => {
         {/* CONTACT DETAILS & DIRECT FORM */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
-          {/* Left: Contact Info Cards (Slide in from Left) */}
+          {/* Left: Contact Info Cards */}
           <ScrollReveal direction="right" delay={0.2} className="lg:col-span-5 space-y-4 text-left">
             <h3 className="font-syne text-xl font-bold text-white mb-2">
               {t.contact?.directHeading || 'Direct Contact Information'}
             </h3>
-            <p className="text-xs sm:text-sm text-[#888888] mb-6">
-              {t.contact?.directSub || 'Feel free to copy my direct contact details or send a message:'}
+            <p className="text-xs sm:text-sm text-[#aaaaaa] mb-6 font-medium">
+              {t.contact?.directSub || 'Feel free to copy my direct contact details, download my CV, or send a message:'}
             </p>
 
             {/* Email Card */}
-            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/40 flex items-center justify-between group transition-colors">
+            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/40 flex items-center justify-between group transition-colors shadow-lg">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#181818] border border-[#333333] flex items-center justify-center text-[#d8c8a8]">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#666666] uppercase">{t.contact?.emailLabel || 'Direct Email'}</div>
+                  <div className="text-[11px] font-mono text-[#888888] uppercase">{t.contact?.emailLabel || 'Direct Email'}</div>
                   <div className="text-sm font-semibold text-[#f4efea] group-hover:text-[#d8c8a8] transition-colors">
                     {personalInfo.email}
                   </div>
@@ -142,21 +140,22 @@ const ContactSection = () => {
 
               <button
                 onClick={() => handleCopy(personalInfo.email, 'email')}
-                className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#888888] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
+                className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#aaaaaa] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
                 title="Copy Email"
+                aria-label="Copy email address"
               >
                 {copiedField === 'email' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
 
             {/* Phone Card */}
-            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/40 flex items-center justify-between group transition-colors">
+            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/40 flex items-center justify-between group transition-colors shadow-lg">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#181818] border border-[#333333] flex items-center justify-center text-[#d8c8a8]">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#666666] uppercase">{t.contact?.phoneLabel || 'Phone Number'}</div>
+                  <div className="text-[11px] font-mono text-[#888888] uppercase">{t.contact?.phoneLabel || 'Phone Number'}</div>
                   <div className="text-sm font-semibold text-[#f4efea] group-hover:text-[#d8c8a8] transition-colors">
                     {personalInfo.phone}
                   </div>
@@ -165,21 +164,22 @@ const ContactSection = () => {
 
               <button
                 onClick={() => handleCopy(personalInfo.phone, 'phone')}
-                className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#888888] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
+                className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#aaaaaa] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
                 title="Copy Phone Number"
+                aria-label="Copy phone number"
               >
                 {copiedField === 'phone' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
 
             {/* Location Card */}
-            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] flex items-center justify-between group">
+            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] flex items-center justify-between group shadow-lg">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#181818] border border-[#333333] flex items-center justify-center text-[#d8c8a8]">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#666666] uppercase">{t.contact?.locationLabel || 'Location'}</div>
+                  <div className="text-[11px] font-mono text-[#888888] uppercase">{t.contact?.locationLabel || 'Location'}</div>
                   <div className="text-sm font-semibold text-[#f4efea]">
                     {lang === 'vi' ? 'Đà Nẵng, Việt Nam' : personalInfo.location}
                   </div>
@@ -188,16 +188,44 @@ const ContactSection = () => {
 
               <button
                 onClick={() => handleCopy(lang === 'vi' ? 'Đà Nẵng, Việt Nam' : personalInfo.location, 'location')}
-                className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#888888] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
+                className="p-2.5 rounded-xl bg-[#181818] border border-[#2a2a2a] text-[#aaaaaa] hover:text-[#d8c8a8] hover:border-[#d8c8a8] transition-all cursor-pointer"
                 title="Copy Location"
+                aria-label="Copy location"
               >
                 {copiedField === 'location' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
 
+            {/* Resume Card (Solves missing CV at contact area!) */}
+            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/60 flex items-center justify-between group transition-colors shadow-lg">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[#181818] border border-[#333333] flex items-center justify-center text-[#d8c8a8]">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-[11px] font-mono text-[#888888] uppercase">{t.contact?.cvLabel || 'Curriculum Vitae'}</div>
+                  <div className="text-sm font-semibold text-[#f4efea]">
+                    NguyenVanDuc_CV.pdf
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href={personalInfo.resumeUrl}
+                download="NguyenVanDuc_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#d8c8a8] text-[#080808] hover:bg-[#e4d7bc] text-xs font-mono font-bold transition-all shadow-md"
+                title="Download ATS Resume PDF"
+              >
+                <span>PDF</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
             {/* Social Channels */}
-            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222]">
-              <div className="text-[11px] font-mono text-[#666666] uppercase mb-3">{t.contact?.socialLabel || 'Social Channels & Profiles'}</div>
+            <div className="p-5 rounded-2xl bg-[#111111] border border-[#222222] shadow-lg">
+              <div className="text-[11px] font-mono text-[#888888] uppercase mb-3">{t.contact?.socialLabel || 'Social Channels & Profiles'}</div>
               <div className="flex items-center gap-3">
                 <a
                   href={personalInfo.github}
@@ -225,14 +253,14 @@ const ContactSection = () => {
 
           </ScrollReveal>
 
-          {/* Right: Direct Contact Form (Slide in from Right) */}
+          {/* Right: Direct Contact Form */}
           <ScrollReveal direction="left" delay={0.25} className="lg:col-span-7">
-            <div className="p-7 sm:p-8 rounded-3xl bg-[#111111] border border-[#222222] text-left">
+            <div className="p-7 sm:p-8 rounded-3xl bg-[#111111] border border-[#222222] text-left shadow-2xl">
               <h3 className="font-syne text-xl font-bold text-white mb-2">
                 {t.contact?.formHeading || 'Send a Quick Message'}
               </h3>
-              <p className="text-xs sm:text-sm text-[#888888] mb-6">
-                {t.contact?.formSub || "I'll get back to you as soon as possible:"}
+              <p className="text-xs sm:text-sm text-[#aaaaaa] mb-6 font-medium">
+                {t.contact?.formSub || "I will respond to your email as soon as possible:"}
               </p>
 
               {submissionState === 'success' ? (
@@ -248,118 +276,93 @@ const ContactSection = () => {
                   </p>
                   <button
                     onClick={() => setSubmissionState('idle')}
-                    className="px-6 py-2.5 rounded-xl bg-[#222222] hover:bg-[#2c2c2c] border border-[#333333] text-xs font-mono text-[#d8c8a8] transition-colors cursor-pointer inline-flex items-center gap-2"
+                    className="px-5 py-2.5 rounded-xl bg-[#d8c8a8] text-[#080808] font-mono text-xs font-bold hover:bg-[#e4d7bc] transition-colors cursor-pointer"
                   >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    <span>{t.contact?.sendAnother || 'Send Another Message'}</span>
+                    {t.contact?.sendAnother || 'Send Another Message'}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {submissionState === 'error' && (
-                    <div className="p-4 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-3">
-                      <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                      <div className="flex-1">
-                        <div className="font-bold mb-0.5">{t.contact?.errorHeading || 'Failed to send message'}</div>
-                        <div>{errorMessage || t.contact?.errorSub}</div>
-                        <button
-                          type="button"
-                          onClick={handleMailtoFallback}
-                          className="mt-2 text-xs font-mono underline text-[#d8c8a8] hover:text-white inline-flex items-center gap-1 cursor-pointer"
-                        >
-                          {t.contact?.fallbackMail || 'Open in Mail Client'}
-                          <ExternalLink className="w-3 h-3" />
-                        </button>
-                      </div>
+                    <div className="p-4 rounded-xl bg-red-950/40 border border-red-500/30 flex items-center gap-3 text-red-300 text-xs font-mono">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+                      <span>{errorMessage || t.contact?.errorSub}</span>
                     </div>
                   )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
+                      <label className="block text-xs font-mono text-[#bbbbbb] mb-1.5 font-medium">
                         {t.contact?.nameLabel || 'Your Name *'}
                       </label>
                       <input
                         type="text"
                         required
-                        disabled={isSubmitting}
-                        placeholder={t.contact?.namePlaceholder || 'e.g. John Doe'}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans disabled:opacity-50"
+                        placeholder={t.contact?.namePlaceholder || 'e.g. John Doe'}
+                        className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-[#2b2b2b] text-[#f4efea] placeholder-[#555555] text-sm focus:border-[#d8c8a8] focus:outline-hidden transition-colors"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
+                      <label className="block text-xs font-mono text-[#bbbbbb] mb-1.5 font-medium">
                         {t.contact?.emailInputLabel || 'Your Email *'}
                       </label>
                       <input
                         type="email"
                         required
-                        disabled={isSubmitting}
-                        placeholder={t.contact?.emailPlaceholder || 'john@example.com'}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans disabled:opacity-50"
+                        placeholder={t.contact?.emailPlaceholder || 'john@example.com'}
+                        className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-[#2b2b2b] text-[#f4efea] placeholder-[#555555] text-sm focus:border-[#d8c8a8] focus:outline-hidden transition-colors"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
+                    <label className="block text-xs font-mono text-[#bbbbbb] mb-1.5 font-medium">
                       {t.contact?.subjectLabel || 'Subject'}
                     </label>
                     <input
                       type="text"
-                      disabled={isSubmitting}
-                      placeholder={t.contact?.subjectPlaceholder || 'Job Opportunity / Project Collaboration...'}
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans disabled:opacity-50"
+                      placeholder={t.contact?.subjectPlaceholder || 'Job Opportunity / Internship...'}
+                      className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-[#2b2b2b] text-[#f4efea] placeholder-[#555555] text-sm focus:border-[#d8c8a8] focus:outline-hidden transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-[#777777] mb-1.5 uppercase">
+                    <label className="block text-xs font-mono text-[#bbbbbb] mb-1.5 font-medium">
                       {t.contact?.messageLabel || 'Message *'}
                     </label>
                     <textarea
                       required
-                      disabled={isSubmitting}
-                      rows={4}
-                      placeholder={t.contact?.messagePlaceholder || 'Write your message here...'}
+                      rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#181818] border border-[#282828] text-sm text-[#f4efea] placeholder-[#555555] focus:outline-none focus:border-[#d8c8a8] transition-all font-sans resize-none disabled:opacity-50"
+                      placeholder={t.contact?.messagePlaceholder || 'Write your message here...'}
+                      className="w-full px-4 py-3 rounded-xl bg-[#161616] border border-[#2b2b2b] text-[#f4efea] placeholder-[#555555] text-sm focus:border-[#d8c8a8] focus:outline-hidden transition-colors resize-none"
                     ></textarea>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#d8c8a8] hover:bg-[#e2d5bd] text-[#0d0d0d] font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 shadow disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl bg-[#d8c8a8] text-[#080808] font-mono text-xs font-bold hover:bg-[#e4d7bc] transition-all disabled:opacity-50 cursor-pointer shadow-md"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          <span>{t.contact?.sendingButton || 'Sending Message...'}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          <span>{t.contact?.sendButton || 'Send Message'}</span>
-                        </>
-                      )}
+                      <Send className="w-4 h-4" />
+                      <span>{isSubmitting ? (t.contact?.sendingButton || 'Sending Message...') : (t.contact?.sendButton || 'Send Message')}</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={handleMailtoFallback}
-                      className="text-xs font-mono text-[#777777] hover:text-[#d8c8a8] transition-colors cursor-pointer text-center sm:text-right"
+                      className="text-xs font-mono text-[#888888] hover:text-[#d8c8a8] underline transition-colors cursor-pointer"
                     >
-                      {t.contact?.fallbackMail || 'Open in Mail Client'} ↗
+                      {t.contact?.fallbackMail || 'Open in Mail Client'}
                     </button>
                   </div>
                 </form>

@@ -13,26 +13,32 @@ const Preloader = ({ onComplete }) => {
   };
 
   useEffect(() => {
-    // Handwriting animation runs ~3.35s; hold for ~0.65s, then smooth slide-up
+    // Check if user prefers reduced motion; skip immediately
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      safeComplete();
+      return;
+    }
+
+    // Shortened, snappy animation duration (~1.8s) so busy recruiters aren't blocked
     const timer = setTimeout(() => {
       setFadeOut(true);
       setTimeout(() => {
         safeComplete();
-      }, 750);
-    }, 4000);
+      }, 500);
+    }, 1800);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div
-      className={`fixed inset-0 z-[100] bg-[#070707] flex flex-col items-center justify-center select-none transition-transform duration-750 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`fixed inset-0 z-[100] bg-[#070707] flex flex-col items-center justify-center select-none transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         fadeOut ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
-      {/* OFFICIAL APPLE HELLO ANIMATION */}
-      <div className="flex flex-col items-center justify-center px-4 animate-in fade-in duration-500">
-        <div className="relative w-[320px] sm:w-[560px] h-[120px] sm:h-[190px] flex items-center justify-center">
+      {/* APPLE HELLO ANIMATION */}
+      <div className="flex flex-col items-center justify-center px-4 animate-in fade-in duration-300">
+        <div className="relative w-[300px] sm:w-[500px] h-[110px] sm:h-[160px] flex items-center justify-center">
           <svg
             className="w-full h-full text-[#d8c8a8] overflow-visible"
             xmlns="http://www.w3.org/2000/svg"
@@ -60,20 +66,21 @@ const Preloader = ({ onComplete }) => {
           </svg>
         </div>
 
-        <span className="font-mono text-xs text-[#888888] tracking-[0.3em] uppercase mt-4 animate-pulse">
-          PORTFOLIO • 2026
+        <span className="font-mono text-xs text-[#a0a0a0] tracking-[0.25em] uppercase mt-4">
+          PORTFOLIO • NGUYEN VAN DUC
         </span>
       </div>
 
-      {/* Skip button for user convenience */}
+      {/* Clear, well-contrasted, easily clickable skip button */}
       <button
         onClick={() => {
           setFadeOut(true);
-          setTimeout(safeComplete, 250);
+          setTimeout(safeComplete, 200);
         }}
-        className="absolute bottom-8 text-xs font-mono text-[#555555] hover:text-[#d8c8a8] transition-colors cursor-pointer uppercase tracking-widest"
+        className="absolute bottom-8 px-4 py-1.5 rounded-full border border-[#d8c8a8]/40 bg-[#141414]/90 text-xs font-mono text-[#d8c8a8] hover:bg-[#d8c8a8] hover:text-[#070707] transition-all cursor-pointer uppercase tracking-widest shadow-md hover:scale-105"
+        aria-label="Skip introduction animation"
       >
-        {lang === 'vi' ? '[ Bỏ qua ]' : '[ Skip Intro ]'}
+        {lang === 'vi' ? 'BỎ QUA INTRO ➔' : 'SKIP INTRO ➔'}
       </button>
     </div>
   );

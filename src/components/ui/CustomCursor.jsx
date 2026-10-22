@@ -9,15 +9,18 @@ const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Only enable on non-touch pointer devices
-    if (window.matchMedia('(pointer: coarse)').matches) {
+    // Disable on touch devices and if user prefers reduced motion
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isTouch || isReducedMotion) {
       return;
     }
 
     const onMouseMove = (e) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
-      setIsVisible(true);
+      if (!isVisible) setIsVisible(true);
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%) scale(${isHoveredRef.current ? 0 : 1})`;
@@ -31,7 +34,7 @@ const CustomCursor = () => {
     document.addEventListener('mouseenter', onMouseEnter);
     document.addEventListener('mouseleave', onMouseLeave);
 
-    // Smooth animation loop for the trailing ring
+    // Smooth 60fps/120fps requestAnimationFrame animation loop for the trailing ring
     let animationFrame;
     const animateTrail = () => {
       const dx = mousePos.current.x - trailPos.current.x;
@@ -62,8 +65,8 @@ const CustomCursor = () => {
 
       if (ringRef.current) {
         if (hovered) {
-          ringRef.current.style.width = '64px';
-          ringRef.current.style.height = '64px';
+          ringRef.current.style.width = '60px';
+          ringRef.current.style.height = '60px';
           ringRef.current.style.backgroundColor = 'rgba(244, 239, 234, 0.95)';
           ringRef.current.style.borderColor = 'transparent';
         } else {
@@ -88,7 +91,7 @@ const CustomCursor = () => {
       window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [isVisible]);
 
   if (!isVisible) return null;
 
@@ -97,7 +100,7 @@ const CustomCursor = () => {
       {/* Precision center dot */}
       <div
         ref={dotRef}
-        className="cursor-dot"
+        className="cursor-dot pointer-events-none"
         style={{
           top: 0,
           left: 0,
@@ -108,7 +111,7 @@ const CustomCursor = () => {
       {/* Trailing interactive ring */}
       <div
         ref={ringRef}
-        className="cursor-ring"
+        className="cursor-ring pointer-events-none"
         style={{
           top: 0,
           left: 0,

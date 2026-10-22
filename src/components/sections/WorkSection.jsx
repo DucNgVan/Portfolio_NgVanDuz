@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Star, GitFork, Info } from 'lucide-react';
+import { ExternalLink, Info, CheckCircle2, Cpu } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Github } from '@/components/ui/BrandIcons';
 import { githubProjects } from '@/data/portfolioData';
@@ -14,11 +14,11 @@ const WorkSection = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const techTicker = [
-    'JavaScript', 'React JS', 'Lenis', 'GSAP', 'Node.js', 'Tailwind CSS', 'TypeScript', 'Docker', 'Firebase', 'Next.js'
+    'Next.js 14', 'Three.js 3D', 'Node.js', 'Express', 'PostgreSQL 3NF', 'Redis Cache', 'Docker Compose', 'TypeScript', 'MongoDB', 'Firebase', 'Tailwind CSS', 'Vue.js 3'
   ];
 
   const bottomTicker = t.work?.bottomTicker || [
-    'UI/UX', 'INTERACTIVE WEB', 'CREATIVE DEVELOPMENT', 'MOTION DESIGN', 'HIGH PERFORMANCE', 'CLEAN CODE'
+    'NEXT.JS 14', 'THREE.JS 3D', 'NODE.JS REST APIS', 'POSTGRESQL 3NF', 'REDIS CACHING', 'DOCKER COMPOSE', 'CLEAN CODE'
   ];
 
   const localizedProjects = githubProjects.map((project) => {
@@ -27,7 +27,11 @@ const WorkSection = () => {
       ...project,
       title: trans.title || project.title,
       category: trans.category || project.category,
+      tagline: trans.tagline || project.tagline,
       description: trans.description || project.description,
+      problem: trans.problem || project.problem,
+      solution: trans.solution || project.solution,
+      myRole: trans.myRole || project.myRole,
       highlights: trans.highlights || project.highlights,
     };
   });
@@ -42,7 +46,7 @@ const WorkSection = () => {
             {[...techTicker, ...techTicker, ...techTicker].map((tech, idx) => (
               <span
                 key={idx}
-                className="text-xs font-mono tracking-widest text-[#777777] uppercase hover:text-white transition-colors"
+                className="text-xs font-mono tracking-widest text-[#999999] uppercase hover:text-[#d8c8a8] transition-colors"
               >
                 {tech}
               </span>
@@ -56,7 +60,7 @@ const WorkSection = () => {
         {/* Eyebrow */}
         <ScrollReveal direction="down">
           <div className="flex flex-col items-center gap-2 mb-4">
-            <span className="text-xs font-mono tracking-[0.25em] text-[#888888] uppercase">
+            <span className="text-xs font-mono tracking-[0.25em] text-[#a3a3a3] uppercase font-semibold">
               {t.work?.eyebrow || 'SCROLL TO EXPLORE MY'}
             </span>
             <div className="w-1.5 h-6 rounded-full bg-[#d8c8a8] flex items-end justify-center pb-1">
@@ -65,16 +69,16 @@ const WorkSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* GIANT "WORK" TEXT WITH FLUID ZOOM ON SCROLL */}
+        {/* GIANT "WORK" / "PROJECTS" TEXT */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 30 }}
+          initial={{ opacity: 0, scale: 0.88, y: 25 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative inline-block"
         >
-          <h2 className="font-bebas text-[28vw] sm:text-[24vw] leading-[0.75] tracking-tight text-[#F4EFEA] drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
-            {t.work?.title || 'WORK'}
+          <h2 className="font-bebas text-[24vw] sm:text-[20vw] leading-[0.75] tracking-tight text-[#F4EFEA] drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+            {t.work?.title || 'PROJECTS'}
           </h2>
 
           {/* Liquid Splash Droplets in Cream / Gold Accent */}
@@ -89,7 +93,7 @@ const WorkSection = () => {
 
         {/* BOTTOM MARQUEE BAR */}
         <ScrollReveal direction="up" delay={0.2} className="w-full max-w-5xl mt-8 pt-6 border-t border-[#222222]">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono tracking-widest text-[#888888] uppercase">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono tracking-widest text-[#a3a3a3] uppercase">
             {bottomTicker.map((item, idx) => (
               <React.Fragment key={idx}>
                 <span className="hover:text-white transition-colors">{item}</span>
@@ -100,7 +104,7 @@ const WorkSection = () => {
         </ScrollReveal>
       </div>
 
-      {/* 3. CURATED PROJECTS / GITHUB REPOS GRID WITH STAGGERED ENTRANCE */}
+      {/* 3. CURATED PROJECTS GRID WITH ENHANCED STRUCTURE */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
         <ScrollStagger staggerDelay={0.15} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           {localizedProjects.map((project, index) => (
@@ -109,49 +113,57 @@ const WorkSection = () => {
                 className="group relative rounded-3xl bg-[#111111] border border-[#222222] p-7 sm:p-8 flex flex-col justify-between w-full h-full transition-all duration-300 hover:border-[#d8c8a8]/60 hover:-translate-y-2 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] text-[#F4EFEA]"
               >
                 <div className="flex-1 flex flex-col">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-xs font-mono tracking-widest text-[#888888]">
-                      0{index + 1} / {project.category.toUpperCase()}
+                  {/* Card Header: Project sequence + Status indicator */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-mono tracking-widest text-[#d8c8a8] font-bold">
+                      0{index + 1} // {project.category.toUpperCase()}
                     </span>
-                    <div className="flex items-center gap-3 text-xs font-mono text-[#888888]">
-                      <span className="flex items-center gap-1 text-[#d8c8a8]">
-                        <Star className="w-3.5 h-3.5 fill-[#d8c8a8]" /> {project.stars}
+                    
+                    {project.liveDemo ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono bg-emerald-950/70 text-emerald-300 border border-emerald-500/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        {project.statusBadge || "Live Demo"}
                       </span>
-                      <span className="flex items-center gap-1 text-[#aaaaaa]">
-                        <GitFork className="w-3.5 h-3.5" /> {project.forks}
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono bg-[#1c1c1c] text-[#bbbbbb] border border-[#333333]">
+                        {project.statusBadge || "Architecture Repo"}
                       </span>
-                    </div>
+                    )}
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-bold font-syne text-[#F4EFEA] group-hover:text-[#d8c8a8] transition-colors mb-3 min-h-[3.5rem] flex items-center">
+                  <h3 className="text-xl sm:text-2xl font-bold font-syne text-[#F4EFEA] group-hover:text-[#d8c8a8] transition-colors mb-2 min-h-[3.5rem] flex items-center leading-snug">
                     {project.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-sm text-[#a0a0a0] leading-relaxed mb-6 line-clamp-3 min-h-[4.2rem] font-sans">
+                  {/* Tagline / Summary */}
+                  <p className="text-xs sm:text-sm text-[#d8c8a8]/90 font-mono mb-3 leading-relaxed">
+                    {project.tagline}
+                  </p>
+
+                  {/* Detailed Description with High Contrast */}
+                  <p className="text-sm text-[#cccccc] leading-relaxed mb-6 font-sans flex-1">
                     {project.description}
                   </p>
 
                   {/* Tech Chips */}
                   <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                    {project.tech.map((t, idx) => (
+                    {project.tech.map((tItem, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#181818] border border-[#2a2a2a] text-[#cccccc] group-hover:border-[#d8c8a8]/40 transition-colors"
+                        className="px-2.5 py-1 rounded-lg text-xs font-mono bg-[#181818] border border-[#2a2a2a] text-[#dddddd] group-hover:border-[#d8c8a8]/40 transition-colors font-medium"
                       >
-                        {t}
+                        {tItem}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* Action Bar */}
+                {/* Card Action Bar */}
                 <div className="pt-4 border-t border-[#1f1f1f] flex items-center justify-between mt-auto">
                   <button
                     onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono text-[#d8c8a8] hover:underline cursor-pointer group/btn"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono text-[#d8c8a8] hover:underline cursor-pointer group/btn font-semibold"
                   >
                     <Info className="w-3.5 h-3.5" />
                     <span>{t.work?.archDetails || 'Architecture Details'}</span>
@@ -162,20 +174,24 @@ const WorkSection = () => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-2.5 rounded-xl bg-[#181818] hover:bg-[#252525] border border-[#333333] hover:border-[#d8c8a8] text-[#cccccc] hover:text-white transition-all"
-                      title={t.work?.viewGithub || 'View on GitHub'}
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#181818] hover:bg-[#252525] border border-[#333333] hover:border-[#d8c8a8] text-[#cccccc] hover:text-white text-xs font-mono transition-all"
+                      title={t.work?.viewGithub || 'View GitHub Repo'}
                     >
                       <Github className="w-4 h-4" />
+                      <span className="hidden sm:inline">Repo</span>
                     </a>
-                    {project.liveDemo && project.liveDemo !== project.githubUrl && (
+                    
+                    {/* Only show Live Demo button when an actual verified live URL exists! */}
+                    {project.liveDemo && (
                       <a
                         href={project.liveDemo}
                         target="_blank"
                         rel="noreferrer"
-                        className="p-2.5 rounded-xl bg-[#d8c8a8] hover:bg-[#e2d5bd] text-[#0D0D0D] font-bold transition-all shadow"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#d8c8a8] hover:bg-[#e6d8be] text-[#080808] text-xs font-mono font-bold transition-all shadow-md"
                         title={t.work?.viewDemo || 'View Live Demo'}
                       >
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Demo</span>
                       </a>
                     )}
                   </div>
@@ -186,7 +202,7 @@ const WorkSection = () => {
         </ScrollStagger>
       </div>
 
-      {/* Project Architecture Modal */}
+      {/* Project Architecture Modal with Refined Aesthetic */}
       {selectedProject && (
         <ProjectModal
           project={selectedProject}

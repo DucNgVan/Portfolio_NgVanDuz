@@ -1,0 +1,50 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 380 >>
+stream
+BT
+/F1 22 Tf
+50 720 Td
+(NGUYEN VAN DUC) Tj
+/F1 14 Tf
+0 -25 Td
+(Full-Stack Software Engineering Intern) Tj
+/F1 11 Tf
+0 -25 Td
+(Email: ducnv179.wk@gmail.com | Phone: 078.855.1709) Tj
+0 -18 Td
+(GitHub: https://github.com/DucNgVan | Da Nang, Vietnam) Tj
+0 -30 Td
+(Education: University of Greenwich - BSc (Hons) Software Engineering) Tj
+0 -20 Td
+(Core Stack: React, Next.js 14, Node.js, Express, PostgreSQL 3NF, Redis, Docker) Tj
+0 -30 Td
+([Note: Please replace this PDF with your full ATS resume PDF file.]) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000244 00000 n 
+0000000676 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+745
+%%EOF

@@ -3,68 +3,75 @@ export const translations = {
     nav: {
       about: "ABOUT",
       expertise: "EXPERTISE",
-      work: "WORK",
-      achievements: "ACHIEVEMENTS",
+      work: "PROJECTS",
+      achievements: "HONORS",
       contact: "CONTACT",
+      resume: "RESUME (PDF)",
     },
     hero: {
+      greeting: "Nguyen Van Duc",
+      role: "Full-Stack Software Engineering Intern",
+      subHeadline: "Final-Year Software Engineering Student at University of Greenwich · Open to Internships in Da Nang & Remote",
+      ctaProjects: "View Projects",
+      ctaCv: "Download CV (PDF)",
       titleWord1: "SOFTWARE",
       titleWord2: "ENGINEERING",
       subtitleVisuals: "VISUALS",
       subtitleCode: "CODE",
       subtitleArch: "ARCHITECTURE",
       scrollExplore: "SCROLL TO EXPLORE",
-      rotatingBadge: "LET'S WORK TOGETHER • LET'S WORK TOGETHER •",
-      basedIn: "BASED IN VIETNAM",
+      rotatingBadge: "OPEN TO INTERNSHIPS • READY TO CONTRIBUTE •",
+      basedIn: "DA NANG, VIETNAM",
     },
     about: {
       sectionTitle: "ABOUT ME",
       eyebrow: "—— WHO AM I ?",
-      headlinePart1: "BUILDING DEDICATED",
+      headlinePart1: "ENGINEERING RELIABLE",
       headlinePart2: "APPLICATIONS,",
-      headlinePart3: "LEARNING RELENTLESSLY TO DELIVER",
-      headlinePart4: "REAL VALUE.",
-      bioP1: "I am Nguyen Van Duc — a Software Engineering student at the University of Greenwich. Oriented towards Full-Stack development (Web & Application), I am passionate about transforming ideas into complete, robust products — from intuitive, fluid user interfaces to rigorous, stable backend data architectures. I constantly focus on writing clean, maintainable code, maintaining meticulous execution, and proactively adopting modern technologies to optimize product experience.",
-      bioP2: "Currently, I am seeking Full-Stack / Software Engineer Internship opportunities to directly contribute my accumulated knowledge to real-world production projects. I aspire to work in a friendly, transparent, and collaborative team environment — where teammates openly share knowledge, support each other, and grow together every day. To me, an internship is not merely a training milestone, but the foundation for long-term commitment, generating tangible value for the organization, and unlocking future career advancement.",
-      badgeGrad: "GREENWICH STUDENT • SOFTWARE ENGINEERING",
+      headlinePart3: "BACKED BY CLEAN ARCHITECTURE &",
+      headlinePart4: "REAL PRODUCT IMPACT.",
+      bioP1: "I am Nguyen Van Duc — a final-year Software Engineering student at the University of Greenwich (Vietnam campus). Focused on Full-Stack web and application development, I bridge responsive, intuitive user interfaces with structured, robust backend data systems. I have engineered practical software across the stack: from interactive 3D web applications with Next.js 14 and Three.js (NẾT) to relational backend architectures featuring PostgreSQL (3NF), Redis caching, and Docker Compose (Nomadix).",
+      bioP2: "I am actively seeking a Full-Stack / Software Engineer Internship where I can directly contribute to production software, write clean, testable code, and collaborate with experienced engineers. To me, an internship is a committed foundation to master industry engineering workflows, take ownership of real features, and build lasting value for the engineering team.",
+      downloadCvBtn: "Download Resume (PDF)",
+      badgeGrad: "GREENWICH VIETNAM • SOFTWARE ENGINEERING",
       badgeAvailable: "READY FOR INTERNSHIP",
       metadata: [
         { label: "LOCATION", value: "DA NANG, VIETNAM (HYBRID / REMOTE READY)" },
         { label: "DEGREE", value: "BSC (HONS) SOFTWARE ENG" },
         { label: "ALMA MATER", value: "UNIVERSITY OF GREENWICH" },
-        { label: "TARGET ROLE", value: "FULL-STACK INTERN" },
-        { label: "SPECIALIZATION", value: "FULL-STACK WEB & APPLICATION" },
-        { label: "TECH STACK", value: "REACT / NEXT.JS / NODE.JS / PYTHON / POSTGRESQL" },
+        { label: "TARGET ROLE", value: "FULL-STACK INTERN / JUNIOR ENGINEER" },
+        { label: "CORE FOCUS", value: "FULL-STACK WEB & APPLICATION ARCHITECTURE" },
+        { label: "TECH STACK", value: "REACT / NEXT.JS / NODE.JS / TYPESCRIPT / POSTGRESQL / MONGODB" },
       ],
     },
     expertise: {
       eyebrow: "SKILLS & EXPERTISE",
-      title: "SKILLS & COMPETENCY MATRIX",
-      subtitle: "Tailored for a Software Engineering Graduate — combining practical full-stack fundamentals with strong teamwork, adaptability, and analytical problem-solving.",
+      title: "TECHNICAL COMPETENCY MATRIX",
+      subtitle: "Curated for a Full-Stack Intern & Junior Software Engineer — combining practical full-stack fundamentals with clean architecture, adaptability, and analytical problem-solving.",
       tabAll: "All Overview",
       tabTech: "Technical Stack",
       tabSoft: "Soft Skills",
-      techHeading: "Technical Foundations (Curated for Junior Software Engineer)",
+      techHeading: "Technical Foundations (Categorized by Production & Project Application)",
       softHeading: "Professional Soft Skills & Engineering Mindset",
       softCount: "[ 5 Core Competencies ]",
       domains: [
         {
           id: '01',
-          title: 'Frontend Engineering',
+          title: 'Frontend & Interactive Web',
           category: 'CLIENT-SIDE',
-          description: 'Developing responsive, clean, and accessible user interfaces with React, Next.js, and modern CSS utility workflows.',
+          description: 'Building responsive, accessible, and high-performance interfaces with Next.js 14, React, TypeScript, Tailwind CSS, and Three.js 3D rendering.',
         },
         {
           id: '02',
-          title: 'Backend & Data Foundations',
+          title: 'Backend & Data Architecture',
           category: 'SERVER & DATABASE',
-          description: 'Building modular RESTful APIs with Node.js/Express, applying OOP principles with Java, and modeling relational databases with SQL.',
+          description: 'Designing modular RESTful APIs with Node.js/Express, relational database modeling in PostgreSQL (3NF schema), MongoDB, Redis caching, and Java OOP.',
         },
         {
           id: '03',
-          title: 'Tools & Engineering Practices',
+          title: 'DevOps & Engineering Practices',
           category: 'DEVOPS & WORKFLOW',
-          description: 'Maintaining clear version control via Git Flow, managing local containerization with Docker, and verifying endpoints with Postman.',
+          description: 'Managing structured Git Flow version control, containerizing multi-tier services with Docker Compose, and verifying API endpoints with Postman.',
         },
       ],
       softSkills: [
@@ -72,127 +79,145 @@ export const translations = {
           id: "teamwork",
           title: "Team Collaboration & Peer Code Review",
           badge: "Agile Team Player",
-          description: "Experienced in collaborating across university hackathons and group engineering projects using Git pull requests, code reviews, constructive feedback, and structured task division.",
-          tags: ["Git Flow", "Teamwork", "Peer Review", "Active Listening"],
+          description: "Experienced in collaborating across university hackathons and group engineering projects using Git pull requests, constructive code reviews, structured task breakdowns, and active communication.",
+          tags: ["Git Flow", "Teamwork", "Peer Review", "Active Communication"],
         },
         {
           id: "analytical-problem-solving",
           title: "Analytical Thinking & Problem Solving",
           badge: "Core Engineering Mindset",
-          description: "Ability to break down complex architectural requirements into actionable, clean, and testable modules. Strong foundation in logic, data structures, and algorithmic debugging.",
-          tags: ["Deductive Logic", "Root Cause Analysis", "Debugging", "Clean Code"],
+          description: "Ability to dissect complex application requirements into decoupled, testable modules. Strong foundation in data structures, algorithms, and systematic root-cause debugging.",
+          tags: ["Root Cause Analysis", "Modular Design", "Debugging", "Clean Code"],
         },
         {
           id: "adaptability",
           title: "Fast Learner & Growth Mindset",
           badge: "Continuous Evolution",
-          description: "Quick to pick up new frameworks, libraries, and design patterns. Enthusiastic about staying current with modern web standards and engineering best practices.",
-          tags: ["Self-starter", "Fast Learner", "Graduate Mindset", "Tech Curiosity"],
+          description: "Rapidly grasps new frameworks, design patterns, and SDKs through hands-on implementation. Passionate about modern web standards, software architecture, and iterative improvements.",
+          tags: ["Quick Learner", "Continuous Growth", "Curiosity", "Self-starter"],
         },
         {
           id: "agile-project-mgmt",
           title: "Agile & Scrum Workflow",
           badge: "Iterative Delivery",
-          description: "Practiced sprint planning, backlog grooming, daily standups, and retrospective workflows in capstone and team competition environments.",
+          description: "Practiced sprint planning, backlog grooming, daily standups, and retrospective workflows during capstone development and hackathon prototyping sprints.",
           tags: ["Agile/Scrum", "Sprint Planning", "Task Ownership", "Jira/Trello"],
         },
         {
           id: "academic-english",
           title: "Technical English & Documentation",
-          badge: "International Standard",
-          description: "Comfortable reading and writing software documentation, architecture blueprints, API specifications (Swagger/Postman), and communicating in international team settings.",
-          tags: ["Technical Specs", "English Communication", "Documentation"],
+          badge: "British Standard",
+          description: "Comfortable writing clear software documentation, architecture blueprints, API specifications (Postman/OpenAPI), and collaborating in international English-medium environments.",
+          tags: ["Technical Specs", "English Communication", "Architecture Docs"],
         }
       ],
-      ticker: ['FULL-STACK WEB', 'TEAM COLLABORATION', 'AGILE & SCRUM', 'PROBLEM SOLVING', 'TECHNICAL ENGLISH']
+      ticker: ['FULL-STACK WEB', 'TEAM COLLABORATION & GIT FLOW', 'AGILE & SCRUM', 'PROBLEM SOLVING', 'TECHNICAL ENGLISH']
     },
     work: {
       eyebrow: "SCROLL TO EXPLORE MY",
-      title: "WORK",
+      title: "PROJECTS",
       archDetails: "Architecture Details",
-      viewGithub: "View on GitHub",
-      viewDemo: "View Live Demo",
-      bottomTicker: ['UI/UX', 'INTERACTIVE WEB', 'CREATIVE DEVELOPMENT', 'MOTION DESIGN', 'HIGH PERFORMANCE', 'CLEAN CODE'],
+      viewGithub: "GitHub Repository",
+      viewDemo: "Live Demo",
+      problemLabel: "Problem Solved",
+      solutionLabel: "Technical Solution",
+      roleLabel: "My Role & Contributions",
+      bottomTicker: ['NEXT.JS 14', 'THREE.JS 3D', 'NODE.JS REST APIS', 'POSTGRESQL 3NF', 'REDIS CACHING', 'DOCKER COMPOSE', 'CLEAN CODE'],
       projects: [
         {
           id: 1,
-          title: "Nomadix — All-in-One Travel & Community App",
-          category: "Final Year Capstone Project",
-          description: "Nomadix is a full-featured travel platform developed as the Final Year Project (FYP) at the University of Greenwich. It allows users to compare flights and hotels, build custom personalized itineraries, and exchange real-world travel stories with an active community.",
-          highlights: [
-            "Final Year Project synthesizing Software Engineering study at Greenwich",
-            "Interactive itinerary planning engine allowing drag-and-drop schedule creation",
-            "Integrated multi-criteria flight and hotel comparison service with responsive UI",
-            "Social travel feed with user reviews, image uploads, and destination bookmarks"
-          ]
-        },
-        {
-          id: 2,
           title: "NÉT — Sustainable Ocean Net & 3D Interactive Craft",
           category: "Full-Stack Web & 3D Interactive Platform",
+          tagline: "Eco-commerce platform transforming marine ghost nets into bespoke products with real-time 3D preview & AI studio.",
           description: "Innovative sustainable e-commerce and interactive 3D craft platform created for VecomNet's Tsunami Team. Transforms discarded ocean ghost nets into bespoke bags & charms, featuring real-time 3D model customization, AI story studio, and a transparent digital eco-passport.",
+          problem: "Marine ghost nets pollute ocean ecosystems, while sustainable products often lack interactive, engaging digital experiences for modern consumers.",
+          solution: "Built a responsive Next.js 14 web platform combining Three.js 3D model customizers, an AI charm studio pipeline, and a transparent digital eco-passport verifying net recovery coordinates.",
+          myRole: "Full-Stack Developer (3D visualizer integration, responsive design, AI studio connection & Vercel deployment)",
           highlights: [
-            "Engineered interactive 3D product visualizer allowing 360-degree rotation and real-time custom color preview",
-            "Built an AI-assisted custom bag designer studio with dynamic configuration options",
-            "Integrated a verifiable digital eco-passport displaying marine net recovery metrics and GPS batch identification",
+            "Engineered interactive 3D product visualizer allowing 360-degree rotation and real-time custom color rendering via Three.js",
+            "Integrated AI-assisted custom bag designer studio with dynamic configuration options",
+            "Built a verifiable digital eco-passport showing marine net recovery metrics and GPS batch identification",
             "Optimized responsive UI/UX and smooth animations deployed seamlessly on Vercel"
           ]
         },
         {
-          id: 3,
-          title: "Web2 Dynamic Web Application",
-          category: "Full-Stack Single Page App",
-          description: "Modern component-based dynamic single page web application engineered for Web Programming coursework at the University of Greenwich, leveraging reactive state management and seamless RESTful data binding.",
+          id: 2,
+          title: "Nomadix — Travel Platform & Scalable Backend Architecture",
+          category: "Final Year Capstone (FYP) · Backend Architecture",
+          tagline: "Scalable backend architecture with 28 relational tables, Redis caching, JWT auth & Docker containerization.",
+          description: "Full-featured travel platform backend engineered as the Final Year Project (FYP) at the University of Greenwich. Features a modular RESTful API architecture handling itinerary planning, flight/hotel comparison services, user communities, and secure session management.",
+          problem: "Travelers struggle with fragmented tools for itineraries, bookings, and community reviews, demanding a unified and resilient data service.",
+          solution: "Architected a modular Node.js/Express REST backend backed by a 28-table 3NF PostgreSQL database, Redis caching layer, and Dockerized multi-service setup.",
+          myRole: "Backend & Data Architect (Database 3NF modeling, migration scripts, JWT refresh token rotation, Redis caching & integration tests)",
           highlights: [
-            "Reactive single-page architecture built with Vue 3 component tree and reactive stores",
-            "Strict compliance with User Interface Design principles and accessibility standards",
-            "Robust data synchronization and interactive user workflows"
+            "Designed a normalized 28-table 3NF PostgreSQL schema with Knex migrations and relational indexing",
+            "Implemented secure JWT authentication with refresh token rotation and role-based access control",
+            "Integrated Redis in-memory caching layer to optimize high-frequency itinerary and lookup queries",
+            "Orchestrated 3-service local environment with Docker Compose and automated API integration test suites"
+          ]
+        },
+        {
+          id: 3,
+          title: "IT Helpdesk Response Library (MEVN Stack)",
+          category: "Full-Stack Enterprise Support Platform",
+          tagline: "Enterprise ticket resolution platform with 8 RESTful endpoints, MongoDB schema, and Vue 3 reactive dashboard.",
+          description: "Component-based dynamic web application engineered for enterprise IT support workflows. Enables support technicians to manage incident tickets, query an organized solution response knowledge base, and track resolution metrics.",
+          problem: "IT helpdesk teams face repetitive incident inquiries without an organized, searchable response repository and structured resolution workflows.",
+          solution: "Developed a reactive single-page dashboard with Vue 3 communicating with an Express/MongoDB backend providing 8 RESTful endpoints for ticket and response management.",
+          myRole: "Full-Stack Developer (Vue 3 frontend state management, Express API routes, MongoDB schema & automated HTTP tests)",
+          highlights: [
+            "Engineered 8 RESTful API endpoints for ticket lifecycle, category indexing, and response library searches",
+            "Designed MongoDB data schema with Mongoose models, validation, and query filtering",
+            "Built reactive Vue 3 dashboard adhering to accessibility guidelines and responsive UI patterns",
+            "Created automated API test collections (api_test.http) for rapid endpoint verification"
           ]
         },
         {
           id: 4,
-          title: "Native Android Hiking & Trail Tracker App",
-          category: "Native Mobile Application",
-          description: "Native Android application engineered in Java for mobile application development coursework, helping outdoor enthusiasts plan, record, and log hiking trails with offline SQLite persistence.",
+          title: "M-Hike — Trail Tracker & Outdoor Journal",
+          category: "Native Android Mobile Application",
+          tagline: "Native Android mobile app with real-time Cloud Firestore sync, Firebase Auth, and offline trail observation logging.",
+          description: "Native Android mobile application engineered in Java for outdoor enthusiasts to plan hiking trails, record GPS waypoints, log environmental observations, and synchronize expedition journals in real time.",
+          problem: "Hikers and field researchers need a dedicated mobile journal to record trail conditions and observations reliably during outdoor expeditions.",
+          solution: "Engineered a native Java Android application integrating Firebase Authentication and Cloud Firestore real-time snapshot listeners for persistent cloud sync.",
+          myRole: "Android Developer (Java activities/fragments architecture, FirestoreHelper sync, dynamic form validation & UI)",
           highlights: [
-            "Architected native Android activities and fragments with clean separation of concerns",
-            "Implemented local SQLite database caching for offline trail observations and condition logs",
-            "Dynamic input validation with customized forms and material design aesthetics"
+            "Implemented real-time cloud data synchronization using Cloud Firestore addSnapshotListener for instant updates",
+            "Built secure authentication workflows and profile management with Firebase Authentication",
+            "Structured clean Android Activity/Fragment architecture with custom input validation for trail logs",
+            "Implemented graceful empty states and sample dataset upload handlers for seamless onboarding"
           ]
         }
       ]
     },
     achievements: {
       eyebrow: "HONORS & RECOGNITION",
-      title: "ACADEMIC HONORS & GREENWICH MILESTONES",
-      verified: "VERIFIED",
+      title: "ACADEMIC HONORS & VERIFIED MILESTONES",
       milestonesHeading: "Honors & Award Milestones",
-      certified: "University Certified",
-      milestoneBadge: "Academic Milestone",
       credentials: [
         { 
           value: "BSc (Hons)", 
           suffix: "Degree", 
           label: "Software Engineering", 
-          desc: "University of Greenwich (British Degree Standard)" 
+          desc: "University of Greenwich (British Standard Curriculum)" 
         },
         { 
           value: "04 Major", 
           suffix: "Honors", 
           label: "Awards & Competitions", 
-          desc: "Top 3 Cohort, Innovation Hackathon, LG Finals & Best Club" 
+          desc: "Top 3 Student, Hackathon 2nd Prize, LG National Finalist & Best Club" 
         },
         { 
-          value: "10+", 
-          suffix: "Repos", 
-          label: "Software Projects", 
-          desc: "Full-Stack Web, 3D Interactive Apps & Mobile Systems" 
+          value: "04 Key", 
+          suffix: "Projects", 
+          label: "Production & Academic Repos", 
+          desc: "Full-Stack Web, 3D Interactive Apps & Scalable Backend Systems" 
         },
         { 
           value: "100%", 
           suffix: "English", 
           label: "International Standard", 
-          desc: "Full English Curriculum, System Specs & Technical Docs" 
+          desc: "Full English Curriculum, Architectural Specs & Technical Docs" 
         },
       ],
       list: [
@@ -201,6 +226,7 @@ export const translations = {
           year: "2024",
           title: "Top 3 Student of University of Greenwich 2024",
           organization: "University of Greenwich",
+          verificationLabel: "University Certified",
           description: "Recognized among the Top 3 Students of the University of Greenwich in 2024 for outstanding academic commitment, software engineering capabilities, and active student community contributions.",
           badge: "Top 3 Student 2024"
         },
@@ -209,6 +235,7 @@ export const translations = {
           year: "2024",
           title: "Second Place (2nd Prize Winner) — Impact Innovation Bootcamp",
           organization: "199 Hospital (Ministry of Public Security)",
+          verificationLabel: "Competition Verified",
           description: "Achieved Second Place at the Impact Innovation Bootcamp organized by 199 Hospital, innovating practical technology solutions under fast-paced hackathon prototyping sprints.",
           badge: "2nd Prize Winner"
         },
@@ -217,16 +244,18 @@ export const translations = {
           year: "2024",
           title: "The Best Club of 2024 — Greenwich Newspaper Group",
           organization: "University of Greenwich Student Community",
-          description: "Awarded 'The Best Club of 2024' with Greenwich Newspaper Group, demonstrating strong team leadership, media creation, project organization, and collaborative impact across university initiatives.",
+          verificationLabel: "Campus Leadership",
+          description: "Awarded 'The Best Club of 2024' as Club President with Greenwich Newspaper Group, demonstrating strong team leadership, media creation, project organization, and collaborative impact.",
           badge: "Best Club 2024"
         },
         {
           id: 4,
           year: "2024",
-          title: "The Final Round Finalist — LG Dream Code Challenge",
+          title: "National Finalist — LG Dream Code Challenge",
           organization: "LG Electronics",
+          verificationLabel: "National Finalist",
           description: "Advanced to the Final Round of the prestigious LG Dream Code Challenge, competing among top nationwide engineering students in algorithmic problem solving and software programming.",
-          badge: "Final Round Finalist"
+          badge: "National Finalist"
         }
       ]
     },
@@ -234,13 +263,15 @@ export const translations = {
       eyebrow: "GET IN TOUCH",
       title: "GET IN TOUCH & CONNECT",
       directHeading: "Direct Contact Information",
-      directSub: "Feel free to copy my direct contact details or send a message:",
+      directSub: "Feel free to copy my direct contact details, download my CV, or send a message:",
       emailLabel: "Direct Email",
       phoneLabel: "Phone Number",
       locationLabel: "Location",
+      cvLabel: "Curriculum Vitae",
+      downloadCvAction: "Download ATS Resume (PDF)",
       socialLabel: "Social Channels & Profiles",
       formHeading: "Send a Quick Message",
-      formSub: "I'll get back to you as soon as possible:",
+      formSub: "I will respond to your email as soon as possible:",
       nameLabel: "Your Name *",
       emailInputLabel: "Your Email *",
       subjectLabel: "Subject",
@@ -259,17 +290,20 @@ export const translations = {
       messagePlaceholder: "Write your message here...",
     },
     modal: {
-      openSource: "Open Source",
+      openSource: "Verified Repository",
       highlightsTitle: "Key Architecture & Engineering Highlights",
-      techTitle: "Technologies Used",
-      stars: "Stars",
-      forks: "Forks"
+      techTitle: "Technologies Applied",
+      problemTitle: "Problem Solved",
+      solutionTitle: "Technical Solution",
+      roleTitle: "My Role & Contributions",
+      viewGithub: "View GitHub Repository",
+      viewDemo: "Open Live Demo"
     },
     footer: {
       portfolioYear: "Portfolio 2026",
       tagline: "CRAFTED WITH PRECISION • REACT & TAILWIND",
       backToTop: "BACK TO TOP",
-      copyright: "All rights reserved. Open for new opportunities and collaborations!"
+      copyright: "All rights reserved. Open for Full-Stack / Software Engineering Internship opportunities!"
     }
   },
 
@@ -280,65 +314,72 @@ export const translations = {
       work: "DỰ ÁN",
       achievements: "THÀNH TÍCH",
       contact: "LIÊN HỆ",
+      resume: "HỒ SƠ (CV)",
     },
     hero: {
+      greeting: "Nguyễn Văn Đức",
+      role: "Thực tập sinh Kỹ sư Phần mềm Full-Stack",
+      subHeadline: "Sinh viên năm cuối Kỹ thuật Phần mềm · Đại học Greenwich · Sẵn sàng thực tập tại Đà Nẵng & Remote",
+      ctaProjects: "Xem Dự Án",
+      ctaCv: "Tải CV (PDF)",
       titleWord1: "KỸ SƯ",
       titleWord2: "PHẦN MỀM",
       subtitleVisuals: "GIAO DIỆN",
       subtitleCode: "MÃ NGUỒN",
       subtitleArch: "KIẾN TRÚC",
       scrollExplore: "CUỘN ĐỂ KHÁM PHÁ",
-      rotatingBadge: "HỢP TÁC CÙNG TÔI • HỢP TÁC CÙNG TÔI •",
+      rotatingBadge: "SẴN SÀNG THỰC TẬP • ĐỒNG HÀNH PHÁT TRIỂN •",
       basedIn: "ĐÀ NẴNG, VIỆT NAM",
     },
     about: {
       sectionTitle: "GIỚI THIỆU BẢN THÂN",
       eyebrow: "—— TÔI LÀ AI ?",
-      headlinePart1: "TÔI XÂY DỰNG",
-      headlinePart2: "ỨNG DỤNG TẬN TÂM,",
-      headlinePart3: "HỌC HỎI KHÔNG NGỪNG ĐỂ TẠO NÊN",
-      headlinePart4: "GIÁ TRỊ THỰC.",
-      bioP1: "Tôi là Nguyễn Văn Đức — sinh viên chuyên ngành Kỹ sư Phần mềm tại Đại học Greenwich. Định hướng phát triển Full-stack (Web & Application), tôi đam mê việc hiện thực hóa các ý tưởng thành sản phẩm hoàn chỉnh — từ giao diện người dùng trực quan, mượt mà cho đến hệ thống backend xử lý dữ liệu chặt chẽ và ổn định. Tôi luôn chú trọng viết mã nguồn rõ ràng, dễ bảo trì, làm việc chỉn chu và chủ động cập nhật các công nghệ mới nhằm tối ưu hóa trải nghiệm sản phẩm.",
-      bioP2: "Hiện tại, tôi đang tìm kiếm cơ hội Thực tập sinh Full-Stack / Software Engineer Intern để mang những kiến thức đã tích lũy đóng góp trực tiếp vào các dự án thực tế. Tôi hướng tới một môi trường làm việc thân thiện, cởi mở và giàu tinh thần đồng đội — nơi các thành viên sẵn sàng sẻ chia, hỗ trợ và cùng nhau tiến bộ mỗi ngày. Đối với tôi, kỳ thực tập không chỉ là giai đoạn rèn luyện kỹ năng mà còn là bước khởi đầu để gắn bó lâu dài, nỗ lực tạo ra giá trị thiết thực cho tập thể và mở rộng cơ hội phát triển, thăng tiến sự nghiệp trong tương lai.",
-      badgeGrad: "SINH VIÊN GREENWICH • SOFTWARE ENGINEERING",
+      headlinePart1: "XÂY DỰNG ỨNG DỤNG",
+      headlinePart2: "BÀI BẢN,",
+      headlinePart3: "DỰA TRÊN KIẾN TRÚC RÕ RÀNG &",
+      headlinePart4: "GIÁ TRỊ SẢN PHẨM THỰC.",
+      bioP1: "Tôi là Nguyễn Văn Đức — sinh viên năm cuối chuyên ngành Kỹ thuật Phần mềm tại Đại học Greenwich (Cơ sở Việt Nam). Định hướng phát triển Full-Stack (Web & Application), tôi kết hợp giữa việc xây dựng giao diện người dùng mượt mà, trực quan với nền tảng backend xử lý dữ liệu chặt chẽ và chuẩn mực. Tôi đã trực tiếp phát triển các sản phẩm thực tế: từ nền tảng web 3D tương tác với Next.js 14 và Three.js (dự án NẾT) đến hệ thống backend quan hệ với PostgreSQL (28 bảng 3NF), bộ nhớ đệm Redis và Docker Compose (dự án Nomadix).",
+      bioP2: "Hiện tại, tôi đang tìm kiếm cơ hội Thực tập sinh Full-Stack / Software Engineer Intern để đóng góp trực tiếp vào các sản phẩm thực tế, viết code sạch, dễ kiểm thử và học hỏi quy trình chuyên nghiệp cùng đồng đội. Đối với tôi, kỳ thực tập là cam kết gắn bó nghiêm túc để làm chủ quy trình làm phần mềm, chủ động hoàn thành các tính năng kỹ thuật và tạo ra giá trị bền vững cho tổ chức.",
+      downloadCvBtn: "Tải Hồ Sơ Năng Lực (CV PDF)",
+      badgeGrad: "GREENWICH VIỆT NAM • KỸ THUẬT PHẦN MỀM",
       badgeAvailable: "SẴN SÀNG THỰC TẬP",
       metadata: [
         { label: "ĐỊA ĐIỂM", value: "ĐÀ NẴNG, VIỆT NAM (SẴN SÀNG HYBRID / REMOTE)" },
-        { label: "BẰNG CẤP", value: "BSC (HONS) SOFTWARE ENG" },
+        { label: "BẰNG CẤP", value: "BSC (HONS) KỸ THUẬT PHẦN MỀM" },
         { label: "TRƯỜNG ĐÀO TẠO", value: "ĐẠI HỌC GREENWICH" },
-        { label: "VỊ TRÍ MONG MUỐN", value: "THỰC TẬP SINH FULL-STACK" },
-        { label: "CHUYÊN MÔN", value: "FULL-STACK WEB & APPLICATION" },
-        { label: "TECH STACK", value: "REACT / NEXT.JS / NODE.JS / PYTHON / POSTGRESQL" },
+        { label: "VỊ TRÍ MONG MUỐN", value: "THỰC TẬP SINH FULL-STACK / JUNIOR ENGINEER" },
+        { label: "CHUYÊN MÔN CỐT LÕI", value: "KIẾN TRÚC FULL-STACK WEB & APPLICATION" },
+        { label: "TECH STACK", value: "REACT / NEXT.JS / NODE.JS / TYPESCRIPT / POSTGRESQL / MONGODB" },
       ],
     },
     expertise: {
       eyebrow: "KỸ NĂNG & NĂNG LỰC",
-      title: "MA TRẬN NĂNG LỰC & KỸ NĂNG",
-      subtitle: "Định hình chuẩn mực cho Kỹ sư Phần mềm mới tốt nghiệp — kết hợp nền tảng full-stack thực chiến cùng kỹ năng làm việc nhóm, thích ứng nhanh và tư duy giải quyết vấn đề.",
+      title: "MA TRẬN NĂNG LỰC KỸ THUẬT",
+      subtitle: "Định hình chuẩn mực cho Thực tập sinh & Kỹ sư Phần mềm mới tốt nghiệp — kết hợp nền tảng full-stack thực chiến cùng tư duy kiến trúc sạch, thích ứng nhanh và tinh thần trách nhiệm.",
       tabAll: "Tổng quan",
       tabTech: "Kỹ thuật chuyên môn",
       tabSoft: "Kỹ năng mềm",
-      techHeading: "Nền tảng Kỹ thuật Chuyên môn (Chuẩn Kỹ sư Phần mềm)",
+      techHeading: "Nền tảng Kỹ thuật Chuyên môn (Phân loại theo dự án & ứng dụng thực tế)",
       softHeading: "Kỹ Năng Mềm Chuyên Nghiệp & Tư Duy Kỹ Sư",
       softCount: "[ 5 Năng Lực Cốt Lõi ]",
       domains: [
         {
           id: '01',
-          title: 'Frontend Engineering',
+          title: 'Frontend & Web Tương Tác',
           category: 'CLIENT-SIDE',
-          description: 'Phát triển giao diện web tương tác mượt mà, chuẩn công thái học và chuẩn Responsive với React, Next.js và Tailwind CSS.',
+          description: 'Phát triển giao diện web mượt mà, chuẩn Responsive và công thái học với Next.js 14, React, TypeScript, Tailwind CSS và đồ họa 3D Three.js.',
         },
         {
           id: '02',
-          title: 'Backend & Data Foundations',
+          title: 'Backend & Kiến Trúc Dữ Liệu',
           category: 'SERVER & DATABASE',
-          description: 'Xây dựng RESTful API dạng module với Node.js/Express, áp dụng tư duy hướng đối tượng (OOP) với Java và thiết kế cơ sở dữ liệu quan hệ SQL.',
+          description: 'Thiết kế RESTful API dạng module với Node.js/Express, mô hình hóa dữ liệu quan hệ PostgreSQL (chuẩn 3NF), MongoDB, cache Redis và OOP với Java.',
         },
         {
           id: '03',
-          title: 'Tools & Engineering Practices',
+          title: 'DevOps & Quy Trình Kỹ Thuật',
           category: 'DEVOPS & WORKFLOW',
-          description: 'Quản lý phiên bản mã nguồn chặt chẽ với Git Flow, đóng gói dịch vụ độc lập bằng Docker và kiểm thử API tự động với Postman.',
+          description: 'Quản lý phiên bản chặt chẽ bằng Git Flow, đóng gói hệ thống đa dịch vụ bằng Docker Compose và kiểm thử hợp đồng API tự động bằng Postman.',
         },
       ],
       softSkills: [
@@ -384,65 +425,83 @@ export const translations = {
       eyebrow: "CUỘN ĐỂ KHÁM PHÁ",
       title: "DỰ ÁN",
       archDetails: "Chi tiết kiến trúc",
-      viewGithub: "Xem trên GitHub",
+      viewGithub: "Xem mã nguồn GitHub",
       viewDemo: "Trải nghiệm trực tiếp",
-      bottomTicker: ['THIẾT KẾ UI/UX', 'WEB TƯƠNG TÁC 3D', 'LẬP TRÌNH SÁNG TẠO', 'CHUYỂN ĐỘNG MƯỢT MÀ', 'HIỆU NĂNG CAO', 'CLEAN CODE'],
+      problemLabel: "Vấn đề giải quyết",
+      solutionLabel: "Giải pháp kỹ thuật",
+      roleLabel: "Vai trò & Đóng góp",
+      bottomTicker: ['NEXT.JS 14', 'THREE.JS 3D', 'NODE.JS REST APIS', 'POSTGRESQL 3NF', 'REDIS CACHING', 'DOCKER COMPOSE', 'CLEAN CODE'],
       projects: [
         {
           id: 1,
-          title: "Nomadix — Nền Tảng Du Lịch & Cộng Đồng All-in-One",
-          category: "Đồ án Tốt Nghiệp Capstone (FYP)",
-          description: "Nomadix là nền tảng du lịch toàn diện được phát triển dưới dạng Đồ án Tốt nghiệp (FYP) tại Đại học Greenwich. Cho phép người dùng so sánh vé máy bay & khách sạn, tạo lịch trình cá nhân hóa và chia sẻ trải nghiệm thực tế cùng cộng đồng.",
-          highlights: [
-            "Đồ án tốt nghiệp tổng hợp kiến thức toàn khóa Kỹ sư Phần mềm tại Greenwich",
-            "Công cụ lập lịch trình tương tác kéo thả linh hoạt và trực quan",
-            "Tích hợp dịch vụ so sánh chuyến bay và khách sạn đa tiêu chí",
-            "Cộng đồng du lịch với tính năng đánh giá, đăng tải hình ảnh và lưu điểm đến"
-          ]
-        },
-        {
-          id: 2,
           title: "NÉT — Nền Tảng Thời Trang Tuần Hoàn & Tương Tác 3D",
           category: "Nền Tảng Full-Stack Web & 3D Interactive",
+          tagline: "Sàn thương mại điện tử tuần hoàn tái sinh lưới ma đại dương với tùy biến 3D xoay 360° & studio sáng tạo AI.",
           description: "Nền tảng thương mại điện tử bền vững và thủ công tương tác 3D sáng tạo cho đội thi VecomNet's Tsunami Team. Tái sinh lưới ma đại dương thành túi xách & charm độc bản, tích hợp tùy biến mô hình 3D xoay 360°, studio sáng tạo AI và hải đồ căn cước số minh bạch.",
+          problem: "Lưới ma đại dương gây ô nhiễm nghiêm trọng, trong khi các sản phẩm thời trang tái chế thiếu trải nghiệm tương tác số trực quan để thu hút người tiêu dùng.",
+          solution: "Xây dựng web application chuẩn Responsive trên Next.js 14, tích hợp bộ tùy biến mô hình 3D với Three.js, studio thiết kế charm AI và hải đồ căn cước số truy xuất nguồn gốc.",
+          myRole: "Lập trình viên Full-Stack (Tích hợp bộ xem 3D Three.js, responsive UI/UX, kết nối luồng AI studio và triển khai Vercel)",
           highlights: [
-            "Xây dựng bộ xem mô hình 3D thực tế xoay 360 độ và chọn màu đại dương thời gian thực",
+            "Xây dựng bộ xem mô hình 3D thực tế xoay 360 độ và chọn màu đại dương thời gian thực với Three.js",
             "Tích hợp studio thiết kế túi cá nhân hóa ứng dụng AI thông minh",
             "Hệ thống hải đồ căn cước số công khai dữ liệu cứu hộ lưới ma với mã định danh GPS đáy biển",
             "Tối ưu hiệu năng, giao diện chuyển động mượt mà triển khai liền mạch trên Vercel"
           ]
         },
         {
-          id: 3,
-          title: "Web2 Dynamic Web Application",
-          category: "Ứng Dụng Đơn Trang Full-Stack SPA",
-          description: "Ứng dụng web đơn trang (SPA) động xây dựng theo kiến trúc component hiện đại cho học phần Lập trình Web tại Đại học Greenwich, ứng dụng quản lý trạng thái phản ứng và liên kết API RESTful.",
+          id: 2,
+          title: "Nomadix — Nền Tảng Du Lịch & Kiến Trúc Backend Đa Dịch Vụ",
+          category: "Đồ án Tốt Nghiệp Capstone (FYP) · Kiến Trúc Backend",
+          tagline: "Hệ thống backend module với 28 bảng dữ liệu quan hệ chuẩn 3NF, bộ nhớ đệm Redis, xác thực JWT và Docker.",
+          description: "Hệ thống backend nền tảng du lịch toàn diện phát triển cho Đồ án Tốt nghiệp (FYP) tại Đại học Greenwich. Cung cấp API RESTful xử lý lập kế hoạch lịch trình, dịch vụ tra cứu so sánh chuyến bay/khách sạn, mạng xã hội chia sẻ trải nghiệm và quản lý phiên người dùng.",
+          problem: "Người dùng phải sử dụng nhiều công cụ phân mảnh để lên lịch trình, đặt phòng và đọc đánh giá, đòi hỏi một hệ thống backend xử lý dữ liệu tập trung, ổn định.",
+          solution: "Thiết kế kiến trúc REST API dạng module trên nền Node.js/Express, cơ sở dữ liệu PostgreSQL chuẩn hóa 28 bảng 3NF, bộ nhớ đệm Redis và môi trường container hóa với Docker Compose.",
+          myRole: "Kỹ sư Backend & Kiến trúc Dữ liệu (Mô hình hóa DB 3NF, viết migration Knex, xác thực JWT token rotation, cache Redis và bộ kiểm thử API)",
           highlights: [
-            "Kiến trúc SPA phản ứng nhanh xây dựng với cây component và reactive store Vue 3",
-            "Tuân thủ nghiêm ngặt tiêu chuẩn thiết kế giao diện UI/UX và khả năng tiếp cận",
-            "Đồng bộ hóa dữ liệu thời gian thực và trải nghiệm người dùng liền mạch"
+            "Thiết kế cơ sở dữ liệu quan hệ PostgreSQL 28 bảng chuẩn 3NF kèm kịch bản migration và đánh chỉ mục tối ưu",
+            "Xây dựng cơ chế xác thực JWT bảo mật với kỹ thuật xoay vòng refresh token và phân quyền người dùng",
+            "Tích hợp bộ nhớ đệm Redis tối ưu hóa tốc độ phản hồi cho các truy vấn lịch trình tần suất cao",
+            "Điều phối môi trường cục bộ 3 dịch vụ bằng Docker Compose kèm bộ test tự động kiểm thử endpoint"
+          ]
+        },
+        {
+          id: 3,
+          title: "IT Helpdesk Response Library (MEVN Stack)",
+          category: "Nền Tảng Hỗ Trợ Doanh Nghiệp Full-Stack",
+          tagline: "Hệ thống quản lý ticket hỗ trợ kỹ thuật và thư viện giải pháp với 8 RESTful endpoints, MongoDB và Vue 3 SPA.",
+          description: "Ứng dụng web động xây dựng cho quy trình hỗ trợ kỹ thuật IT nội bộ. Cho phép kỹ thuật viên tiếp nhận, phân loại và xử lý ticket sự cố, tra cứu thư viện giải pháp nhanh và theo dõi chỉ số hỗ trợ.",
+          problem: "Đội ngũ IT Helpdesk thường xuyên gặp các sự cố lặp lại nhưng thiếu kho giải pháp chuẩn hóa, gây chậm trễ thời gian phản hồi.",
+          solution: "Phát triển bảng điều khiển đơn trang SPA với Vue 3 kết nối backend Express/MongoDB cung cấp 8 endpoint RESTful quản lý vòng đời ticket và tra cứu thư viện giải pháp.",
+          myRole: "Lập trình viên Full-Stack (Xây dựng Vue 3 SPA, quản lý trạng thái, thiết kế schema MongoDB và bộ kiểm thử tự động)",
+          highlights: [
+            "Thiết kế 8 endpoint RESTful API xử lý trọn vẹn vòng đời ticket và tra cứu thư viện giải pháp theo danh mục",
+            "Xây dựng Schema cơ sở dữ liệu MongoDB tối ưu bằng Mongoose kèm kiểm tra ràng buộc dữ liệu",
+            "Phát triển giao diện phản ứng nhanh Vue 3 tuân thủ nguyên tắc thiết kế công thái học và trợ năng",
+            "Tích hợp file kịch bản api_test.http phục vụ kiểm thử và tài liệu hóa endpoint chuẩn mực"
           ]
         },
         {
           id: 4,
-          title: "Ứng Dụng Native Android Theo Dõi Đường Đi Rừng & Leo Núi",
+          title: "M-Hike — Ứng Dụng Di Động Nhật Ký Leo Núi & Đường Đi Rừng",
           category: "Ứng Dụng Di Động Native Android",
-          description: "Ứng dụng Android thuần xây dựng bằng Java cho môn học Phát triển Ứng dụng Di động, hỗ trợ người yêu dã ngoại lập kế hoạch, ghi chép và lưu trữ hành trình leo núi với cơ sở dữ liệu SQLite ngoại tuyến.",
+          tagline: "Ứng dụng Android thuần với đồng bộ đám mây thời gian thực Cloud Firestore, Firebase Auth và lưu trữ ngoại tuyến.",
+          description: "Ứng dụng di động Android thuần viết bằng ngôn ngữ Java phục vụ cộng đồng dã ngoại lập kế hoạch leo núi, ghi nhận tọa độ GPS, lưu trữ quan sát môi trường và đồng bộ nhật ký hành trình theo thời gian thực.",
+          problem: "Người leo núi và khảo sát thực địa cần một ứng dụng nhật ký chuyên dụng để ghi chép địa hình, thời tiết và quan sát ngay cả khi điều kiện kết nối thay đổi.",
+          solution: "Lập trình ứng dụng Android thuần bằng Java tích hợp Cloud Firestore với cơ chế addSnapshotListener để đồng bộ dữ liệu hai chiều tức thì cùng Firebase Authentication.",
+          myRole: "Lập trình viên Android (Kiến trúc Activity/Fragment, xử lý đồng bộ FirestoreHelper, kiểm tra form nhập liệu động và UI Material)",
           highlights: [
-            "Kiến trúc Activity và Fragment phân tách trách nhiệm rõ ràng chuẩn Android",
-            "Tích hợp cơ sở dữ liệu SQLite cục bộ lưu nhật ký quan sát không cần mạng",
-            "Xác thực dữ liệu đầu vào theo thời gian thực với phong cách thiết kế Material Design"
+            "Tích hợp đồng bộ dữ liệu đám mây hai chiều thời gian thực với Cloud Firestore addSnapshotListener",
+            "Xây dựng quy trình xác thực người dùng và bảo vệ phiên đăng nhập an toàn bằng Firebase Authentication",
+            "Thiết kế kiến trúc Activity & Fragment phân tách rõ ràng với bộ kiểm tra dữ liệu đầu vào tùy biến",
+            "Tối ưu trải nghiệm với màn hình trạng thái rỗng và hàm nạp dữ liệu mẫu ban đầu trực quan"
           ]
         }
       ]
     },
     achievements: {
       eyebrow: "DANH HIỆU & GIẢI THƯỞNG",
-      title: "DANH HIỆU HỌC THUẬT & CỘT MỐC GREENWICH",
-      verified: "XÁC MINH",
+      title: "DANH HIỆU HỌC THUẬT & CỘT MỐC CHỨNG THỰC",
       milestonesHeading: "Chi tiết Các Cột mốc & Giải thưởng",
-      certified: "Chứng thực chính quy",
-      milestoneBadge: "Cột mốc học thuật",
       credentials: [
         { 
           value: "BSc (Hons)", 
@@ -454,13 +513,13 @@ export const translations = {
           value: "04 Giải", 
           suffix: "Danh hiệu", 
           label: "Giải thưởng & Cuộc thi", 
-          desc: "Top 3 Sinh viên, Giải Nhì Hackathon, Chung kết LG & CLB xuất sắc" 
+          desc: "Top 3 Sinh viên, Giải Nhì Hackathon, Chung kết Toàn quốc LG & CLB xuất sắc" 
         },
         { 
-          value: "10+", 
+          value: "04 Key", 
           suffix: "Dự án", 
-          label: "Mã nguồn Phần mềm", 
-          desc: "Ứng dụng Full-Stack Web, 3D Tương tác & Ứng dụng Di động" 
+          label: "Dự án Nổi bật", 
+          desc: "Full-Stack Web, 3D Tương tác & Hệ thống Backend Mở rộng" 
         },
         { 
           value: "100%", 
@@ -475,6 +534,7 @@ export const translations = {
           year: "2024",
           title: "Top 3 Sinh Viên Xuất Sắc Đại Học Greenwich 2024",
           organization: "Đại học Greenwich",
+          verificationLabel: "Chứng nhận cấp trường",
           description: "Được vinh danh trong Top 3 Sinh viên xuất sắc của Đại học Greenwich năm 2024 nhờ nỗ lực học tập vượt bậc, năng lực kỹ thuật phần mềm vững vàng và đóng góp tích cực cho cộng đồng sinh viên.",
           badge: "Top 3 Sinh viên 2024"
         },
@@ -483,6 +543,7 @@ export const translations = {
           year: "2024",
           title: "Giải Nhì (Second Place) — Impact Innovation Bootcamp",
           organization: "Bệnh viện 199 (Bộ Công An)",
+          verificationLabel: "Xác nhận cuộc thi",
           description: "Đạt Giải Nhì tại cuộc thi Impact Innovation Bootcamp do Bệnh viện 199 tổ chức, sáng tạo giải pháp công nghệ y tế thực tiễn trong các chặng chạy nước rút hackathon cường độ cao.",
           badge: "Giải Nhì Cuộc Thi"
         },
@@ -491,7 +552,8 @@ export const translations = {
           year: "2024",
           title: "Câu Lạc Bộ Xuất Sắc Nhất Năm 2024 — Greenwich Newspaper Group",
           organization: "Cộng đồng Sinh viên Đại học Greenwich",
-          description: "Được trao tặng danh hiệu 'CLB Xuất Sắc Nhất Năm 2024' cùng Greenwich Newspaper Group, khẳng định năng lực lãnh đạo đội nhóm, tổ chức dự án và lan tỏa giá trị cộng đồng.",
+          verificationLabel: "Cột mốc lãnh đạo",
+          description: "Được trao tặng danh hiệu 'CLB Xuất Sắc Nhất Năm 2024' với cương vị Chủ nhiệm CLB Greenwich Newspaper Group, khẳng định năng lực lãnh đạo đội nhóm, tổ chức dự án và lan tỏa giá trị cộng đồng.",
           badge: "CLB Xuất Sắc 2024"
         },
         {
@@ -499,6 +561,7 @@ export const translations = {
           year: "2024",
           title: "Vòng Chung Kết Toàn Quốc LG Dream Code Challenge",
           organization: "Tập đoàn LG Electronics",
+          verificationLabel: "Chung kết toàn quốc",
           description: "Vượt qua các vòng tuyển chọn gắt gao để tiến vào Vòng Chung kết toàn quốc cuộc thi LG Dream Code Challenge, tranh tài giải thuật và lập trình tối ưu cùng các tài năng công nghệ cả nước.",
           badge: "Chung Kết Toàn Quốc"
         }
@@ -508,10 +571,12 @@ export const translations = {
       eyebrow: "LIÊN HỆ",
       title: "KẾT NỐI & LIÊN HỆ TRỰC TIẾP",
       directHeading: "Thông Tin Liên Hệ Nhanh",
-      directSub: "Sao chép nhanh thông tin liên lạc hoặc gửi tin nhắn trao đổi cơ hội công việc:",
+      directSub: "Sao chép nhanh thông tin liên lạc, tải hồ sơ CV hoặc gửi tin nhắn trao đổi cơ hội công việc:",
       emailLabel: "Email Trực Tiếp",
       phoneLabel: "Số Điện Thoại",
       locationLabel: "Địa Điểm",
+      cvLabel: "Hồ Sơ Năng Lực (CV)",
+      downloadCvAction: "Tải bản CV chuẩn ATS (PDF)",
       socialLabel: "Mạng Xã Hội & Hồ Sơ Trực Tuyến",
       formHeading: "Gửi Tin Nhắn Nhanh",
       formSub: "Tôi sẽ phản hồi bạn trong thời gian sớm nhất:",
@@ -533,17 +598,20 @@ export const translations = {
       messagePlaceholder: "Nhập nội dung tin nhắn của bạn tại đây...",
     },
     modal: {
-      openSource: "Mã nguồn mở",
+      openSource: "Mã nguồn kiểm chứng",
       highlightsTitle: "Điểm Nhấn Kiến Trúc & Kỹ Thuật",
       techTitle: "Công Nghệ Ứng Dụng",
-      stars: "Sao",
-      forks: "Forks"
+      problemTitle: "Bài Toán Đặt Ra",
+      solutionTitle: "Giải Pháp Kỹ Thuật",
+      roleTitle: "Vai Trò & Đóng Góp",
+      viewGithub: "Xem mã nguồn GitHub",
+      viewDemo: "Trải nghiệm trực tiếp"
     },
     footer: {
       portfolioYear: "Portfolio 2026",
       tagline: "THIẾT KẾ TỐI ƯU • REACT & TAILWIND CSS",
       backToTop: "LÊN ĐẦU TRANG",
-      copyright: "Bảo lưu mọi quyền. Sẵn sàng đón nhận cơ hội công việc và hợp tác dự án!"
+      copyright: "Bảo lưu mọi quyền. Sẵn sàng đón nhận cơ hội thực tập Full-Stack / Software Engineering!"
     }
   }
 };
