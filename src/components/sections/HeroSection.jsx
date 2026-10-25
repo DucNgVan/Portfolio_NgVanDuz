@@ -125,8 +125,8 @@ const HeroSection = () => {
         </div>
       )}
 
-      {/* 2. MAIN HERO CONTENT (Exact Match to Reference Template Typography) */}
-      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4">
+      {/* 2. MAIN HERO CONTENT (Centered optical alignment between Nav & Footer) */}
+      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4 mt-4 sm:mt-7 lg:mt-9">
         
         {/* Kinetic Giant Word 1: "SOFTWARE" - Elegant Elongation & Liquid Wave Interaction */}
         <div 
