@@ -1,11 +1,32 @@
 import React, { useState } from 'react';
-import { Laptop, FileText, Send, CheckCircle2 } from 'lucide-react';
+import { Laptop, FileText, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/portfolioData';
 import profileImg from '@/assets/images/profile.jpg';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
+import { getTechIcon } from '@/components/ui/TechIcons';
+
+const allTechStack = [
+  { name: 'React.js', category: 'Frontend' },
+  { name: 'Next.js 14', category: 'Full-Stack' },
+  { name: 'TypeScript', category: 'Language' },
+  { name: 'JavaScript', category: 'Language' },
+  { name: 'Node.js', category: 'Runtime' },
+  { name: 'Express', category: 'Backend' },
+  { name: 'PostgreSQL', category: 'Relational DB' },
+  { name: 'Redis', category: 'Cache Store' },
+  { name: 'Docker', category: 'DevOps' },
+  { name: 'Tailwind CSS', category: 'Styling' },
+  { name: 'Three.js', category: '3D Graphics' },
+  { name: 'MongoDB', category: 'NoSQL DB' },
+  { name: 'Git & GitHub', category: 'VCS' },
+  { name: 'Postman', category: 'API Testing' },
+  { name: 'Firebase', category: 'Cloud BaaS' },
+  { name: 'Vue.js 3', category: 'Frontend' },
+  { name: 'Java', category: 'Mobile & OOP' },
+];
 
 const AboutSection = () => {
   const { lang } = useLanguage();
@@ -172,20 +193,70 @@ const AboutSection = () => {
         />
 
         {/* FULL WIDTH METADATA SPECIFICATIONS */}
-        <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-3 sm:gap-y-4">
-          {t.about.metadata.map((item, idx) => (
-            <ScrollStaggerItem key={idx} direction="up">
-              <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#222222] group hover:border-[#d8c8a8]/50 transition-colors">
-                <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#a0a0a0] uppercase shrink-0">
-                  {item.label}:
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-[#d8c8a8] font-mono leading-normal">
-                  {item.value}
-                </span>
-              </div>
-            </ScrollStaggerItem>
-          ))}
+        <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3 sm:gap-y-4">
+          {t.about.metadata
+            .filter((item) => !item.label.toUpperCase().includes('TECH'))
+            .map((item, idx) => (
+              <ScrollStaggerItem key={idx} direction="up">
+                <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#222222] group hover:border-[#d8c8a8]/50 transition-colors">
+                  <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#a0a0a0] uppercase shrink-0">
+                    {item.label}:
+                  </span>
+                  <span className="text-xs sm:text-sm font-bold text-[#d8c8a8] font-mono leading-normal">
+                    {item.value}
+                  </span>
+                </div>
+              </ScrollStaggerItem>
+            ))}
         </ScrollStagger>
+
+        {/* INTERACTIVE HORIZONTAL TECH STACK LOGO BAR (MARQUEE & DRAGGABLE) */}
+        <div className="mt-14 pt-10 border-t border-[#1e1e1e]">
+          <div className="flex items-center justify-between mb-6 px-1">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#d8c8a8] animate-pulse"></span>
+              <span className="text-xs font-mono tracking-[0.2em] text-[#d8c8a8] uppercase font-bold">
+                {lang === 'vi' ? 'HỆ THỐNG CÔNG NGHỆ CỐT LÕI' : 'CORE TECHNICAL STACK'}
+              </span>
+            </div>
+            <span className="text-[10px] font-mono text-[#777777] uppercase tracking-wider hidden sm:inline">
+              {lang === 'vi' ? '✦ CUỘN HOẶC KÉO NGANG ĐỂ KHÁM PHÁ' : '✦ DRAG OR SCROLL HORIZONTALLY'}
+            </span>
+          </div>
+
+          {/* Smooth Horizontal Carousel Track with Native Drag/Scroll and Hover Pause */}
+          <div className="relative w-full overflow-hidden group">
+            {/* Left and Right Subtle Fade Gradients */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none" />
+
+            <div className="flex gap-4 overflow-x-auto no-scrollbar py-2 px-4 cursor-grab active:cursor-grabbing select-none">
+              <div className="flex items-center gap-4 animate-marquee group-hover:[animation-play-state:paused] shrink-0">
+                {[...allTechStack, ...allTechStack].map((tech, idx) => {
+                  const Icon = getTechIcon(tech.name);
+                  return (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-[#121212] border border-[#222222] hover:border-[#d8c8a8]/70 hover:bg-[#181818] transition-all duration-300 shrink-0 shadow-md group/item hover:-translate-y-1"
+                    >
+                      <div className="w-7 h-7 rounded-lg bg-[#1a1a1a] border border-[#2c2c2c] flex items-center justify-center p-1 shrink-0 group-hover/item:scale-110 transition-transform">
+                        {Icon && <Icon className="w-4 h-4" />}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs font-mono font-bold text-[#f4efea] group-hover/item:text-[#d8c8a8] transition-colors whitespace-nowrap">
+                          {tech.name}
+                        </span>
+                        <span className="text-[9px] font-mono text-[#777777] uppercase tracking-wider">
+                          {tech.category}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </section>
