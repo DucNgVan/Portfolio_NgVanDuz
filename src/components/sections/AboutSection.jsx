@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Laptop, FileText, Send } from 'lucide-react';
+import { Laptop } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/portfolioData';
 import profileImg from '@/assets/images/profile.jpg';
@@ -37,11 +37,12 @@ const AboutSection = () => {
     <section id="about" className="relative py-24 sm:py-32 bg-[#080808] text-[#f4efea] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
         
-        {/* SECTION TITLE WITH ANIMATED GOLD ACCENT LINE */}
+        {/* SECTION TITLE: 'ABOUT' in Sand-gold (#d8c8a8), 'ME' in White (#f4efea) */}
         <div className="text-center mb-16 sm:mb-20">
           <ScrollReveal direction="down">
-            <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider text-[#f4efea]">
-              {t.about.sectionTitle}
+            <h2 className="font-bebas text-4xl sm:text-6xl tracking-wider">
+              <span className="text-[#d8c8a8]">{lang === 'vi' ? 'GIỚI THIỆU ' : 'ABOUT '}</span>
+              <span className="text-[#f4efea]">{lang === 'vi' ? 'BẢN THÂN' : 'ME'}</span>
             </h2>
           </ScrollReveal>
           
@@ -132,21 +133,13 @@ const AboutSection = () => {
             
             {/* Eyebrow */}
             <ScrollReveal direction="left" delay={0.1}>
-              <div className="flex items-center gap-2 text-xs font-mono text-[#a3a3a3] tracking-widest mb-4">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#a3a3a3] tracking-widest mb-6">
                 <span>{t.about.eyebrow}</span>
               </div>
             </ScrollReveal>
 
-            {/* Main Statement Headline */}
+            {/* Two Columns of Editorial Bio Text with High Readability */}
             <ScrollReveal direction="up" delay={0.2}>
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-8">
-                {t.about.headlinePart1} <span className="text-[#d8c8a8]">{t.about.headlinePart2}</span> {t.about.headlinePart3} <br />
-                <span className="text-[#d8c8a8]">{t.about.headlinePart4}</span>
-              </h3>
-            </ScrollReveal>
-
-            {/* Two Columns of Editorial Bio Text with Improved WCAG Contrast */}
-            <ScrollReveal direction="up" delay={0.3}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm sm:text-base text-[#d1d5db] leading-relaxed">
                 <p>
                   {t.about.bioP1}
@@ -154,28 +147,6 @@ const AboutSection = () => {
                 <p>
                   {t.about.bioP2}
                 </p>
-              </div>
-
-              {/* Action Buttons in About Me */}
-              <div className="flex flex-wrap items-center gap-4 mt-8 pt-4">
-                <a
-                  href={personalInfo.resumeUrl}
-                  download="NguyenVanDuc_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#d8c8a8] text-[#080808] font-mono text-xs font-bold hover:bg-[#e4d7bc] transition-all shadow-md hover:-translate-y-0.5"
-                >
-                  <FileText className="w-4 h-4" />
-                  <span>{t.about.downloadCvBtn || "Download Resume (PDF)"}</span>
-                </a>
-
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#181818] border border-[#333333] hover:border-[#d8c8a8] text-white font-mono text-xs font-medium transition-all"
-                >
-                  <Send className="w-3.5 h-3.5 text-[#d8c8a8]" />
-                  <span>{t.nav.contact}</span>
-                </a>
               </div>
             </ScrollReveal>
 
@@ -189,30 +160,12 @@ const AboutSection = () => {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full h-px bg-[#262626] mt-16 sm:mt-20 mb-8 sm:mb-10 origin-left"
+          className="w-full h-px bg-[#262626] mt-14 sm:mt-18 mb-10 sm:mb-12 origin-left"
         />
 
-        {/* FULL WIDTH METADATA SPECIFICATIONS */}
-        <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3 sm:gap-y-4">
-          {t.about.metadata
-            .filter((item) => !item.label.toUpperCase().includes('TECH'))
-            .map((item, idx) => (
-              <ScrollStaggerItem key={idx} direction="up">
-                <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#222222] group hover:border-[#d8c8a8]/50 transition-colors">
-                  <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#a0a0a0] uppercase shrink-0">
-                    {item.label}:
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-[#d8c8a8] font-mono leading-normal">
-                    {item.value}
-                  </span>
-                </div>
-              </ScrollStaggerItem>
-            ))}
-        </ScrollStagger>
-
-        {/* INTERACTIVE HORIZONTAL TECH STACK LOGO BAR (MARQUEE & DRAGGABLE) */}
-        <div className="mt-14 pt-10 border-t border-[#1e1e1e]">
-          <div className="flex items-center justify-between mb-6 px-1">
+        {/* 1. INTERACTIVE HORIZONTAL TECH STACK LOGO BAR (PLACED ABOVE LOCATION) */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-5 px-1">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#d8c8a8] animate-pulse"></span>
               <span className="text-xs font-mono tracking-[0.2em] text-[#d8c8a8] uppercase font-bold">
@@ -256,6 +209,26 @@ const AboutSection = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* 2. FULL WIDTH METADATA SPECIFICATIONS (LOCATION, DEGREE, ETC.) */}
+        <div className="pt-8 border-t border-[#1e1e1e]">
+          <ScrollStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3 sm:gap-y-4">
+            {t.about.metadata
+              .filter((item) => !item.label.toUpperCase().includes('TECH'))
+              .map((item, idx) => (
+                <ScrollStaggerItem key={idx} direction="up">
+                  <div className="flex items-baseline gap-2.5 sm:gap-3 py-2 border-b border-[#222222] group hover:border-[#d8c8a8]/50 transition-colors">
+                    <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[#a0a0a0] uppercase shrink-0">
+                      {item.label}:
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-[#d8c8a8] font-mono leading-normal">
+                      {item.value}
+                    </span>
+                  </div>
+                </ScrollStaggerItem>
+              ))}
+          </ScrollStagger>
         </div>
 
       </div>
