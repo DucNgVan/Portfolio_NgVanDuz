@@ -34,7 +34,7 @@ const HeroSection = () => {
     <section
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen lg:h-screen lg:max-h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-4 sm:p-6 lg:px-10 lg:py-6 select-none overflow-hidden"
+      className="relative min-h-screen lg:h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-5 sm:p-8 lg:px-12 lg:py-8 select-none overflow-hidden"
     >
       {/* 1. TOP NAVIGATION HEADER BAR */}
       <header className="w-full z-30">
@@ -141,8 +141,8 @@ const HeroSection = () => {
         </div>
       )}
 
-      {/* 2. MAIN HERO CONTENT: Kinetic Display & Direct CTAs */}
-      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4">
+      {/* 2. MAIN HERO CONTENT: Colossal Kinetic Typography & CTAs */}
+      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-3 sm:py-6">
         
         {/* Kinetic Wavy Word 1: "SOFTWARE" */}
         <div 
@@ -155,7 +155,7 @@ const HeroSection = () => {
           {softwareLetters.map((char, index) => (
             <span
               key={index}
-              className="wave-letter font-bebas text-[16vw] sm:text-[13vw] lg:text-[10vw] leading-[0.82] tracking-tight text-[#0D0D0D] cursor-default"
+              className="wave-letter font-bebas text-[18vw] sm:text-[15vw] lg:text-[12.5vw] leading-[0.8] tracking-tight text-[#0D0D0D] cursor-default"
               style={{
                 animationDelay: `${index * 0.08}s`,
               }}
@@ -167,7 +167,7 @@ const HeroSection = () => {
 
         {/* Kinetic Word 2: "ENGINEERING" */}
         <h2 
-          className="font-bebas text-[10vw] sm:text-[8vw] lg:text-[6.2vw] leading-[0.85] tracking-wider text-[#0D0D0D] mt-1"
+          className="font-bebas text-[11vw] sm:text-[8.8vw] lg:text-[7.4vw] leading-[0.85] tracking-wider text-[#0D0D0D] mt-1 sm:mt-2"
           style={{
             transform: `translate(${-mousePos.x * 0.25}px, ${-mousePos.y * 0.25}px)`,
             transition: 'transform 0.15s ease-out',
@@ -176,13 +176,13 @@ const HeroSection = () => {
           {t.hero.titleWord2 || "ENGINEERING"}
         </h2>
 
-        {/* Clear Subtitle Headline */}
-        <p className="max-w-2xl mt-3 sm:mt-4 text-xs sm:text-sm font-sans font-medium text-[#444444] leading-relaxed px-4">
+        {/* Subtitle Headline */}
+        <p className="max-w-2xl mt-4 sm:mt-5 text-xs sm:text-sm font-sans font-medium text-[#444444] leading-relaxed px-4">
           {t.hero.subHeadline}
         </p>
 
         {/* Subtitle Pills: VISUALS • CODE • ARCHITECTURE */}
-        <div className="flex items-center justify-center gap-3 sm:gap-6 mt-3 text-[11px] sm:text-xs font-semibold tracking-widest text-[#222222] uppercase font-sans">
+        <div className="flex items-center justify-center gap-3 sm:gap-6 mt-3 sm:mt-4 text-[11px] sm:text-xs font-semibold tracking-widest text-[#222222] uppercase font-sans">
           <span>{t.hero.subtitleVisuals}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#0D0D0D]"></span>
           <span>{t.hero.subtitleCode}</span>
@@ -191,10 +191,10 @@ const HeroSection = () => {
         </div>
 
         {/* PRIMARY CALL-TO-ACTION BUTTONS */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-4 sm:mt-6">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-5 sm:mt-6">
           <a
             href="#work"
-            className="flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#0D0D0D] text-[#F4EFEA] hover:bg-[#8C6D3F] transition-all text-xs sm:text-sm font-mono font-bold shadow-md hover:shadow-xl hover:-translate-y-0.5 cursor-pointer"
+            className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#0D0D0D] text-[#F4EFEA] hover:bg-[#8C6D3F] transition-all text-xs sm:text-sm font-mono font-bold shadow-md hover:shadow-xl hover:-translate-y-0.5 cursor-pointer"
           >
             <FolderGit2 className="w-4 h-4 text-[#d8c8a8]" />
             <span>{t.hero.ctaProjects || "View Projects"}</span>
@@ -205,7 +205,7 @@ const HeroSection = () => {
             download="NguyenVanDuc_CV.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white border border-[#0D0D0D]/20 text-[#0D0D0D] hover:border-[#0D0D0D] hover:bg-[#FAF8F5] transition-all text-xs sm:text-sm font-mono font-bold shadow-xs hover:-translate-y-0.5 cursor-pointer"
+            className="flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-[#0D0D0D]/20 text-[#0D0D0D] hover:border-[#0D0D0D] hover:bg-[#FAF8F5] transition-all text-xs sm:text-sm font-mono font-bold shadow-xs hover:-translate-y-0.5 cursor-pointer"
           >
             <FileText className="w-4 h-4 text-[#8C6D3F]" />
             <span>{t.hero.ctaCv || "Download CV (PDF)"}</span>
@@ -215,15 +215,61 @@ const HeroSection = () => {
         {/* SCROLL TO EXPLORE INDICATOR */}
         <a
           href="#about"
-          className="inline-flex flex-col items-center gap-1 mt-4 sm:mt-5 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#555555] hover:text-[#0D0D0D] transition-colors group cursor-pointer"
+          className="inline-flex flex-col items-center gap-1 mt-5 sm:mt-6 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#555555] hover:text-[#0D0D0D] transition-colors group cursor-pointer"
         >
           <span className="tracking-[0.2em]">{t.hero.scrollExplore}</span>
           <ArrowDown className="w-3.5 h-3.5 animate-bounce text-[#0D0D0D]" />
         </a>
       </div>
 
-      {/* 3. HERO FOOTER BAR */}
-      <div className="w-full flex items-end justify-between z-20 pt-2">
+      {/* 3. ROTATING CIRCULAR BADGE & LOCATION (Elevated higher off the bottom floor) */}
+      <div className="flex flex-col items-center gap-2 sm:absolute sm:right-8 sm:bottom-14 lg:right-14 lg:bottom-16 z-20 pointer-events-auto">
+        <a
+          href="#contact"
+          className="relative w-22 h-22 sm:w-26 sm:h-26 lg:w-28 lg:h-28 flex items-center justify-center group cursor-pointer"
+          title="Open to Internships - Contact Me"
+        >
+          {/* Rotating circular SVG text with evenly distributed glyphs */}
+          <svg
+            className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
+            viewBox="0 0 100 100"
+          >
+            <defs>
+              <path
+                id="circlePath"
+                d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
+              />
+            </defs>
+            <text
+              fontSize="7.8"
+              fontWeight="600"
+              fill="currentColor"
+            >
+              <textPath
+                href="#circlePath"
+                startOffset="0%"
+                textLength="224"
+                lengthAdjust="spacingAndGlyphs"
+              >
+                OPEN TO INTERNSHIPS • READY TO CONTRIBUTE •
+              </textPath>
+            </text>
+          </svg>
+
+          {/* Central Arrow Button */}
+          <div className="absolute w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-md">
+            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </div>
+        </a>
+
+        {/* Location Caption */}
+        <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#444444] uppercase font-semibold">
+          {t.hero.basedIn || "DA NANG, VIETNAM"}
+        </span>
+      </div>
+
+      {/* 4. HERO FOOTER BAR */}
+      <div className="w-full flex items-center justify-between z-10 pt-4">
         {/* Bottom Left: Copyright & University standing */}
         <div className="text-xs font-mono text-[#444444] tracking-wide flex flex-col sm:flex-row sm:items-center gap-1">
           <span>©2026 {personalInfo.name}</span>
@@ -231,41 +277,9 @@ const HeroSection = () => {
           <span className="text-[11px] text-[#666666]">University of Greenwich</span>
         </div>
 
-        {/* Bottom Right: Circular Rotating Badge & Location (Compact & elevated) */}
-        <div className="flex flex-col items-end sm:items-center gap-1.5 -translate-y-2 sm:-translate-y-4">
-          <a
-            href="#contact"
-            className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center group cursor-pointer"
-            title="Open to Internships - Contact Me"
-          >
-            {/* Rotating circular SVG text */}
-            <svg
-              className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
-              viewBox="0 0 100 100"
-            >
-              <defs>
-                <path
-                  id="circlePath"
-                  d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
-                />
-              </defs>
-              <text fontSize="8.2" fontWeight="600" letterSpacing="1.8" fill="currentColor">
-                <textPath href="#circlePath" startOffset="0%">
-                  {t.hero.rotatingBadge || "OPEN TO INTERNSHIPS • READY TO CONTRIBUTE •"}
-                </textPath>
-              </text>
-            </svg>
-
-            {/* Central Arrow Button */}
-            <div className="absolute w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-md">
-              <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </div>
-          </a>
-
-          {/* Location Caption */}
-          <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#444444] uppercase font-semibold">
-            {t.hero.basedIn || "DA NANG, VIETNAM"}
-          </span>
+        {/* Subtle right balance on wide screens */}
+        <div className="hidden sm:block text-[11px] font-mono text-[#888888] tracking-wider uppercase">
+          Portfolio 2026
         </div>
       </div>
     </section>
