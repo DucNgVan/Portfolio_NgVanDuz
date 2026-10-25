@@ -128,18 +128,20 @@ const HeroSection = () => {
       {/* 2. MAIN HERO CONTENT (Exact Match to Reference Template Typography) */}
       <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4">
         
-        {/* Kinetic Giant Word 1: "SOFTWARE" */}
+        {/* Kinetic Giant Word 1: "SOFTWARE" - Elongated & Glitch on Hover */}
         <div 
-          className="flex justify-center items-center overflow-visible"
+          className="flex justify-center items-center overflow-visible py-2 sm:py-3 origin-center"
           style={{
-            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px)`,
+            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.32)`,
+            transformOrigin: 'center center',
             transition: 'transform 0.15s ease-out',
           }}
         >
           {softwareLetters.map((char, index) => (
             <span
               key={index}
-              className="wave-letter font-bebas text-[22vw] sm:text-[20vw] lg:text-[18vw] leading-[0.76] tracking-[0.02em] text-[#0D0D0D] cursor-default"
+              data-char={char}
+              className="wave-letter font-bebas text-[22vw] sm:text-[20vw] lg:text-[18vw] leading-[0.76] tracking-[0.02em] text-[#0D0D0D] cursor-pointer select-none"
               style={{
                 animationDelay: `${index * 0.08}s`,
               }}
@@ -199,10 +201,10 @@ const HeroSection = () => {
         </div>
 
         {/* Bottom Right: Circular Rotating Badge ("GET IN TOUCH") + Location */}
-        <div className="flex flex-col items-center gap-1.5">
+        <div className="flex flex-col items-center gap-1">
           <a
             href="#contact"
-            className="relative w-22 h-22 sm:w-26 sm:h-26 flex items-center justify-center group cursor-pointer"
+            className="relative w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center group cursor-pointer"
             title="Get in touch"
           >
             {/* Rotating circular SVG text: "GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •" */}
@@ -233,13 +235,13 @@ const HeroSection = () => {
             </svg>
 
             {/* Central Arrow Button */}
-            <div className="absolute w-10 h-10 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-md">
-              <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <div className="absolute w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-sm">
+              <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </a>
 
           {/* Location Caption */}
-          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#555555] uppercase font-semibold">
+          <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#555555] uppercase font-semibold">
             {t.hero.basedIn || "DA NANG, VIETNAM"}
           </span>
         </div>

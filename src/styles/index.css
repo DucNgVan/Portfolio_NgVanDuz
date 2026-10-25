@@ -56,30 +56,96 @@
   mix-blend-mode: difference;
 }
 
-/* Wavy interactive letter keyframes */
-@keyframes wave-liquid {
-  0%, 100% {
-    transform: scaleY(1) skewX(0deg);
+/* Interactive glitch / noise letter animation on hover */
+@keyframes glitch-jitter {
+  0% {
+    transform: translate(0, 0) skewX(0deg);
   }
-  25% {
-    transform: scaleY(1.08) skewX(-3deg);
+  20% {
+    transform: translate(-2px, 1px) skewX(-2.5deg);
+  }
+  40% {
+    transform: translate(2px, -1.5px) skewX(3deg);
+  }
+  60% {
+    transform: translate(-1.5px, -1px) skewX(-1.5deg);
+  }
+  80% {
+    transform: translate(1.5px, 1px) skewX(2deg);
+  }
+  100% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+}
+
+@keyframes glitch-slice-1 {
+  0% {
+    clip-path: polygon(0 0%, 100% 0%, 100% 38%, 0 38%);
+    transform: translate(-3px, -1px);
   }
   50% {
-    transform: scaleY(0.95) skewX(2deg);
+    clip-path: polygon(0 42%, 100% 42%, 100% 68%, 0 68%);
+    transform: translate(3px, 1.5px);
   }
-  75% {
-    transform: scaleY(1.04) skewX(-1deg);
+  100% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 52%, 0 52%);
+    transform: translate(-2px, 0.5px);
+  }
+}
+
+@keyframes glitch-slice-2 {
+  0% {
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    transform: translate(3px, 1px);
+  }
+  50% {
+    clip-path: polygon(0 20%, 100% 20%, 100% 48%, 0 48%);
+    transform: translate(-2.5px, -1.5px);
+  }
+  100% {
+    clip-path: polygon(0 68%, 100% 68%, 100% 95%, 0 95%);
+    transform: translate(2px, -1px);
   }
 }
 
 .wave-letter {
   display: inline-block;
-  transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), color 0.3s;
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1), color 0.15s;
+  will-change: transform;
 }
 
 .wave-letter:hover {
-  animation: wave-liquid 0.7s ease-in-out;
-  color: #d8c8a8;
+  animation: glitch-jitter 0.25s steps(2, end) infinite;
+  color: #8C6D3F;
+}
+
+.wave-letter:hover::before,
+.wave-letter:hover::after {
+  content: attr(data-char);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.95;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+
+.wave-letter:hover::before {
+  left: -2px;
+  text-shadow: -2px 0 #bfa882;
+  animation: glitch-slice-1 0.22s steps(2, start) infinite alternate;
+}
+
+.wave-letter:hover::after {
+  left: 2px;
+  text-shadow: 2px 0 #0d0d0d;
+  animation: glitch-slice-2 0.26s steps(2, start) infinite alternate;
 }
 
 /* Liquid dripping droplet animations */
