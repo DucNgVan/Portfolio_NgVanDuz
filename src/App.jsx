@@ -5,7 +5,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { Footer } from '@/components/layout';
 
 // Modular UI components
-import { CustomCursor, Preloader, LanguageSwitcher } from '@/components/ui';
+import { CustomCursor, Preloader } from '@/components/ui';
 
 // Page sections
 import {
@@ -40,10 +40,7 @@ function App() {
       {/* 2. Custom Smooth Difference Cursor */}
       <CustomCursor />
 
-      {/* 3. Global Floating Language Switcher (EN | VI) */}
-      <LanguageSwitcher />
-
-      {/* 4. Main Sections */}
+      {/* 3. Main Sections */}
       <main>
         {/* Home: Hero with Cream Background & Kinetic Typography */}
         <HeroSection />

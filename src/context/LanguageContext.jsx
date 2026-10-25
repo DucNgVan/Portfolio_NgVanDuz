@@ -1,28 +1,21 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState(() => {
-    try {
-      return localStorage.getItem('portfolio_lang') || 'en';
-    } catch {
-      return 'en';
-    }
-  });
+  const lang = 'en';
 
   useEffect(() => {
     try {
-      localStorage.setItem('portfolio_lang', lang);
-      document.documentElement.lang = lang;
+      localStorage.setItem('portfolio_lang', 'en');
+      document.documentElement.lang = 'en';
     } catch {
       // Ignore localStorage errors
     }
-  }, [lang]);
+  }, []);
 
-  const toggleLang = () => {
-    setLang((prev) => (prev === 'en' ? 'vi' : 'en'));
-  };
+  const toggleLang = () => {};
+  const setLang = () => {};
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, toggleLang }}>

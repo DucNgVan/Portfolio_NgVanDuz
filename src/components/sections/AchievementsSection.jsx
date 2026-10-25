@@ -67,16 +67,17 @@ const AchievementsSection = () => {
         <ScrollStagger staggerDelay={0.1} className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 items-stretch">
           {credentialsList.map((item, idx) => {
             const Icon = item.icon;
+            const credentialTags = ['#01 DEGREE', '#02 HONORS', '#03 PROJECTS', '#04 ENGLISH'];
             return (
               <ScrollStaggerItem key={idx} direction="zoom" className="h-full flex">
-                <div className="relative p-6 rounded-2xl bg-[#FFFFFF] border border-[#E5DEC9] hover:border-[#8C6D3F] transition-all duration-300 group hover:-translate-y-1 shadow-sm hover:shadow-lg h-full w-full flex flex-col justify-between">
+                <div className="relative p-5 sm:p-6 rounded-2xl bg-[#FFFFFF] border border-[#E5DEC9] hover:border-[#8C6D3F] transition-all duration-300 group hover:-translate-y-1 shadow-sm hover:shadow-lg h-full w-full flex flex-col justify-between">
                   <div className="flex-1 flex flex-col">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl bg-[#FAF8F5] border border-[#E5DEC9] flex items-center justify-center text-[#8C6D3F] flex-shrink-0 group-hover:scale-105 transition-transform">
-                        <Icon className="w-5 h-5 stroke-[2] flex-shrink-0" />
+                    <div className="flex items-center justify-between gap-2 mb-3.5">
+                      <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#E5DEC9] flex items-center justify-center text-[#8C6D3F] shrink-0 group-hover:scale-105 transition-transform">
+                        <Icon className="w-5 h-5 stroke-[2] shrink-0" />
                       </div>
-                      <span className="text-[10px] font-mono text-[#777777] tracking-widest uppercase font-semibold">
-                        {item.label}
+                      <span className="px-2 py-0.5 rounded-md bg-[#FAF8F5] border border-[#E5DEC9] text-[10px] font-mono text-[#8C6D3F] font-semibold tracking-wider">
+                        {credentialTags[idx] || `#0${idx + 1}`}
                       </span>
                     </div>
 
@@ -85,10 +86,10 @@ const AchievementsSection = () => {
                       <span className="text-xs font-mono text-[#8C6D3F] ml-1.5 font-bold">{item.suffix}</span>
                     </div>
 
-                    <div className="text-xs font-semibold text-[#111111] mt-1.5 font-sans">
+                    <div className="text-xs font-bold text-[#111111] mt-2 font-sans">
                       {item.label}
                     </div>
-                    <div className="text-[11px] text-[#555555] mt-0.5 leading-relaxed font-sans font-medium">
+                    <div className="text-[11px] text-[#555555] mt-1 leading-relaxed font-sans font-medium">
                       {item.desc}
                     </div>
                   </div>

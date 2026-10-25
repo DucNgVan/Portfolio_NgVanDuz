@@ -8,15 +8,14 @@ import {
   Globe, 
   Sparkles,
   Layers,
-  Terminal,
   Server,
   Wrench,
-  Check
 } from 'lucide-react';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from '@/components/ui/ScrollReveal';
 import { techSkills, softSkills as rawSoftSkills } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
+import { getTechIcon } from '@/components/ui/TechIcons';
 
 const iconMap = {
   Users: Users,
@@ -42,19 +41,19 @@ const ExpertiseSection = () => {
       id: '01',
       category: 'CLIENT-SIDE',
       skills: techSkills.frontend,
-      tags: ['REACT.JS', 'NEXT.JS 14', 'TYPESCRIPT', 'TAILWIND CSS', 'THREE.JS / 3D'],
+      tags: ['React.js', 'Next.js 14', 'TypeScript', 'Tailwind CSS', 'Three.js'],
     },
     {
       id: '02',
       category: 'SERVER & DATABASE',
       skills: techSkills.backend,
-      tags: ['NODE.JS', 'EXPRESS', 'POSTGRESQL (3NF)', 'MONGODB', 'REDIS', 'JAVA'],
+      tags: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Redis', 'Java'],
     },
     {
       id: '03',
       category: 'DEVOPS & WORKFLOW',
       skills: techSkills.devopsAndTools,
-      tags: ['GIT FLOW', 'DOCKER COMPOSE', 'POSTMAN', 'FIREBASE', 'AGILE / SCRUM'],
+      tags: ['Git Flow', 'Docker', 'Postman', 'Firebase', 'Scrum'],
     },
   ];
 
@@ -77,7 +76,7 @@ const ExpertiseSection = () => {
   return (
     <section
       id="expertise"
-      className="relative py-24 sm:py-32 bg-[#F4EFEA] text-[#0D0D0D] overflow-hidden select-none"
+      className="relative py-20 sm:py-28 bg-[#F4EFEA] text-[#0D0D0D] overflow-hidden select-none"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
         
@@ -92,7 +91,7 @@ const ExpertiseSection = () => {
                 {t.expertise?.title || 'TECHNICAL COMPETENCY MATRIX'}
               </h2>
               <p className="text-xs sm:text-sm text-[#444444] mt-2 max-w-2xl font-medium leading-relaxed">
-                {t.expertise?.subtitle || 'Curated for a Full-Stack Intern & Junior Software Engineer — combining practical full-stack fundamentals with clean architecture, adaptability, and analytical problem-solving.'}
+                {t.expertise?.subtitle || 'Full-stack engineering competencies with proven production experience, clean architecture, and modern developer tooling.'}
               </p>
             </div>
 
@@ -132,12 +131,12 @@ const ExpertiseSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* 1. TECHNICAL FOUNDATIONS (NO PERCENTAGE BARS, REPLACED BY TIERS & PRACTICAL CONTEXT) */}
+        {/* 1. TECHNICAL FOUNDATIONS WITH BRAND LOGOS */}
         {(activeTab === 'all' || activeTab === 'technical') && (
           <div className="mb-16">
             <div className="flex items-center gap-2 mb-6 text-xs font-mono text-[#8C6D3F] uppercase tracking-wider font-semibold">
               <Code2 className="w-4 h-4" />
-              <span>{t.expertise?.techHeading || 'Technical Foundations (Categorized by Production & Project Application)'}</span>
+              <span>{t.expertise?.techHeading || 'Technical Foundations & Production Stack'}</span>
             </div>
 
             <ScrollStagger staggerDelay={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
@@ -161,30 +160,51 @@ const ExpertiseSection = () => {
                         </div>
 
                         {/* Domain Title */}
-                        <h3 className="text-xl font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[3rem] flex items-center">
+                        <h3 className="text-xl font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[2.5rem] flex items-center">
                           {domain.title}
                         </h3>
 
-                        {/* Description */}
-                        <p className="text-xs sm:text-sm text-[#444444] leading-relaxed mb-6 font-medium">
+                        {/* Description (Concise & Clear) */}
+                        <p className="text-xs text-[#555555] leading-relaxed mb-5 font-medium">
                           {domain.description}
                         </p>
 
-                        {/* Technology items with practical tier badge & project context (No fake percentages!) */}
-                        <div className="space-y-3.5 mb-6">
-                          {domain.skills.map((s, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#EDE5DC] hover:border-[#8C6D3F]/40 transition-colors">
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="text-xs font-mono font-bold text-[#111111]">{s.name}</span>
-                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#E5DEC9] text-[#8C6D3F] font-semibold">
-                                  {s.tier || s.highlight}
-                                </span>
+                        {/* Technology items with Authentic Tech Logos */}
+                        <div className="space-y-2.5 mb-6">
+                          {domain.skills.map((s, idx) => {
+                            const TechIconComponent = getTechIcon(s.name);
+
+                            return (
+                              <div 
+                                key={idx} 
+                                className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#EDE5DC] hover:border-[#8C6D3F] hover:bg-white transition-all flex items-center gap-3 group/item shadow-2xs"
+                              >
+                                {/* Official Tech Logo Icon */}
+                                <div className="w-9 h-9 rounded-lg bg-white border border-[#E5DEC9] flex items-center justify-center p-1.5 shrink-0 group-hover/item:scale-110 transition-transform shadow-xs">
+                                  {TechIconComponent ? (
+                                    <TechIconComponent className="w-5 h-5" />
+                                  ) : (
+                                    <Code2 className="w-4 h-4 text-[#8C6D3F]" />
+                                  )}
+                                </div>
+
+                                {/* Tech Information */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center justify-between gap-1.5 mb-0.5">
+                                    <span className="text-xs font-mono font-bold text-[#111111] truncate">
+                                      {s.name}
+                                    </span>
+                                    <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#E5DEC9] text-[#8C6D3F] font-semibold shrink-0">
+                                      {s.tier ? s.tier.replace(' / Production', '') : 'Core'}
+                                    </span>
+                                  </div>
+                                  <p className="text-[11px] text-[#666666] font-sans truncate font-medium">
+                                    {s.experience || s.highlight}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-[11px] text-[#555555] font-sans leading-snug">
-                                {s.experience}
-                              </p>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </div>
 
@@ -193,7 +213,7 @@ const ExpertiseSection = () => {
                         {domain.tags.map((tag, idx) => (
                           <span
                             key={idx}
-                            className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FAF8F5] text-[#444444] border border-[#E5DEC9] font-medium"
+                            className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-[#FAF8F5] text-[#444444] border border-[#E5DEC9] font-medium"
                           >
                             {tag}
                           </span>
@@ -207,7 +227,7 @@ const ExpertiseSection = () => {
           </div>
         )}
 
-        {/* 2. DEDICATED SOFT SKILLS SECTION (WITHOUT ARBITRARY 1-100 NUMBER SCORES) */}
+        {/* 2. DEDICATED SOFT SKILLS SECTION */}
         {(activeTab === 'all' || activeTab === 'softskills') && (
           <div>
             <div className="flex items-center justify-between mb-6">
@@ -239,7 +259,7 @@ const ExpertiseSection = () => {
                         </div>
 
                         {/* Title */}
-                        <h4 className="text-lg font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[3rem] flex items-center">
+                        <h4 className="text-lg font-bold font-syne text-[#0D0D0D] group-hover:text-[#8C6D3F] transition-colors mb-2 min-h-[2.5rem] flex items-center">
                           {item.title}
                         </h4>
 
