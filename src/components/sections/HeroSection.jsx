@@ -34,7 +34,7 @@ const HeroSection = () => {
     <section
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen lg:h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-5 sm:p-8 lg:px-12 lg:py-8 select-none overflow-hidden"
+      className="relative min-h-screen lg:h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-4 sm:p-6 lg:px-12 lg:py-6 select-none overflow-hidden"
     >
       {/* 1. TOP NAVIGATION HEADER BAR */}
       <header className="w-full z-30">
@@ -141,10 +141,10 @@ const HeroSection = () => {
         </div>
       )}
 
-      {/* 2. MAIN HERO CONTENT: Colossal Kinetic Typography & CTAs */}
-      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-3 sm:py-6">
+      {/* 2. MAIN HERO CONTENT: Expanded & Larger Kinetic Typography */}
+      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4">
         
-        {/* Kinetic Wavy Word 1: "SOFTWARE" */}
+        {/* Kinetic Wavy Word 1: "SOFTWARE" (Larger & More Letter Spacing) */}
         <div 
           className="flex justify-center items-center overflow-visible"
           style={{
@@ -155,7 +155,7 @@ const HeroSection = () => {
           {softwareLetters.map((char, index) => (
             <span
               key={index}
-              className="wave-letter font-bebas text-[18vw] sm:text-[15vw] lg:text-[12.5vw] leading-[0.8] tracking-tight text-[#0D0D0D] cursor-default"
+              className="wave-letter font-bebas text-[19vw] sm:text-[16vw] lg:text-[13.5vw] leading-[0.8] tracking-[0.06em] text-[#0D0D0D] cursor-default"
               style={{
                 animationDelay: `${index * 0.08}s`,
               }}
@@ -165,9 +165,9 @@ const HeroSection = () => {
           ))}
         </div>
 
-        {/* Kinetic Word 2: "ENGINEERING" */}
+        {/* Kinetic Word 2: "ENGINEERING" (Larger & Wide Letter Spacing) */}
         <h2 
-          className="font-bebas text-[11vw] sm:text-[8.8vw] lg:text-[7.4vw] leading-[0.85] tracking-wider text-[#0D0D0D] mt-1 sm:mt-2"
+          className="font-bebas text-[12vw] sm:text-[9.8vw] lg:text-[8.2vw] leading-[0.85] tracking-[0.15em] text-[#0D0D0D] mt-1 sm:mt-2"
           style={{
             transform: `translate(${-mousePos.x * 0.25}px, ${-mousePos.y * 0.25}px)`,
             transition: 'transform 0.15s ease-out',
@@ -176,10 +176,11 @@ const HeroSection = () => {
           {t.hero.titleWord2 || "ENGINEERING"}
         </h2>
 
-        {/* Subtitle Headline */}
-        <p className="max-w-2xl mt-4 sm:mt-5 text-xs sm:text-sm font-sans font-medium text-[#444444] leading-relaxed px-4">
-          {t.hero.subHeadline}
-        </p>
+        {/* Subtitle Headline: Split across lines & removed "Remote" as requested */}
+        <div className="max-w-2xl mt-4 sm:mt-5 text-xs sm:text-sm font-sans font-medium text-[#444444] leading-relaxed px-4 text-center">
+          <p>Final-Year Software Engineering Student at University of Greenwich</p>
+          <p className="mt-1 text-[#222222] font-semibold">Open to Internships in Da Nang</p>
+        </div>
 
         {/* Subtitle Pills: VISUALS • CODE • ARCHITECTURE */}
         <div className="flex items-center justify-center gap-3 sm:gap-6 mt-3 sm:mt-4 text-[11px] sm:text-xs font-semibold tracking-widest text-[#222222] uppercase font-sans">
@@ -215,71 +216,66 @@ const HeroSection = () => {
         {/* SCROLL TO EXPLORE INDICATOR */}
         <a
           href="#about"
-          className="inline-flex flex-col items-center gap-1 mt-5 sm:mt-6 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#555555] hover:text-[#0D0D0D] transition-colors group cursor-pointer"
+          className="inline-flex flex-col items-center gap-1 mt-4 sm:mt-5 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#555555] hover:text-[#0D0D0D] transition-colors group cursor-pointer"
         >
           <span className="tracking-[0.2em]">{t.hero.scrollExplore}</span>
           <ArrowDown className="w-3.5 h-3.5 animate-bounce text-[#0D0D0D]" />
         </a>
       </div>
 
-      {/* 3. ROTATING CIRCULAR BADGE & LOCATION (Elevated higher off the bottom floor) */}
-      <div className="flex flex-col items-center gap-2 sm:absolute sm:right-8 sm:bottom-14 lg:right-14 lg:bottom-16 z-20 pointer-events-auto">
-        <a
-          href="#contact"
-          className="relative w-22 h-22 sm:w-26 sm:h-26 lg:w-28 lg:h-28 flex items-center justify-center group cursor-pointer"
-          title="Open to Internships - Contact Me"
-        >
-          {/* Rotating circular SVG text with evenly distributed glyphs */}
-          <svg
-            className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
-            viewBox="0 0 100 100"
-          >
-            <defs>
-              <path
-                id="circlePath"
-                d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
-              />
-            </defs>
-            <text
-              fontSize="7.8"
-              fontWeight="600"
-              fill="currentColor"
-            >
-              <textPath
-                href="#circlePath"
-                startOffset="0%"
-                textLength="224"
-                lengthAdjust="spacingAndGlyphs"
-              >
-                OPEN TO INTERNSHIPS • READY TO CONTRIBUTE •
-              </textPath>
-            </text>
-          </svg>
-
-          {/* Central Arrow Button */}
-          <div className="absolute w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-md">
-            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </div>
-        </a>
-
-        {/* Location Caption */}
-        <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#444444] uppercase font-semibold">
-          {t.hero.basedIn || "DA NANG, VIETNAM"}
-        </span>
-      </div>
-
-      {/* 4. HERO FOOTER BAR */}
-      <div className="w-full flex items-center justify-between z-10 pt-4">
-        {/* Bottom Left: Copyright & University standing */}
-        <div className="text-xs font-mono text-[#444444] tracking-wide flex flex-col sm:flex-row sm:items-center gap-1">
+      {/* 3. HERO FOOTER BAR: Perfectly Aligned Baseline for Left & Right Elements */}
+      <div className="w-full flex items-end justify-between z-20 pt-2 pb-1">
+        {/* Bottom Left Element: Copyright & University */}
+        <div className="text-xs font-mono text-[#444444] tracking-wide flex flex-col sm:flex-row sm:items-center gap-1 mb-1">
           <span>©2026 {personalInfo.name}</span>
           <span className="hidden sm:inline text-[#888888]">•</span>
           <span className="text-[11px] text-[#666666]">University of Greenwich</span>
         </div>
 
-        {/* Subtle right balance on wide screens */}
-        <div className="hidden sm:block text-[11px] font-mono text-[#888888] tracking-wider uppercase">
-          Portfolio 2026
+        {/* Bottom Right Element: Circular Badge ("Get in touch") + Location */}
+        <div className="flex flex-col items-center gap-1.5">
+          <a
+            href="#contact"
+            className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center group cursor-pointer"
+            title="Get in touch"
+          >
+            {/* Rotating circular SVG text: "GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •" */}
+            <svg
+              className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
+              viewBox="0 0 100 100"
+            >
+              <defs>
+                <path
+                  id="circlePath"
+                  d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
+                />
+              </defs>
+              <text
+                fontSize="8"
+                fontWeight="600"
+                fill="currentColor"
+              >
+                <textPath
+                  href="#circlePath"
+                  startOffset="0%"
+                  textLength="225"
+                  lengthAdjust="spacingAndGlyphs"
+                >
+                  GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •
+                </textPath>
+              </text>
+            </svg>
+
+            {/* Central Arrow Button */}
+            <div className="absolute w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-md">
+              <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </a>
+
+          {/* Location Caption */}
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#444444] uppercase font-semibold">
+            {t.hero.basedIn || "DA NANG, VIETNAM"}
+          </span>
         </div>
       </div>
     </section>

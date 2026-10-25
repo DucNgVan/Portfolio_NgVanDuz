@@ -11,7 +11,7 @@ export const translations = {
     hero: {
       greeting: "Nguyen Van Duc",
       role: "Full-Stack Software Engineering Intern",
-      subHeadline: "Final-Year Software Engineering Student at University of Greenwich · Open to Internships in Da Nang & Remote",
+      subHeadline: "Final-Year Software Engineering Student at University of Greenwich\nOpen to Internships in Da Nang",
       ctaProjects: "View Projects",
       ctaCv: "Download CV (PDF)",
       titleWord1: "SOFTWARE",
@@ -20,7 +20,7 @@ export const translations = {
       subtitleCode: "CODE",
       subtitleArch: "ARCHITECTURE",
       scrollExplore: "SCROLL TO EXPLORE",
-      rotatingBadge: "OPEN TO INTERNSHIPS • READY TO CONTRIBUTE •",
+      rotatingBadge: "GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •",
       basedIn: "DA NANG, VIETNAM",
     },
     about: {
