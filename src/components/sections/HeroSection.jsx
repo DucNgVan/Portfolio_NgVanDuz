@@ -128,11 +128,11 @@ const HeroSection = () => {
       {/* 2. MAIN HERO CONTENT (Exact Match to Reference Template Typography) */}
       <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4">
         
-        {/* Kinetic Giant Word 1: "SOFTWARE" - Elongated & Glitch on Hover */}
+        {/* Kinetic Giant Word 1: "SOFTWARE" - Elegant Elongation & Liquid Wave Interaction */}
         <div 
           className="flex justify-center items-center overflow-visible py-2 sm:py-3 origin-center"
           style={{
-            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.32)`,
+            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.25)`,
             transformOrigin: 'center center',
             transition: 'transform 0.15s ease-out',
           }}

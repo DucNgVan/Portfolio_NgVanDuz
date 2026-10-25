@@ -56,72 +56,58 @@
   mix-blend-mode: difference;
 }
 
-/* Interactive glitch / noise letter animation on hover */
-@keyframes glitch-jitter {
-  0% {
-    transform: translate(0, 0) skewX(0deg);
-  }
-  20% {
-    transform: translate(-2px, 1px) skewX(-2.5deg);
-  }
-  40% {
-    transform: translate(2px, -1.5px) skewX(3deg);
-  }
-  60% {
-    transform: translate(-1.5px, -1px) skewX(-1.5deg);
-  }
-  80% {
-    transform: translate(1.5px, 1px) skewX(2deg);
-  }
-  100% {
-    transform: translate(0, 0) skewX(0deg);
-  }
-}
-
-@keyframes glitch-slice-1 {
-  0% {
-    clip-path: polygon(0 0%, 100% 0%, 100% 38%, 0 38%);
-    transform: translate(-3px, -1px);
-  }
-  50% {
-    clip-path: polygon(0 42%, 100% 42%, 100% 68%, 0 68%);
-    transform: translate(3px, 1.5px);
-  }
-  100% {
-    clip-path: polygon(0 15%, 100% 15%, 100% 52%, 0 52%);
-    transform: translate(-2px, 0.5px);
-  }
-}
-
-@keyframes glitch-slice-2 {
-  0% {
-    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-    transform: translate(3px, 1px);
-  }
-  50% {
-    clip-path: polygon(0 20%, 100% 20%, 100% 48%, 0 48%);
-    transform: translate(-2.5px, -1.5px);
-  }
-  100% {
-    clip-path: polygon(0 68%, 100% 68%, 100% 95%, 0 95%);
-    transform: translate(2px, -1px);
-  }
-}
-
+/* Artistic Liquid Wave & Golden Ink Bloom */
 .wave-letter {
   display: inline-block;
   position: relative;
-  transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1), color 0.15s;
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1), color 0.3s ease, filter 0.3s ease;
   will-change: transform;
+  cursor: pointer;
 }
 
+/* Primary Hovered Letter: Elegant upward spring + warm bronze highlight */
 .wave-letter:hover {
-  animation: glitch-jitter 0.25s steps(2, end) infinite;
+  transform: translateY(-20px) scaleY(1.08) scaleX(1.02);
   color: #8C6D3F;
+  filter: drop-shadow(0 16px 24px rgba(140, 109, 63, 0.28));
+  z-index: 10;
 }
 
-.wave-letter:hover::before,
-.wave-letter:hover::after {
+/* Subtle organic micro-rotation */
+.wave-letter:nth-child(even):hover {
+  transform: translateY(-20px) scaleY(1.08) scaleX(1.02) rotate(-1.5deg);
+}
+
+.wave-letter:nth-child(odd):hover {
+  transform: translateY(-20px) scaleY(1.08) scaleX(1.02) rotate(1.5deg);
+}
+
+/* Natural Gaussian Ripple on Adjacent Next Letter */
+.wave-letter:hover + .wave-letter {
+  transform: translateY(-9px) scaleY(1.04);
+  color: #383838;
+  z-index: 5;
+}
+
+.wave-letter:hover + .wave-letter + .wave-letter {
+  transform: translateY(-3px) scaleY(1.015);
+  color: #222222;
+}
+
+/* Natural Gaussian Ripple on Adjacent Previous Letter (CSS :has) */
+.wave-letter:has(+ .wave-letter:hover) {
+  transform: translateY(-9px) scaleY(1.04);
+  color: #383838;
+  z-index: 5;
+}
+
+.wave-letter:has(+ .wave-letter + .wave-letter:hover) {
+  transform: translateY(-3px) scaleY(1.015);
+  color: #222222;
+}
+
+/* Ethereal Golden Ink Aura blooming softly behind the hovered letter */
+.wave-letter::after {
   content: attr(data-char);
   position: absolute;
   top: 0;
@@ -129,23 +115,22 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.95;
+  opacity: 0;
+  color: #D8C8A8;
+  filter: blur(8px);
+  transform: translateY(0) scale(1);
+  transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+  z-index: -1;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   letter-spacing: inherit;
 }
 
-.wave-letter:hover::before {
-  left: -2px;
-  text-shadow: -2px 0 #bfa882;
-  animation: glitch-slice-1 0.22s steps(2, start) infinite alternate;
-}
-
 .wave-letter:hover::after {
-  left: 2px;
-  text-shadow: 2px 0 #0d0d0d;
-  animation: glitch-slice-2 0.26s steps(2, start) infinite alternate;
+  opacity: 0.7;
+  filter: blur(12px);
+  transform: translateY(-8px) scale(1.12);
 }
 
 /* Liquid dripping droplet animations */
