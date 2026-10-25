@@ -129,7 +129,7 @@ const AboutSection = () => {
           </div>
 
           {/* RIGHT: Editorial Statement & Clear Professional Profile */}
-          <div className="lg:col-span-7 flex flex-col justify-start text-left">
+          <div className="lg:col-span-7 flex flex-col justify-center text-left my-auto">
             
             {/* Eyebrow */}
             <ScrollReveal direction="left" delay={0.1}>
@@ -138,9 +138,9 @@ const AboutSection = () => {
               </div>
             </ScrollReveal>
 
-            {/* Two Columns of Editorial Bio Text with High Readability */}
+            {/* Editorial Bio Text - Stacked Top & Bottom */}
             <ScrollReveal direction="up" delay={0.2}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm sm:text-base text-[#d1d5db] leading-relaxed">
+              <div className="flex flex-col gap-5 sm:gap-6 text-sm sm:text-base text-[#d1d5db] leading-relaxed">
                 <p>
                   {t.about.bioP1}
                 </p>
