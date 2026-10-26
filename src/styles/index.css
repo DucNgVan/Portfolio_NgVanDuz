@@ -36,9 +36,8 @@
   background-color: #f4efea;
   border-radius: 50%;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, opacity 0.2s;
   mix-blend-mode: difference;
+  transition: opacity 0.2s ease, transform 0.15s ease-out;
 }
 
 .cursor-ring {
@@ -46,14 +45,22 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(244, 239, 234, 0.5);
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(244, 239, 234, 0.6);
   border-radius: 50%;
   z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.12s ease-out, width 0.25s, height 0.25s, background-color 0.25s;
   mix-blend-mode: difference;
+  transition: opacity 0.2s ease, background-color 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Utilities to completely hide native scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Artistic Liquid Wave & Golden Ink Bloom */

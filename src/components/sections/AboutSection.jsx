@@ -209,7 +209,7 @@ const AboutSection = () => {
                     </span>
                   </div>
                   <span className="text-[9px] font-mono text-[#777777] uppercase tracking-wider hidden sm:inline">
-                    {lang === 'vi' ? '✦ CUỘN HOẶC KÉO NGANG' : '✦ DRAG OR HOVER'}
+                    {lang === 'vi' ? '✦ RÊ CHUỘT ĐỂ TẠM DỪNG' : '✦ HOVER TO PAUSE'}
                   </span>
                 </div>
 
@@ -218,14 +218,14 @@ const AboutSection = () => {
                   <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none" />
                   <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none" />
 
-                  <div className="flex gap-2 overflow-x-auto no-scrollbar py-0.5 cursor-grab active:cursor-grabbing select-none">
+                  <div className="flex gap-2 overflow-hidden py-1 select-none">
                     <div className="flex items-center gap-2 animate-marquee group-hover:[animation-play-state:paused] shrink-0">
                       {[...allTechStack, ...allTechStack].map((tech, idx) => {
                         const Icon = getTechIcon(tech.name);
                         return (
                           <div
                             key={idx}
-                            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/70 hover:bg-[#161616] transition-all duration-300 shrink-0 shadow-sm group/item hover:-translate-y-0.5"
+                            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/70 hover:bg-[#161616] transition-all duration-300 shrink-0 shadow-sm group/item hover:-translate-y-0.5 cursor-pointer interactive-hover"
                           >
                             <div className="w-5 h-5 rounded-md bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center p-0.5 shrink-0 group-hover/item:scale-105 transition-transform">
                               {Icon && <Icon className="w-3 h-3" />}

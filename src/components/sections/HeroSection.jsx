@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, ArrowDown, Menu, X, FileText } from 'lucide-react';
+import { ArrowUpRight, Menu, X, FileText } from 'lucide-react';
 import { personalInfo } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
@@ -30,8 +30,6 @@ const HeroSection = () => {
 
   // Letters for kinetic display
   const softwareLetters = (t.hero.titleWord1 || "SOFTWARE").split("");
-
-  const quickTechList = ['React.js / Next.js', 'Node.js / Express', 'PostgreSQL (3NF)', 'Redis', 'Docker'];
 
   return (
     <section
@@ -126,24 +124,14 @@ const HeroSection = () => {
         </div>
       )}
 
-      {/* 2. MAIN HERO CONTENT (Harmoniously balanced on Mobile & Desktop) */}
-      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4 lg:py-2">
+      {/* 2. MAIN HERO CONTENT (Artistic Kinetic Typography & Optical Centering) */}
+      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-4 sm:py-6">
         
-        {/* Status / Availability Eyebrow Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0D0D0D]/[0.05] border border-[#0D0D0D]/10 text-[10px] sm:text-xs font-mono tracking-widest text-[#444444] mb-4 sm:mb-6 lg:mb-7 uppercase shadow-xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-semibold text-[#0D0D0D]">
-            {lang === 'vi' ? 'SẴN SÀNG THỰC TẬP' : 'READY FOR INTERNSHIP'}
-          </span>
-          <span className="text-[#888888]">•</span>
-          <span>DA NANG, VN</span>
-        </div>
-
-        {/* Kinetic Giant Word 1: "SOFTWARE" */}
+        {/* Kinetic Giant Word 1: "SOFTWARE" - Elegant Elongation & Liquid Wave Interaction */}
         <div 
           className="flex justify-center items-center overflow-visible py-2 sm:py-3 origin-center"
           style={{
-            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.15)`,
+            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.2)`,
             transformOrigin: 'center center',
             transition: 'transform 0.15s ease-out',
           }}
@@ -174,7 +162,7 @@ const HeroSection = () => {
         </h2>
 
         {/* Subtitle Pills: VISUALS • CODE • ARCHITECTURE */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-6 mt-3 sm:mt-4 lg:mt-5 text-[11px] sm:text-sm font-semibold tracking-[0.2em] text-[#0D0D0D] uppercase font-mono">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-6 mt-4 sm:mt-5 text-[11px] sm:text-sm font-semibold tracking-[0.2em] text-[#0D0D0D] uppercase font-mono">
           <span>{t.hero.subtitleVisuals || "VISUALS"}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#0D0D0D]"></span>
           <span>{t.hero.subtitleCode || "CODE"}</span>
@@ -183,49 +171,17 @@ const HeroSection = () => {
         </div>
 
         {/* Bio Paragraphs */}
-        <div className="max-w-xl mt-3 sm:mt-4 text-xs sm:text-sm font-sans text-[#555555] leading-relaxed text-center px-4">
+        <div className="max-w-xl mt-3.5 sm:mt-4 text-xs sm:text-sm font-sans text-[#555555] leading-relaxed text-center px-4">
           <p className="font-medium text-[#444444]">
             {lang === 'vi'
               ? 'Sinh viên Kỹ thuật Phần mềm năm cuối tại Đại học Greenwich (Việt Nam)'
               : 'Final-Year Software Engineering Student at University of Greenwich (Vietnam)'}
           </p>
-          <p className="mt-0.5 sm:mt-1 text-[#0D0D0D] font-bold text-xs sm:text-[13px] tracking-wide">
+          <p className="mt-1 text-[#0D0D0D] font-bold text-xs sm:text-[13px] tracking-wide">
             {lang === 'vi'
               ? 'Chuyên sâu Clean Architecture, Backend quy mô lớn & Tối ưu Cơ sở dữ liệu'
               : 'Specializing in Clean Architecture, Scalable Backend & Database Optimization'}
           </p>
-        </div>
-
-        {/* Mobile & Desktop High-Conversion Action Buttons */}
-        <div className="flex items-center justify-center gap-3 mt-4 sm:mt-5 lg:mt-6">
-          <a
-            href="#work"
-            className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#0D0D0D] text-[#F4EFEA] font-mono text-[11px] sm:text-xs font-bold tracking-wider hover:bg-[#8C6D3F] transition-all shadow-md flex items-center gap-2 group cursor-pointer"
-          >
-            <span>{lang === 'vi' ? 'XEM DỰ ÁN' : 'EXPLORE WORK'}</span>
-            <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
-          </a>
-          <a
-            href={personalInfo.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4.5 sm:px-5 py-2.5 sm:py-3 rounded-full border border-[#0D0D0D]/30 text-[#0D0D0D] font-mono text-[11px] sm:text-xs font-bold tracking-wider hover:border-[#0D0D0D] hover:bg-[#0D0D0D]/5 transition-all flex items-center gap-2 cursor-pointer"
-          >
-            <FileText className="w-3.5 h-3.5 text-[#555555]" />
-            <span>{lang === 'vi' ? 'HỒ SƠ CV' : 'RESUME (PDF)'}</span>
-          </a>
-        </div>
-
-        {/* Quick Core Tech Stack Pills (Shown on mobile & tablet to perfectly fill viewport without empty gaps) */}
-        <div className="flex lg:hidden flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-4 max-w-md px-2">
-          {quickTechList.map((tech, i) => (
-            <span 
-              key={i} 
-              className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-[#0D0D0D]/[0.04] border border-[#0D0D0D]/10 text-[#444444] font-medium"
-            >
-              {tech}
-            </span>
-          ))}
         </div>
 
       </div>
