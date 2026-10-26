@@ -176,74 +176,80 @@ const HeroSection = () => {
           <p>Final-Year Software Engineering Student at University of Greenwich</p>
           <p className="mt-0.5 text-[#0D0D0D] font-semibold">Open to Internships in Da Nang</p>
         </div>
-
-        {/* SCROLL TO EXPLORE WITH ANIMATED MOUSE PIN */}
-        <a
-          href="#about"
-          className="inline-flex flex-col items-center gap-2 mt-6 sm:mt-8 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#333333] hover:text-[#0D0D0D] transition-colors group cursor-pointer"
-        >
-          <span className="tracking-[0.2em]">{t.hero.scrollExplore || "SCROLL TO EXPLORE"}</span>
-          {/* Animated Scroll Mouse Pin Icon matching Reference */}
-          <div className="w-4 h-7 rounded-full border-2 border-[#0D0D0D] flex items-start justify-center p-1 group-hover:scale-105 transition-transform">
-            <div className="w-1 h-2 bg-[#0D0D0D] rounded-full animate-bounce"></div>
-          </div>
-        </a>
       </div>
 
-      {/* 3. HERO FOOTER BAR (Exact Baseline Alignment for Left & Right) */}
-      <div className="w-full flex items-end justify-between z-20 pt-2 pb-1">
+      {/* 3. HERO FOOTER BAR (3-Column Layout: Left Signature, Center Mouse Pin, Right Contact Badge) */}
+      <div className="w-full grid grid-cols-3 items-end z-20 pt-2 pb-1">
         {/* Bottom Left: ©2026 + Handwritten Signature */}
-        <div className="text-xs font-mono text-[#444444] tracking-wide flex items-center gap-1.5 mb-1">
+        <div className="text-xs font-mono text-[#444444] tracking-wide flex items-center gap-1.5 mb-1 justify-start">
           <span>©2026</span>
           <span className="font-hand text-xl text-[#0D0D0D]">
             {personalInfo.name.toLowerCase().replace(/\s+/g, '')}
           </span>
         </div>
 
-        {/* Bottom Right: Circular Rotating Badge ("GET IN TOUCH") + Location */}
-        <div className="flex flex-col items-center gap-1">
+        {/* Bottom Center: SCROLL TO EXPLORE WITH ANIMATED MOUSE PIN */}
+        <div className="flex justify-center items-end">
           <a
-            href="#contact"
-            className="relative w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center group cursor-pointer"
-            title="Get in touch"
+            href="#about"
+            className="inline-flex flex-col items-center gap-1.5 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#333333] hover:text-[#0D0D0D] transition-colors group cursor-pointer mb-1"
           >
-            {/* Rotating circular SVG text: "GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •" */}
-            <svg
-              className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
-              viewBox="0 0 100 100"
-            >
-              <defs>
-                <path
-                  id="circlePath"
-                  d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
-                />
-              </defs>
-              <text
-                fontSize="8"
-                fontWeight="600"
-                fill="currentColor"
-              >
-                <textPath
-                  href="#circlePath"
-                  startOffset="0%"
-                  textLength="225"
-                  lengthAdjust="spacingAndGlyphs"
-                >
-                  GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •
-                </textPath>
-              </text>
-            </svg>
-
-            {/* Central Arrow Button */}
-            <div className="absolute w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-sm">
-              <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span className="tracking-[0.2em] uppercase text-[9px] sm:text-[10px] font-semibold text-[#555555] group-hover:text-[#0D0D0D] transition-colors">
+              {t.hero.scrollExplore || "SCROLL TO EXPLORE"}
+            </span>
+            {/* Animated Scroll Mouse Pin Icon matching Reference */}
+            <div className="w-4 h-7 rounded-full border-2 border-[#0D0D0D] flex items-start justify-center p-1 group-hover:scale-105 transition-transform">
+              <div className="w-1 h-2 bg-[#0D0D0D] rounded-full animate-bounce"></div>
             </div>
           </a>
+        </div>
 
-          {/* Location Caption */}
-          <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#555555] uppercase font-semibold">
-            {t.hero.basedIn || "DA NANG, VIETNAM"}
-          </span>
+        {/* Bottom Right: Circular Rotating Badge ("GET IN TOUCH") + Location */}
+        <div className="flex flex-col items-end gap-1 justify-end">
+          <div className="flex flex-col items-center">
+            <a
+              href="#contact"
+              className="relative w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center group cursor-pointer"
+              title="Get in touch"
+            >
+              {/* Rotating circular SVG text: "GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •" */}
+              <svg
+                className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
+                viewBox="0 0 100 100"
+              >
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
+                  />
+                </defs>
+                <text
+                  fontSize="8"
+                  fontWeight="600"
+                  fill="currentColor"
+                >
+                  <textPath
+                    href="#circlePath"
+                    startOffset="0%"
+                    textLength="225"
+                    lengthAdjust="spacingAndGlyphs"
+                  >
+                    GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •
+                  </textPath>
+                </text>
+              </svg>
+
+              {/* Central Arrow Button */}
+              <div className="absolute w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-sm">
+                <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </a>
+
+            {/* Location Caption */}
+            <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#555555] uppercase font-semibold">
+              {t.hero.basedIn || "DA NANG, VIETNAM"}
+            </span>
+          </div>
         </div>
       </div>
     </section>
