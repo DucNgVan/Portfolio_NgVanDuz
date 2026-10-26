@@ -68,7 +68,7 @@ const AboutSection = () => {
         <div className="shrink-0 mb-3 lg:mb-4">
           <div className="flex items-end justify-between pb-2.5 border-b border-[#222222]">
             <div>
-              <h2 className="font-bebas text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wider leading-none">
+              <h2 className="font-bebas text-6xl sm:text-7xl lg:text-8xl xl:text-9xl tracking-wider leading-none">
                 <span className="text-[#d8c8a8]">{lang === 'vi' ? 'GIỚI THIỆU ' : 'ABOUT '}</span>
                 <span className="text-[#F4EFEA]">{lang === 'vi' ? 'BẢN THÂN' : 'ME'}</span>
               </h2>
@@ -123,37 +123,16 @@ const AboutSection = () => {
             </ScrollReveal>
           </div>
 
-          {/* RIGHT: Name Header + Tech Tags + Bio + Specs Grid + Marquee Under Da Nang */}
+          {/* RIGHT: Editorial Headline + Bio + Specs Grid + Marquee Under Da Nang */}
           <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-center text-left">
             
-            {/* Replaced Headline with Content from the Photo Box (Name + Greenwich + Core Tech Chips) */}
+            {/* Editorial Headline */}
             <ScrollReveal direction="left" delay={0.1}>
-              <div className="flex flex-col gap-2 mb-3">
-                <div className="flex items-baseline justify-between border-b border-[#222222] pb-1.5">
-                  <h3 className="font-syne font-extrabold text-xl sm:text-2xl lg:text-3xl tracking-wider text-[#F4EFEA] uppercase">
-                    {personalInfo.name}
-                  </h3>
-                  <span className="text-xs font-mono text-[#d8c8a8] tracking-widest uppercase font-semibold">
-                    GREENWICH VIETNAM
-                  </span>
-                </div>
-
-                {/* The 4 Core Tech Chips from the old photo box */}
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#d8c8a8] uppercase font-semibold tracking-wider">
-                    Clean Architecture
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#cccccc] uppercase tracking-wider">
-                    PostgreSQL 3NF
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#cccccc] uppercase tracking-wider">
-                    Redis
-                  </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#cccccc] uppercase tracking-wider">
-                    Docker
-                  </span>
-                </div>
-              </div>
+              <h3 className="font-bebas text-2xl sm:text-3xl lg:text-4xl text-[#d8c8a8] tracking-wider mb-3 leading-tight">
+                {lang === 'vi'
+                  ? 'ƯU TIÊN HÀNG ĐẦU LÀ CLEAN ARCHITECTURE & TỐI ƯU HỆ THỐNG.'
+                  : 'CLEAN ARCHITECTURE, SCALABLE BACKEND & DATABASE OPTIMIZATION.'}
+              </h3>
             </ScrollReveal>
 
             {/* Editorial Bio Paragraphs */}
