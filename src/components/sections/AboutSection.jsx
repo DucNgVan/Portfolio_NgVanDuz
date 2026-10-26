@@ -1,5 +1,4 @@
 import React from 'react';
-import { Target, Layers, MapPin, GraduationCap } from 'lucide-react';
 import profileImg from '@/assets/images/profile.jpg';
 import { personalInfo } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
@@ -65,21 +64,17 @@ const AboutSection = () => {
     >
       <div className="max-w-7xl mx-auto w-full h-full flex flex-col justify-between my-auto">
         
-        {/* 1. TOP HEADER: Editorial Title + Status Pill */}
-        <div className="shrink-0 mb-2 lg:mb-3">
+        {/* 1. TOP HEADER: Single BOLD Title (No duplicate about me) + Status */}
+        <div className="shrink-0 mb-3 lg:mb-4">
           <div className="flex items-end justify-between pb-2.5 border-b border-[#222222]">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono text-[#a3a3a3] tracking-[0.25em] mb-1">
-                <span className="text-[#d8c8a8]">{'//'}</span>
-                <span>{lang === 'vi' ? '01 • GIỚI THIỆU BẢN THÂN' : '01 • ABOUT ME'}</span>
-              </div>
-              <h2 className="font-bebas text-4xl sm:text-5xl lg:text-6xl tracking-wider leading-none">
+              <h2 className="font-bebas text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wider leading-none">
                 <span className="text-[#d8c8a8]">{lang === 'vi' ? 'GIỚI THIỆU ' : 'ABOUT '}</span>
                 <span className="text-[#F4EFEA]">{lang === 'vi' ? 'BẢN THÂN' : 'ME'}</span>
               </h2>
             </div>
 
-            <div className="hidden sm:flex flex-col items-end gap-1">
+            <div className="hidden sm:flex flex-col items-end gap-1 pb-1">
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#141414] border border-[#2a2a2a] text-[10px] font-mono text-[#F4EFEA]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="uppercase font-semibold text-[#d8c8a8]">{t.about.badgeAvailable || 'READY FOR INTERNSHIP'}</span>
@@ -93,81 +88,77 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* 2. MIDDLE CONTENT: Left Portrait + Right Architectural Narrative */}
+        {/* 2. MAIN CONTENT GRID: Clear Photo (Left) + Name, Bio, Specs & Marquee (Right) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center my-auto">
           
-          {/* LEFT: Portrait Photograph (Cinematic Frame) */}
+          {/* LEFT: Portrait Photograph (CLEAN & UNOBSTRUCTED - No Box Covering Photo) */}
           <div className="lg:col-span-5 xl:col-span-4 flex justify-center lg:justify-start">
             <ScrollReveal direction="zoom" delay={0.1} className="w-full max-w-[340px] lg:max-w-none">
-              <div className="relative w-full h-[380px] sm:h-[410px] lg:h-[430px] xl:h-[450px] rounded-2xl overflow-hidden bg-[#111111] border border-[#262626] shadow-2xl group transition-all duration-500 hover:border-[#d8c8a8]/50">
+              <div className="relative w-full h-[400px] sm:h-[430px] lg:h-[460px] xl:h-[480px] rounded-2xl overflow-hidden bg-[#111111] border border-[#262626] shadow-2xl group transition-all duration-500 hover:border-[#d8c8a8]/50">
                 
-                {/* The Photo */}
+                {/* Full Photo Visible Clearly */}
                 <img
                   src={profileImg}
                   alt={personalInfo.name}
-                  className="w-full h-full object-cover object-[center_16%] group-hover:scale-105 transition-transform duration-700 filter brightness-[0.96] contrast-[1.04]"
+                  className="w-full h-full object-cover object-[center_16%] group-hover:scale-105 transition-transform duration-700 filter brightness-[0.98] contrast-[1.02]"
                   loading="eager"
                 />
 
-                {/* Cinematic Vignettes */}
-                <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#080808]/80 to-transparent pointer-events-none" />
-                <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#080808] via-[#080808]/85 to-transparent pointer-events-none" />
+                {/* Subtle Edge Vignettes */}
+                <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#080808]/70 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#080808]/80 to-transparent pointer-events-none" />
 
-                {/* Top Badges */}
-                <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10 pointer-events-none">
-                  <span className="px-2.5 py-1 rounded-md bg-[#0a0a0a]/85 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-wider text-[#d8c8a8] font-bold">
+                {/* Subtle Status Pin in Top Corner */}
+                <div className="absolute top-3 right-3 z-10 pointer-events-none">
+                  <span className="px-2.5 py-1 rounded-md bg-[#0a0a0a]/85 backdrop-blur-md border border-white/10 text-[10px] font-mono tracking-wider text-[#d8c8a8] font-bold shadow">
                     BSc (Hons)
                   </span>
-                  <span className="text-[10px] font-mono text-[#a0a0a0] px-2 py-0.5 rounded bg-black/60 backdrop-blur-md">
-                    DEV.2026
-                  </span>
-                </div>
-
-                {/* Bottom Overlay on Photo */}
-                <div className="absolute bottom-3 inset-x-3 z-10 flex flex-col gap-1.5 p-3 rounded-xl bg-[#0a0a0a]/80 backdrop-blur-md border border-white/10 pointer-events-none">
-                  <div className="flex items-center justify-between">
-                    <span className="font-syne font-bold text-base tracking-wider text-[#F4EFEA] uppercase">
-                      {personalInfo.name}
-                    </span>
-                    <span className="text-[10px] font-mono text-[#d8c8a8]">
-                      GREENWICH VN
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5 flex-wrap pt-1.5 border-t border-white/10">
-                    <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[#d8c8a8]">
-                      Clean Architecture
-                    </span>
-                    <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[#cccccc]">
-                      PostgreSQL 3NF
-                    </span>
-                    <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[#cccccc]">
-                      Redis • Docker
-                    </span>
-                  </div>
                 </div>
 
                 {/* Corner Crosshairs */}
                 <span className="absolute top-2 left-2 text-[#d8c8a8]/40 font-mono text-xs pointer-events-none">+</span>
-                <span className="absolute top-2 right-2 text-[#d8c8a8]/40 font-mono text-xs pointer-events-none">+</span>
+                <span className="absolute bottom-2 left-2 text-[#d8c8a8]/40 font-mono text-xs pointer-events-none">+</span>
+                <span className="absolute bottom-2 right-2 text-[#d8c8a8]/40 font-mono text-xs pointer-events-none">+</span>
               </div>
             </ScrollReveal>
           </div>
 
-          {/* RIGHT: Editorial Bio + Blueprint Specifications */}
+          {/* RIGHT: Name Header + Tech Tags + Bio + Specs Grid + Marquee Under Da Nang */}
           <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-center text-left">
             
-            {/* Editorial Quote Headline */}
+            {/* Replaced Headline with Content from the Photo Box (Name + Greenwich + Core Tech Chips) */}
             <ScrollReveal direction="left" delay={0.1}>
-              <h3 className="font-bebas text-2xl sm:text-3xl text-[#d8c8a8] tracking-wider mb-2.5">
-                {lang === 'vi'
-                  ? 'ƯU TIÊN HÀNG ĐẦU LÀ CLEAN ARCHITECTURE & TỐI ƯU HỆ THỐNG.'
-                  : 'CLEAN ARCHITECTURE, SCALABLE BACKEND & DATABASE OPTIMIZATION.'}
-              </h3>
+              <div className="flex flex-col gap-2 mb-3">
+                <div className="flex items-baseline justify-between border-b border-[#222222] pb-1.5">
+                  <h3 className="font-syne font-extrabold text-xl sm:text-2xl lg:text-3xl tracking-wider text-[#F4EFEA] uppercase">
+                    {personalInfo.name}
+                  </h3>
+                  <span className="text-xs font-mono text-[#d8c8a8] tracking-widest uppercase font-semibold">
+                    GREENWICH VIETNAM
+                  </span>
+                </div>
+
+                {/* The 4 Core Tech Chips from the old photo box */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#d8c8a8] uppercase font-semibold tracking-wider">
+                    Clean Architecture
+                  </span>
+                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#cccccc] uppercase tracking-wider">
+                    PostgreSQL 3NF
+                  </span>
+                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#cccccc] uppercase tracking-wider">
+                    Redis
+                  </span>
+                  <span className="px-2.5 py-1 rounded-lg bg-[#141414] border border-[#262626] text-[10.5px] font-mono text-[#cccccc] uppercase tracking-wider">
+                    Docker
+                  </span>
+                </div>
+              </div>
             </ScrollReveal>
 
-            {/* Bio Paragraphs */}
+            {/* Editorial Bio Paragraphs */}
             <ScrollReveal direction="up" delay={0.15}>
-              <div className="flex flex-col gap-2.5 text-xs sm:text-[13px] lg:text-[13.5px] leading-relaxed text-[#c9cbcf] mb-4">
+              <div className="flex flex-col gap-2 text-xs sm:text-[13px] lg:text-[13.5px] leading-relaxed text-[#c9cbcf] mb-3">
                 <div className="pl-3.5 border-l-2 border-[#d8c8a8] py-0.5">
                   <p>{renderFormattedBio(t.about.bioP1)}</p>
                 </div>
@@ -175,13 +166,12 @@ const AboutSection = () => {
               </div>
             </ScrollReveal>
 
-            {/* Blueprint Specifications Grid (Clean Hairlines, Architecture Blueprint Style) */}
+            {/* Blueprint Specifications Grid (Ending with Da Nang, Vietnam) */}
             <ScrollReveal direction="up" delay={0.2}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-b border-[#222222] divide-y sm:divide-y-0 sm:divide-x divide-[#222222] py-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-b border-[#222222] divide-y sm:divide-y-0 sm:divide-x divide-[#222222] py-2 mb-3">
                 
-                {/* Left Column */}
-                <div className="flex flex-col gap-2.5 py-2.5 sm:pr-4">
-                  {/* Item 1: Target Role */}
+                {/* Left Column (Items 1 & 3) */}
+                <div className="flex flex-col gap-2 py-1 sm:pr-4">
                   <div className="flex flex-col">
                     <span className="text-[9px] font-mono tracking-widest text-[#888888] uppercase">
                       {lang === 'vi' ? '[01] VỊ TRÍ MONG MUỐN' : '[01] TARGET ROLE'}
@@ -191,8 +181,8 @@ const AboutSection = () => {
                     </span>
                   </div>
 
-                  {/* Item 2: Location */}
-                  <div className="flex flex-col pt-2 border-t border-[#1a1a1a]">
+                  {/* ITEM 3: DA NANG, VIETNAM */}
+                  <div className="flex flex-col pt-1.5 border-t border-[#1a1a1a]">
                     <span className="text-[9px] font-mono tracking-widest text-[#888888] uppercase">
                       {lang === 'vi' ? '[03] ĐỊA ĐIỂM & HÌNH THỨC' : '[03] LOCATION & PREFERENCE'}
                     </span>
@@ -202,9 +192,8 @@ const AboutSection = () => {
                   </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="flex flex-col gap-2.5 py-2.5 sm:pl-4">
-                  {/* Item 3: Core Focus */}
+                {/* Right Column (Items 2 & 4) */}
+                <div className="flex flex-col gap-2 py-1 sm:pl-4">
                   <div className="flex flex-col">
                     <span className="text-[9px] font-mono tracking-widest text-[#888888] uppercase">
                       {lang === 'vi' ? '[02] CHUYÊN MÔN CỐT LÕI' : '[02] CORE FOCUS'}
@@ -214,8 +203,7 @@ const AboutSection = () => {
                     </span>
                   </div>
 
-                  {/* Item 4: Education */}
-                  <div className="flex flex-col pt-2 border-t border-[#1a1a1a]">
+                  <div className="flex flex-col pt-1.5 border-t border-[#1a1a1a]">
                     <span className="text-[9px] font-mono tracking-widest text-[#888888] uppercase">
                       {lang === 'vi' ? '[04] HỌC VẤN & BẰNG CẤP' : '[04] ACADEMIC FOUNDATION'}
                     </span>
@@ -228,59 +216,60 @@ const AboutSection = () => {
               </div>
             </ScrollReveal>
 
-          </div>
+            {/* MARQUEE BAR: Placed directly under Da Nang, Vietnam & Specs Grid */}
+            <ScrollReveal direction="up" delay={0.25}>
+              <div className="w-full pt-0.5">
+                <div className="flex items-center justify-between mb-1.5 px-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d8c8a8] animate-pulse"></span>
+                    <span className="text-[10px] sm:text-xs font-mono tracking-[0.25em] text-[#d8c8a8] uppercase font-bold">
+                      {lang === 'vi' ? 'HỆ THỐNG CÔNG NGHỆ CỐT LÕI' : 'CORE TECHNICAL STACK'}
+                    </span>
+                    <span className="text-[9px] font-mono text-[#666666] hidden md:inline">
+                      [ 17 TECHNOLOGIES ]
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono text-[#777777] uppercase tracking-wider hidden sm:inline">
+                    {lang === 'vi' ? '✦ CUỘN HOẶC KÉO NGANG' : '✦ DRAG OR HOVER'}
+                  </span>
+                </div>
 
-        </div>
+                {/* Marquee Slider inside Right Column */}
+                <div className="relative w-full overflow-hidden group">
+                  <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none" />
 
-        {/* 3. BOTTOM: Architectural Tech Stack Ribbon (Full width border-y matching Work Section) */}
-        <div className="shrink-0 mt-2 lg:mt-3 pt-2 border-t border-[#222222]">
-          <div className="flex items-center justify-between mb-1.5 px-1">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#d8c8a8] animate-pulse"></span>
-              <span className="text-[10px] sm:text-xs font-mono tracking-[0.25em] text-[#d8c8a8] uppercase font-bold">
-                {lang === 'vi' ? 'HỆ THỐNG CÔNG NGHỆ CỐT LÕI' : 'CORE TECHNICAL STACK'}
-              </span>
-              <span className="text-[9px] font-mono text-[#666666] hidden md:inline">
-                [ 17 TECHNOLOGIES ]
-              </span>
-            </div>
-            <span className="text-[9px] font-mono text-[#777777] uppercase tracking-wider hidden sm:inline">
-              {lang === 'vi' ? '✦ CUỘN HOẶC KÉO NGANG ĐỂ KHÁM PHÁ' : '✦ DRAG OR SCROLL HORIZONTALLY'}
-            </span>
-          </div>
-
-          {/* Smooth Horizontal Carousel Track with Native Drag/Scroll and Hover Pause */}
-          <div className="relative w-full overflow-hidden group">
-            {/* Left and Right Subtle Fade Gradients */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none" />
-
-            <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 cursor-grab active:cursor-grabbing select-none">
-              <div className="flex items-center gap-2.5 animate-marquee group-hover:[animation-play-state:paused] shrink-0">
-                {[...allTechStack, ...allTechStack].map((tech, idx) => {
-                  const Icon = getTechIcon(tech.name);
-                  return (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/70 hover:bg-[#161616] transition-all duration-300 shrink-0 shadow-sm group/item hover:-translate-y-0.5"
-                    >
-                      <div className="w-6 h-6 rounded-md bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center p-1 shrink-0 group-hover/item:scale-105 transition-transform">
-                        {Icon && <Icon className="w-3.5 h-3.5" />}
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-[11px] font-mono font-bold text-[#F4EFEA] group-hover/item:text-[#d8c8a8] transition-colors whitespace-nowrap">
-                          {tech.name}
-                        </span>
-                        <span className="text-[8.5px] font-mono text-[#777777] uppercase tracking-wider">
-                          {tech.category}
-                        </span>
-                      </div>
+                  <div className="flex gap-2 overflow-x-auto no-scrollbar py-0.5 cursor-grab active:cursor-grabbing select-none">
+                    <div className="flex items-center gap-2 animate-marquee group-hover:[animation-play-state:paused] shrink-0">
+                      {[...allTechStack, ...allTechStack].map((tech, idx) => {
+                        const Icon = getTechIcon(tech.name);
+                        return (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/70 hover:bg-[#161616] transition-all duration-300 shrink-0 shadow-sm group/item hover:-translate-y-0.5"
+                          >
+                            <div className="w-5 h-5 rounded-md bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center p-0.5 shrink-0 group-hover/item:scale-105 transition-transform">
+                              {Icon && <Icon className="w-3 h-3" />}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-[10.5px] font-mono font-bold text-[#F4EFEA] group-hover/item:text-[#d8c8a8] transition-colors whitespace-nowrap">
+                                {tech.name}
+                              </span>
+                              <span className="text-[8px] font-mono text-[#777777] uppercase tracking-wider">
+                                {tech.category}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  </div>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
+
           </div>
+
         </div>
 
       </div>
