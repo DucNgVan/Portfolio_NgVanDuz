@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Menu, X, FileText } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, Menu, X, FileText } from 'lucide-react';
 import { personalInfo } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
@@ -31,13 +31,15 @@ const HeroSection = () => {
   // Letters for kinetic display
   const softwareLetters = (t.hero.titleWord1 || "SOFTWARE").split("");
 
+  const quickTechList = ['React.js / Next.js', 'Node.js / Express', 'PostgreSQL (3NF)', 'Redis', 'Docker'];
+
   return (
     <section
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen lg:h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-6 sm:p-10 lg:px-14 lg:py-10 select-none overflow-hidden"
+      className="relative min-h-[100dvh] lg:h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-5 sm:p-8 lg:px-14 lg:py-10 select-none overflow-hidden"
     >
-      {/* 1. TOP NAVIGATION (Exact Match to Reference Template) */}
+      {/* 1. TOP NAVIGATION */}
       <header className="w-full flex items-center justify-between z-30">
         {/* Left: Elegant Signature Script Logo */}
         <a 
@@ -57,7 +59,6 @@ const HeroSection = () => {
               onMouseLeave={() => setHoveredNav(null)}
               className="text-xs font-semibold tracking-widest text-[#0D0D0D] hover:text-[#8C6D3F] transition-colors relative py-1 group"
             >
-              {/* Floating dot above hovered/active nav */}
               {hoveredNav === link.id && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#0D0D0D] animate-in fade-in zoom-in duration-150"></span>
               )}
@@ -125,14 +126,24 @@ const HeroSection = () => {
         </div>
       )}
 
-      {/* 2. MAIN HERO CONTENT (Centered optical alignment between Nav & Footer) */}
-      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4 mt-4 sm:mt-7 lg:mt-9">
+      {/* 2. MAIN HERO CONTENT (Harmoniously balanced on Mobile & Desktop) */}
+      <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-2 sm:py-4 lg:py-2">
         
-        {/* Kinetic Giant Word 1: "SOFTWARE" - Elegant Elongation & Liquid Wave Interaction */}
+        {/* Status / Availability Eyebrow Pill */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0D0D0D]/[0.05] border border-[#0D0D0D]/10 text-[10px] sm:text-xs font-mono tracking-widest text-[#444444] mb-4 sm:mb-6 lg:mb-7 uppercase shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-semibold text-[#0D0D0D]">
+            {lang === 'vi' ? 'SẴN SÀNG THỰC TẬP' : 'READY FOR INTERNSHIP'}
+          </span>
+          <span className="text-[#888888]">•</span>
+          <span>DA NANG, VN</span>
+        </div>
+
+        {/* Kinetic Giant Word 1: "SOFTWARE" */}
         <div 
           className="flex justify-center items-center overflow-visible py-2 sm:py-3 origin-center"
           style={{
-            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.25)`,
+            transform: `translate(${mousePos.x * 0.35}px, ${mousePos.y * 0.35}px) scaleY(1.15)`,
             transformOrigin: 'center center',
             transition: 'transform 0.15s ease-out',
           }}
@@ -141,7 +152,7 @@ const HeroSection = () => {
             <span
               key={index}
               data-char={char}
-              className="wave-letter font-bebas text-[22vw] sm:text-[20vw] lg:text-[18vw] leading-[0.76] tracking-[0.02em] text-[#0D0D0D] cursor-pointer select-none"
+              className="wave-letter font-bebas text-[24vw] sm:text-[20vw] lg:text-[18vw] leading-[0.76] tracking-[0.02em] text-[#0D0D0D] cursor-pointer select-none"
               style={{
                 animationDelay: `${index * 0.08}s`,
               }}
@@ -153,7 +164,7 @@ const HeroSection = () => {
 
         {/* Kinetic Word 2: "ENGINEERING" */}
         <h2 
-          className="font-bebas text-[10vw] sm:text-[8vw] lg:text-[6.2vw] leading-none tracking-[0.14em] text-[#0D0D0D] mt-2 sm:mt-3"
+          className="font-bebas text-[11vw] sm:text-[8vw] lg:text-[6.2vw] leading-none tracking-[0.16em] text-[#0D0D0D] mt-2 sm:mt-3"
           style={{
             transform: `translate(${-mousePos.x * 0.25}px, ${-mousePos.y * 0.25}px)`,
             transition: 'transform 0.15s ease-out',
@@ -163,7 +174,7 @@ const HeroSection = () => {
         </h2>
 
         {/* Subtitle Pills: VISUALS • CODE • ARCHITECTURE */}
-        <div className="flex items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-5 text-xs sm:text-sm font-semibold tracking-widest text-[#0D0D0D] uppercase font-sans">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-6 mt-3 sm:mt-4 lg:mt-5 text-[11px] sm:text-sm font-semibold tracking-[0.2em] text-[#0D0D0D] uppercase font-mono">
           <span>{t.hero.subtitleVisuals || "VISUALS"}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#0D0D0D]"></span>
           <span>{t.hero.subtitleCode || "CODE"}</span>
@@ -171,19 +182,60 @@ const HeroSection = () => {
           <span>{t.hero.subtitleArch || "ARCHITECTURE"}</span>
         </div>
 
-        {/* Subtitle Headline: Split across lines & clean */}
-        <div className="max-w-xl mt-3 sm:mt-4 text-xs font-sans text-[#555555] leading-relaxed text-center px-4">
-          <p>Final-Year Software Engineering Student at University of Greenwich</p>
-          <p className="mt-0.5 text-[#0D0D0D] font-semibold">Open to Internships in Da Nang</p>
+        {/* Bio Paragraphs */}
+        <div className="max-w-xl mt-3 sm:mt-4 text-xs sm:text-sm font-sans text-[#555555] leading-relaxed text-center px-4">
+          <p className="font-medium text-[#444444]">
+            {lang === 'vi'
+              ? 'Sinh viên Kỹ thuật Phần mềm năm cuối tại Đại học Greenwich (Việt Nam)'
+              : 'Final-Year Software Engineering Student at University of Greenwich (Vietnam)'}
+          </p>
+          <p className="mt-0.5 sm:mt-1 text-[#0D0D0D] font-bold text-xs sm:text-[13px] tracking-wide">
+            {lang === 'vi'
+              ? 'Chuyên sâu Clean Architecture, Backend quy mô lớn & Tối ưu Cơ sở dữ liệu'
+              : 'Specializing in Clean Architecture, Scalable Backend & Database Optimization'}
+          </p>
         </div>
+
+        {/* Mobile & Desktop High-Conversion Action Buttons */}
+        <div className="flex items-center justify-center gap-3 mt-4 sm:mt-5 lg:mt-6">
+          <a
+            href="#work"
+            className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#0D0D0D] text-[#F4EFEA] font-mono text-[11px] sm:text-xs font-bold tracking-wider hover:bg-[#8C6D3F] transition-all shadow-md flex items-center gap-2 group cursor-pointer"
+          >
+            <span>{lang === 'vi' ? 'XEM DỰ ÁN' : 'EXPLORE WORK'}</span>
+            <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
+          </a>
+          <a
+            href={personalInfo.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4.5 sm:px-5 py-2.5 sm:py-3 rounded-full border border-[#0D0D0D]/30 text-[#0D0D0D] font-mono text-[11px] sm:text-xs font-bold tracking-wider hover:border-[#0D0D0D] hover:bg-[#0D0D0D]/5 transition-all flex items-center gap-2 cursor-pointer"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#555555]" />
+            <span>{lang === 'vi' ? 'HỒ SƠ CV' : 'RESUME (PDF)'}</span>
+          </a>
+        </div>
+
+        {/* Quick Core Tech Stack Pills (Shown on mobile & tablet to perfectly fill viewport without empty gaps) */}
+        <div className="flex lg:hidden flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-4 max-w-md px-2">
+          {quickTechList.map((tech, i) => (
+            <span 
+              key={i} 
+              className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-[#0D0D0D]/[0.04] border border-[#0D0D0D]/10 text-[#444444] font-medium"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
       </div>
 
       {/* 3. HERO FOOTER BAR (3-Column Layout: Left Signature, Center Mouse Pin, Right Contact Badge) */}
-      <div className="w-full grid grid-cols-3 items-end z-20 pt-2 pb-1">
+      <div className="w-full grid grid-cols-3 items-end z-20 pt-3 pb-1 sm:pt-2">
         {/* Bottom Left: ©2026 + Handwritten Signature */}
-        <div className="text-xs font-mono text-[#444444] tracking-wide flex items-center gap-1.5 mb-1 justify-start">
+        <div className="text-[10px] sm:text-xs font-mono text-[#444444] tracking-wide flex items-center gap-1.5 mb-1 justify-start">
           <span>©2026</span>
-          <span className="font-hand text-xl text-[#0D0D0D]">
+          <span className="font-hand text-lg sm:text-xl text-[#0D0D0D]">
             {personalInfo.name.toLowerCase().replace(/\s+/g, '')}
           </span>
         </div>
@@ -192,14 +244,14 @@ const HeroSection = () => {
         <div className="flex justify-center items-end">
           <a
             href="#about"
-            className="inline-flex flex-col items-center gap-1.5 text-[10px] sm:text-[11px] font-mono tracking-widest text-[#333333] hover:text-[#0D0D0D] transition-colors group cursor-pointer mb-1"
+            className="inline-flex flex-col items-center gap-1 text-[9px] sm:text-[11px] font-mono tracking-widest text-[#333333] hover:text-[#0D0D0D] transition-colors group cursor-pointer mb-1"
           >
-            <span className="tracking-[0.2em] uppercase text-[9px] sm:text-[10px] font-semibold text-[#555555] group-hover:text-[#0D0D0D] transition-colors">
+            <span className="tracking-[0.2em] uppercase text-[8px] sm:text-[10px] font-semibold text-[#555555] group-hover:text-[#0D0D0D] transition-colors whitespace-nowrap">
               {t.hero.scrollExplore || "SCROLL TO EXPLORE"}
             </span>
-            {/* Animated Scroll Mouse Pin Icon matching Reference */}
-            <div className="w-4 h-7 rounded-full border-2 border-[#0D0D0D] flex items-start justify-center p-1 group-hover:scale-105 transition-transform">
-              <div className="w-1 h-2 bg-[#0D0D0D] rounded-full animate-bounce"></div>
+            {/* Animated Scroll Mouse Pin Icon */}
+            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-full border-2 border-[#0D0D0D] flex items-start justify-center p-1 group-hover:scale-105 transition-transform">
+              <div className="w-1 h-1.5 sm:h-2 bg-[#0D0D0D] rounded-full animate-bounce"></div>
             </div>
           </a>
         </div>
@@ -209,10 +261,10 @@ const HeroSection = () => {
           <div className="flex flex-col items-center">
             <a
               href="#contact"
-              className="relative w-16 h-16 sm:w-18 sm:h-18 flex items-center justify-center group cursor-pointer"
+              className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 flex items-center justify-center group cursor-pointer"
               title="Get in touch"
             >
-              {/* Rotating circular SVG text: "GET IN TOUCH • GET IN TOUCH • GET IN TOUCH •" */}
+              {/* Rotating circular SVG text */}
               <svg
                 className="w-full h-full animate-rotate-badge text-[#0D0D0D]"
                 viewBox="0 0 100 100"
@@ -240,13 +292,13 @@ const HeroSection = () => {
               </svg>
 
               {/* Central Arrow Button */}
-              <div className="absolute w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-sm">
-                <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <div className="absolute w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-full bg-[#0D0D0D] text-[#F4EFEA] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#8C6D3F] transition-all shadow-sm">
+                <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
             </a>
 
             {/* Location Caption */}
-            <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#555555] uppercase font-semibold">
+            <span className="text-[8px] sm:text-[9px] lg:text-[10px] font-mono tracking-widest text-[#555555] uppercase font-semibold whitespace-nowrap">
               {t.hero.basedIn || "DA NANG, VIETNAM"}
             </span>
           </div>
