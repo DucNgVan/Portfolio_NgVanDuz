@@ -6,24 +6,21 @@ import { translations } from '@/data/translations';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { getTechIcon } from '@/components/ui/TechIcons';
 
-const allTechStack = [
-  { name: 'Node.js', category: 'Runtime' },
-  { name: 'Express', category: 'Backend' },
-  { name: 'PostgreSQL', category: 'Relational DB' },
-  { name: 'Redis', category: 'Cache Store' },
-  { name: 'Docker', category: 'Containerization' },
-  { name: 'Next.js 14', category: 'React Framework' },
-  { name: 'React.js', category: 'UI Library' },
-  { name: 'TypeScript', category: 'Language' },
-  { name: 'JavaScript', category: 'Language' },
-  { name: 'Tailwind CSS', category: 'Styling' },
-  { name: 'Three.js', category: '3D Graphics' },
-  { name: 'MongoDB', category: 'NoSQL DB' },
-  { name: 'Git & GitHub', category: 'VCS' },
-  { name: 'Postman', category: 'API Testing' },
-  { name: 'Firebase', category: 'Cloud BaaS' },
-  { name: 'Vue.js 3', category: 'Frontend' },
-  { name: 'Java', category: 'Mobile & OOP' },
+const techStackItems = [
+  { name: 'React.js', shortTag: 'React', category: 'Frontend' },
+  { name: 'Node.js', shortTag: 'Node.js', category: 'Backend' },
+  { name: 'TypeScript', shortTag: 'TS', category: 'Language' },
+  { name: 'JavaScript', shortTag: 'JS', category: 'Language' },
+  { name: 'Python', shortTag: 'Python', category: 'Language' },
+  { name: 'Next.js 14', shortTag: 'Next.js', category: 'Full-Stack' },
+  { name: 'Tailwind CSS', shortTag: 'Tailwind', category: 'Styling' },
+  { name: 'PostgreSQL', shortTag: 'SQL', category: 'Relational DB' },
+  { name: 'MySQL', shortTag: 'SQL', category: 'Relational DB' },
+  { name: 'MongoDB', shortTag: 'NoSQL', category: 'Database' },
+  { name: 'Redis', shortTag: 'Cache', category: 'In-Memory' },
+  { name: 'Docker', shortTag: 'Docker', category: 'DevOps' },
+  { name: 'Three.js', shortTag: '3D Web', category: 'Graphics' },
+  { name: 'Git & GitHub', shortTag: 'Git', category: 'VCS' },
 ];
 
 const renderFormattedBio = (text) => {
@@ -195,54 +192,49 @@ const AboutSection = () => {
               </div>
             </ScrollReveal>
 
-            {/* MARQUEE BAR: Placed directly under Da Nang, Vietnam & Specs Grid */}
+            {/* TECH STACK SHOWCASE: Clean Brand Logos with Floating Capsule Pills */}
             <ScrollReveal direction="up" delay={0.25}>
-              <div className="w-full pt-0.5">
-                <div className="flex items-center justify-between mb-1.5 px-0.5">
+              <div className="w-full pt-1">
+                {/* Header: Tech Stack / Technologies I work with */}
+                <div className="flex items-center justify-between mb-2 px-0.5">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#d8c8a8] animate-pulse"></span>
-                    <span className="text-[10px] sm:text-xs font-mono tracking-[0.25em] text-[#d8c8a8] uppercase font-bold">
-                      {lang === 'vi' ? 'HỆ THỐNG CÔNG NGHỆ CỐT LÕI' : 'CORE TECHNICAL STACK'}
+                    <span className="text-xs sm:text-[13px] font-bold tracking-wider text-[#F4EFEA] uppercase font-mono">
+                      {lang === 'vi' ? 'HỆ THỐNG CÔNG NGHỆ (TECH STACK)' : 'TECH STACK'}
                     </span>
-                    <span className="text-[9px] font-mono text-[#666666] hidden md:inline">
-                      [ 17 TECHNOLOGIES ]
+                    <span className="text-[10px] font-mono text-[#888888] hidden sm:inline">
+                      • {lang === 'vi' ? 'Công nghệ chuyên sâu & thực chiến' : 'Technologies I work with'}
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono text-[#777777] uppercase tracking-wider hidden sm:inline">
-                    {lang === 'vi' ? '✦ RÊ CHUỘT ĐỂ TẠM DỪNG' : '✦ HOVER TO PAUSE'}
+                  <span className="text-[9px] font-mono text-[#666666] uppercase tracking-wider hidden md:inline">
+                    [ 14 CORE TECHNOLOGIES ]
                   </span>
                 </div>
 
-                {/* Marquee Slider inside Right Column */}
-                <div className="relative w-full overflow-hidden group">
-                  <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none" />
-                  <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none" />
+                {/* Clean Logo Grid with Dark Capsule Badge Pills (Matching Reference Image) */}
+                <div className="w-full grid grid-cols-4 sm:grid-cols-7 gap-y-2.5 gap-x-1.5 sm:gap-x-2 pt-1 select-none">
+                  {techStackItems.map((tech, idx) => {
+                    const Icon = getTechIcon(tech.name);
+                    return (
+                      <div
+                        key={idx}
+                        className="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/[0.04] transition-all duration-300 group/tech cursor-pointer interactive-hover"
+                        title={`${tech.name} (${tech.category || tech.shortTag})`}
+                      >
+                        {/* 1. Large Brand Logo Icon (Clean, Authentic Colors) */}
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center group-hover/tech:scale-115 transition-transform duration-300">
+                          {Icon && <Icon className="w-full h-full drop-shadow-sm" />}
+                        </div>
 
-                  <div className="flex gap-2 overflow-hidden py-1 select-none">
-                    <div className="flex items-center gap-2 animate-marquee group-hover:[animation-play-state:paused] shrink-0">
-                      {[...allTechStack, ...allTechStack].map((tech, idx) => {
-                        const Icon = getTechIcon(tech.name);
-                        return (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111111] border border-[#222222] hover:border-[#d8c8a8]/70 hover:bg-[#161616] transition-all duration-300 shrink-0 shadow-sm group/item hover:-translate-y-0.5 cursor-pointer interactive-hover"
-                          >
-                            <div className="w-5 h-5 rounded-md bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center p-0.5 shrink-0 group-hover/item:scale-105 transition-transform">
-                              {Icon && <Icon className="w-3 h-3" />}
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="text-[10.5px] font-mono font-bold text-[#F4EFEA] group-hover/item:text-[#d8c8a8] transition-colors whitespace-nowrap">
-                                {tech.name}
-                              </span>
-                              <span className="text-[8px] font-mono text-[#777777] uppercase tracking-wider">
-                                {tech.category}
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                        {/* 2. Capsule Pill Badge directly below logo (Matching Reference Image 2) */}
+                        <div className="mt-1 sm:mt-1.5">
+                          <span className="inline-block px-2 sm:px-2.5 py-0.5 rounded-full bg-[#11141d] border border-white/10 text-[8.5px] sm:text-[9.5px] font-mono font-semibold text-[#e5e5e5] group-hover/tech:border-[#d8c8a8] group-hover/tech:bg-[#181c28] group-hover/tech:text-[#d8c8a8] transition-all shadow-sm whitespace-nowrap">
+                            {tech.shortTag}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </ScrollReveal>
