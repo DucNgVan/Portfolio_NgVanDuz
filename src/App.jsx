@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 // Layout components
-import { Footer } from '@/components/layout';
+import { Navbar, Footer } from '@/components/layout';
 
 // Modular UI components
 import { CustomCursor, Preloader } from '@/components/ui';
@@ -40,7 +40,10 @@ function App() {
       {/* 2. Custom Smooth Difference Cursor */}
       <CustomCursor />
 
-      {/* 3. Main Sections */}
+      {/* 3. Global Fixed Navigation Bar */}
+      <Navbar />
+
+      {/* 4. Main Sections */}
       <main>
         {/* Home: Hero with Cream Background & Kinetic Typography */}
         <HeroSection />

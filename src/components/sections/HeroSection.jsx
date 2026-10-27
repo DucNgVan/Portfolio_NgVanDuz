@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Menu, X, FileText } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { personalInfo } from '@/data/portfolioData';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
@@ -7,9 +7,7 @@ import { translations } from '@/data/translations';
 const HeroSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.en;
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [hoveredNav, setHoveredNav] = useState(null);
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
@@ -20,14 +18,6 @@ const HeroSection = () => {
     });
   };
 
-  const navLinks = [
-    { id: 'work', label: t.nav.work || 'WORK', href: '#work' },
-    { id: 'about', label: t.nav.about || 'ABOUT', href: '#about' },
-    { id: 'expertise', label: t.nav.expertise || 'EXPERTISE', href: '#expertise' },
-    { id: 'achievements', label: t.nav.achievements || 'HONORS', href: '#achievements' },
-    { id: 'contact', label: t.nav.contact || 'CONTACT', href: '#contact' },
-  ];
-
   // Letters for kinetic display
   const softwareLetters = (t.hero.titleWord1 || "SOFTWARE").split("");
 
@@ -37,92 +27,8 @@ const HeroSection = () => {
       onMouseMove={handleMouseMove}
       className="relative min-h-[100dvh] lg:h-screen w-full bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-5 sm:p-8 lg:px-14 lg:py-10 select-none overflow-hidden"
     >
-      {/* 1. TOP NAVIGATION */}
-      <header className="w-full flex items-center justify-between z-30">
-        {/* Left: Elegant Signature Script Logo */}
-        <a 
-          href="#home" 
-          className="font-hand text-3xl sm:text-4xl text-[#0D0D0D] hover:opacity-75 transition-opacity cursor-pointer"
-        >
-          {personalInfo.name.toLowerCase().replace(/\s+/g, '')}
-        </a>
-
-        {/* Center: Desktop Clean Spaced Nav Links with Floating Active Dot */}
-        <nav className="hidden md:flex items-center gap-8 lg:gap-12 relative">
-          {navLinks.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              onMouseEnter={() => setHoveredNav(link.id)}
-              onMouseLeave={() => setHoveredNav(null)}
-              className="text-xs font-semibold tracking-widest text-[#0D0D0D] hover:text-[#8C6D3F] transition-colors relative py-1 group"
-            >
-              {hoveredNav === link.id && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#0D0D0D] animate-in fade-in zoom-in duration-150"></span>
-              )}
-              <span>{link.label}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#0D0D0D] transition-all duration-200 group-hover:w-full"></span>
-            </a>
-          ))}
-        </nav>
-
-        {/* Right: Minimalist Hamburger Menu Icon */}
-        <button
-          onClick={() => setMobileMenuOpen(true)}
-          className="p-2 text-[#0D0D0D] hover:opacity-70 transition-opacity cursor-pointer"
-          aria-label="Open menu"
-        >
-          <Menu className="w-6 h-6 stroke-[1.8]" />
-        </button>
-      </header>
-
-      {/* Mobile / Fullscreen Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#F4EFEA] flex flex-col justify-between p-8 sm:p-12 animate-in fade-in duration-300">
-          <div className="flex items-center justify-between">
-            <span className="font-hand text-3xl text-[#0D0D0D]">
-              {personalInfo.name.toLowerCase().replace(/\s+/g, '')}
-            </span>
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-[#0D0D0D] hover:opacity-70 transition-opacity cursor-pointer"
-              aria-label="Close menu"
-            >
-              <X className="w-7 h-7 stroke-[1.8]" />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center gap-6 my-auto">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-bebas text-5xl sm:text-6xl text-[#0D0D0D] hover:text-[#8C6D3F] tracking-wider transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-
-            <a
-              href={personalInfo.resumeUrl}
-              download="NguyenVanDuc_CV.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0D0D0D] text-[#F4EFEA] font-mono text-xs font-bold shadow-md hover:bg-[#8C6D3F] transition-all"
-            >
-              <FileText className="w-4 h-4 text-[#d8c8a8]" />
-              <span>DOWNLOAD RESUME (PDF)</span>
-            </a>
-          </div>
-
-          <div className="flex items-center justify-between text-xs font-mono text-[#555555] border-t border-[#0D0D0D]/10 pt-4">
-            <span>©2026 {personalInfo.name}</span>
-            <span>DA NANG, VIETNAM</span>
-          </div>
-        </div>
-      )}
+      {/* 1. TOP SPACER: Preserves identical optical centering beneath global fixed navbar */}
+      <div className="w-full h-10 sm:h-12 lg:h-14 shrink-0 pointer-events-none" aria-hidden="true" />
 
       {/* 2. MAIN HERO CONTENT (Artistic Kinetic Typography & Optical Centering) */}
       <div className="my-auto flex flex-col items-center justify-center text-center w-full z-10 py-4 sm:py-6">

@@ -1,161 +1,177 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Menu, X, Sparkles, Send, Award, Code2, User } from 'lucide-react';
+import { Menu, X, FileText } from 'lucide-react';
+import { personalInfo } from '@/data/portfolioData';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/data/translations';
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.en;
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [hoveredNav, setHoveredNav] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 50);
 
-      // Section spy
-      const sections = ['home', 'experience', 'achievements', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      // Active section spy
+      const sectionIds = ['contact', 'achievements', 'work', 'expertise', 'about', 'home'];
+      const scrollPos = scrollY + window.innerHeight * 0.35;
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (element) {
+          const top = element.offsetTop;
+          if (scrollPos >= top) {
+            setActiveSection(id);
             break;
           }
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { id: 'home', label: 'Home', icon: User },
-    { id: 'experience', label: 'Skills & Experience', icon: Code2 },
-    { id: 'achievements', label: 'Honors & Awards', icon: Award },
-    { id: 'contact', label: 'Contact', icon: Send },
+  const navLinks = [
+    { id: 'work', label: t.nav.work || 'PROJECTS', href: '#work' },
+    { id: 'about', label: t.nav.about || 'ABOUT', href: '#about' },
+    { id: 'expertise', label: t.nav.expertise || 'EXPERTISE', href: '#expertise' },
+    { id: 'achievements', label: t.nav.achievements || 'HONORS', href: '#achievements' },
+    { id: 'contact', label: t.nav.contact || 'CONTACT', href: '#contact' },
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'py-3 glass-panel border-b border-cyan-500/20 shadow-lg shadow-black/40 backdrop-blur-xl'
-          : 'py-5 bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo Brand */}
+    <>
+      {/* FIXED TOP NAVIGATION BAR */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 select-none ${
+          isScrolled
+            ? 'bg-[#080808]/90 backdrop-blur-md border-b border-[#222222]/80 shadow-xl shadow-black/50 py-3.5 sm:py-4 px-5 sm:px-8 lg:px-14'
+            : 'bg-transparent pt-5 sm:pt-8 lg:pt-10 pb-4 px-5 sm:px-8 lg:px-14'
+        }`}
+      >
+        <div className="w-full flex items-center justify-between mx-auto">
+          {/* Left: Signature Logo */}
           <a
             href="#home"
-            className="flex items-center gap-2.5 group cursor-pointer"
-            aria-label="Back to home"
+            className={`font-hand text-3xl sm:text-4xl transition-colors cursor-pointer ${
+              isScrolled
+                ? 'text-[#F4EFEA] hover:text-[#d8c8a8]'
+                : 'text-[#0D0D0D] hover:opacity-75'
+            }`}
+            aria-label="Back to top"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/30 border border-cyan-500/40 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 group-hover:scale-105 transition-all shadow-sm shadow-cyan-500/20">
-              <Terminal className="w-5 h-5 text-cyan-400 group-hover:rotate-6 transition-transform" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-mono font-bold text-base tracking-tight text-white flex items-center gap-1">
-                DEV.<span className="text-cyan-400">PORTFOLIO</span>
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-1"></span>
-              </span>
-              <span className="text-[11px] text-slate-400 font-mono tracking-wider">v2.0 • Interactive</span>
-            </div>
+            {personalInfo.name.toLowerCase().replace(/\s+/g, '')}
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2 p-1.5 rounded-full bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeSection === item.id;
+          {/* Center: Desktop Spaced Nav Links */}
+          <nav className="hidden md:flex items-center gap-8 lg:gap-12 relative">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              const isHovered = hoveredNav === link.id;
               return (
                 <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'text-cyan-300 bg-cyan-950/60 border border-cyan-500/40 shadow-sm shadow-cyan-500/30 font-semibold'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                  key={link.id}
+                  href={link.href}
+                  onMouseEnter={() => setHoveredNav(link.id)}
+                  onMouseLeave={() => setHoveredNav(null)}
+                  className={`text-xs font-semibold tracking-widest transition-colors relative py-1 group cursor-pointer ${
+                    isScrolled
+                      ? isActive
+                        ? 'text-[#d8c8a8]'
+                        : 'text-[#cccccc] hover:text-[#d8c8a8]'
+                      : isActive
+                        ? 'text-[#0D0D0D]'
+                        : 'text-[#0D0D0D] hover:text-[#8C6D3F]'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-400'}`} />
-                  <span>{item.label}</span>
-                  {isActive && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-cyan-400 rounded-full blur-[1px]"></span>
+                  {(isHovered || (isActive && isScrolled)) && (
+                    <span
+                      className={`absolute -top-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full animate-in fade-in zoom-in duration-150 ${
+                        isScrolled ? 'bg-[#d8c8a8]' : 'bg-[#0D0D0D]'
+                      }`}
+                    />
                   )}
+                  <span>{link.label}</span>
+                  <span
+                    className={`absolute bottom-0 left-0 h-[1.5px] transition-all duration-200 ${
+                      isActive && isScrolled ? 'w-full' : 'w-0 group-hover:w-full'
+                    } ${isScrolled ? 'bg-[#d8c8a8]' : 'bg-[#0D0D0D]'}`}
+                  />
                 </a>
               );
             })}
           </nav>
 
-          {/* Action CTA & Contact shortcut */}
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href="#contact"
-              className="relative group px-5 py-2.5 rounded-xl font-mono text-xs font-semibold tracking-wide text-white overflow-hidden transition-all duration-300 cursor-pointer"
+          {/* Right: Hamburger Menu Icon */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className={`p-2 transition-colors cursor-pointer ${
+              isScrolled
+                ? 'text-[#F4EFEA] hover:text-[#d8c8a8]'
+                : 'text-[#0D0D0D] hover:opacity-70'
+            }`}
+            aria-label="Open menu"
+          >
+            <Menu className="w-6 h-6 stroke-[1.8]" />
+          </button>
+        </div>
+      </header>
+
+      {/* Fullscreen Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-[#F4EFEA] text-[#0D0D0D] flex flex-col justify-between p-8 sm:p-12 animate-in fade-in duration-300 select-none">
+          <div className="flex items-center justify-between">
+            <span className="font-hand text-3xl sm:text-4xl text-[#0D0D0D]">
+              {personalInfo.name.toLowerCase().replace(/\s+/g, '')}
+            </span>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 text-[#0D0D0D] hover:opacity-70 transition-opacity cursor-pointer"
+              aria-label="Close menu"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]"></div>
-              <div className="absolute inset-[1px] bg-slate-950 rounded-[11px] transition-all group-hover:bg-slate-900/70"></div>
-              <span className="relative z-10 flex items-center gap-2 text-cyan-300 group-hover:text-white">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
-                <span>Let's Connect</span>
-              </span>
+              <X className="w-7 h-7 stroke-[1.8]" />
+            </button>
+          </div>
+
+          <div className="flex flex-col items-center gap-6 my-auto">
+            {navLinks.map((link) => (
+              <a
+                key={link.id}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-bebas text-5xl sm:text-6xl text-[#0D0D0D] hover:text-[#8C6D3F] tracking-wider transition-colors cursor-pointer"
+              >
+                {link.label}
+              </a>
+            ))}
+
+            <a
+              href={personalInfo.resumeUrl}
+              download="NguyenVanDuc_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0D0D0D] text-[#F4EFEA] font-mono text-xs font-bold shadow-md hover:bg-[#8C6D3F] transition-all cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-[#d8c8a8]" />
+              <span>DOWNLOAD RESUME (PDF)</span>
             </a>
           </div>
 
-          {/* Mobile menu hamburger button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-500/50 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+          <div className="flex items-center justify-between text-xs font-mono text-[#555555] border-t border-[#0D0D0D]/10 pt-4">
+            <span>©2026 {personalInfo.name}</span>
+            <span>DA NANG, VIETNAM</span>
           </div>
         </div>
-
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-3 p-4 rounded-2xl glass-panel border border-cyan-500/30 animate-in fade-in slide-in-from-top-4 duration-200">
-            <div className="flex flex-col gap-2">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = activeSection === item.id;
-                return (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      isActive
-                        ? 'bg-cyan-950/70 border border-cyan-500/50 text-cyan-300 font-semibold'
-                        : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
-                  </a>
-                );
-              })}
-              <div className="pt-2 mt-2 border-t border-slate-800">
-                <a
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium text-sm shadow-md shadow-cyan-500/30"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span>🤝 Let's Collaborate</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
+      )}
+    </>
   );
 };
 
