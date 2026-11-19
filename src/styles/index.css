@@ -13,7 +13,7 @@
   }
 
   body {
-    background-color: #0d0d0d;
+    background-color: #0c0d10;
     color: #f4efea;
     overflow-x: hidden;
   }
@@ -21,7 +21,7 @@
   /* Custom selection */
   ::selection {
     background-color: #d8c8a8;
-    color: #0d0d0d;
+    color: #0c0d10;
   }
 }
 
@@ -248,4 +248,61 @@
 .animate-hand-right {
   animation: hand-right-shake 0.8s ease-in-out infinite;
   transform-origin: bottom right;
+}
+
+/* Soft Luxury Ambient Floating Glow Animations (Calm & Non-Neon) */
+@keyframes loadingCircle {
+  0% {
+    transform: translate(-30%, -30%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-30%, -30%) rotate(360deg);
+  }
+}
+
+.landing-circle1 {
+  animation: loadingCircle 20s linear infinite;
+}
+
+@keyframes loadingCircle2 {
+  0% {
+    transform: translate(30%, -40%) rotate(0deg);
+  }
+  100% {
+    transform: translate(30%, -40%) rotate(360deg);
+  }
+}
+
+.landing-circle2 {
+  animation: loadingCircle2 24s linear infinite;
+}
+
+/* Gentle Character Float Levitation */
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 5s ease-in-out infinite;
+}
+
+/* Soft Champagne Studio Rim Glow (Gentle & Organic) */
+@keyframes softRimGlow {
+  0%, 100% {
+    opacity: 0.75;
+    transform: translate(-50%, -40%) scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translate(-50%, -40%) scale(1.05);
+  }
+}
+
+.character-rim {
+  animation: softRimGlow 6s ease-in-out infinite;
 }

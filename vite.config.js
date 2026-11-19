@@ -17,4 +17,15 @@ export default defineConfig({
     port: 5173,
     open: false,
   },
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three-vendor': ['three', 'three-stdlib'],
+          'framer-vendor': ['framer-motion'],
+        },
+      },
+    },
+  },
 })

@@ -55,3 +55,8 @@ Thumbs.db
 # Agent & AI tool cache
 .agents/
 .gemini/
+
+# Large uncompressed 3D assets
+public/models/*-raw.glb
+public/models/*-original.glb
+public/models/*-v1.glb

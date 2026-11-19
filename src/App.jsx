@@ -1,71 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 // Layout components
-import { Navbar, Footer } from '@/components/layout';
+import { Navbar } from '@/components/layout';
 
 // Modular UI components
-import { CustomCursor, Preloader } from '@/components/ui';
+import { CustomCursor, Preloader, PrivacyConsentBanner } from '@/components/ui';
 
-// Page sections
-import {
-  HeroSection,
-  AboutSection,
-  WorkSection,
-  ExpertiseSection,
-  AchievementsSection,
-  ContactSection,
-} from '@/components/sections';
+// Cinematic Video 3D Mode
+import { CinematicPortfolio } from '@/components/cinematic';
+
+// Standalone Secured Admin & Analytics Portal
+import { AdminPortal } from '@/components/admin/AdminPortal';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+
+  // Hidden admin route checking: #admin, /admin, or ?admin=true
+  const checkIsAdmin = () => {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.location.hash === '#admin' ||
+      window.location.pathname === '/admin' ||
+      window.location.search.includes('admin=true')
+    );
+  };
+
+  const [isAdminRoute, setIsAdminRoute] = useState(checkIsAdmin);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setIsAdminRoute(checkIsAdmin());
+    };
+
+    // Global hidden shortcut for Duc: Ctrl + Shift + A or Cmd + Shift + A
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        setIsAdminRoute((prev) => {
+          const next = !prev;
+          if (next) {
+            window.location.hash = '#admin';
+          } else {
+            window.history.pushState(null, '', window.location.pathname + window.location.search);
+          }
+          return next;
+        });
+      }
+    };
+
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleExitAdmin = () => {
+    setIsAdminRoute(false);
+    if (window.location.hash === '#admin') {
+      window.history.pushState(null, '', window.location.pathname + window.location.search);
+    }
+  };
+
+  // If hidden Admin route is engaged, render the secured Admin & Analytics Portal directly
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen bg-[#0d0d0f] text-white font-sans selection:bg-[#d8c8a8] selection:text-black">
+        <AdminPortal onExit={handleExitAdmin} />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[#080808] text-[#f4efea] selection:bg-[#d8c8a8] selection:text-[#0d0d0d] relative overflow-x-hidden">
-      {/* Dynamic Top Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#d8c8a8] origin-left z-50 pointer-events-none shadow-[0_0_10px_rgba(216,200,168,0.7)]"
-        style={{ scaleX }}
-      />
-
+    <div className="min-h-screen bg-[#f8f7f4] text-[#111113] selection:bg-[#d8c8a8] selection:text-black relative overflow-x-hidden font-sans">
       {/* 1. Preloader Screen */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* 2. Custom Smooth Difference Cursor */}
+      {/* 2. Custom Interactive Follower Lens with Color Shift */}
       <CustomCursor />
 
-      {/* 3. Global Fixed Navigation Bar */}
-      <Navbar />
+      {/* 3. Main Artistic 3D Experience */}
+      <CinematicPortfolio />
 
-      {/* 4. Main Sections */}
-      <main>
-        {/* Home: Hero with Cream Background & Kinetic Typography */}
-        <HeroSection />
-
-        {/* About: About Me with Portrait Card & Metadata Grid */}
-        <AboutSection />
-
-        {/* Expertise & Skills: Core Stack & Professional Soft Skills */}
-        <ExpertiseSection />
-
-        {/* Work: Colossal WORK with Liquid Droplets & GitHub Repos */}
-        <WorkSection />
-
-        {/* Highlights & Academic Honors */}
-        <AchievementsSection />
-
-        {/* Contact Details & Direct Form */}
-        <ContactSection />
-      </main>
-
-      {/* 4. Footer */}
-      <Footer />
+      {/* 4. Privacy & Consent Notice for Anonymous Telemetry */}
+      <PrivacyConsentBanner />
     </div>
   );
 }

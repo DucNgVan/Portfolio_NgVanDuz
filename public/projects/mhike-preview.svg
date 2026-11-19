@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1614"/>
+      <stop offset="100%" stop-color="#0a0a0d"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+
+  <!-- Browser Window Chrome -->
+  <rect x="60" y="50" width="1080" height="575" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <rect x="60" y="50" width="1080" height="48" rx="16" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="95" cy="74" r="6" fill="#ff5f56"/>
+  <circle cx="120" cy="74" r="6" fill="#ffbd2e"/>
+  <circle cx="145" cy="74" r="6" fill="#27c93f"/>
+
+  <rect x="240" y="62" width="600" height="24" rx="6" fill="rgba(0,0,0,0.3)"/>
+  <text x="540" y="78" fill="#888" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">app.production/m-hike/preview</text>
+
+  <!-- Graphic Preview Content -->
+  <g transform="translate(100, 150)">
+    <!-- Category Badge -->
+    <rect x="0" y="0" width="280" height="32" rx="16" fill="rgba(255,255,255,0.06)" stroke="#f97316" stroke-width="1"/>
+    <text x="140" y="21" fill="#f97316" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="1.5">DEMO PREVIEW // LIVE</text>
+
+    <!-- Main Title -->
+    <text x="0" y="110" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="64" font-weight="900" letter-spacing="-1">M-Hike</text>
+    <text x="0" y="150" fill="#cccccc" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="400">Native Android Trail Companion</text>
+
+    <!-- Tech specs bar -->
+    <rect x="0" y="200" width="1000" height="2" fill="rgba(255,255,255,0.08)"/>
+
+    <g transform="translate(0, 240)">
+      <text x="0" y="0" fill="#a89878" font-family="monospace" font-size="14" font-weight="bold">ARCHITECTURE HIGHLIGHT</text>
+      <text x="0" y="30" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" font-weight="600">Offline SQLite Trail Storage • Real-time Sync</text>
+      <text x="0" y="65" fill="#888888" font-family="monospace" font-size="14">STACK: Java • Android SDK • Cloud Firestore Sync</text>
+    </g>
+
+    <!-- Placeholder prompt note -->
+    <rect x="620" y="210" width="380" height="130" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+    <text x="810" y="260" fill="#d8c8a8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">USER SCREENSHOT READY</text>
+    <text x="810" y="290" fill="#777777" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Drop demo screenshot into /public/projects/</text>
+  </g>
+</svg>

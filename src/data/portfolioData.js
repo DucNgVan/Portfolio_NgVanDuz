@@ -16,7 +16,7 @@ export const personalInfo = {
   stats: [
     { label: "Degree Standing", value: "BSc (Hons)", suffix: " Greenwich" },
     { label: "Academic Standing", value: "Top 3", suffix: " Student 2024" },
-    { label: "Featured Projects", value: "04", suffix: " Key Repos" },
+    { label: "Featured Projects", value: "05", suffix: " Projects" },
     { label: "Major Honors", value: "04", suffix: " Awards" }
   ],
   terminalCommands: [
@@ -166,23 +166,81 @@ export const softSkills = [
 export const githubProjects = [
   {
     id: 1,
-    title: "NÉT — Sustainable Ocean Net & 3D Interactive Craft",
+    title: "NÉT STUDIO — Sustainable Ocean Net & 3D Interactive Craft",
     category: "Full-Stack Web & 3D Interactive Platform",
     tagline: "Eco-commerce platform transforming marine ghost nets into bespoke products with real-time 3D preview & AI studio.",
-    description: "Innovative sustainable e-commerce and interactive 3D craft platform created for VecomNet's Tsunami Team. Transforms discarded ocean ghost nets into bespoke bags & charms, featuring real-time 3D model customization, AI story studio, and a transparent digital eco-passport.",
-    tech: ["Next.js 14", "TypeScript", "Three.js / 3D", "Tailwind CSS", "AI Studio", "Firebase", "Vercel"],
-    statusBadge: "Live Production Demo",
+    description: "Innovative sustainable e-commerce and interactive 3D craft platform created for VecomNet's Tsunami Team. Transforms discarded ocean ghost nets into bespoke bags & charms, featuring real-time 3D model customization, AI story studio, order tracking, and a transparent digital eco-passport.",
+    tech: ["Next.js 14", "TypeScript", "Three.js / 3D", "Tailwind CSS", "AI Studio", "Firebase", "Domain net-s.id.vn"],
+    statusBadge: "Live Production Platform",
     statusType: "live",
+    image: "/projects/net-s-1.jpg",
+    images: [
+      {
+        url: "/projects/net-s-1.jpg",
+        title: "Nét Studio Co-Creation Workspace",
+        caption: "Nét Studio — Interactive Bag Customization, Real-Time 3D Product Visualizer & Digital Bag Journey across Desktop, Tablet & Mobile"
+      },
+      {
+        url: "/projects/net-s-2.jpg",
+        title: "Order Tracking & Story Passport",
+        caption: "Order Tracking & Story Passport — Unique Product Identity, Verifiable Ocean Coordinates & Digital Eco-Passport"
+      }
+    ],
     githubUrl: "https://github.com/DucNgVan/VecomNet-s_Tsunami_Team",
-    liveDemo: "https://vecom-net-s-tsunami-team.vercel.app/",
+    liveDemo: "https://www.net-s.id.vn/",
     problem: "Marine ghost nets pollute ocean ecosystems, while sustainable products often lack interactive, engaging digital experiences for modern consumers.",
-    solution: "Built a responsive Next.js 14 web platform combining Three.js 3D model customizers, an AI charm studio pipeline, and a transparent digital eco-passport verifying net recovery coordinates.",
-    myRole: "Full-Stack Developer (3D visualizer integration, responsive design, AI studio connection & Vercel deployment)",
+    solution: "Built a responsive Next.js 14 web platform combining Three.js 3D model customizers, an AI charm studio pipeline, order lifecycle tracking, and a transparent digital eco-passport verifying net recovery coordinates.",
+    myRole: "Full-Stack Developer (3D visualizer integration, responsive design, AI studio connection & production domain deployment)",
     highlights: [
       "Engineered interactive 3D product visualizer allowing 360-degree rotation and real-time custom color rendering via Three.js",
-      "Integrated AI-assisted custom bag designer studio with dynamic configuration options",
+      "Integrated AI-assisted custom bag designer studio with dynamic configuration options and live charm pairing",
       "Built a verifiable digital eco-passport showing marine net recovery metrics and GPS batch identification",
-      "Optimized responsive UI/UX and smooth animations deployed seamlessly on Vercel"
+      "Deployed to production domain https://www.net-s.id.vn/ with high performance and mobile-first responsiveness"
+    ]
+  },
+  {
+    id: 5,
+    title: "VAVA CMS — SharePoint Information & Content Management",
+    category: "Enterprise CMS & Content Architecture · Coursework",
+    tagline: "Centralized SharePoint portal for goods donation scheduling, volunteer registration, and automated content workflows.",
+    description: "Enterprise content management platform engineered on Microsoft SharePoint for the 'Information and Content Management' course at the University of Greenwich. Designed to streamline non-profit operations through automated donation scheduling, structured volunteer roster management, and live statistical metrics tracking.",
+    tech: ["SharePoint Online", "Microsoft 365", "Power Automate", "Information Architecture", "Content Governance", "Permission Roles"],
+    statusBadge: "SharePoint Live Portal",
+    statusType: "live",
+    image: "/projects/vava-cms-1.jpg",
+    images: [
+      {
+        url: "/projects/vava-cms-1.jpg",
+        title: "Platform Ecosystem",
+        caption: "VAVA Da Nang Platform — Full Digital Solutions & Automated Workflow Ecosystem across Desktop, Tablet & Mobile"
+      },
+      {
+        url: "/projects/vava-cms-2.jpg",
+        title: "Public Portal & Donation",
+        caption: "Public Portal & Donation Platform — Multi-Device News, Facilities Map & Public Donation Streams"
+      },
+      {
+        url: "/projects/vava-cms-3.jpg",
+        title: "Administration Suite",
+        caption: "Administration Suite — Goods Donation Schedules, Volunteer Intake Management & Real-Time Stats"
+      },
+      {
+        url: "/projects/vava-cms-4.jpg",
+        title: "Smart Automation Workflows",
+        caption: "Smart Automation — Power Automate Multi-Stage Workflows & Instant Automated Email Dispatch System"
+      }
+    ],
+    githubUrl: null,
+    liveDemo: "https://uogcloud.sharepoint.com/:u:/r/sites/Coursework_SharePoint_Greenwich_VavaDN-S-CAM/SitePages/HomePage.aspx?d=weaf2501dab044352939bae04571f1104&csf=1&web=1&e=nVycl5",
+    accessNote: "Institutional Access Notice: This portal is hosted on the University of Greenwich Microsoft 365 tenant. The link may expire or become inaccessible post-graduation as student institutional email accounts are decommissioned.",
+    problem: "Non-profit organizations struggle with unstructured donation spreadsheets, manual volunteer shift coordination, and lack of role-based content access control.",
+    solution: "Architected a custom SharePoint site suite featuring relational list schemas for goods donations and volunteer registrations, automated approval workflows, and centralized donation metric dashboards.",
+    myRole: "CMS Architect & Site Administrator (SharePoint architecture design, custom list schemas, view permissions, metadata taxonomy & content governance)",
+    highlights: [
+      "Engineered Goods Donation Scheduling Suite managing donor records, dispatch logistics, and multi-tier fulfillment statuses",
+      "Built Volunteer Register Management module with structured intake schemas, role matching, and availability filters",
+      "Created centralized Donation Statistics dashboard tracking goods donors (100+), financial donations (650M+ VND), and active volunteers (200+)",
+      "Established strict role-based access control (RBAC) and content governance adhering to university academic coursework standards"
     ]
   },
   {
@@ -194,6 +252,7 @@ export const githubProjects = [
     tech: ["Node.js", "Express", "PostgreSQL (3NF)", "Redis", "Docker Compose", "JWT Auth", "RESTful APIs"],
     statusBadge: "Backend Complete · Mobile in Progress",
     statusType: "repo",
+    image: "/projects/nomadix-preview.svg",
     githubUrl: "https://github.com/DucNgVan/nomadix-travel-platform",
     liveDemo: null,
     problem: "Travelers struggle with fragmented tools for itineraries, bookings, and community reviews, demanding a unified and resilient data service.",
@@ -215,6 +274,14 @@ export const githubProjects = [
     tech: ["Vue.js 3", "Node.js", "Express", "MongoDB", "Mongoose", "RESTful APIs"],
     statusBadge: "REST APIs & Single Page App",
     statusType: "repo",
+    image: "/projects/helpdesk-1.jpg",
+    images: [
+      {
+        url: "/projects/helpdesk-1.jpg",
+        title: "Helpdesk Library Ecosystem",
+        caption: "Helpdesk Response Library (MEVN Stack) — Central Knowledge Hub, Dynamic Single-Page App & Ticket Resolution Dashboard across Desktop, Tablet & Mobile"
+      }
+    ],
     githubUrl: "https://github.com/DucNgVan/helpdesk-response-library-mevn",
     liveDemo: null,
     problem: "IT helpdesk teams face repetitive incident inquiries without an organized, searchable response repository and structured resolution workflows.",
@@ -230,22 +297,40 @@ export const githubProjects = [
   {
     id: 4,
     title: "M-Hike — Trail Tracker & Outdoor Journal",
-    category: "Native Android Mobile Application",
-    tagline: "Native Android mobile app with real-time Cloud Firestore sync, Firebase Auth, and offline trail observation logging.",
-    description: "Native Android mobile application engineered in Java for outdoor enthusiasts to plan hiking trails, record GPS waypoints, log environmental observations, and synchronize expedition journals in real time.",
-    tech: ["Java", "Android SDK", "Cloud Firestore", "Firebase Auth", "Real-time Sync", "Material Design"],
-    statusBadge: "Native Mobile App",
+    category: "Native Android & Cross-Platform Mobile Application",
+    tagline: "Native mobile app with real-time GPS tracking, Mapbox integration, Cloud Firestore sync & Material Design 3.",
+    description: "Full-featured mobile hiking tracker engineered with native Android (Java) and cross-platform React Native parity. Enables outdoor enthusiasts to plan trails with 3-tier geocoding, record GPS waypoints with sub-5m accuracy, log environmental observations, and sync journals via Cloud Firestore.",
+    tech: ["Android (Java)", "React Native", "Mapbox GPS", "Cloud Firestore", "Firebase Auth", "Material Design 3"],
+    statusBadge: "Mobile Application",
     statusType: "repo",
+    image: "/projects/mhike-1.jpg",
+    images: [
+      {
+        url: "/projects/mhike-1.jpg",
+        title: "Hiker Management",
+        caption: "M-HIKE Home Dashboard — Trail Discovery, Difficulty Filters & Interactive Mapbox Location Pin"
+      },
+      {
+        url: "/projects/mhike-2.jpg",
+        title: "Smart Hike Planning",
+        caption: "Smart Hike Planning — 3-Tier Geocoding, One-Tap GPS Auto-Fill & Material Design 3 Form"
+      },
+      {
+        url: "/projects/mhike-3.jpg",
+        title: "Live GPS Tracking",
+        caption: "Live GPS Tracking — Real-Time Coordinate Tracking, ±5m Precision Accuracy & Mapbox Satellite Layer"
+      }
+    ],
     githubUrl: "https://github.com/DucNgVan/mhike-android-trail-tracker",
     liveDemo: null,
     problem: "Hikers and field researchers need a dedicated mobile journal to record trail conditions and observations reliably during outdoor expeditions.",
-    solution: "Engineered a native Java Android application integrating Firebase Authentication and Cloud Firestore real-time snapshot listeners for persistent cloud sync.",
-    myRole: "Android Developer (Java activities/fragments architecture, FirestoreHelper sync, dynamic form validation & UI)",
+    solution: "Engineered a native mobile application integrating Mapbox location pins, 3-tier geocoding, Firebase Authentication, and Cloud Firestore real-time snapshot listeners for persistent cloud sync.",
+    myRole: "Mobile Developer (Native Android Java architecture, Mapbox GPS tracking, FirestoreHelper sync & Material Design 3 UI)",
     highlights: [
+      "Engineered real-time GPS tracker with live device coordinates and high-precision ±5m tolerance",
+      "Built 3-tier geocoding form with native Android Geocoder and interactive Mapbox pin placement",
       "Implemented real-time cloud data synchronization using Cloud Firestore addSnapshotListener for instant updates",
-      "Built secure authentication workflows and profile management with Firebase Authentication",
-      "Structured clean Android Activity/Fragment architecture with custom input validation for trail logs",
-      "Implemented graceful empty states and sample dataset upload handlers for seamless onboarding"
+      "Created structured Material Design 3 interface with dynamic input validation and offline caching"
     ]
   }
 ];

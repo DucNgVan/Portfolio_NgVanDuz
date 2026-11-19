@@ -2,9 +2,9 @@ export const translations = {
   en: {
     nav: {
       about: "ABOUT",
-      expertise: "EXPERTISE",
-      work: "PROJECTS",
-      achievements: "HONORS",
+      techStack: "TECH STACK",
+      work: "WORK",
+      achievements: "ACHIEVEMENT BOARD",
       contact: "CONTACT",
       resume: "RESUME (PDF)",
     },
@@ -316,7 +316,7 @@ export const translations = {
   vi: {
     nav: {
       about: "GIỚI THIỆU",
-      expertise: "KỸ NĂNG",
+      techStack: "TECH STACK",
       work: "DỰ ÁN",
       achievements: "THÀNH TÍCH",
       contact: "LIÊN HỆ",

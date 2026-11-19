@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { X, ExternalLink, CheckCircle2, Layers, Cpu, AlertCircle, Wrench, UserCheck } from 'lucide-react';
 import { Github } from './BrandIcons';
+import { ProjectVisualMockup } from './ProjectVisualMockup';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/data/translations';
 
@@ -58,6 +59,11 @@ const ProjectModal = ({ project, onClose }) => {
         {/* Body Content */}
         <div className="py-5 space-y-6">
           
+          {/* Visual Architecture Mockup Preview */}
+          <div className="w-full aspect-[21/9] sm:aspect-[16/7] rounded-2xl overflow-hidden border border-[#282828] shadow-inner">
+            <ProjectVisualMockup projectId={project.id} title={project.title} />
+          </div>
+
           {/* Overview Description */}
           <div className="text-[#cccccc] text-sm sm:text-base leading-relaxed">
             {project.description}
