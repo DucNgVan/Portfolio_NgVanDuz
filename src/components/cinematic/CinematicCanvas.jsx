@@ -291,6 +291,125 @@ function createFloorSpotlightTexture() {
 }
 
 /**
+ * Creates authentic museum VIP velvet stanchions (brass posts & catenary red velvet ropes)
+ */
+function createMuseumStanchions(shadowTexture) {
+  const group = new THREE.Group();
+
+  const brassMat = new THREE.MeshStandardMaterial({
+    color: 0xdfbc68,
+    roughness: 0.22,
+    metalness: 0.90,
+    transparent: true,
+    opacity: 0.0,
+  });
+
+  const velvetMat = new THREE.MeshStandardMaterial({
+    color: 0x82121e, // Rich deep burgundy velvet
+    roughness: 0.82,
+    metalness: 0.08,
+    transparent: true,
+    opacity: 0.0,
+  });
+
+  const postShadowMat = new THREE.MeshBasicMaterial({
+    map: shadowTexture,
+    transparent: true,
+    opacity: 0.0,
+    depthWrite: false,
+  });
+
+  // Stanchion posts standing along an elegant arc in front of the 6 pedestals
+  const postPositions = [
+    [-2.85, -0.25],
+    [-1.85, -0.70],
+    [-0.75, -1.00],
+    [0.75, -1.00],
+    [1.85, -0.70],
+    [2.85, -0.25],
+  ];
+
+  const postHeight = 0.62;
+  const baseY = -1.25;
+
+  // Stanchion brass posts
+  postPositions.forEach(([px, pz]) => {
+    const postGroup = new THREE.Group();
+    postGroup.position.set(px, baseY, pz);
+
+    // Weighted base plate
+    const baseGeo = new THREE.CylinderGeometry(0.11, 0.12, 0.022, 20);
+    const baseMesh = new THREE.Mesh(baseGeo, brassMat);
+    baseMesh.position.y = 0.011;
+    postGroup.add(baseMesh);
+
+    // Post contact shadow directly under base
+    const shadowGeo = new THREE.PlaneGeometry(0.28, 0.28);
+    const shadowMesh = new THREE.Mesh(shadowGeo, postShadowMat);
+    shadowMesh.rotation.x = -Math.PI / 2;
+    shadowMesh.position.y = 0.002;
+    postGroup.add(shadowMesh);
+
+    // Post upright stem
+    const stemGeo = new THREE.CylinderGeometry(0.016, 0.016, postHeight, 16);
+    const stemMesh = new THREE.Mesh(stemGeo, brassMat);
+    stemMesh.position.y = postHeight / 2;
+    postGroup.add(stemMesh);
+
+    // Top brass collar ring
+    const collarGeo = new THREE.CylinderGeometry(0.026, 0.026, 0.022, 16);
+    const collarMesh = new THREE.Mesh(collarGeo, brassMat);
+    collarMesh.position.y = postHeight + 0.011;
+    postGroup.add(collarMesh);
+
+    // Top spherical finial
+    const finialGeo = new THREE.SphereGeometry(0.032, 16, 16);
+    const finialMesh = new THREE.Mesh(finialGeo, brassMat);
+    finialMesh.position.y = postHeight + 0.045;
+    postGroup.add(finialMesh);
+
+    group.add(postGroup);
+  });
+
+  // Deep red velvet ropes linking consecutive posts with graceful catenary curves
+  for (let i = 0; i < postPositions.length - 1; i++) {
+    const p1 = postPositions[i];
+    const p2 = postPositions[i + 1];
+
+    const start = new THREE.Vector3(p1[0], baseY + postHeight + 0.01, p1[1]);
+    const end = new THREE.Vector3(p2[0], baseY + postHeight + 0.01, p2[1]);
+
+    // Sag amount: center segment sags slightly deeper for majestic VIP drape
+    const sag = i === 2 ? 0.16 : 0.12;
+    const mid = new THREE.Vector3(
+      (p1[0] + p2[0]) / 2,
+      baseY + postHeight - sag,
+      (p1[1] + p2[1]) / 2
+    );
+
+    const curve = new THREE.CatmullRomCurve3([start, mid, end]);
+    const tubeGeo = new THREE.TubeGeometry(curve, 20, 0.014, 8, false);
+    const ropeMesh = new THREE.Mesh(tubeGeo, velvetMat);
+    group.add(ropeMesh);
+
+    // Brass clip caps at rope ends
+    [start, end].forEach((pt) => {
+      const clipGeo = new THREE.SphereGeometry(0.020, 12, 12);
+      const clipMesh = new THREE.Mesh(clipGeo, brassMat);
+      clipMesh.position.copy(pt);
+      group.add(clipMesh);
+    });
+  }
+
+  return {
+    group,
+    brassMat,
+    velvetMat,
+    postShadowMat,
+  };
+}
+
+/**
  * CinematicCanvas
  * Fullscreen 3D Stage acting as an interactive camera timeline:
  * - Interpolates camera position, target, rotation, and lighting based on scrollProgress (0 to 1)
@@ -760,6 +879,11 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       });
     });
 
+    // 5.5 Authentic Museum Stanchions (Brass posts & Red velvet ropes)
+    const museumStanchionsObj = createMuseumStanchions(shadowTexture);
+    museumStanchionsObj.group.visible = false;
+    scene.add(museumStanchionsObj.group);
+
     // 6. Raycaster for Pedestal Hover & Click
     const raycaster = new THREE.Raycaster();
     const mouseVec = new THREE.Vector2();
@@ -910,6 +1034,10 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         galleryFloor.visible = false;
         stageRigBar.visible = false;
         galaxyField.visible = false;
+        museumStanchionsObj.group.visible = false;
+        museumStanchionsObj.brassMat.opacity = 0;
+        museumStanchionsObj.velvetMat.opacity = 0;
+        museumStanchionsObj.postShadowMat.opacity = 0;
         pedestalNodes.forEach((node) => {
           node.spotLight.intensity = 0;
           node.lampMesh.visible = false;
@@ -932,6 +1060,13 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         galaxyField.material.opacity = s4 * 0.85;
         galaxyField.rotation.y = elapsedTime * 0.006;
         galaxyField.rotation.x = Math.sin(elapsedTime * 0.05) * 0.004;
+
+        // Smooth elevation & fade animation for museum VIP stanchions & velvet ropes
+        museumStanchionsObj.group.visible = true;
+        museumStanchionsObj.group.position.y = THREE.MathUtils.lerp(-1.20, 0.0, s4);
+        museumStanchionsObj.brassMat.opacity = s4;
+        museumStanchionsObj.velvetMat.opacity = s4;
+        museumStanchionsObj.postShadowMat.opacity = s4 * 0.75;
 
         pedestalNodes.forEach((node, idx) => {
           // Contracted origin: clustered near center & sunken below floor
