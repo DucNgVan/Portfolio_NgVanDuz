@@ -618,10 +618,10 @@ export const MobilePortfolio = () => {
               className="p-4 rounded-3xl bg-white border border-black/[0.08] shadow-sm text-left flex flex-col justify-between"
             >
               <div>
-                {/* Mockup Preview Image */}
+                {/* Mockup Preview Image (Clean, no floating badges) */}
                 <div 
                   onClick={() => handleOpenProject(proj)}
-                  className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-neutral-900 mb-3 border border-black/10 cursor-pointer group"
+                  className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-neutral-900 mb-3 border border-black/10 cursor-pointer group shadow-sm"
                 >
                   <img
                     src={proj.image}
@@ -629,17 +629,19 @@ export const MobilePortfolio = () => {
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
-                  <div className="absolute top-2 left-2 flex items-center gap-1.5">
-                    <span className="px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-sm text-white text-[9px] font-mono font-bold">
-                      {proj.category}
+                </div>
+
+                {/* Category & Status */}
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <span className="text-[10px] font-mono text-[#8c7355] font-semibold uppercase tracking-wider line-clamp-1">
+                    {proj.category}
+                  </span>
+                  {proj.liveDemo && (
+                    <span className="text-[10px] font-mono text-emerald-600 font-bold flex items-center gap-1 shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      LIVE
                     </span>
-                    {proj.liveDemo && (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[9px] font-mono font-bold flex items-center gap-1">
-                        <span className="w-1 h-1 rounded-full bg-white animate-pulse" />
-                        LIVE
-                      </span>
-                    )}
-                  </div>
+                  )}
                 </div>
 
                 {/* Title & Tagline */}
