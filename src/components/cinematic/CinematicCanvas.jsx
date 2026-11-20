@@ -410,6 +410,186 @@ function createMuseumStanchions(shadowTexture) {
 }
 
 /**
+ * Creates ultra high-resolution canvas texture for the 3D wall-mounted "VERIFIED MILESTONES" lettering
+ */
+function createWallSignageTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 2048;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+
+  ctx.clearRect(0, 0, 2048, 512);
+
+  // 1. Top Eyebrow Emblem & Category
+  ctx.save();
+  ctx.fillStyle = '#dfc58d';
+  ctx.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  if ('letterSpacing' in ctx) {
+    ctx.letterSpacing = '8px';
+  }
+  ctx.fillText('✦   A C A D E M I C   &   L E A D E R S H I P   A R C H I V E   ✦', 1024, 75);
+  ctx.restore();
+
+  // 2. Main 3D Pin-Mounted Metallic Lettering: VERIFIED MILESTONES
+  ctx.save();
+  // Deep cast shadow on the wall behind 3D metal letters
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
+  ctx.shadowBlur = 20;
+  ctx.shadowOffsetX = 4;
+  ctx.shadowOffsetY = 10;
+
+  // Luminous metallic gold gradient
+  const goldGrad = ctx.createLinearGradient(0, 110, 0, 260);
+  goldGrad.addColorStop(0.0, '#ffffff');
+  goldGrad.addColorStop(0.20, '#faecc5');
+  goldGrad.addColorStop(0.55, '#dfc58d');
+  goldGrad.addColorStop(0.85, '#bf9b53');
+  goldGrad.addColorStop(1.0, '#7d5e28');
+
+  ctx.fillStyle = goldGrad;
+  ctx.font = '900 94px "Plus Jakarta Sans", "Syne", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  if ('letterSpacing' in ctx) {
+    ctx.letterSpacing = '10px';
+  }
+  ctx.fillText('VERIFIED MILESTONES', 1024, 185);
+
+  // Fine specular top edge highlight on the letters
+  ctx.shadowColor = 'transparent';
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+  ctx.strokeText('VERIFIED MILESTONES', 1024, 185);
+  ctx.restore();
+
+  // 3. Elegant Architectural Horizontal Rule with Diamond
+  ctx.save();
+  ctx.strokeStyle = 'rgba(223, 197, 141, 0.65)';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(340, 265);
+  ctx.lineTo(1708, 265);
+  ctx.stroke();
+
+  // Center gold diamond
+  ctx.fillStyle = '#faecc5';
+  ctx.beginPath();
+  ctx.moveTo(1024, 255);
+  ctx.lineTo(1034, 265);
+  ctx.lineTo(1024, 275);
+  ctx.lineTo(1014, 265);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  // 4. Subtitle / Curatorial Citation
+  ctx.save();
+  ctx.fillStyle = '#dfc58d';
+  ctx.font = 'bold 26px "JetBrains Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  if ('letterSpacing' in ctx) {
+    ctx.letterSpacing = '6px';
+  }
+  ctx.fillText('HONORS, SCHOLARSHIPS & STUDENT LEADERSHIP • 2024 — 2026', 1024, 330);
+  ctx.restore();
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
+ * Creates authentic museum feature exhibition wall behind pedestals with mounted signage
+ */
+function createMuseumExhibitionWall(signageTexture) {
+  const group = new THREE.Group();
+
+  const wallMat = new THREE.MeshStandardMaterial({
+    color: 0x121319, // Deep exhibition matte charcoal basalt
+    roughness: 0.90,
+    metalness: 0.05,
+    transparent: true,
+    opacity: 0.0,
+  });
+
+  const trimMat = new THREE.MeshStandardMaterial({
+    color: 0x5a4d33, // Brushed antique bronze/brass trim
+    roughness: 0.45,
+    metalness: 0.65,
+    transparent: true,
+    opacity: 0.0,
+  });
+
+  const inlayMat = new THREE.MeshStandardMaterial({
+    color: 0x3d3525, // Vertical architectural reveals
+    roughness: 0.60,
+    metalness: 0.40,
+    transparent: true,
+    opacity: 0.0,
+  });
+
+  const signageMat = new THREE.MeshStandardMaterial({
+    map: signageTexture,
+    roughness: 0.25,
+    metalness: 0.60,
+    emissive: 0x3a2e18, // Warm metallic gold luminescence
+    emissiveIntensity: 0.55,
+    transparent: true,
+    opacity: 0.0,
+  });
+
+  const wallWidth = 11.8;
+  const wallHeight = 6.4;
+  const wallDepth = 0.25;
+  const wallY = 1.95; // From -1.25 (floor) to 5.15 (ceiling)
+  const wallZ = -2.85;
+
+  // A. Main Center Gallery Wall Panel
+  const wallGeo = new THREE.BoxGeometry(wallWidth, wallHeight, wallDepth);
+  const wallMesh = new THREE.Mesh(wallGeo, wallMat);
+  wallMesh.position.set(0, wallY, wallZ);
+  group.add(wallMesh);
+
+  // B. Baseboard Bronze Kickplate (at floor level)
+  const baseboardGeo = new THREE.BoxGeometry(wallWidth + 0.04, 0.08, wallDepth + 0.03);
+  const baseboardMesh = new THREE.Mesh(baseboardGeo, trimMat);
+  baseboardMesh.position.set(0, -1.21, wallZ + 0.01);
+  group.add(baseboardMesh);
+
+  // C. Top Architectural Crown Molding
+  const crownGeo = new THREE.BoxGeometry(wallWidth + 0.04, 0.06, wallDepth + 0.03);
+  const crownMesh = new THREE.Mesh(crownGeo, trimMat);
+  crownMesh.position.set(0, 5.12, wallZ + 0.01);
+  group.add(crownMesh);
+
+  // D. Vertical Architectural Reveal Seams (subdividing into bays)
+  [-3.8, 3.8].forEach((rx) => {
+    const revealGeo = new THREE.BoxGeometry(0.018, wallHeight, wallDepth + 0.01);
+    const revealMesh = new THREE.Mesh(revealGeo, inlayMat);
+    revealMesh.position.set(rx, wallY, wallZ + 0.005);
+    group.add(revealMesh);
+  });
+
+  // E. 3D Wall-Mounted Signage Plane (VERIFIED MILESTONES)
+  // Mounted directly onto the front face of the wall in perfect camera sightline
+  const signageGeo = new THREE.PlaneGeometry(5.6, 1.40);
+  const signageMesh = new THREE.Mesh(signageGeo, signageMat);
+  signageMesh.position.set(0, 0.96, wallZ + wallDepth / 2 + 0.008);
+  group.add(signageMesh);
+
+  return {
+    group,
+    wallMat,
+    trimMat,
+    inlayMat,
+    signageMat,
+  };
+}
+
+/**
  * CinematicCanvas
  * Fullscreen 3D Stage acting as an interactive camera timeline:
  * - Interpolates camera position, target, rotation, and lighting based on scrollProgress (0 to 1)
@@ -884,6 +1064,22 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     museumStanchionsObj.group.visible = false;
     scene.add(museumStanchionsObj.group);
 
+    // 5.6 Authentic Museum Exhibition Feature Wall with Mounted Gold Lettering (VERIFIED MILESTONES)
+    const wallSignageTex = createWallSignageTexture();
+    const museumWallObj = createMuseumExhibitionWall(wallSignageTex);
+    museumWallObj.group.visible = false;
+    scene.add(museumWallObj.group);
+
+    // Dedicated Overhead Wall Wash Light highlighting the mounted letters
+    const wallWashTarget = new THREE.Object3D();
+    wallWashTarget.position.set(0, 0.96, -2.72);
+    scene.add(wallWashTarget);
+
+    const wallWashSpot = new THREE.SpotLight(0xfff3db, 0.0, 16.0, Math.PI / 3.4, 0.65, 1.1);
+    wallWashSpot.position.set(0, 4.88, -1.50);
+    wallWashSpot.target = wallWashTarget;
+    scene.add(wallWashSpot);
+
     // 6. Raycaster for Pedestal Hover & Click
     const raycaster = new THREE.Raycaster();
     const mouseVec = new THREE.Vector2();
@@ -1038,6 +1234,12 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         museumStanchionsObj.brassMat.opacity = 0;
         museumStanchionsObj.velvetMat.opacity = 0;
         museumStanchionsObj.postShadowMat.opacity = 0;
+        museumWallObj.group.visible = false;
+        museumWallObj.wallMat.opacity = 0;
+        museumWallObj.trimMat.opacity = 0;
+        museumWallObj.inlayMat.opacity = 0;
+        museumWallObj.signageMat.opacity = 0;
+        wallWashSpot.intensity = 0;
         pedestalNodes.forEach((node) => {
           node.spotLight.intensity = 0;
           node.lampMesh.visible = false;
@@ -1060,6 +1262,15 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         galaxyField.material.opacity = s4 * 0.85;
         galaxyField.rotation.y = elapsedTime * 0.006;
         galaxyField.rotation.x = Math.sin(elapsedTime * 0.05) * 0.004;
+
+        // Smooth elevation & fade animation for the museum feature wall & mounted letters
+        museumWallObj.group.visible = true;
+        museumWallObj.group.position.y = THREE.MathUtils.lerp(-1.60, 0.0, s4);
+        museumWallObj.wallMat.opacity = s4 * 0.98;
+        museumWallObj.trimMat.opacity = s4 * 0.98;
+        museumWallObj.inlayMat.opacity = s4 * 0.98;
+        museumWallObj.signageMat.opacity = s4 * 0.98;
+        wallWashSpot.intensity = s4 * 5.2;
 
         // Smooth elevation & fade animation for museum VIP stanchions & velvet ropes
         museumStanchionsObj.group.visible = true;

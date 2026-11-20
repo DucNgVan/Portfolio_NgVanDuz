@@ -885,24 +885,16 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - 100% clean, unobstructed 3D view (direct click on 3D pedestals)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex flex-col items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16 pt-20 sm:pt-24 pb-6 transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 flex flex-col items-center justify-end px-4 sm:px-8 lg:px-12 xl:px-16 pb-6 sm:pb-8 transition-opacity duration-300 pointer-events-none"
         style={{ opacity: s4.opacity, pointerEvents: s4.pointerEvents }}
       >
-        {/* Top Centered Header */}
-        <div className="text-center w-full max-w-2xl mx-auto mb-1 select-none pointer-events-auto">
-          <h2 
-            style={largeTitleParallax}
-            className="text-lg sm:text-xl lg:text-2xl font-black font-sans uppercase tracking-[0.14em] text-[#dfc58d] mb-0.5 leading-tight select-none cursor-default drop-shadow-[0_2px_10px_rgba(216,200,168,0.25)]"
-          >
-            Verified Milestones
-          </h2>
-          <p className="text-[10.5px] sm:text-xs text-neutral-400 font-sans max-w-md mx-auto">
-            Nhấp trực tiếp vào từng bệ bằng khen 3D để xem hồ sơ xác thực và chứng nhận chi tiết
+        {/* Bottom subtle hint: leaves the upper 3D wall completely unobstructed for the mounted VERIFIED MILESTONES lettering */}
+        <div className="text-center w-full max-w-xl mx-auto select-none pointer-events-auto">
+          <p className="text-[10.5px] sm:text-xs text-[#dfc58d] font-mono bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#dfc58d]/30 inline-flex items-center gap-2 shadow-xl">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#dfc58d] animate-pulse" />
+            <span>Nhấp trực tiếp vào từng bệ bằng khen 3D để xem hồ sơ xác thực</span>
           </p>
         </div>
-
-        {/* Center Void: Completely unobstructed 3D gallery view where character and 5 pedestals are displayed */}
-        <div className="flex-1 w-full pointer-events-none" />
       </section>
 
       {/* =========================================================================
