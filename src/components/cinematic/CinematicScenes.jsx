@@ -103,6 +103,17 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
     analyticsService.trackEvent('cert_inspect', { certId: cert.id, title: cert.title });
   };
 
+  // Listen for 3D Pedestal Clicks from CinematicCanvas
+  useEffect(() => {
+    const handleCustomCertOpen = (e) => {
+      if (e.detail) {
+        handleOpenCert(e.detail);
+      }
+    };
+    window.addEventListener('open-certificate', handleCustomCertOpen);
+    return () => window.removeEventListener('open-certificate', handleCustomCertOpen);
+  }, []);
+
   const handleSendQuickMessage = (e) => {
     e.preventDefault();
     if (!quickMessage.trim()) {
@@ -239,8 +250,22 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
     },
 
     // ----------------------------------------------------
-    // NHÓM 2: CLB & KỸ NĂNG MỀM
+    // NHÓM 2: CLB & KỸ NĂNG MỀM / CỐ VẤN
     // ----------------------------------------------------
+    {
+      id: 'peer_mentoring_2024',
+      category: 'club_skill',
+      categoryLabel: 'CLB & Cố Vấn Học Thuật',
+      badge: 'MENTOR XUẤT SẮC',
+      title: 'Chứng Nhận Mentor Xuất Sắc — Greenwich Peer Mentoring',
+      titleEn: 'Certificate of Recognition — Peer Mentoring Club (GPM)',
+      issuer: 'Greenwich Peer Mentoring Club & Ban CTSV',
+      recipient: 'Nguyen Van Duc',
+      image: '/certificates/cert_peer_mentoring_2024.jpg',
+      year: '2024',
+      verificationRef: 'Trưởng ngành QTKD: ThS. Nguyễn Minh Hải & Chủ nhiệm GPM: Đinh Văn Thanh Khởi',
+      description: 'Vinh danh đóng góp nổi bật và tích cực với vai trò Mentor hướng dẫn, hỗ trợ học tập và phát triển kỹ năng cho sinh viên khóa mới trong suốt 7 tuần Fall 2024.'
+    },
     {
       id: 'gnews_club_2024',
       category: 'club_skill',
@@ -582,7 +607,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 return (
                   <button
                     key={step.id}
-                    onClick={() => setActiveWorkflowStep(idx)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveWorkflowStep(idx);
+                    }}
                     className={`relative pb-1 text-xs font-sans transition-all cursor-pointer flex items-center gap-1.5 ${
                       isActive ? 'font-bold text-[#111113]' : 'font-medium text-[#777] hover:text-[#111113]'
                     }`}
@@ -849,112 +877,32 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       </section>
 
       {/* =========================================================================
-          SCENE 04: HALL OF HONORS (MILESTONES)
-          Layout: Model glides to LEFT (MEDIUM ZOOM), UI on the RIGHT (Interleaved!)
+          SCENE 04: HALL OF HONORS (3D EXHIBITION GALLERY - SPOTLIGHT AMPHITHEATER)
+          Layout: 
+          - Model in FOREGROUND CENTER, squarely admiring certificates
+          - 5 Exhibition Pedestals in deep background crescent amphitheater
+          - Overhead gentle ceiling spotlight shining down over the stage
+          - 100% clean, unobstructed 3D view (direct click on 3D pedestals)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center justify-end px-6 sm:px-10 lg:px-16 xl:px-20 pt-16 sm:pt-20 pb-6 transition-opacity duration-300"
+        className="absolute inset-0 flex flex-col items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16 pt-20 sm:pt-24 pb-6 transition-opacity duration-300 pointer-events-none"
         style={{ opacity: s4.opacity, pointerEvents: s4.pointerEvents }}
       >
-        <div className="w-full max-w-lg lg:max-w-[34rem] xl:max-w-[36rem] flex flex-col items-start text-left ml-auto">
-          
-          {/* Dynamic Interactive Large Headline */}
+        {/* Top Centered Header */}
+        <div className="text-center w-full max-w-2xl mx-auto mb-1 select-none pointer-events-auto">
           <h2 
             style={largeTitleParallax}
-            className="text-xl sm:text-2xl lg:text-3xl font-black font-sans uppercase tracking-tight text-[#111113] mb-1 select-none cursor-default"
+            className="text-lg sm:text-xl lg:text-2xl font-black font-sans uppercase tracking-[0.14em] text-[#dfc58d] mb-0.5 leading-tight select-none cursor-default drop-shadow-[0_2px_10px_rgba(216,200,168,0.25)]"
           >
             Verified Milestones
           </h2>
-
-          <p className="text-[11px] sm:text-xs text-[#66625d] font-sans mb-2">
-            Click any certificate to inspect full high-resolution credentials:
+          <p className="text-[10.5px] sm:text-xs text-neutral-400 font-sans max-w-md mx-auto">
+            Nhấp trực tiếp vào từng bệ bằng khen 3D để xem hồ sơ xác thực và chứng nhận chi tiết
           </p>
-
-          {/* Category Tabs: Chuyên Ngành vs CLB & Kỹ Năng */}
-          <div className="flex items-center gap-1.5 mb-2.5 p-1 rounded-xl bg-black/[0.04] border border-black/[0.06] w-full">
-            <button
-              onClick={() => setCertCategoryFilter('all')}
-              className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer ${
-                certCategoryFilter === 'all'
-                  ? 'bg-white text-black shadow-sm'
-                  : 'text-[#777] hover:text-black'
-              }`}
-            >
-              Tất cả (5)
-            </button>
-            <button
-              onClick={() => setCertCategoryFilter('academic')}
-              className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                certCategoryFilter === 'academic'
-                  ? 'bg-white text-[#9a6728] shadow-sm'
-                  : 'text-[#777] hover:text-black'
-              }`}
-            >
-              <span>🎓</span>
-              <span>Chuyên Ngành (3)</span>
-            </button>
-            <button
-              onClick={() => setCertCategoryFilter('club_skill')}
-              className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                certCategoryFilter === 'club_skill'
-                  ? 'bg-white text-[#4f46e5] shadow-sm'
-                  : 'text-[#777] hover:text-black'
-              }`}
-            >
-              <span>🎭</span>
-              <span>CLB & Kỹ Năng (2)</span>
-            </button>
-          </div>
-
-          {/* Certificate Showcase Grid on Right Side */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[50vh] overflow-y-auto pr-1">
-            {filteredCertificates.map((cert) => (
-              <div
-                key={cert.id}
-                onClick={() => handleOpenCert(cert)}
-                className="group relative rounded-2xl bg-white/95 border border-black/[0.08] hover:border-[#bfa074] p-2.5 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl cursor-pointer hover:shadow-[0_8px_25px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
-              >
-                <div>
-                  <div className="relative aspect-[16/9] max-h-24 w-full rounded-xl overflow-hidden mb-1.5 border border-black/[0.08] bg-black/5">
-                    <img 
-                      src={cert.image} 
-                      alt={cert.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end justify-between p-1.5">
-                      <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/85 text-white">
-                        {cert.badge}
-                      </span>
-                      <span className={`text-[7.5px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                        cert.category === 'academic' 
-                          ? 'bg-[#c5a880]/90 text-black' 
-                          : 'bg-[#6366f1]/90 text-white'
-                      }`}>
-                        {cert.category === 'academic' ? '🎓 Chuyên ngành' : '🎭 CLB'}
-                      </span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xs font-bold text-[#111113] group-hover:text-[#8c7355] transition-colors line-clamp-1 mb-0.5">
-                    {cert.title}
-                  </h3>
-                  <p className="text-[9.5px] text-[#777] font-mono line-clamp-1">
-                    {cert.issuer}
-                  </p>
-                </div>
-
-                <div className="mt-2 pt-1.5 border-t border-black/[0.05] flex items-center justify-between text-[9px] font-mono text-[#8c7355]">
-                  <span className="font-semibold">{cert.year}</span>
-                  <span className="flex items-center gap-1 group-hover:translate-x-0.5 transition-transform font-bold">
-                    Inspect ↗
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
         </div>
+
+        {/* Center Void: Completely unobstructed 3D gallery view where character and 5 pedestals are displayed */}
+        <div className="flex-1 w-full pointer-events-none" />
       </section>
 
       {/* =========================================================================
@@ -995,16 +943,16 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#111113] flex items-center gap-1.5">
                   <MessageSquare className="w-3 h-3 text-[#8c7355]" />
-                  <span>Direct Recruiter Dispatch</span>
+                  <span>Contact for Work</span>
                 </span>
               </div>
-              <span className="text-[9.5px] font-mono text-[#888]">Direct to Duc's Admin Portal</span>
+              <span className="text-[9.5px] font-mono text-[#888]">Direct contact for work & opportunities</span>
             </div>
 
             {messageSent ? (
               <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-sans flex items-center gap-2.5 animate-fadeIn">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Message dispatched successfully! Duc will review your inquiry in the Admin Console.</span>
+                <span>Message dispatched successfully! Duc will review your inquiry and get back to you shortly.</span>
               </div>
             ) : (
               <form onSubmit={handleSendQuickMessage} className="space-y-2">
@@ -1047,7 +995,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#111113] hover:bg-black text-white font-mono font-bold text-xs transition-all shadow-md cursor-pointer hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                   >
                     <Send className="w-3 h-3 text-[#d8c8a8]" />
-                    <span>{messageSending ? 'Sending...' : 'Send to Admin'}</span>
+                    <span>{messageSending ? 'Sending...' : 'Contact for Work'}</span>
                   </button>
                 </div>
               </form>
@@ -1093,7 +1041,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </a>
           </div>
 
-          {/* Bottom Controls: Replay Journey & Discreet Admin Access */}
+          {/* Bottom Controls: Replay Journey */}
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={onReplay}
@@ -1101,18 +1049,6 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             >
               <RotateCcw className="w-3.5 h-3.5 text-[#d8c8a8]" />
               <span>REPLAY JOURNEY (SCROLL TO TOP)</span>
-            </button>
-
-            {/* Hidden / Discreet Admin Doorway */}
-            <button
-              onClick={() => {
-                window.location.hash = '#admin';
-              }}
-              title="Secured Admin Console (or press Ctrl+Shift+A)"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10.5px] font-mono text-[#888] hover:text-[#111113] hover:bg-black/5 transition-all cursor-pointer"
-            >
-              <Lock className="w-3 h-3 text-[#8c7355]" />
-              <span>Admin Console</span>
             </button>
           </div>
 

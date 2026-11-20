@@ -77,7 +77,7 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
   return (
     <div className="relative min-h-[900vh] bg-[#f8f7f4] text-[#111113] selection:bg-[#d8c8a8] selection:text-black font-sans">
       {/* 1. Original Clean Menu Bar (as requested by user screenshot) */}
-      <Navbar onNavigate={handleSelectScene} />
+      <Navbar onNavigate={handleSelectScene} scrollProgress={scrollProgress} />
 
       {/* 2. Three.js 3D Viewport with Interleaved Left/Right Gliding & Zoom In/Out */}
       <CinematicCanvas scrollProgress={scrollProgress} mousePos={mousePos} />

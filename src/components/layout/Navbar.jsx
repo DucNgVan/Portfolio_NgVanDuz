@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-export const Navbar = ({ onNavigate = null }) => {
+export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isDarkSection = scrollProgress >= 0.65 && scrollProgress <= 0.86;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,9 +17,9 @@ export const Navbar = ({ onNavigate = null }) => {
   }, []);
 
   const navLinks = [
-    { id: 'projects', label: 'PROJECTS', progress: 0.54, href: '#projects' },
     { id: 'about', label: 'ABOUT', progress: 0.05, href: '#about' },
     { id: 'expertise', label: 'EXPERTISE', progress: 0.30, href: '#expertise' },
+    { id: 'projects', label: 'PROJECTS', progress: 0.54, href: '#projects' },
     { id: 'honors', label: 'HONORS', progress: 0.76, href: '#honors' },
     { id: 'contact', label: 'CONTACT', progress: 0.96, href: '#contact' },
   ];
@@ -49,7 +51,9 @@ export const Navbar = ({ onNavigate = null }) => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 select-none ${
-          isScrolled
+          isDarkSection
+            ? 'bg-[#0a0b10]/85 backdrop-blur-md border-b border-white/10 py-4 px-6 sm:px-10 lg:px-14 shadow-md'
+            : isScrolled
             ? 'bg-[#f8f7f4]/90 backdrop-blur-md border-b border-black/[0.05] py-4 px-6 sm:px-10 lg:px-14 shadow-sm'
             : 'bg-transparent py-5 sm:py-6 px-6 sm:px-10 lg:px-14'
         }`}
@@ -60,29 +64,42 @@ export const Navbar = ({ onNavigate = null }) => {
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, { progress: 0.0, href: '#hero' })}
-            className="font-hand font-semibold text-3xl sm:text-4xl text-[#111113] hover:text-[#8c7355] transition-colors tracking-normal cursor-pointer z-10"
+            className={`font-hand font-semibold text-3xl sm:text-4xl transition-colors tracking-normal cursor-pointer z-10 ${
+              isDarkSection ? 'text-white hover:text-[#d8c8a8]' : 'text-[#111113] hover:text-[#8c7355]'
+            }`}
           >
             nguyenvanduc
           </a>
 
           {/* Center Navigation Links matching user screenshot (centered perfectly to never collide with 3D model) */}
           <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 lg:gap-9">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link)}
-                className="text-[12px] tracking-[0.18em] uppercase text-[#444] hover:text-[#111113] font-medium transition-colors py-1 cursor-pointer"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isHonorsActive = isDarkSection && link.id === 'honors';
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link)}
+                  className={`text-[12px] tracking-[0.18em] uppercase font-medium transition-colors py-1 cursor-pointer ${
+                    isHonorsActive
+                      ? 'text-[#d8c8a8] font-bold drop-shadow-[0_0_8px_rgba(216,200,168,0.4)]'
+                      : isDarkSection
+                      ? 'text-neutral-300 hover:text-white'
+                      : 'text-[#444] hover:text-[#111113]'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right Hamburger Menu Icon */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="p-2 rounded-full hover:bg-black/5 text-[#111113] transition-colors cursor-pointer z-10"
+            className={`p-2 rounded-full transition-colors cursor-pointer z-10 ${
+              isDarkSection ? 'hover:bg-white/10 text-white' : 'hover:bg-black/5 text-[#111113]'
+            }`}
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

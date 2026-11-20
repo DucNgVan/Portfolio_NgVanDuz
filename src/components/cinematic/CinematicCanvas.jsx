@@ -4,11 +4,298 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
 /**
+ * Certificate definitions for 3D Museum Pedestals in Scene 4
+ */
+export const cinematicCertificates = [
+  // LEFT SIDE (3 Pedestals): Academic Excellence & National Innovation
+  // 1. Outer Left: Top 3 Outstanding Student (Greenwich Academic)
+  {
+    id: 'top3_2024',
+    title: 'Top 3 Sinh Viên Xuất Sắc — Summer 2024',
+    titleEn: 'Top 3 Outstanding Student — Summer 2024',
+    badge: 'TOP 3 TOÀN KHÓA',
+    category: 'academic',
+    categoryLabel: 'Chuyên Ngành & Học Thuật',
+    issuer: 'University of Greenwich (Vietnam)',
+    recipient: 'Nguyen Van Duc (GCD230006)',
+    image: '/certificates/cert_top3_2024.jpg',
+    year: '2024',
+    verificationRef: 'GKDN240149 • QĐ: 157/QĐ-FPTUDN',
+    description: 'Vinh danh thành tích học tập vượt trội, đứng trong Top 3 sinh viên có điểm GPA cao nhất toàn khóa cử nhân Quốc tế Greenwich (Đà Nẵng Campus).',
+    spreadPos: new THREE.Vector3(-2.50, -1.25, -1.25),
+    rotY: 0.44,
+    plinthHeight: 0.72,
+    frameColor: 0xc8b07a,
+  },
+
+  // 2. Mid Left: Best Student ICM 2026 (Greenwich Academic)
+  {
+    id: 'best_student_icm_2026',
+    title: 'Thủ Khoa Môn Quản Trị Thông Tin & Nội Dung',
+    titleEn: 'Best Student: Information & Content Management',
+    badge: 'THỦ KHOA MÔN HỌC',
+    category: 'academic',
+    categoryLabel: 'Chuyên Ngành & Học Thuật',
+    issuer: 'Greenwich International Bachelor Program',
+    recipient: 'Nguyen Van Duc (GCD230006)',
+    image: '/certificates/cert_best_student_icm_2026.jpg',
+    year: '2026',
+    verificationRef: 'QĐ: 181 QH-PPTUDN • GKD2300025',
+    description: 'Thủ khoa đạt điểm số xuất sắc nhất bộ môn Information and Content Management (COMP1643) kỳ Summer Trimester 2026, chứng nhận bởi Giám đốc Phân hiệu TS. Nguyễn Duy Nghiêm.',
+    spreadPos: new THREE.Vector3(-1.70, -1.25, -1.65),
+    rotY: 0.28,
+    plinthHeight: 0.72,
+    frameColor: 0xc8b07a,
+  },
+
+  // 3. Inner Left: Impact Innovation Bootcamp 2025 (National 2nd Prize)
+  {
+    id: 'bootcamp_innovation_2025',
+    title: 'Giải Nhì Toàn Quốc — Impact Innovation Bootcamp 2025',
+    titleEn: '2nd Prize Winner — Impact Innovation Bootcamp 2025',
+    badge: 'GIẢI NHÌ TOÀN QUỐC',
+    category: 'academic',
+    categoryLabel: 'Chuyên Ngành & Học Thuật',
+    issuer: 'Greenwich Vietnam & Đổi Mới Sáng Tạo Bệnh Viện',
+    recipient: 'Nguyen Van Duc (GCD230006)',
+    image: '/certificates/cert_bootcamp_innovation_2025.jpg',
+    year: '2025',
+    verificationRef: 'Director of Da Nang Campus: Dr. Nguyen Duy Nghiem',
+    description: 'Giải Nhì cuộc thi Đổi mới Sáng tạo Công nghệ (Impact Innovation Bootcamp 2025) với giải pháp số hóa và chuyển đổi số quy trình y tế cộng đồng.',
+    spreadPos: new THREE.Vector3(-0.90, -1.25, -1.95),
+    rotY: 0.14,
+    plinthHeight: 0.72,
+    frameColor: 0xd8c8a8,
+  },
+
+  // RIGHT SIDE (3 Pedestals): Mentoring, Media & Leadership Activities
+  // 4. Inner Right: Greenwich Peer Mentoring Club (Academic Mentoring & Leadership - from PDF)
+  {
+    id: 'peer_mentoring_2024',
+    title: 'Chứng Nhận Mentor Xuất Sắc — Greenwich Peer Mentoring',
+    titleEn: 'Certificate of Recognition — Peer Mentoring Club (GPM)',
+    badge: 'MENTOR XUẤT SẮC',
+    category: 'club_skill',
+    categoryLabel: 'CLB & Cố Vấn Học Thuật',
+    issuer: 'Greenwich Peer Mentoring Club & Ban CTSV',
+    recipient: 'Nguyen Van Duc',
+    image: '/certificates/cert_peer_mentoring_2024.jpg',
+    year: '2024',
+    verificationRef: 'Trưởng ngành QTKD: ThS. Nguyễn Minh Hải & Chủ nhiệm GPM: Đinh Văn Thanh Khởi',
+    description: 'Vinh danh đóng góp nổi bật và tích cực với vai trò Mentor hướng dẫn, hỗ trợ học tập và phát triển kỹ năng cho sinh viên khóa mới trong suốt 7 tuần Fall 2024.',
+    spreadPos: new THREE.Vector3(0.90, -1.25, -1.95),
+    rotY: -0.14,
+    plinthHeight: 0.72,
+    frameColor: 0xc8b07a,
+  },
+
+  // 5. Mid Right: Greenwich Newspaper Club GNews (Club & Soft Skills)
+  {
+    id: 'gnews_club_2024',
+    title: 'Thành Viên Tích Cực — CLB Báo Chí GNews 2024',
+    titleEn: 'Active Member — Greenwich Newspaper Club (GNews) 2024',
+    badge: 'CLB BÁO CHÍ',
+    category: 'club_skill',
+    categoryLabel: 'CLB & Kỹ Năng Mềm',
+    issuer: 'Ban Công Tác Sinh Viên & CLB GNews',
+    recipient: 'Nguyen Van Duc',
+    image: '/certificates/cert_gnews_club_2024.jpg',
+    year: '2024',
+    verificationRef: 'Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh & Ban Chủ Nhiệm GNews',
+    description: 'Chứng nhận đóng góp tích cực và nổi bật trong ban kỹ thuật và truyền thông báo chí đại học, tham gia biên tập ấn phẩm và truyền thông sự kiện công nghệ sinh viên.',
+    spreadPos: new THREE.Vector3(1.70, -1.25, -1.65),
+    rotY: -0.28,
+    plinthHeight: 0.72,
+    frameColor: 0xc8b07a,
+  },
+
+  // 6. Outer Right: Greenwich Music Club GMC (Club & Soft Skills)
+  {
+    id: 'gmc_music_club',
+    title: 'Thành Tích Xuất Sắc — Đêm Nhạc "Under the Baubles"',
+    titleEn: 'Outstanding Participation — "Under the Baubles" Musical Night',
+    badge: 'CLB ÂM NHẠC',
+    category: 'club_skill',
+    categoryLabel: 'CLB & Kỹ Năng Mềm',
+    issuer: 'Greenwich Music Club (GMC) & Ban CTSV',
+    recipient: 'Nguyen Van Duc',
+    image: '/certificates/cert_gmc_music_club.jpg',
+    year: '2024',
+    verificationRef: 'Chủ nhiệm CLB Lê Tất Chương & Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh',
+    description: 'Vinh danh đóng góp nổi bật trong ban tổ chức và tham gia biểu diễn tại đêm đại nhạc hội "Under the Baubles", khẳng định kỹ năng tổ chức sự kiện, gắn kết đội ngũ và kỹ năng mềm.',
+    spreadPos: new THREE.Vector3(2.50, -1.25, -1.25),
+    rotY: -0.44,
+    plinthHeight: 0.72,
+    frameColor: 0xc8b07a,
+  },
+];
+
+/**
+ * Creates high-resolution metallic brass plaque texture with crisp typography
+ */
+function createPlaqueCanvas(badge, year, title) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 140;
+  const ctx = canvas.getContext('2d');
+
+  // Brushed brass gradient
+  const grad = ctx.createLinearGradient(0, 0, 512, 140);
+  grad.addColorStop(0, '#cbb27a');
+  grad.addColorStop(0.35, '#f4e5be');
+  grad.addColorStop(0.65, '#dfc58d');
+  grad.addColorStop(1, '#ab8e54');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 512, 140);
+
+  // Outer bevel
+  ctx.strokeStyle = '#624d26';
+  ctx.lineWidth = 5;
+  ctx.strokeRect(2, 2, 508, 136);
+
+  // Inset hairline
+  ctx.strokeStyle = '#fff8e4';
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(7, 7, 498, 126);
+
+  // Corner mounting screws
+  ctx.fillStyle = '#453314';
+  [[14, 14], [498, 14], [14, 126], [498, 126]].forEach(([x, y]) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 2.8, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Badge & Year
+  ctx.fillStyle = '#1c1407';
+  ctx.font = 'bold 20px monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(`${badge}  •  ${year}`, 256, 42);
+
+  // Title
+  ctx.fillStyle = '#221908';
+  ctx.font = 'bold 22px sans-serif';
+  let shortTitle = title;
+  if (shortTitle.length > 27) shortTitle = shortTitle.substring(0, 25) + '...';
+  ctx.fillText(shortTitle, 256, 88);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
+ * Creates soft volumetric downlight beam gradient texture (matching theatre stage lighting in h1(18).jpg)
+ */
+function createSpotlightBeamTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+
+  // Vertical gradient: intense bright at top, smoothly fading to transparent at bottom
+  const grad = ctx.createLinearGradient(0, 0, 0, 512);
+  grad.addColorStop(0.0, 'rgba(255, 252, 245, 0.95)');
+  grad.addColorStop(0.06, 'rgba(255, 245, 225, 0.75)');
+  grad.addColorStop(0.25, 'rgba(245, 230, 205, 0.40)');
+  grad.addColorStop(0.55, 'rgba(230, 215, 185, 0.18)');
+  grad.addColorStop(0.85, 'rgba(215, 200, 170, 0.06)');
+  grad.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 128, 512);
+
+  // Horizontal feathering (soft edges)
+  const hGrad = ctx.createLinearGradient(0, 0, 128, 0);
+  hGrad.addColorStop(0.0, 'rgba(0, 0, 0, 1)');
+  hGrad.addColorStop(0.22, 'rgba(255, 255, 255, 1)');
+  hGrad.addColorStop(0.78, 'rgba(255, 255, 255, 1)');
+  hGrad.addColorStop(1.0, 'rgba(0, 0, 0, 1)');
+
+  ctx.globalCompositeOperation = 'destination-in';
+  ctx.fillStyle = hGrad;
+  ctx.fillRect(0, 0, 128, 512);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  return texture;
+}
+
+/**
+ * Creates soft, realistic plinth contact & directional drop shadow texture
+ */
+function createPedestalShadowTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, 256, 256);
+
+  // 1. Soft extended directional drop shadow (cast slightly backward away from light)
+  const dirGrad = ctx.createRadialGradient(128, 142, 10, 128, 142, 110);
+  dirGrad.addColorStop(0, "rgba(0, 0, 0, 0.78)");
+  dirGrad.addColorStop(0.5, "rgba(0, 0, 0, 0.42)");
+  dirGrad.addColorStop(0.85, "rgba(0, 0, 0, 0.12)");
+  dirGrad.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+  ctx.fillStyle = dirGrad;
+  ctx.beginPath();
+  ctx.ellipse(128, 142, 95, 75, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 2. Crisp, deep contact occlusion shadow right beneath plinth footprint
+  const occlGrad = ctx.createRadialGradient(128, 128, 20, 128, 128, 75);
+  occlGrad.addColorStop(0, "rgba(0, 0, 0, 0.98)");
+  occlGrad.addColorStop(0.65, "rgba(0, 0, 0, 0.85)");
+  occlGrad.addColorStop(0.9, "rgba(0, 0, 0, 0.38)");
+  occlGrad.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+  ctx.fillStyle = occlGrad;
+  ctx.beginPath();
+  ctx.ellipse(128, 128, 75, 55, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
+ * Creates luminous, feathered floor spotlight puddle texture matching h1(18).jpg
+ */
+function createFloorSpotlightTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, 256, 256);
+
+  // Radial pool of theatrical spotlight matching h1(18).jpg
+  const grad = ctx.createRadialGradient(128, 128, 15, 128, 128, 120);
+  grad.addColorStop(0, "rgba(255, 248, 235, 0.88)");
+  grad.addColorStop(0.25, "rgba(245, 235, 215, 0.68)");
+  grad.addColorStop(0.55, "rgba(225, 210, 185, 0.32)");
+  grad.addColorStop(0.82, "rgba(190, 175, 150, 0.10)");
+  grad.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(128, 128, 120, 0, Math.PI * 2);
+  ctx.fill();
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+/**
  * CinematicCanvas
  * Fullscreen 3D Stage acting as an interactive camera timeline:
  * - Interpolates camera position, target, rotation, and lighting based on scrollProgress (0 to 1)
  * - Loads the model /models/character-cinematic.glb with Draco decoding
- * - Adds floating cyber dust particles and dynamic cinematic rim lighting
+ * - Scene 4: Seated central model with back turned, surrounded by radiating 3D pedestals & spotlit certificates
  */
 export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } }) => {
   const mountRef = useRef(null);
@@ -21,49 +308,59 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
   const mousePosRef = useRef(mousePos);
   mousePosRef.current = mousePos;
 
-  // Cinematic keyframes for camera & model across 5 scenes:
-  // Scene 1: Model centered with text on two sides (desired roles on right)
-  // Scene 2..5: Model glides left & right, zooms in & out, while UI elements interleave symmetrically!
+  const scene4FactorRef = useRef(0);
+
+  // Cinematic keyframes for camera & model across 5 scenes
   const keyframes = [
     {
       progress: 0.0,
-      camPos: new THREE.Vector3(0.0, 0.08, 4.40), // Pull camera back so model fits comfortably in the central corridor
+      camPos: new THREE.Vector3(0.0, 0.08, 4.40),
       camTarget: new THREE.Vector3(0.0, 0.02, 0),
-      sideOffset: 0.0, // Model dead-centered in the open central corridor
+      sideOffset: 0.0,
       modelRotY: 0.0,
       lightIntensity: 1.85,
+      spotIntensity: 0.0,
+      bgColor: new THREE.Color(0xf8f7f4),
     },
     {
       progress: 0.30,
-      camPos: new THREE.Vector3(0.0, 0.08, 3.55), // Pulled back so model is smaller and leaves plenty of space for UI
+      camPos: new THREE.Vector3(0.0, 0.08, 3.55),
       camTarget: new THREE.Vector3(0.0, 0.10, 0.05),
-      sideOffset: 0.88, // Model cleanly on LEFT with wide separation from UI
-      modelRotY: 0.14, // Model turns gently towards right cards
+      sideOffset: 0.88,
+      modelRotY: 1.05, // Model quay sang trái thêm một chút từ góc 1.40
       lightIntensity: 1.95,
+      spotIntensity: 0.0,
+      bgColor: new THREE.Color(0xf8f7f4),
     },
     {
       progress: 0.54,
-      camPos: new THREE.Vector3(0.0, 0.16, 3.65), // ZOOM OUT for wide heroic project stage!
+      camPos: new THREE.Vector3(0.0, 0.16, 3.65),
       camTarget: new THREE.Vector3(0.0, 0.08, 0),
-      sideOffset: -0.80, // Model on RIGHT, UI on LEFT!
-      modelRotY: -0.14,
+      sideOffset: -1.05,
+      modelRotY: -0.92, // Model quay góc 3/4 sang bên trái hướng về các project cards/elements
       lightIntensity: 1.85,
+      spotIntensity: 0.0,
+      bgColor: new THREE.Color(0xf8f7f4),
     },
     {
       progress: 0.76,
-      camPos: new THREE.Vector3(0.0, 0.10, 2.95), // MEDIUM ZOOM for Honors!
-      camTarget: new THREE.Vector3(0.0, 0.10, 0),
-      sideOffset: 0.76, // Model on LEFT, UI on RIGHT!
-      modelRotY: 0.10,
-      lightIntensity: 2.0,
+      camPos: new THREE.Vector3(0.0, 0.55, 4.60), // Góc máy cao thoáng bao quát toàn bộ 5 bệ bằng khen và model
+      camTarget: new THREE.Vector3(0.0, -0.15, -0.40),
+      sideOffset: 0.0,
+      modelRotY: -2.356, // Model quay mặt vào sân khấu chiêm ngưỡng các bằng khen (smooth lerp từ -0.92)
+      lightIntensity: 0.05, // Dramatic stage contrast (ambient light drops)
+      spotIntensity: 5.5, // Theatrical overhead spotlights (matching h1(18).jpg)
+      bgColor: new THREE.Color(0x020204), // Pure stage black / dark galaxy background
     },
     {
       progress: 1.0,
-      camPos: new THREE.Vector3(0.0, 0.16, 3.45), // Balanced Finish
+      camPos: new THREE.Vector3(0.0, 0.16, 3.45),
       camTarget: new THREE.Vector3(0.0, 0.08, 0),
-      sideOffset: -0.75, // Model on RIGHT, UI on LEFT!
+      sideOffset: -0.75,
       modelRotY: -0.08,
       lightIntensity: 1.8,
+      spotIntensity: 0.0,
+      bgColor: new THREE.Color(0xf8f7f4),
     },
   ];
 
@@ -75,7 +372,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     let height = window.innerHeight;
     let isDisposed = false;
 
-    // 1. Bright Artistic Scene & Camera
+    // 1. Scene & Camera
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf8f7f4);
     scene.fog = new THREE.FogExp2(0xf8f7f4, 0.02);
@@ -96,6 +393,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
+      renderer.domElement.style.pointerEvents = 'auto';
       container.appendChild(renderer.domElement);
     } catch (err) {
       console.warn('WebGL is not available or disabled on this device:', err);
@@ -105,7 +403,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       };
     }
 
-    // 3. Bright Soft Studio Portrait Lighting (Artistic, Flattering, Natural)
+    // 3. Studio Lighting
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0xf0ece1, 1.4);
     scene.add(hemiLight);
 
@@ -121,7 +419,42 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     rimLight.position.set(0.0, 2.5, -2.5);
     scene.add(rimLight);
 
-    // 4. Floating Warm Champagne Dust Particles (Daylight Gallery Motes)
+    // 3.4 Model Container Group
+    const modelRoot = new THREE.Group();
+    scene.add(modelRoot);
+
+    // 3.5 Volumetric Spotlight Beam Texture (Soft theatrical gradient matching h1(18).jpg)
+    const beamTexture = createSpotlightBeamTexture();
+
+    // 3.6 Overhead Theatrical Stage Rig Bar (spanning wide matching h1(18).jpg)
+    const rigGeo = new THREE.CylinderGeometry(0.04, 0.04, 7.2, 16);
+    rigGeo.rotateZ(Math.PI / 2);
+    const rigMat = new THREE.MeshStandardMaterial({ color: 0x14151b, metalness: 0.85, roughness: 0.35 });
+    const stageRigBar = new THREE.Mesh(rigGeo, rigMat);
+    stageRigBar.position.set(0.0, 4.88, -1.55);
+    stageRigBar.visible = false;
+    scene.add(stageRigBar);
+
+    const backRimLight = new THREE.DirectionalLight(0xffedd5, 0.0);
+    backRimLight.position.set(0.0, 2.5, -2.5);
+    scene.add(backRimLight);
+
+    // 3.8 Museum Exhibition Soft Matte Floor in Scene 4
+    const floorGeo = new THREE.CircleGeometry(5.8, 64);
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: 0x030306, // Deep pitch black stage floor
+      roughness: 0.94, // Ultra-matte black slate, zero glare
+      metalness: 0.05,
+      transparent: true,
+      opacity: 0.0,
+    });
+    const galleryFloor = new THREE.Mesh(floorGeo, floorMat);
+    galleryFloor.rotation.x = -Math.PI / 2;
+    galleryFloor.position.y = -1.25;
+    galleryFloor.visible = false;
+    scene.add(galleryFloor);
+
+    // 4. Floating Warm Champagne Dust Particles
     const pCount = window.innerWidth < 768 ? 40 : 80;
     const pGeo = new THREE.BufferGeometry();
     const pPositions = new Float32Array(pCount * 3);
@@ -141,17 +474,353 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     const particles = new THREE.Points(pGeo, pMat);
     scene.add(particles);
 
-    // 5. Model Container Group
-    const modelRoot = new THREE.Group();
-    scene.add(modelRoot);
+    // 4.1 Dark Galaxy Cosmic Starfield for Scene 4
+    const starCount = 380;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    const starColors = new Float32Array(starCount * 3);
 
-    // 6. Load /models/character-cinematic.glb with Draco
+    const colorPalette = [
+      new THREE.Color(0xffffff), // Diamond White
+      new THREE.Color(0x93c5fd), // Ice Blue
+      new THREE.Color(0xfde68a), // Pale Gold
+      new THREE.Color(0xc4b5fd), // Cosmic Violet
+    ];
+
+    for (let i = 0; i < starCount; i++) {
+      starPos[i * 3] = (Math.random() - 0.5) * 22.0;
+      starPos[i * 3 + 1] = Math.random() * 9.0 - 1.5;
+      starPos[i * 3 + 2] = -Math.random() * 9.0 - 2.5; // Deep behind pedestals
+
+      const c = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      starColors[i * 3] = c.r;
+      starColors[i * 3 + 1] = c.g;
+      starColors[i * 3 + 2] = c.b;
+    }
+
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+
+    const starMat = new THREE.PointsMaterial({
+      size: 0.032,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const galaxyField = new THREE.Points(starGeo, starMat);
+    galaxyField.visible = false;
+    scene.add(galaxyField);
+
+    // 5. 3D Museum Exhibition Pedestals & Framed Certificates (Scene 4)
+    const pedestalsGroup = new THREE.Group();
+    pedestalsGroup.visible = false;
+    scene.add(pedestalsGroup);
+
+    const pedestalNodes = [];
+    const clickableMeshes = [];
+    const textureLoader = new THREE.TextureLoader();
     const baseUrl = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') + '/';
+
+    // Shared realistic textures for spotlight puddles and plinth shadows
+    const floorSpotTexture = createFloorSpotlightTexture();
+    const shadowTexture = createPedestalShadowTexture();
+
+    cinematicCertificates.forEach((cert, idx) => {
+      // Slender, architectural museum plinth
+      const pw = 0.50;
+      const pd = 0.34;
+      const ph = cert.plinthHeight;
+
+      const pedestal = new THREE.Group();
+      pedestal.userData = { certData: cert };
+
+      // A. Plinth Column (Refined Matte Charcoal Basalt)
+      const plinthGeo = new THREE.BoxGeometry(pw, ph, pd);
+      const plinthMat = new THREE.MeshStandardMaterial({
+        color: 0x181922,
+        roughness: 0.88, // Velvet matte, zero plastic glare
+        metalness: 0.08,
+      });
+      const plinthMesh = new THREE.Mesh(plinthGeo, plinthMat);
+      plinthMesh.position.y = ph / 2;
+      pedestal.add(plinthMesh);
+
+      // B. Base Dark Trim
+      const baseGeo = new THREE.BoxGeometry(pw + 0.04, 0.03, pd + 0.04);
+      const baseMat = new THREE.MeshStandardMaterial({
+        color: 0x0f1016,
+        roughness: 0.9,
+        metalness: 0.1,
+      });
+      const baseMesh = new THREE.Mesh(baseGeo, baseMat);
+      baseMesh.position.y = 0.015;
+      pedestal.add(baseMesh);
+
+      // C. Top Brushed Brass Collar
+      const topRimGeo = new THREE.BoxGeometry(pw + 0.02, 0.02, pd + 0.02);
+      const topRimMat = new THREE.MeshStandardMaterial({
+        color: 0xc8b07a,
+        roughness: 0.45,
+        metalness: 0.65,
+      });
+      const topRimMesh = new THREE.Mesh(topRimGeo, topRimMat);
+      topRimMesh.position.y = ph + 0.01;
+      pedestal.add(topRimMesh);
+
+      // D. Subtle Brass Plaque
+      const plaqueTex = createPlaqueCanvas(cert.badge, cert.year, cert.title);
+      const plaqueGeo = new THREE.PlaneGeometry(0.30, 0.078);
+      const plaqueMat = new THREE.MeshStandardMaterial({
+        map: plaqueTex,
+        roughness: 0.45,
+        metalness: 0.5,
+      });
+      const plaqueMesh = new THREE.Mesh(plaqueGeo, plaqueMat);
+      plaqueMesh.position.set(0, ph * 0.52, pd / 2 + 0.003);
+      pedestal.add(plaqueMesh);
+
+      // E. Framed Certificate on Top (Satin Antique Gold, Archival Matte Paper)
+      const frameGroup = new THREE.Group();
+      frameGroup.position.set(0, ph + 0.02, 0);
+      frameGroup.rotation.x = -0.22; // Gentle tilt facing viewer and model
+      frameGroup.userData = { certData: cert };
+
+      const fw = 0.70;
+      const fh = 0.48;
+      const fdepth = 0.024;
+
+      // Outer Beveled Frame (Satin Dark Antique Gold, matte, no specular glare)
+      const outerFrameGeo = new THREE.BoxGeometry(fw, fh, fdepth);
+      const outerFrameMat = new THREE.MeshStandardMaterial({
+        color: 0x5a4d33,
+        roughness: 0.75,
+        metalness: 0.35,
+      });
+      const outerFrame = new THREE.Mesh(outerFrameGeo, outerFrameMat);
+      outerFrame.position.y = fh / 2;
+      outerFrame.userData = { certData: cert };
+      frameGroup.add(outerFrame);
+      clickableMeshes.push(outerFrame);
+
+      // Inner Matting Board (Dark museum matting board, maximizes contrast and eliminates white glare)
+      const matGeo = new THREE.PlaneGeometry(fw - 0.08, fh - 0.08);
+      const matMat = new THREE.MeshStandardMaterial({
+        color: 0x08090f,
+        roughness: 0.98,
+      });
+      const matMesh = new THREE.Mesh(matGeo, matMat);
+      matMesh.position.set(0, fh / 2, fdepth / 2 + 0.001);
+      frameGroup.add(matMesh);
+
+      // Certificate Artwork Plane (Archival matte paper, zero glare)
+      const certPlaneGeo = new THREE.PlaneGeometry(fw - 0.14, fh - 0.14);
+      const certMat = new THREE.MeshStandardMaterial({
+        color: 0xf5f3ed,
+        roughness: 0.98,
+        metalness: 0.0,
+      });
+
+      const texUrl = `${baseUrl}${cert.image.replace(/^\//, '')}`;
+      textureLoader.load(
+        texUrl,
+        (tex) => {
+          if (isDisposed) return;
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.generateMipmaps = true;
+          certMat.map = tex;
+          certMat.needsUpdate = true;
+        },
+        undefined,
+        (err) => console.warn('Cert texture load err:', cert.image, err)
+      );
+
+      const certMesh = new THREE.Mesh(certPlaneGeo, certMat);
+      certMesh.position.set(0, fh / 2, fdepth / 2 + 0.003);
+      certMesh.userData = { certData: cert };
+      frameGroup.add(certMesh);
+      clickableMeshes.push(certMesh);
+
+      // Easel Stand Backing
+      const standGeo = new THREE.BoxGeometry(0.08, 0.34, 0.015);
+      const standMat = new THREE.MeshStandardMaterial({ color: 0x1f1e1a, roughness: 0.8 });
+      const standMesh = new THREE.Mesh(standGeo, standMat);
+      standMesh.position.set(0, fh / 3, -0.06);
+      standMesh.rotation.x = 0.32;
+      frameGroup.add(standMesh);
+
+      pedestal.add(frameGroup);
+      pedestalsGroup.add(pedestal);
+
+      // F. Dedicated Overhead Stage Spotlight for this Pedestal (Matching h1(18).jpg)
+      // Dedicated spotlight target Object3D added directly to scene for precise tracking
+      const spotTarget = new THREE.Object3D();
+      spotTarget.position.set(cert.spreadPos.x, cert.spreadPos.y + ph + 0.22, cert.spreadPos.z);
+      scene.add(spotTarget);
+
+      // Exact ceiling lamp coordinates and mathematical aiming vector to pedestal floor pool
+      const lampPos = new THREE.Vector3(cert.spreadPos.x, 4.88, cert.spreadPos.z + 0.12);
+      const floorTarget = new THREE.Vector3(cert.spreadPos.x, -1.248, cert.spreadPos.z);
+      const beamVec = new THREE.Vector3().subVectors(floorTarget, lampPos);
+      const beamLength = beamVec.length();
+      const beamDir = beamVec.clone().normalize();
+      const beamQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), beamDir);
+
+      // Theatrical focused spotlight hitting directly and accurately on the certificate and pedestal
+      const pedSpot = new THREE.SpotLight(0xfff3db, 0.0, 16.0, Math.PI / 8.5, 0.45, 1.1);
+      pedSpot.position.copy(lampPos);
+      pedSpot.target = spotTarget;
+      scene.add(pedSpot);
+
+      // F.1 Ceiling Lamp Fixture Canister (Aimed along beamDir)
+      const lampGeo = new THREE.CylinderGeometry(0.11, 0.14, 0.24, 16);
+      lampGeo.translate(0, 0.12, 0);
+      const lampMat = new THREE.MeshStandardMaterial({ color: 0x15161c, metalness: 0.85, roughness: 0.35 });
+      const lampMesh = new THREE.Mesh(lampGeo, lampMat);
+      lampMesh.position.copy(lampPos);
+      lampMesh.quaternion.copy(beamQuat);
+      lampMesh.visible = false;
+      scene.add(lampMesh);
+
+      // F.2 Glowing Lamp Lens (Facing down towards pedestal)
+      const lampLensGeo = new THREE.CircleGeometry(0.10, 16);
+      const lampLensMat = new THREE.MeshBasicMaterial({ color: 0xfff6e5, transparent: true, opacity: 0.0 });
+      const lampLensMesh = new THREE.Mesh(lampLensGeo, lampLensMat);
+      lampLensMesh.position.copy(lampPos);
+      lampLensMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), beamDir);
+      lampLensMesh.visible = false;
+      scene.add(lampLensMesh);
+
+      // F.3 Volumetric Downlight Cone Beam (Accurately lands on the pedestal without drifting)
+      const pBeamGeo = new THREE.CylinderGeometry(0.08, 0.65, beamLength, 28, 1, true);
+      pBeamGeo.translate(0, -beamLength / 2, 0); // Origin at top fixture
+      const pBeamMat = new THREE.MeshBasicMaterial({
+        map: beamTexture,
+        color: 0xfff3db,
+        transparent: true,
+        opacity: 0.0,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      });
+      const pBeamMesh = new THREE.Mesh(pBeamGeo, pBeamMat);
+      pBeamMesh.position.copy(lampPos);
+      pBeamMesh.quaternion.copy(beamQuat);
+      pBeamMesh.visible = false;
+      scene.add(pBeamMesh);
+
+      // G. Luminous Floor Spotlight Puddle (Luminous warm feathered pool matching h1(18).jpg)
+      const floorPoolGeo = new THREE.CircleGeometry(0.72, 32);
+      const floorPoolMat = new THREE.MeshBasicMaterial({
+        map: floorSpotTexture,
+        transparent: true,
+        opacity: 0.0,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const floorPoolMesh = new THREE.Mesh(floorPoolGeo, floorPoolMat);
+      floorPoolMesh.rotation.x = -Math.PI / 2;
+      floorPoolMesh.position.set(cert.spreadPos.x, -1.248, cert.spreadPos.z);
+      floorPoolMesh.visible = false;
+      scene.add(floorPoolMesh);
+
+      // H. Deep Plinth Contact & Directional Drop Shadow (Directly beneath plinth base)
+      const shadowGeo = new THREE.PlaneGeometry(0.92, 0.72);
+      const shadowMat = new THREE.MeshBasicMaterial({
+        map: shadowTexture,
+        transparent: true,
+        opacity: 0.0,
+        depthWrite: false,
+      });
+      const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
+      shadowMesh.rotation.x = -Math.PI / 2;
+      shadowMesh.rotation.z = -cert.rotY;
+      shadowMesh.position.set(cert.spreadPos.x, -1.245, cert.spreadPos.z);
+      shadowMesh.visible = false;
+      scene.add(shadowMesh);
+
+      pedestalNodes.push({
+        group: pedestal,
+        frameGroup,
+        spotTarget,
+        plinthHeight: ph,
+        spreadPos: cert.spreadPos,
+        rotY: cert.rotY,
+        lampPos,
+        spotLight: pedSpot,
+        lampMesh,
+        lampLensMesh,
+        lampLensMat,
+        beamMesh: pBeamMesh,
+        beamMat: pBeamMat,
+        floorPoolMesh,
+        shadowMesh,
+      });
+    });
+
+    // 6. Raycaster for Pedestal Hover & Click
+    const raycaster = new THREE.Raycaster();
+    const mouseVec = new THREE.Vector2();
+    let hoveredObject = null;
+
+    const getIntersects = (clientX, clientY) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouseVec.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      mouseVec.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(mouseVec, camera);
+      return raycaster.intersectObjects(clickableMeshes, true);
+    };
+
+    const handlePointerMove = (e) => {
+      if (scene4FactorRef.current < 0.70) {
+        if (hoveredObject) {
+          document.body.style.cursor = 'default';
+          hoveredObject = null;
+        }
+        return;
+      }
+      const hits = getIntersects(e.clientX, e.clientY);
+      if (hits.length > 0) {
+        document.body.style.cursor = 'pointer';
+        hoveredObject = hits[0].object;
+      } else if (hoveredObject) {
+        document.body.style.cursor = 'default';
+        hoveredObject = null;
+      }
+    };
+
+    const handleClick = (e) => {
+      // 1. MUST only handle direct clicks on the canvas
+      if (e.target !== renderer.domElement && e.target !== container) return;
+      // 2. MUST only be active when firmly inside Scene 4
+      if (scene4FactorRef.current < 0.70) return;
+
+      const hits = getIntersects(e.clientX, e.clientY);
+      if (hits.length > 0) {
+        let target = hits[0].object;
+        while (target && !target.userData?.certData && target.parent) {
+          target = target.parent;
+        }
+        if (target?.userData?.certData) {
+          window.dispatchEvent(new CustomEvent('open-certificate', { detail: target.userData.certData }));
+        }
+      }
+    };
+
+    // Attach click strictly to renderer.domElement so UI clicks never bleed in
+    renderer.domElement.addEventListener('click', handleClick);
+    window.addEventListener('pointermove', handlePointerMove);
+
+    // 7. Load /models/character-cinematic.glb with Draco
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath(`${baseUrl}draco/`);
 
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
+
+    let baseModelScale = 1.0;
 
     loader.load(
       `${baseUrl}models/character-cinematic.glb`,
@@ -170,15 +839,14 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         char.position.z = -center.z;
 
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 2.45 / maxDim;
-        modelRoot.scale.set(scale, scale, scale);
+        baseModelScale = 2.45 / maxDim;
+        modelRoot.scale.set(baseModelScale, baseModelScale, baseModelScale);
 
         char.traverse((child) => {
           if (child.isMesh && child.material) {
             child.material.side = THREE.FrontSide;
-            // Soft matte finish eliminates harsh plastic / uncanny valley glare:
-            child.material.roughness = 0.72;
-            child.material.metalness = 0.04;
+            child.material.roughness = 0.88; // Soft matte fabric on character, zero plastic glare
+            child.material.metalness = 0.02;
             child.material.needsUpdate = true;
           }
         });
@@ -190,7 +858,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       (err) => console.warn('Cinematic model load error:', err)
     );
 
-    // 7. Render Loop with Spline Interpolation & Organic Micro-Breathing
+    // 8. Render Loop with Spline Interpolation, Organic Micro-Breathing & Pedestal Spread
     let animId;
     const clock = new THREE.Clock();
     const currentCamPos = new THREE.Vector3(0.0, 0.08, 4.40);
@@ -201,10 +869,6 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
       const elapsedTime = clock.getElapsedTime();
 
-      // Organic subtle breathing float (gentle, artistic, natural human presence)
-      modelRoot.position.y = Math.sin(elapsedTime * 1.3) * 0.012;
-      modelRoot.rotation.z = Math.cos(elapsedTime * 0.9) * 0.004;
-
       // Particle subtle drifting
       if (particles) {
         particles.rotation.y += 0.0004;
@@ -213,6 +877,111 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       // Calculate camera position and target from scrollProgress
       const p = Math.max(0, Math.min(1, scrollProgressRef.current));
       
+      // Calculate Scene 4 Factor (0 outside, smoothly peaks at 1.0 around 0.76)
+      let s4 = 0;
+      if (p >= 0.58 && p <= 0.92) {
+        if (p < 0.72) {
+          s4 = (p - 0.58) / (0.72 - 0.58);
+        } else if (p > 0.80) {
+          s4 = 1 - (p - 0.80) / (0.92 - 0.80);
+        } else {
+          s4 = 1.0;
+        }
+        s4 = Math.max(0, Math.min(1, s4));
+        s4 = s4 * s4 * (3 - 2 * s4); // smooth cubic ease
+      }
+      scene4FactorRef.current = s4;
+
+      // Model scaling, centering & foreground depth staging in Scene 4
+      if (baseModelScale > 0) {
+        const currentModelScale = baseModelScale * THREE.MathUtils.lerp(1.0, 0.65, s4);
+        modelRoot.scale.set(currentModelScale, currentModelScale, currentModelScale);
+      }
+
+      // Model sits in foreground looking towards certificates behind him, well below pedestals sightlines
+      const breathingY = Math.sin(elapsedTime * 1.3) * 0.010;
+      modelRoot.position.z = THREE.MathUtils.lerp(0.0, 1.32, s4);
+      modelRoot.position.y = THREE.MathUtils.lerp(-0.08, -0.62, s4) + breathingY;
+      modelRoot.rotation.z = Math.cos(elapsedTime * 0.9) * 0.004;
+
+      // Pedestals Group Spread Animation (in background behind model)
+      if (s4 <= 0.001) {
+        pedestalsGroup.visible = false;
+        galleryFloor.visible = false;
+        stageRigBar.visible = false;
+        galaxyField.visible = false;
+        pedestalNodes.forEach((node) => {
+          node.spotLight.intensity = 0;
+          node.lampMesh.visible = false;
+          node.lampLensMesh.visible = false;
+          node.beamMesh.visible = false;
+          node.beamMat.opacity = 0;
+          node.lampLensMat.opacity = 0;
+          node.floorPoolMesh.visible = false;
+          node.floorPoolMesh.material.opacity = 0;
+          node.shadowMesh.visible = false;
+          node.shadowMesh.material.opacity = 0;
+        });
+      } else {
+        pedestalsGroup.visible = true;
+        galleryFloor.visible = true;
+        galleryFloor.material.opacity = s4 * 0.98;
+
+        stageRigBar.visible = true;
+        galaxyField.visible = true;
+        galaxyField.material.opacity = s4 * 0.85;
+        galaxyField.rotation.y = elapsedTime * 0.006;
+        galaxyField.rotation.x = Math.sin(elapsedTime * 0.05) * 0.004;
+
+        pedestalNodes.forEach((node, idx) => {
+          // Contracted origin: clustered near center & sunken below floor
+          const ox = node.spreadPos.x * 0.16;
+          const oy = -2.35;
+          const oz = node.spreadPos.z * 0.16;
+
+          const tx = node.spreadPos.x;
+          const ty = node.spreadPos.y;
+          const tz = node.spreadPos.z;
+
+          const cx = THREE.MathUtils.lerp(ox, tx, s4);
+          let cy = THREE.MathUtils.lerp(oy, ty, s4);
+          const cz = THREE.MathUtils.lerp(oz, tz, s4);
+
+          // Gentle breathing float when deployed
+          if (s4 > 0.85) {
+            cy += Math.sin(elapsedTime * 1.5 + idx * 1.1) * 0.006;
+          }
+
+          node.group.position.set(cx, cy, cz);
+          node.group.scale.setScalar(s4);
+          node.group.rotation.y = node.rotY * s4;
+
+          // Dynamically aim the spotlight target right at the certificate frame
+          node.spotTarget.position.set(cx, cy + node.plinthHeight + 0.22, cz);
+          node.spotTarget.updateMatrixWorld();
+
+          // Spotlight & Ceiling Lamp Fixtures (aimed directly at this pedestal)
+          node.spotLight.intensity = s4 * 5.2;
+          node.lampMesh.visible = true;
+          node.lampLensMesh.visible = true;
+          node.lampLensMat.opacity = s4 * 0.98;
+
+          // Volumetric downlight cone beam
+          node.beamMesh.visible = true;
+          node.beamMat.opacity = s4 * 0.32;
+
+          // Theatrical floor spotlight puddle & plinth contact shadow
+          node.floorPoolMesh.visible = true;
+          node.floorPoolMesh.position.set(cx, -1.248, cz);
+          node.floorPoolMesh.material.opacity = s4 * 0.70;
+
+          node.shadowMesh.visible = true;
+          node.shadowMesh.position.set(cx, -1.245, cz);
+          node.shadowMesh.rotation.z = -node.rotY * s4;
+          node.shadowMesh.material.opacity = s4 * 0.88;
+        });
+      }
+
       // Find bounding keyframes
       let k1 = keyframes[0];
       let k2 = keyframes[keyframes.length - 1];
@@ -225,7 +994,6 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       }
 
       const segmentT = (p - k1.progress) / (k2.progress - k1.progress || 1);
-      // Smooth cubic ease in out
       const smoothT = segmentT < 0.5 
         ? 2 * segmentT * segmentT 
         : 1 - Math.pow(-2 * segmentT + 2, 2) / 2;
@@ -234,7 +1002,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       const targetLook = new THREE.Vector3().lerpVectors(k1.camTarget, k2.camTarget, smoothT);
       const targetModelRotY = THREE.MathUtils.lerp(k1.modelRotY, k2.modelRotY, smoothT);
 
-      // Dynamic Interleaved Framing: Model glides left & right and zooms in & out across scenes
+      // Dynamic Interleaved Framing
       const targetSideOffset = THREE.MathUtils.lerp(k1.sideOffset, k2.sideOffset, smoothT);
       const isWideScreen = window.innerWidth >= 1024;
       const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
@@ -243,7 +1011,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       targetCamPos.x += targetSideOffset * responsiveScale;
       targetLook.x += targetSideOffset * responsiveScale;
 
-      // Add mouse parallax
+      // Mouse parallax
       const mx = mousePosRef.current.x * 0.15;
       const my = mousePosRef.current.y * 0.1;
       targetCamPos.x += mx;
@@ -261,7 +1029,21 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
       // Dynamic light color lerp
       const targetLightIntensity = THREE.MathUtils.lerp(k1.lightIntensity, k2.lightIntensity, smoothT);
-      keyLight.intensity = targetLightIntensity;
+
+      // Dynamic theater spotlight & ambient lerp for Scene 4
+      const targetSpotIntensity = THREE.MathUtils.lerp(k1.spotIntensity, k2.spotIntensity, smoothT);
+      spotLight.intensity = targetSpotIntensity;
+      backRimLight.intensity = targetSpotIntensity * 0.35;
+
+      // Dynamic theater background color lerp
+      const targetBg = new THREE.Color().lerpColors(k1.bgColor, k2.bgColor, smoothT);
+      scene.background.copy(targetBg);
+      if (scene.fog) scene.fog.color.copy(targetBg);
+
+      // Ambient compensation in dark theater: drop ambient to near-zero in Scene 4 for stark theatrical spotlight contrast
+      hemiLight.intensity = THREE.MathUtils.lerp(1.4, 0.05, s4);
+      fillLight.intensity = THREE.MathUtils.lerp(1.1, 0.03, s4);
+      keyLight.intensity = THREE.MathUtils.lerp(targetLightIntensity, 0.02, s4);
 
       renderer.render(scene, camera);
     };
@@ -283,6 +1065,11 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       isDisposed = true;
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('pointermove', handlePointerMove);
+      if (renderer?.domElement) {
+        renderer.domElement.removeEventListener('click', handleClick);
+      }
+      document.body.style.cursor = 'default';
       if (renderer) {
         renderer.dispose();
         if (renderer.domElement && renderer.domElement.parentNode) {
@@ -298,7 +1085,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
   return (
     <div 
       ref={mountRef} 
-      className="fixed inset-0 w-full h-full pointer-events-none z-0 bg-[#f8f7f4]"
+      className="fixed inset-0 w-full h-full z-0 bg-[#f8f7f4]"
     >
       {webGlError && (
         <div className="absolute inset-0 bg-radial from-[#ffffff] via-[#f4f2eb] to-[#e8e4dc] opacity-90" />
