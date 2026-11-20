@@ -79,6 +79,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const [inspectedProject, setInspectedProject] = useState(null);
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(0); // 0..3
   const [techCategoryFilter, setTechCategoryFilter] = useState('all'); // 'all', 'backend', 'frontend', 'tools'
+  const [selectedProjIndex, setSelectedProjIndex] = useState(0); // 0..4 (Active Cinema Spotlight)
   const [projectFilter, setProjectFilter] = useState('all');
   const [projectPage, setProjectPage] = useState(0);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
@@ -739,13 +740,13 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
 
       {/* =========================================================================
           SCENE 03: SYSTEM VAULT (PROJECTS)
-          Layout: Model glides to RIGHT (ZOOMED OUT), UI on the LEFT (Interleaved!)
+          Layout: Interactive Cinema Stage Showcase on the LEFT, 3D Model on the RIGHT
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center px-6 sm:px-10 lg:px-16 xl:px-20 pt-16 sm:pt-20 pb-6 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-16 sm:pt-20 pb-6 transition-opacity duration-300"
         style={{ opacity: s3.opacity, pointerEvents: s3.pointerEvents }}
       >
-        <div className="w-full max-w-lg lg:max-w-[34rem] xl:max-w-[36rem] flex flex-col items-start text-left">
+        <div className="w-full max-w-lg lg:max-w-[34rem] xl:max-w-[37rem] flex flex-col items-start text-left">
           
           {/* Artistic Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-1.5">
@@ -772,126 +773,208 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </span>
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#66625d] font-sans mb-2">
-            Click any project card to inspect screenshots, system architecture, and live links:
-          </p>
-
-          {/* Project Category & Pagination Controls */}
-          <div className="w-full flex items-center justify-between gap-2 mb-2.5">
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-              {filterCategories.map((cat) => (
+          {/* Interactive Project Switcher Ribbon (5 Flagship Systems) */}
+          <div className="w-full flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 mb-2.5">
+            {githubProjects.map((p, idx) => {
+              const isActive = selectedProjIndex === idx;
+              return (
                 <button
-                  key={cat.id}
-                  onClick={() => {
-                    setProjectFilter(cat.id);
-                    setProjectPage(0);
-                  }}
-                  className={`px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-bold tracking-wider transition-all cursor-pointer ${
-                    projectFilter === cat.id
-                      ? 'bg-[#111113] text-white shadow-sm'
-                      : 'bg-black/5 hover:bg-black/10 text-[#666]'
+                  key={p.id}
+                  onClick={() => setSelectedProjIndex(idx)}
+                  className={`group/tab relative px-3 py-1.5 rounded-xl text-[10px] sm:text-[11px] font-mono font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
+                    isActive
+                      ? 'bg-[#111113] text-white shadow-md scale-[1.02]'
+                      : 'bg-white/80 hover:bg-white text-[#555] hover:text-black border border-black/[0.08]'
                   }`}
                 >
-                  {cat.label}
+                  <span className={isActive ? 'text-[#dfc58d]' : 'text-[#8c7355]'}>
+                    0{idx + 1}
+                  </span>
+                  <span>{p.title.split('—')[0].trim()}</span>
+                  {p.liveDemo && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  )}
                 </button>
-              ))}
-            </div>
-
-            {totalPages > 1 && (
-              <div className="flex items-center gap-1 shrink-0">
-                <button
-                  onClick={() => setProjectPage((prev) => Math.max(0, prev - 1))}
-                  disabled={projectPage === 0}
-                  className="p-1 rounded-lg bg-black/5 hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                  title="Previous page"
-                >
-                  <ChevronLeft className="w-3 h-3 text-[#111113]" />
-                </button>
-                <span className="text-[9px] font-mono font-bold text-[#8c7355] px-1">
-                  {projectPage + 1}/{totalPages}
-                </span>
-                <button
-                  onClick={() => setProjectPage((prev) => Math.min(totalPages - 1, prev + 1))}
-                  disabled={projectPage === totalPages - 1}
-                  className="p-1 rounded-lg bg-black/5 hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-                  title="Next page"
-                >
-                  <ChevronRight className="w-3 h-3 text-[#111113]" />
-                </button>
-              </div>
-            )}
+              );
+            })}
           </div>
 
-          {/* Project 2x2 Grid on Left Side with Dedicated Demo Image Frame */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-            {currentProjects.map((proj, idx) => {
-              const displayIndex = projectPage * PAGE_SIZE + idx + 1;
-              return (
-                <div 
-                  key={proj.id}
-                  onClick={() => handleOpenProject(proj)}
-                  className="w-full rounded-2xl bg-white/95 border border-black/[0.08] hover:border-[#bfa074] p-2.5 sm:p-3 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_8px_25px_rgba(0,0,0,0.06)] cursor-pointer flex flex-col justify-between hover:scale-[1.01]"
-                >
-                  <div>
-                    {/* Dedicated Project Demo Image Preview Area */}
-                    <div className="relative aspect-[16/8] max-h-24 sm:max-h-26 w-full rounded-xl overflow-hidden mb-1.5 border border-black/[0.08] bg-neutral-100 group">
-                      {proj.image ? (
-                        <img 
-                          src={proj.image} 
-                          alt={proj.title} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-[#888] p-2 text-center">
-                          <ImageIcon className="w-5 h-5 mb-0.5 text-[#bfa074]" />
-                          <span className="text-[9px] font-mono font-bold tracking-wider">DEMO PREVIEW</span>
-                        </div>
-                      )}
-                      
-                      {proj.liveDemo && (
-                        <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[8px] font-mono font-bold shadow-sm">
-                          {proj.id === 5 ? 'SHAREPOINT' : 'LIVE'}
-                        </span>
-                      )}
-                    </div>
+          {/* Hero Cinema Stage Card (Active Project Spotlight) */}
+          {(() => {
+            const activeProj = githubProjects[selectedProjIndex] || githubProjects[0];
+            return (
+              <div 
+                onClick={() => handleOpenProject(activeProj)}
+                className="w-full rounded-2xl bg-white/95 border border-black/[0.1] hover:border-[#bfa074] p-3 sm:p-3.5 transition-all duration-300 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.06)] group cursor-pointer flex flex-col hover:shadow-[0_16px_45px_rgba(0,0,0,0.1)]"
+              >
+                {/* Large Widescreen Preview Screen */}
+                <div className="relative aspect-[16/8.8] max-h-48 sm:max-h-56 w-full rounded-xl overflow-hidden mb-2.5 border border-black/[0.08] bg-[#14151a] group">
+                  <img 
+                    src={activeProj.image} 
+                    alt={activeProj.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    loading="lazy"
+                  />
 
-                    <span className="text-[9px] font-mono text-[#8c7355] font-semibold block mb-0.5">
-                      0{displayIndex} // {proj.category.split('·')[0].trim()}
+                  {/* Top Floating Badges */}
+                  <div className="absolute top-2 left-2 flex items-center gap-1.5">
+                    <span className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-white text-[9px] font-mono font-bold tracking-wider border border-white/10">
+                      0{selectedProjIndex + 1} // {activeProj.category.split('·')[0].trim()}
                     </span>
-
-                    <h3 className="text-xs sm:text-sm font-bold text-[#111113] group-hover:text-[#8c7355] transition-colors line-clamp-1 mb-0.5">
-                      {proj.title.split('—')[0].trim()}
-                    </h3>
-
-                    <p className="text-[10px] sm:text-[11px] text-[#555] font-sans line-clamp-1 leading-snug mb-1">
-                      {proj.tagline || proj.description}
-                    </p>
-
-                    {proj.accessNote && (
-                      <div className="mb-1 flex items-center gap-1 text-[8.5px] font-mono text-amber-800 bg-amber-50 border border-amber-200/80 px-1.5 py-0.5 rounded">
-                        <span>⚠️ Institutional Link (May Expire)</span>
-                      </div>
+                    {activeProj.liveDemo && (
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[8.5px] font-mono font-bold flex items-center gap-1 shadow-md">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                        {activeProj.id === 5 ? 'SHAREPOINT' : 'LIVE DEMO'}
+                      </span>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between pt-1.5 border-t border-black/[0.05]">
-                    <span className="text-[9px] font-mono text-[#888] line-clamp-1 max-w-[120px]">
-                      {proj.tech[0]} • {proj.tech[1]}
-                    </span>
-
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleOpenProject(proj);
-                      }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#1a1a1a] hover:bg-black text-white font-mono font-bold text-[9px] transition-all shadow-sm cursor-pointer hover:scale-105 shrink-0"
-                    >
-                      <Eye className="w-2.5 h-2.5 text-[#d8c8a8]" />
-                      <span>Details ➔</span>
-                    </button>
+                  {/* Hover Prompt Badge */}
+                  <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-2.5 py-1 rounded-full bg-black/85 backdrop-blur-md text-[#dfc58d] text-[9.5px] font-mono font-bold border border-[#dfc58d]/30 shadow-lg flex items-center gap-1.5">
+                    <Eye className="w-3 h-3" />
+                    <span>Click to inspect details & gallery</span>
                   </div>
                 </div>
+
+                {/* Info & Typography Area */}
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-[9.5px] font-mono text-[#8c7355] font-semibold uppercase tracking-wider line-clamp-1">
+                      {activeProj.category}
+                    </span>
+                    <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-md bg-black/5 text-[#555] border border-black/[0.06] shrink-0">
+                      {activeProj.statusBadge}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm sm:text-base font-black text-[#111113] group-hover:text-[#8c7355] transition-colors line-clamp-1 mb-1 font-sans">
+                    {activeProj.title}
+                  </h3>
+
+                  <p className="text-[11px] sm:text-xs text-[#555] font-sans leading-relaxed line-clamp-2 mb-2">
+                    {activeProj.tagline || activeProj.description}
+                  </p>
+
+                  {/* Tech stack chips */}
+                  <div className="flex flex-wrap items-center gap-1 mb-2.5">
+                    {activeProj.tech.slice(0, 5).map((t, tIdx) => (
+                      <span 
+                        key={tIdx} 
+                        className="px-2 py-0.5 rounded-md bg-black/[0.04] text-[9.5px] font-mono text-[#333] border border-black/[0.04]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                    {activeProj.tech.length > 5 && (
+                      <span className="text-[9.5px] font-mono text-[#8c7355] font-bold px-1">
+                        +{activeProj.tech.length - 5}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action Bar */}
+                  <div className="flex items-center justify-between pt-2 border-t border-black/[0.06]">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenProject(activeProj);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#111113] hover:bg-black text-white font-mono font-bold text-[10px] sm:text-[11px] transition-all shadow-md hover:scale-105 cursor-pointer"
+                      >
+                        <Eye className="w-3 h-3 text-[#dfc58d]" />
+                        <span>Inspect System ➔</span>
+                      </button>
+
+                      {activeProj.liveDemo && (
+                        <a
+                          href={activeProj.liveDemo}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/5 hover:bg-black/10 text-[#111113] font-mono font-bold text-[10px] sm:text-[11px] transition-all border border-black/[0.08]"
+                        >
+                          <ExternalLink className="w-3 h-3 text-[#8c7355]" />
+                          <span className="hidden sm:inline">
+                            {activeProj.id === 5 ? 'SharePoint' : 'Live Demo'}
+                          </span>
+                        </a>
+                      )}
+
+                      {activeProj.githubUrl && (
+                        <a
+                          href={activeProj.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/5 hover:bg-black/10 text-[#444] font-mono font-bold text-[10px] sm:text-[11px] transition-all border border-black/[0.08]"
+                        >
+                          <Code2 className="w-3 h-3" />
+                          <span className="hidden sm:inline">GitHub</span>
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Prev / Next Slider Controls */}
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProjIndex((prev) => (prev > 0 ? prev - 1 : githubProjects.length - 1));
+                        }}
+                        className="p-1.5 rounded-lg bg-black/5 hover:bg-black/10 transition-all cursor-pointer"
+                        title="Previous project"
+                      >
+                        <ChevronLeft className="w-3 h-3 text-[#111113]" />
+                      </button>
+                      <span className="text-[10px] font-mono font-bold text-[#8c7355] px-1">
+                        {selectedProjIndex + 1} / {githubProjects.length}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProjIndex((prev) => (prev < githubProjects.length - 1 ? prev + 1 : 0));
+                        }}
+                        className="p-1.5 rounded-lg bg-black/5 hover:bg-black/10 transition-all cursor-pointer"
+                        title="Next project"
+                      >
+                        <ChevronRight className="w-3 h-3 text-[#111113]" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Interactive Filmstrip Peek Bar (All 5 projects immediately selectable) */}
+          <div className="w-full flex items-center gap-1.5 mt-2 pt-1.5 border-t border-black/[0.06] overflow-x-auto no-scrollbar">
+            {githubProjects.map((p, idx) => {
+              const isActive = selectedProjIndex === idx;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setSelectedProjIndex(idx)}
+                  className={`group/thumb flex items-center gap-2 p-1 pr-2.5 rounded-xl border transition-all cursor-pointer shrink-0 ${
+                    isActive
+                      ? 'bg-[#111113] text-white border-[#111113] shadow-md scale-[1.02]'
+                      : 'bg-white/70 hover:bg-white text-[#555] hover:text-black border-black/[0.08]'
+                  }`}
+                >
+                  <div className="w-8 h-5 rounded-md overflow-hidden bg-black/10 shrink-0">
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <span className={`text-[8px] font-mono leading-none ${
+                      isActive ? 'text-[#dfc58d]' : 'text-[#8c7355]'
+                    }`}>
+                      0{idx + 1}
+                    </span>
+                    <span className="text-[9.5px] font-sans font-bold leading-tight truncate max-w-[72px]">
+                      {p.title.split('—')[0].trim()}
+                    </span>
+                  </div>
+                </button>
               );
             })}
           </div>
