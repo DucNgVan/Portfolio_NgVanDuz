@@ -1032,7 +1032,6 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
       // Dynamic theater spotlight & ambient lerp for Scene 4
       const targetSpotIntensity = THREE.MathUtils.lerp(k1.spotIntensity, k2.spotIntensity, smoothT);
-      spotLight.intensity = targetSpotIntensity;
       backRimLight.intensity = targetSpotIntensity * 0.35;
 
       // Dynamic theater background color lerp
