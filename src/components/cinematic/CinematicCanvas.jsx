@@ -6,7 +6,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 /**
  * Certificate definitions for 3D Museum Pedestals in Scene 4
  */
-export const cinematicCertificates = [
+const cinematicCertificates = [
   // LEFT SIDE (3 Pedestals): Academic Excellence & National Innovation
   // 1. Outer Left: Top 3 Outstanding Student (Greenwich Academic)
   {
@@ -410,127 +410,9 @@ function createMuseumStanchions(shadowTexture) {
 }
 
 /**
- * Creates ultra high-resolution canvas texture for the 3D wall-mounted "VERIFIED MILESTONES" lettering
- * Engineered with luminous, bright glowing letter outlines ("sáng viền chữ")
+ * Creates authentic museum feature exhibition wall behind pedestals
  */
-function createWallSignageTexture() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 2048;
-  canvas.height = 512;
-  const ctx = canvas.getContext('2d');
-
-  ctx.clearRect(0, 0, 2048, 512);
-
-  // 1. Top Eyebrow Emblem & Category (Bright glowing white-gold)
-  ctx.save();
-  ctx.shadowColor = 'rgba(255, 230, 160, 0.95)';
-  ctx.shadowBlur = 14;
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) {
-    ctx.letterSpacing = '8px';
-  }
-  ctx.fillText('✦   A C A D E M I C   &   L E A D E R S H I P   A R C H I V E   ✦', 1024, 75);
-  ctx.restore();
-
-  // 2. Main Lettering: VERIFIED MILESTONES with Radiant Illuminated Outlines (Sáng viền chữ)
-  ctx.save();
-  ctx.font = '900 96px "Plus Jakarta Sans", "Syne", sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) {
-    ctx.letterSpacing = '10px';
-  }
-
-  // --- PASS 1: Broad Radiant Gold Neon Halo behind the letter outlines ---
-  ctx.save();
-  ctx.shadowColor = '#ffd066';
-  ctx.shadowBlur = 32;
-  ctx.strokeStyle = '#ffe494';
-  ctx.lineWidth = 10;
-  ctx.strokeText('VERIFIED MILESTONES', 1024, 185);
-  ctx.restore();
-
-  // --- PASS 2: Vivid Gold Intermediate Glow ---
-  ctx.save();
-  ctx.shadowColor = '#ffea9f';
-  ctx.shadowBlur = 16;
-  ctx.strokeStyle = '#fff8e1';
-  ctx.lineWidth = 6;
-  ctx.strokeText('VERIFIED MILESTONES', 1024, 185);
-  ctx.restore();
-
-  // --- PASS 3: Razor-Sharp Pure White Specular Border (Viền chữ phát sáng siêu nét) ---
-  ctx.save();
-  ctx.shadowColor = '#ffffff';
-  ctx.shadowBlur = 8;
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 3.5;
-  ctx.strokeText('VERIFIED MILESTONES', 1024, 185);
-  ctx.restore();
-
-  // --- PASS 4: Luminous Metallic Gold & White Fill ---
-  ctx.save();
-  const goldGrad = ctx.createLinearGradient(0, 110, 0, 260);
-  goldGrad.addColorStop(0.0, '#ffffff');
-  goldGrad.addColorStop(0.20, '#fffbe6');
-  goldGrad.addColorStop(0.50, '#f7db99');
-  goldGrad.addColorStop(0.80, '#e8be61');
-  goldGrad.addColorStop(1.0, '#c79836');
-
-  ctx.fillStyle = goldGrad;
-  ctx.fillText('VERIFIED MILESTONES', 1024, 185);
-  ctx.restore();
-
-  ctx.restore();
-
-  // 3. Elegant Architectural Horizontal Rule with Diamond (Bright Glowing)
-  ctx.save();
-  ctx.shadowColor = 'rgba(255, 230, 150, 0.95)';
-  ctx.shadowBlur = 14;
-  ctx.strokeStyle = '#fff0c2';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(340, 265);
-  ctx.lineTo(1708, 265);
-  ctx.stroke();
-
-  // Center gold diamond
-  ctx.fillStyle = '#ffffff';
-  ctx.beginPath();
-  ctx.moveTo(1024, 253);
-  ctx.lineTo(1036, 265);
-  ctx.lineTo(1024, 277);
-  ctx.lineTo(1012, 265);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-
-  // 4. Subtitle / Curatorial Citation (Bright Glowing)
-  ctx.save();
-  ctx.shadowColor = 'rgba(255, 220, 140, 0.85)';
-  ctx.shadowBlur = 12;
-  ctx.fillStyle = '#fffaea';
-  ctx.font = 'bold 26px "JetBrains Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) {
-    ctx.letterSpacing = '6px';
-  }
-  ctx.fillText('HONORS, SCHOLARSHIPS & STUDENT LEADERSHIP • 2024 — 2026', 1024, 330);
-  ctx.restore();
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
-}
-
-/**
- * Creates authentic museum feature exhibition wall behind pedestals with mounted signage
- */
-function createMuseumExhibitionWall(signageTexture) {
+function createMuseumExhibitionWall() {
   const group = new THREE.Group();
 
   const wallMat = new THREE.MeshStandardMaterial({
@@ -547,15 +429,6 @@ function createMuseumExhibitionWall(signageTexture) {
     metalness: 0.65,
     transparent: true,
     opacity: 0.0,
-  });
-
-  // Self-luminous basic material: fog: false guarantees 100% full brightness unaffected by distance fog
-  const signageMat = new THREE.MeshBasicMaterial({
-    map: signageTexture,
-    transparent: true,
-    opacity: 0.0,
-    depthWrite: false,
-    fog: false, // Immune to stage fog dimming
   });
 
   const wallWidth = 11.8;
@@ -582,19 +455,10 @@ function createMuseumExhibitionWall(signageTexture) {
   crownMesh.position.set(0, 5.12, wallZ + 0.01);
   group.add(crownMesh);
 
-  // D. 3D Wall-Mounted Signage Plane (VERIFIED MILESTONES)
-  // Transparent quad with depthWrite: false - only the bright gold letters are visible directly on the wall
-  const signageGeo = new THREE.PlaneGeometry(5.6, 1.40);
-  const signageMesh = new THREE.Mesh(signageGeo, signageMat);
-  signageMesh.position.set(0, 0.62, wallZ + wallDepth / 2 + 0.008);
-  group.add(signageMesh);
-
   return {
     group,
     wallMat,
     trimMat,
-    inlayMat: trimMat,
-    signageMat,
   };
 }
 
@@ -1086,14 +950,10 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     museumStanchionsObj.group.visible = false;
     scene.add(museumStanchionsObj.group);
 
-    // 5.6 Authentic Museum Exhibition Feature Wall with Mounted Gold Lettering (VERIFIED MILESTONES)
-    const wallSignageTex = createWallSignageTexture();
-    const museumWallObj = createMuseumExhibitionWall(wallSignageTex);
+    // 5.6 Authentic Museum Exhibition Feature Wall behind pedestals
+    const museumWallObj = createMuseumExhibitionWall();
     museumWallObj.group.visible = false;
     scene.add(museumWallObj.group);
-
-    // Wall Wash Light disabled per user request: "bỏ ánh đèn chữ nhật đi làm sáng chữ lên thôi không cần hiệu ứng đèn"
-    const wallWashSpot = { intensity: 0 };
 
     // 6. Raycaster for Pedestal Hover & Click
     const raycaster = new THREE.Raycaster();
@@ -1261,9 +1121,6 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         museumWallObj.group.visible = false;
         museumWallObj.wallMat.opacity = 0;
         museumWallObj.trimMat.opacity = 0;
-        museumWallObj.inlayMat.opacity = 0;
-        museumWallObj.signageMat.opacity = 0;
-        wallWashSpot.intensity = 0;
         pedestalNodes.forEach((node) => {
           node.spotLight.intensity = 0;
           node.lampMesh.visible = false;
@@ -1287,14 +1144,11 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         galaxyField.rotation.y = elapsedTime * 0.006;
         galaxyField.rotation.x = Math.sin(elapsedTime * 0.05) * 0.004;
 
-        // Smooth elevation & fade animation for the museum feature wall & mounted letters
+        // Smooth elevation & fade animation for the museum feature wall
         museumWallObj.group.visible = true;
         museumWallObj.group.position.y = THREE.MathUtils.lerp(-1.60, 0.0, s4);
         museumWallObj.wallMat.opacity = s4 * 0.98;
         museumWallObj.trimMat.opacity = s4 * 0.98;
-        if (museumWallObj.inlayMat) museumWallObj.inlayMat.opacity = s4 * 0.98;
-        museumWallObj.signageMat.opacity = s4 * 0.98;
-        wallWashSpot.intensity = 0; // Disabled: letters are self-luminous gold with zero rectangular light
 
         // Smooth elevation & fade animation for museum VIP stanchions & velvet ropes
         museumStanchionsObj.group.visible = true;

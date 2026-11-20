@@ -981,15 +981,66 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       {/* =========================================================================
           SCENE 04: HALL OF HONORS (3D EXHIBITION GALLERY - SPOTLIGHT AMPHITHEATER)
           Layout: 
-          - Model in FOREGROUND CENTER, squarely admiring certificates
+          - Luminous, razor-sharp header matching all other scenes with glowing text borders
+          - Model in FOREGROUND CENTER admiring certificates
           - 6 Exhibition Pedestals in deep background crescent amphitheater
           - Overhead theatrical spotlights shining down over each plinth
           - 100% clean, unobstructed 3D view (direct click on 3D pedestals)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+        className="absolute inset-0 flex flex-col items-center justify-start pt-20 sm:pt-24 px-4 sm:px-8 pointer-events-none transition-opacity duration-300"
         style={{ opacity: s4.opacity }}
-      />
+      >
+        {/* Top Centered Header - Gloriously Illuminated with Specular Border & Neon Gold Glow */}
+        <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center select-none pointer-events-none animate-fadeIn">
+          
+          {/* Eyebrow Tag with Pulsing Gold Orb */}
+          <div className="flex items-center justify-center gap-2 mb-2 select-none">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#ffd066] shadow-[0_0_10px_#ffd066] animate-pulse" />
+            <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase text-[#f7db99] font-bold drop-shadow-[0_0_6px_rgba(255,208,102,0.5)]">
+              ACADEMIC &amp; LEADERSHIP ARCHIVE // 04
+            </span>
+          </div>
+
+          {/* Main Title: VERIFIED MILESTONES with Radiant White Specular Border & Gold Neon Glow */}
+          <h2 
+            style={{
+              ...largeTitleParallax,
+              textShadow: '0 0 16px rgba(255, 230, 160, 0.85), 0 0 35px rgba(255, 208, 102, 0.6), 0 0 60px rgba(216, 180, 90, 0.35)',
+            }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black font-sans uppercase tracking-[0.08em] leading-none mb-2.5 select-none cursor-default text-center"
+          >
+            <span 
+              className="bg-clip-text text-transparent bg-gradient-to-r from-[#ffffff] via-[#fff4d0] to-[#f0c766]"
+              style={{
+                WebkitTextStroke: '1.2px rgba(255, 255, 255, 0.95)',
+                filter: 'drop-shadow(0 2px 14px rgba(255, 230, 160, 0.6))',
+              }}
+            >
+              Verified Milestones
+            </span>
+          </h2>
+
+          {/* Elegant Architectural Gold Divider with Center Diamond Emblem */}
+          <div className="flex items-center justify-center gap-3 w-full max-w-md mx-auto mb-2 opacity-90 select-none">
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#ffd066]/80 to-[#ffd066]" />
+            <span className="text-[#ffe494] text-[11px] drop-shadow-[0_0_8px_#ffd066]">✦</span>
+            <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#ffd066]/80 to-[#ffd066]" />
+          </div>
+
+          {/* Subtitle / Curatorial Citation */}
+          <p className="text-[11px] sm:text-[12px] font-mono tracking-[0.16em] text-[#f7e6c4] uppercase text-center max-w-lg mx-auto drop-shadow-[0_0_10px_rgba(255,230,160,0.5)] mb-1.5 select-none">
+            Honors, Scholarships &amp; Student Leadership • 2024 — 2026
+          </p>
+
+          {/* Interactive Hint */}
+          <p className="text-[10px] sm:text-[11px] text-neutral-400/90 font-sans text-center flex items-center justify-center gap-1.5 select-none mt-0.5">
+            <span className="w-1 h-1 rounded-full bg-[#ffd066]/80" />
+            <span>Nhấp trực tiếp vào từng bệ bằng khen 3D để xem hồ sơ xác thực và chứng nhận chi tiết</span>
+          </p>
+
+        </div>
+      </section>
 
       {/* =========================================================================
           SCENE 05: FINAL TRANSMISSION (CONTACT & QUICK ADMIN DISPATCH)
