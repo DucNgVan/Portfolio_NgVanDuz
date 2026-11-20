@@ -251,13 +251,33 @@ export const AdminPortal = ({ onExit = () => {} }) => {
   const [newPassword, setNewPassword] = useState('');
   const [passwordStatus, setPasswordStatus] = useState(null);
 
+  // Cloud sync state
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [cloudStatus, setCloudStatus] = useState('connected');
+
   useEffect(() => {
     // Check existing session
     if (analyticsService.isAdminAuthenticated()) {
       setIsAuthenticated(true);
-      refreshDashboard();
     }
   }, []);
+
+  // Sync and Realtime subscription
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    refreshDashboard();
+
+    // Subscribe to multi-device real-time updates
+    const unsubscribe = analyticsService.subscribeToRealtime((type) => {
+      console.log('[Supabase Realtime] Event triggered:', type);
+      refreshDashboard();
+    });
+
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, [isAuthenticated]);
 
   // Lockout countdown timer
   useEffect(() => {
@@ -269,13 +289,44 @@ export const AdminPortal = ({ onExit = () => {} }) => {
     }
   }, [lockoutTime]);
 
-  const refreshDashboard = () => {
+  const refreshDashboard = async () => {
+    setIsSyncing(true);
+    // Instant local cache rendering
     setAnalyticsData(analyticsService.getAnalyticsData());
     setVisitors(analyticsService.getVisitors());
-    const msgs = analyticsService.getMessages();
-    setMessages(msgs);
-    if (msgs.length > 0 && !selectedMessage) {
-      setSelectedMessage(msgs[0]);
+    const localMsgs = analyticsService.getMessages();
+    setMessages(localMsgs);
+    if (localMsgs.length > 0 && !selectedMessage) {
+      setSelectedMessage(localMsgs[0]);
+    }
+
+    // Async cloud sync from Supabase PostgreSQL
+    try {
+      const [cloudVisitors, cloudMsgs, cloudAnalytics] = await Promise.all([
+        analyticsService.fetchVisitorsAsync(),
+        analyticsService.fetchMessagesAsync(),
+        analyticsService.fetchAnalyticsAsync()
+      ]);
+
+      if (cloudVisitors && cloudVisitors.length > 0) {
+        setVisitors(cloudVisitors);
+      }
+      if (cloudMsgs && cloudMsgs.length > 0) {
+        setMessages(cloudMsgs);
+        setSelectedMessage((prev) => {
+          if (!prev) return cloudMsgs[0];
+          return cloudMsgs.find((m) => m.id === prev.id) || cloudMsgs[0];
+        });
+      }
+      if (cloudAnalytics) {
+        setAnalyticsData(cloudAnalytics);
+      }
+      setCloudStatus('connected');
+    } catch (err) {
+      console.warn('Dashboard cloud sync notice:', err);
+      setCloudStatus('offline');
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -309,7 +360,10 @@ export const AdminPortal = ({ onExit = () => {} }) => {
 
   const handleMarkRead = (id) => {
     analyticsService.markMessageStatus(id, 'read');
-    refreshDashboard();
+    setMessages((prev) => prev.map((m) => m.id === id ? { ...m, status: 'read' } : m));
+    if (selectedMessage?.id === id) {
+      setSelectedMessage((prev) => prev ? { ...prev, status: 'read' } : null);
+    }
   };
 
   const handleDeleteMessage = (id) => {
@@ -322,8 +376,8 @@ export const AdminPortal = ({ onExit = () => {} }) => {
   };
 
   const handleDeleteVisitor = (id) => {
-    const updated = analyticsService.deleteVisitor(id);
-    setVisitors(updated);
+    analyticsService.deleteVisitor(id);
+    setVisitors((prev) => prev.filter((v) => v.id !== id));
   };
 
   const handleUpdatePassword = (e) => {
@@ -500,6 +554,10 @@ export const AdminPortal = ({ onExit = () => {} }) => {
               <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">
                 PROD ADMIN
               </span>
+              <span className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-[#38bdf8]/10 text-[#38bdf8] border border-[#38bdf8]/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                CLOUD REALTIME
+              </span>
             </div>
             <span className="text-[10px] font-mono text-[#888] hidden sm:block">
               Telemetry Analytics & Live Device Inspector Console
@@ -601,10 +659,12 @@ export const AdminPortal = ({ onExit = () => {} }) => {
 
           <button
             onClick={refreshDashboard}
-            title="Refresh Real-Time Data"
-            className="p-2 rounded-xl text-[#888] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+            disabled={isSyncing}
+            title={isSyncing ? "Syncing Cloud Data..." : "Refresh Real-Time Cloud Data"}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono text-[#888] hover:text-white hover:bg-white/5 transition-colors cursor-pointer border border-white/5"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin text-[#c5a880]' : ''}`} />
+            <span className="hidden sm:inline">{isSyncing ? 'Syncing...' : 'Sync Cloud'}</span>
           </button>
         </div>
 
