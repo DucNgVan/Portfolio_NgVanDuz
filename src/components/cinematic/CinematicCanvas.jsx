@@ -422,7 +422,7 @@ function createWallSignageTexture() {
 
   // 1. Top Eyebrow Emblem & Category
   ctx.save();
-  ctx.fillStyle = '#dfc58d';
+  ctx.fillStyle = '#ffe494';
   ctx.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -432,21 +432,21 @@ function createWallSignageTexture() {
   ctx.fillText('✦   A C A D E M I C   &   L E A D E R S H I P   A R C H I V E   ✦', 1024, 75);
   ctx.restore();
 
-  // 2. Main 3D Pin-Mounted Metallic Lettering: VERIFIED MILESTONES
+  // 2. Main 3D Pin-Mounted Metallic Lettering: VERIFIED MILESTONES (Luminous, bright gold)
   ctx.save();
-  // Deep cast shadow on the wall behind 3D metal letters
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
-  ctx.shadowBlur = 20;
-  ctx.shadowOffsetX = 4;
-  ctx.shadowOffsetY = 10;
+  // Soft glow drop shadow on the wall behind 3D metal letters
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+  ctx.shadowBlur = 16;
+  ctx.shadowOffsetX = 3;
+  ctx.shadowOffsetY = 6;
 
-  // Luminous metallic gold gradient
+  // Luminous bright metallic gold gradient (high-contrast, self-standing on dark wall)
   const goldGrad = ctx.createLinearGradient(0, 110, 0, 260);
   goldGrad.addColorStop(0.0, '#ffffff');
-  goldGrad.addColorStop(0.20, '#faecc5');
-  goldGrad.addColorStop(0.55, '#dfc58d');
-  goldGrad.addColorStop(0.85, '#bf9b53');
-  goldGrad.addColorStop(1.0, '#7d5e28');
+  goldGrad.addColorStop(0.20, '#fff5d6');
+  goldGrad.addColorStop(0.50, '#f2d08a');
+  goldGrad.addColorStop(0.80, '#dfba63');
+  goldGrad.addColorStop(1.0, '#b3832b');
 
   ctx.fillStyle = goldGrad;
   ctx.font = '900 94px "Plus Jakarta Sans", "Syne", sans-serif';
@@ -457,16 +457,16 @@ function createWallSignageTexture() {
   }
   ctx.fillText('VERIFIED MILESTONES', 1024, 185);
 
-  // Fine specular top edge highlight on the letters
+  // Fine crisp specular edge stroke for intense pop
   ctx.shadowColor = 'transparent';
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+  ctx.lineWidth = 2.5;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.92)';
   ctx.strokeText('VERIFIED MILESTONES', 1024, 185);
   ctx.restore();
 
   // 3. Elegant Architectural Horizontal Rule with Diamond
   ctx.save();
-  ctx.strokeStyle = 'rgba(223, 197, 141, 0.65)';
+  ctx.strokeStyle = 'rgba(242, 208, 138, 0.85)';
   ctx.lineWidth = 2.5;
   ctx.beginPath();
   ctx.moveTo(340, 265);
@@ -474,7 +474,7 @@ function createWallSignageTexture() {
   ctx.stroke();
 
   // Center gold diamond
-  ctx.fillStyle = '#faecc5';
+  ctx.fillStyle = '#fff4cc';
   ctx.beginPath();
   ctx.moveTo(1024, 255);
   ctx.lineTo(1034, 265);
@@ -486,7 +486,7 @@ function createWallSignageTexture() {
 
   // 4. Subtitle / Curatorial Citation
   ctx.save();
-  ctx.fillStyle = '#dfc58d';
+  ctx.fillStyle = '#f5dfa8';
   ctx.font = 'bold 26px "JetBrains Mono", monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -508,9 +508,9 @@ function createMuseumExhibitionWall(signageTexture) {
   const group = new THREE.Group();
 
   const wallMat = new THREE.MeshStandardMaterial({
-    color: 0x121319, // Deep exhibition matte charcoal basalt
-    roughness: 0.90,
-    metalness: 0.05,
+    color: 0x0a0b10, // Pure deep exhibition matte charcoal basalt
+    roughness: 0.95,
+    metalness: 0.02,
     transparent: true,
     opacity: 0.0,
   });
@@ -523,22 +523,12 @@ function createMuseumExhibitionWall(signageTexture) {
     opacity: 0.0,
   });
 
-  const inlayMat = new THREE.MeshStandardMaterial({
-    color: 0x3d3525, // Vertical architectural reveals
-    roughness: 0.60,
-    metalness: 0.40,
-    transparent: true,
-    opacity: 0.0,
-  });
-
-  const signageMat = new THREE.MeshStandardMaterial({
+  // Self-luminous basic material: NO lighting calculation, NO rectangular specular quad or emissive box
+  const signageMat = new THREE.MeshBasicMaterial({
     map: signageTexture,
-    roughness: 0.25,
-    metalness: 0.60,
-    emissive: 0x3a2e18, // Warm metallic gold luminescence
-    emissiveIntensity: 0.55,
     transparent: true,
     opacity: 0.0,
+    depthWrite: false,
   });
 
   const wallWidth = 11.8;
@@ -565,16 +555,8 @@ function createMuseumExhibitionWall(signageTexture) {
   crownMesh.position.set(0, 5.12, wallZ + 0.01);
   group.add(crownMesh);
 
-  // D. Vertical Architectural Reveal Seams (subdividing into bays)
-  [-3.8, 3.8].forEach((rx) => {
-    const revealGeo = new THREE.BoxGeometry(0.018, wallHeight, wallDepth + 0.01);
-    const revealMesh = new THREE.Mesh(revealGeo, inlayMat);
-    revealMesh.position.set(rx, wallY, wallZ + 0.005);
-    group.add(revealMesh);
-  });
-
-  // E. 3D Wall-Mounted Signage Plane (VERIFIED MILESTONES)
-  // Mounted directly onto the front face of the wall in perfect camera sightline (well below top navbar)
+  // D. 3D Wall-Mounted Signage Plane (VERIFIED MILESTONES)
+  // Transparent quad with depthWrite: false - only the bright gold letters are visible directly on the wall
   const signageGeo = new THREE.PlaneGeometry(5.6, 1.40);
   const signageMesh = new THREE.Mesh(signageGeo, signageMat);
   signageMesh.position.set(0, 0.62, wallZ + wallDepth / 2 + 0.008);
@@ -584,7 +566,7 @@ function createMuseumExhibitionWall(signageTexture) {
     group,
     wallMat,
     trimMat,
-    inlayMat,
+    inlayMat: trimMat,
     signageMat,
   };
 }
@@ -647,8 +629,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       camTarget: new THREE.Vector3(0.0, -0.15, -0.40),
       sideOffset: 0.0,
       modelRotY: -2.356, // Model quay mặt vào sân khấu chiêm ngưỡng các bằng khen (smooth lerp từ -0.92)
-      lightIntensity: 0.05, // Dramatic stage contrast (ambient light drops)
-      spotIntensity: 5.5, // Theatrical overhead spotlights (matching h1(18).jpg)
+      lightIntensity: 0.70, // Elevated stage light so pedestals and frames are clearly visible & sculpted
+      spotIntensity: 6.5,
       bgColor: new THREE.Color(0x020204), // Pure stage black / dark galaxy background
     },
     {
@@ -730,7 +712,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     rigGeo.rotateZ(Math.PI / 2);
     const rigMat = new THREE.MeshStandardMaterial({ color: 0x14151b, metalness: 0.85, roughness: 0.35 });
     const stageRigBar = new THREE.Mesh(rigGeo, rigMat);
-    stageRigBar.position.set(0.0, 4.88, -1.55);
+    stageRigBar.position.set(0.0, 3.40, 2.50);
     stageRigBar.visible = false;
     scene.add(stageRigBar);
 
@@ -835,12 +817,12 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       const pedestal = new THREE.Group();
       pedestal.userData = { certData: cert };
 
-      // A. Plinth Column (Refined Matte Charcoal Basalt)
+      // A. Plinth Column (Refined Museum Basalt - Brightened with soft satin sheen)
       const plinthGeo = new THREE.BoxGeometry(pw, ph, pd);
       const plinthMat = new THREE.MeshStandardMaterial({
-        color: 0x181922,
-        roughness: 0.88, // Velvet matte, zero plastic glare
-        metalness: 0.08,
+        color: 0x2a2c3a, // Lightened museum charcoal slate (was 0x181922)
+        roughness: 0.65, // Velvet satin finish catching the forward spotlight
+        metalness: 0.16,
       });
       const plinthMesh = new THREE.Mesh(plinthGeo, plinthMat);
       plinthMesh.position.y = ph / 2;
@@ -848,12 +830,12 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       pedestal.add(plinthMesh);
       clickableMeshes.push(plinthMesh);
 
-      // B. Base Dark Trim
+      // B. Base Dark Trim (Sculpted transition)
       const baseGeo = new THREE.BoxGeometry(pw + 0.04, 0.03, pd + 0.04);
       const baseMat = new THREE.MeshStandardMaterial({
-        color: 0x0f1016,
-        roughness: 0.9,
-        metalness: 0.1,
+        color: 0x20222f,
+        roughness: 0.70,
+        metalness: 0.20,
       });
       const baseMesh = new THREE.Mesh(baseGeo, baseMat);
       baseMesh.position.y = 0.015;
@@ -861,12 +843,12 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       pedestal.add(baseMesh);
       clickableMeshes.push(baseMesh);
 
-      // C. Top Brushed Brass Collar
+      // C. Top Brushed Brass Collar (Bright, luminous gold trim)
       const topRimGeo = new THREE.BoxGeometry(pw + 0.02, 0.02, pd + 0.02);
       const topRimMat = new THREE.MeshStandardMaterial({
-        color: 0xc8b07a,
-        roughness: 0.45,
-        metalness: 0.65,
+        color: 0xdfc58d,
+        roughness: 0.35,
+        metalness: 0.75,
       });
       const topRimMesh = new THREE.Mesh(topRimGeo, topRimMat);
       topRimMesh.position.y = ph + 0.01;
@@ -879,8 +861,10 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       const plaqueGeo = new THREE.PlaneGeometry(0.30, 0.078);
       const plaqueMat = new THREE.MeshStandardMaterial({
         map: plaqueTex,
-        roughness: 0.45,
-        metalness: 0.5,
+        roughness: 0.35,
+        metalness: 0.60,
+        emissive: 0x241d10,
+        emissiveIntensity: 0.22,
       });
       const plaqueMesh = new THREE.Mesh(plaqueGeo, plaqueMat);
       plaqueMesh.position.set(0, ph * 0.52, pd / 2 + 0.003);
@@ -888,7 +872,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       pedestal.add(plaqueMesh);
       clickableMeshes.push(plaqueMesh);
 
-      // E. Framed Certificate on Top (Satin Antique Gold, Archival Matte Paper)
+      // E. Framed Certificate on Top (Bright Satin Antique Gold, Archival Matte Paper)
       const frameGroup = new THREE.Group();
       frameGroup.position.set(0, ph + 0.02, 0);
       frameGroup.rotation.x = -0.22; // Gentle tilt facing viewer and model
@@ -898,12 +882,12 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       const fh = 0.48;
       const fdepth = 0.024;
 
-      // Outer Beveled Frame (Satin Dark Antique Gold, matte, no specular glare)
+      // Outer Beveled Frame (Bright Satin Antique Gold)
       const outerFrameGeo = new THREE.BoxGeometry(fw, fh, fdepth);
       const outerFrameMat = new THREE.MeshStandardMaterial({
-        color: 0x5a4d33,
-        roughness: 0.75,
-        metalness: 0.35,
+        color: 0xd4b878, // Luminous satin gold frame (was 0x5a4d33)
+        roughness: 0.42,
+        metalness: 0.65,
       });
       const outerFrame = new THREE.Mesh(outerFrameGeo, outerFrameMat);
       outerFrame.position.y = fh / 2;
@@ -911,7 +895,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       frameGroup.add(outerFrame);
       clickableMeshes.push(outerFrame);
 
-      // Inner Matting Board (Dark museum matting board, maximizes contrast and eliminates white glare)
+      // Inner Matting Board (Dark museum matting board, maximizes contrast)
       const matGeo = new THREE.PlaneGeometry(fw - 0.08, fh - 0.08);
       const matMat = new THREE.MeshStandardMaterial({
         color: 0x08090f,
@@ -923,12 +907,14 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       frameGroup.add(matMesh);
       clickableMeshes.push(matMesh);
 
-      // Certificate Artwork Plane (Archival matte paper, zero glare)
+      // Certificate Artwork Plane (Archival matte paper with gentle warm self-luminance for clear legibility)
       const certPlaneGeo = new THREE.PlaneGeometry(fw - 0.14, fh - 0.14);
       const certMat = new THREE.MeshStandardMaterial({
-        color: 0xf5f3ed,
-        roughness: 0.98,
+        color: 0xffffff,
+        roughness: 0.40,
         metalness: 0.0,
+        emissive: 0x242018,
+        emissiveIntensity: 0.28,
       });
 
       const texUrl = `${baseUrl}${cert.image.replace(/^\//, '')}`;
@@ -963,22 +949,21 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       pedestal.add(frameGroup);
       pedestalsGroup.add(pedestal);
 
-      // F. Dedicated Overhead Stage Spotlight for this Pedestal (Matching h1(18).jpg)
-      // Dedicated spotlight target Object3D added directly to scene for precise tracking
+      // F. Theatrical Stage Spotlight Shining From BEHIND THE MODEL Forward
+      // Model sits in foreground at Z = 1.32; lamps are positioned behind the model at Z = 2.50, Y = 3.40
       const spotTarget = new THREE.Object3D();
       spotTarget.position.set(cert.spreadPos.x, cert.spreadPos.y + ph + 0.22, cert.spreadPos.z);
       scene.add(spotTarget);
 
-      // Exact ceiling lamp coordinates and mathematical aiming vector to pedestal floor pool
-      const lampPos = new THREE.Vector3(cert.spreadPos.x, 4.88, cert.spreadPos.z + 0.12);
-      const floorTarget = new THREE.Vector3(cert.spreadPos.x, -1.248, cert.spreadPos.z);
-      const beamVec = new THREE.Vector3().subVectors(floorTarget, lampPos);
+      // Lamp coordinates: elevated behind the model, angled forward and downward onto this pedestal
+      const lampPos = new THREE.Vector3(cert.spreadPos.x * 0.45, 3.40, 2.50);
+      const beamVec = new THREE.Vector3().subVectors(spotTarget.position, lampPos);
       const beamLength = beamVec.length();
       const beamDir = beamVec.clone().normalize();
       const beamQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), beamDir);
 
-      // Theatrical focused museum spotlight hitting directly and exclusively on this certificate and pedestal (no overlap with adjacent plinths)
-      const pedSpot = new THREE.SpotLight(0xfff5e0, 0.0, 9.5, Math.PI / 30, 0.30, 1.2);
+      // Theatrical focused museum spotlight shining from behind the model forward onto the front of this pedestal & certificate
+      const pedSpot = new THREE.SpotLight(0xfff6e5, 0.0, 14.0, Math.PI / 16, 0.35, 1.1);
       pedSpot.position.copy(lampPos);
       pedSpot.target = spotTarget;
       scene.add(pedSpot);
@@ -1002,8 +987,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       lampLensMesh.visible = false;
       scene.add(lampLensMesh);
 
-      // F.3 Volumetric Downlight Cone Beam (Crisp, isolated pencil column landing squarely on this plinth)
-      const pBeamGeo = new THREE.CylinderGeometry(0.06, 0.28, beamLength, 28, 1, true);
+      // F.3 Volumetric Downlight Cone Beam (Cinematic godray streaming from behind model onto the plinth)
+      const pBeamGeo = new THREE.CylinderGeometry(0.04, 0.32, beamLength, 28, 1, true);
       pBeamGeo.translate(0, -beamLength / 2, 0); // Origin at top fixture
       const pBeamMat = new THREE.MeshBasicMaterial({
         map: beamTexture,
@@ -1021,7 +1006,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       scene.add(pBeamMesh);
 
       // G. Luminous Floor Spotlight Puddle (Focused puddle directly under plinth footprint without overlapping neighbors)
-      const floorPoolGeo = new THREE.CircleGeometry(0.35, 32);
+      const floorPoolGeo = new THREE.CircleGeometry(0.38, 32);
       const floorPoolMat = new THREE.MeshBasicMaterial({
         map: floorSpotTexture,
         transparent: true,
@@ -1080,15 +1065,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     museumWallObj.group.visible = false;
     scene.add(museumWallObj.group);
 
-    // Dedicated Overhead Wall Wash Light highlighting the mounted letters (close to wall, no forward spill on pedestals)
-    const wallWashTarget = new THREE.Object3D();
-    wallWashTarget.position.set(0, 0.62, -2.85);
-    scene.add(wallWashTarget);
-
-    const wallWashSpot = new THREE.SpotLight(0xfff3db, 0.0, 10.0, Math.PI / 6.0, 0.50, 1.2);
-    wallWashSpot.position.set(0, 4.40, -2.45);
-    wallWashSpot.target = wallWashTarget;
-    scene.add(wallWashSpot);
+    // Wall Wash Light disabled per user request: "bỏ ánh đèn chữ nhật đi làm sáng chữ lên thôi không cần hiệu ứng đèn"
+    const wallWashSpot = { intensity: 0 };
 
     // 6. Raycaster for Pedestal Hover & Click
     const raycaster = new THREE.Raycaster();
@@ -1287,9 +1265,9 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         museumWallObj.group.position.y = THREE.MathUtils.lerp(-1.60, 0.0, s4);
         museumWallObj.wallMat.opacity = s4 * 0.98;
         museumWallObj.trimMat.opacity = s4 * 0.98;
-        museumWallObj.inlayMat.opacity = s4 * 0.98;
+        if (museumWallObj.inlayMat) museumWallObj.inlayMat.opacity = s4 * 0.98;
         museumWallObj.signageMat.opacity = s4 * 0.98;
-        wallWashSpot.intensity = s4 * 3.2; // Soft wall wash, leaves pedestals in sharp spotlight contrast
+        wallWashSpot.intensity = 0; // Disabled: letters are self-luminous gold with zero rectangular light
 
         // Smooth elevation & fade animation for museum VIP stanchions & velvet ropes
         museumStanchionsObj.group.visible = true;
@@ -1325,25 +1303,25 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
           node.spotTarget.position.set(cx, cy + node.plinthHeight + 0.22, cz);
           node.spotTarget.updateMatrixWorld();
 
-          // Focused SpotLight hitting directly and exclusively on this pedestal's certificate
-          node.spotLight.intensity = s4 * 6.2;
+          // Focused Forward SpotLight streaming from behind the model onto the front of the pedestal
+          node.spotLight.intensity = s4 * 9.2;
           node.lampMesh.visible = true;
           node.lampLensMesh.visible = true;
           node.lampLensMat.opacity = s4 * 0.98;
 
-          // Volumetric downlight cone beam (tight, surgical pencil column)
+          // Volumetric cone beam streaming forward over the model
           node.beamMesh.visible = true;
-          node.beamMat.opacity = s4 * 0.28;
+          node.beamMat.opacity = s4 * 0.20;
 
           // Theatrical floor spotlight puddle & plinth contact shadow
           node.floorPoolMesh.visible = true;
           node.floorPoolMesh.position.set(cx, -1.248, cz);
-          node.floorPoolMesh.material.opacity = s4 * 0.70;
+          node.floorPoolMesh.material.opacity = s4 * 0.55;
 
           node.shadowMesh.visible = true;
           node.shadowMesh.position.set(cx, -1.245, cz);
           node.shadowMesh.rotation.z = -node.rotY * s4;
-          node.shadowMesh.material.opacity = s4 * 0.88;
+          node.shadowMesh.material.opacity = s4 * 0.85;
         });
       }
 
@@ -1404,10 +1382,10 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       scene.background.copy(targetBg);
       if (scene.fog) scene.fog.color.copy(targetBg);
 
-      // Ambient compensation in dark theater: drop ambient to near-zero in Scene 4 for stark theatrical spotlight contrast
-      hemiLight.intensity = THREE.MathUtils.lerp(1.4, 0.05, s4);
-      fillLight.intensity = THREE.MathUtils.lerp(1.1, 0.03, s4);
-      keyLight.intensity = THREE.MathUtils.lerp(targetLightIntensity, 0.02, s4);
+      // Ambient compensation in theater: gentle fill so pedestals, frames & statues have sculpted 3D contrast
+      hemiLight.intensity = THREE.MathUtils.lerp(1.4, 0.38, s4);
+      fillLight.intensity = THREE.MathUtils.lerp(1.1, 0.32, s4);
+      keyLight.intensity = THREE.MathUtils.lerp(targetLightIntensity, 0.40, s4);
 
       renderer.render(scene, camera);
     };
