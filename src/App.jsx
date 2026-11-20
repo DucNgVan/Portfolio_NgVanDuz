@@ -7,14 +7,33 @@ import { Navbar } from '@/components/layout';
 // Modular UI components
 import { CustomCursor, Preloader, PrivacyConsentBanner } from '@/components/ui';
 
-// Cinematic Video 3D Mode
+// Desktop 3D Cinematic Portfolio (100% Untouched on PC)
 import { CinematicPortfolio } from '@/components/cinematic';
+
+// Mobile-First Bespoke Portfolio (Optimized for Phones & Tablets)
+import { MobilePortfolio } from '@/components/mobile';
 
 // Standalone Secured Admin & Analytics Portal
 import { AdminPortal } from '@/components/admin/AdminPortal';
 
 function App() {
   const [loading, setLoading] = useState(true);
+
+  // Responsive device check (< 768px -> Mobile Experience)
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Hidden admin route checking: #admin, /admin, or ?admin=true
   const checkIsAdmin = () => {
@@ -81,11 +100,15 @@ function App() {
       {/* 1. Preloader Screen */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {/* 2. Custom Interactive Follower Lens with Color Shift */}
-      <CustomCursor />
+      {/* 2. Custom Interactive Follower Lens (Desktop Only) */}
+      {!isMobile && <CustomCursor />}
 
-      {/* 3. Main Artistic 3D Experience */}
-      <CinematicPortfolio />
+      {/* 3. Adaptive Main Experience: Desktop 3D Cinematic vs Mobile-First */}
+      {isMobile ? (
+        <MobilePortfolio />
+      ) : (
+        <CinematicPortfolio />
+      )}
 
       {/* 4. Privacy & Consent Notice for Anonymous Telemetry */}
       <PrivacyConsentBanner />
