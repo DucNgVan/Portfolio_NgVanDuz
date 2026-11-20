@@ -4,6 +4,9 @@ import CinematicCanvas from './CinematicCanvas';
 import CinematicScenes from './CinematicScenes';
 import { analyticsService } from '@/services/analyticsService';
 
+// Milestone anchor checkpoints for the 5 scenes
+const SCENE_ANCHORS = [0.00, 0.30, 0.54, 0.76, 1.00];
+
 /**
  * CinematicPortfolio
  * Main orchestrator for the bright artistic 3D portfolio experience.
@@ -12,18 +15,142 @@ import { analyticsService } from '@/services/analyticsService';
  * - Interleaved luxury editorial layout
  * - Pure top Navbar with smooth chapter navigation
  * - Dynamic mouse typography tilt & interactive color-shifting lens cursor
+ * - Smart Section Snapping: Each scroll / long swipe transitions cleanly and locks
+ *   at the key milestone of the next scene without momentum overshooting!
  */
 export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const activeSceneRef = useRef(0);
 
-  // 0. Initialize anonymous session telemetry
+  // Snapping & Smooth Scroll State Refs
+  const isSnappingRef = useRef(false);
+  const animationFrameRef = useRef(null);
+  const scrollSettleTimeoutRef = useRef(null);
+  const wheelAccumulatorRef = useRef(0);
+  const wheelTimerRef = useRef(null);
+  const touchStartYRef = useRef(0);
+  const touchStartXRef = useRef(0);
+  const isTouchActiveRef = useRef(false);
+  const activeAnchorRef = useRef(0);
+
+  // 0. Disable browser native CSS smooth scroll on html to prevent RAF fighting
+  useEffect(() => {
+    const originalBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    return () => {
+      document.documentElement.style.scrollBehavior = originalBehavior;
+    };
+  }, []);
+
+  // 1. Initialize anonymous session telemetry
   useEffect(() => {
     analyticsService.trackVisit();
   }, []);
 
-  // 1. Scroll tracking & progress normalization (0.0 to 1.0)
+  // 2. Custom Silk-Smooth RAF Scroll with Cubic Ease-In-Out
+  const smoothScrollToY = useCallback((targetY, duration = 750) => {
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    if (Math.abs(distance) < 2) {
+      isSnappingRef.current = false;
+      return;
+    }
+
+    const startTime = performance.now();
+    isSnappingRef.current = true;
+
+    const easeInOutCubic = (t) => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+
+      window.scrollTo(0, startY + distance * eased);
+
+      if (progress < 1) {
+        animationFrameRef.current = requestAnimationFrame(step);
+      } else {
+        window.scrollTo(0, targetY);
+        animationFrameRef.current = null;
+        // Hold lock for a brief cooldown buffer to swallow trailing trackpad inertia
+        setTimeout(() => {
+          isSnappingRef.current = false;
+        }, 120);
+      }
+    };
+
+    animationFrameRef.current = requestAnimationFrame(step);
+  }, []);
+
+  // 3. Find next / previous anchor milestone
+  const getNextAnchor = useCallback((currentProgress, direction) => {
+    const EPSILON = 0.025;
+    if (direction > 0) {
+      // Forward / scroll down
+      for (let i = 0; i < SCENE_ANCHORS.length; i++) {
+        if (SCENE_ANCHORS[i] > currentProgress + EPSILON) {
+          return SCENE_ANCHORS[i];
+        }
+      }
+      return SCENE_ANCHORS[SCENE_ANCHORS.length - 1];
+    } else {
+      // Backward / scroll up
+      for (let i = SCENE_ANCHORS.length - 1; i >= 0; i--) {
+        if (SCENE_ANCHORS[i] < currentProgress - EPSILON) {
+          return SCENE_ANCHORS[i];
+        }
+      }
+      return SCENE_ANCHORS[0];
+    }
+  }, []);
+
+  // 4. Trigger jump to next or previous scene
+  const triggerSceneJump = useCallback((direction) => {
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalHeight <= 0) return;
+
+    const currentProgress = window.scrollY / totalHeight;
+    const targetAnchor = getNextAnchor(currentProgress, direction);
+    activeAnchorRef.current = targetAnchor;
+    const targetY = Math.round(targetAnchor * totalHeight);
+
+    if (Math.abs(targetY - window.scrollY) > 4) {
+      smoothScrollToY(targetY, 750);
+    }
+  }, [getNextAnchor, smoothScrollToY]);
+
+  // 5. Scroll tracking & progress normalization (0.0 to 1.0)
+  const snapToNearestAnchor = useCallback(() => {
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalHeight <= 0) return;
+    const currentProgress = window.scrollY / totalHeight;
+
+    let closestAnchor = SCENE_ANCHORS[0];
+    let minDiff = Infinity;
+    for (const anchor of SCENE_ANCHORS) {
+      const diff = Math.abs(currentProgress - anchor);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestAnchor = anchor;
+      }
+    }
+
+    // Only snap if not already at the anchor
+    if (minDiff > 0.015) {
+      activeAnchorRef.current = closestAnchor;
+      smoothScrollToY(Math.round(closestAnchor * totalHeight), 550);
+    }
+  }, [smoothScrollToY]);
+
   const handleScroll = useCallback(() => {
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     if (totalHeight <= 0) return;
@@ -42,15 +169,193 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
       activeSceneRef.current = sceneIndex;
       analyticsService.trackScene(sceneIndex);
     }
-  }, []);
+
+    // Idle Settle Snap: If user drags native scrollbar directly, gently snap after release
+    if (scrollSettleTimeoutRef.current) {
+      clearTimeout(scrollSettleTimeoutRef.current);
+    }
+    if (!isSnappingRef.current) {
+      scrollSettleTimeoutRef.current = setTimeout(() => {
+        if (!isSnappingRef.current && document.body.style.overflow !== 'hidden') {
+          snapToNearestAnchor();
+        }
+      }, 250);
+    }
+  }, [snapToNearestAnchor]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollSettleTimeoutRef.current) clearTimeout(scrollSettleTimeoutRef.current);
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    };
   }, [handleScroll]);
 
-  // 2. Mouse position tracking for camera parallax & dynamic text tilt
+  // 6. Wheel / Trackpad Gesture Controller (Prevents Momentum Overshoot!)
+  useEffect(() => {
+    const handleWheel = (e) => {
+      // Do not intercept if a modal lightbox is open
+      if (document.body.style.overflow === 'hidden') return;
+
+      // Do not intercept if scrolling inside a scrollable container (e.g. textarea, select, dialog)
+      const target = e.target;
+      if (
+        target &&
+        target.closest &&
+        (target.closest('.overflow-y-auto') ||
+          target.closest('[role="dialog"]') ||
+          target.closest('textarea') ||
+          target.closest('input'))
+      ) {
+        return;
+      }
+
+      // Intercept wheel to prevent multi-page momentum fling
+      e.preventDefault();
+
+      // If already in transition cooldown, ignore residual trackpad inertia
+      if (isSnappingRef.current) return;
+
+      const rawDelta = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY;
+      wheelAccumulatorRef.current += rawDelta;
+
+      if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
+      wheelTimerRef.current = setTimeout(() => {
+        wheelAccumulatorRef.current = 0;
+      }, 120);
+
+      const THRESHOLD = 35; // px swipe sensitivity
+      if (Math.abs(wheelAccumulatorRef.current) >= THRESHOLD) {
+        const direction = wheelAccumulatorRef.current > 0 ? 1 : -1;
+        wheelAccumulatorRef.current = 0;
+        triggerSceneJump(direction);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
+    };
+  }, [triggerSceneJump]);
+
+  // 7. Touch Swiping for Mobile & Tablets
+  useEffect(() => {
+    const handleTouchStart = (e) => {
+      if (e.touches.length !== 1) return;
+      if (document.body.style.overflow === 'hidden') return;
+      const target = e.target;
+      if (
+        target &&
+        target.closest &&
+        (target.closest('.overflow-y-auto') ||
+          target.closest('[role="dialog"]') ||
+          target.closest('textarea') ||
+          target.closest('input'))
+      ) {
+        return;
+      }
+      touchStartYRef.current = e.touches[0].clientY;
+      touchStartXRef.current = e.touches[0].clientX;
+      isTouchActiveRef.current = true;
+    };
+
+    const handleTouchMove = (e) => {
+      if (!isTouchActiveRef.current) return;
+      if (document.body.style.overflow === 'hidden') return;
+      const target = e.target;
+      if (
+        target &&
+        target.closest &&
+        (target.closest('.overflow-y-auto') ||
+          target.closest('[role="dialog"]') ||
+          target.closest('textarea') ||
+          target.closest('input'))
+      ) {
+        return;
+      }
+
+      const deltaY = touchStartYRef.current - e.touches[0].clientY;
+      const deltaX = touchStartXRef.current - e.touches[0].clientX;
+
+      // Ignore primarily horizontal swipes (e.g. project image gallery sliders)
+      if (Math.abs(deltaX) > Math.abs(deltaY)) return;
+
+      if (isSnappingRef.current) {
+        if (e.cancelable) e.preventDefault();
+        return;
+      }
+
+      const TOUCH_THRESHOLD = 40;
+      if (Math.abs(deltaY) >= TOUCH_THRESHOLD) {
+        if (e.cancelable) e.preventDefault();
+        isTouchActiveRef.current = false;
+        const direction = deltaY > 0 ? 1 : -1;
+        triggerSceneJump(direction);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isTouchActiveRef.current = false;
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [triggerSceneJump]);
+
+  // 8. Keyboard Navigation (Arrow Keys, Page Up/Down, Space, Home, End)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (document.body.style.overflow === 'hidden') return;
+      const isEditing =
+        ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
+        document.activeElement?.isContentEditable;
+      if (isEditing) return;
+
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
+        e.preventDefault();
+        triggerSceneJump(1);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
+        e.preventDefault();
+        triggerSceneJump(-1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        activeAnchorRef.current = 0;
+        smoothScrollToY(0, 750);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        activeAnchorRef.current = 1.0;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        smoothScrollToY(totalHeight, 750);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [smoothScrollToY, triggerSceneJump]);
+
+  // 9. Window Resize Anchor Lock
+  useEffect(() => {
+    const handleResize = () => {
+      if (activeAnchorRef.current !== null) {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo(0, activeAnchorRef.current * totalHeight);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 10. Mouse position tracking for camera parallax & dynamic text tilt
   useEffect(() => {
     const handleMouseMove = (e) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -62,16 +367,18 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 3. Navigation seek handler (Navbar links jump smoothly to scene milestones)
+  // 11. Navigation seek handler (Navbar links jump smoothly to scene milestones)
   const handleSelectScene = (targetPercent) => {
+    activeAnchorRef.current = targetPercent;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const targetY = targetPercent * totalHeight;
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
+    const targetY = Math.round(targetPercent * totalHeight);
+    smoothScrollToY(targetY, 750);
   };
 
-  // 4. Replay from top handler
+  // 12. Replay from top handler
   const handleReplay = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    activeAnchorRef.current = 0;
+    smoothScrollToY(0, 750);
   };
 
   return (

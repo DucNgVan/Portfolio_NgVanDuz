@@ -17,11 +17,11 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
   }, []);
 
   const navLinks = [
-    { id: 'about', label: 'ABOUT', progress: 0.05, href: '#about' },
+    { id: 'about', label: 'ABOUT', progress: 0.00, href: '#about' },
     { id: 'expertise', label: 'EXPERTISE', progress: 0.30, href: '#expertise' },
     { id: 'projects', label: 'PROJECTS', progress: 0.54, href: '#projects' },
     { id: 'honors', label: 'HONORS', progress: 0.76, href: '#honors' },
-    { id: 'contact', label: 'CONTACT', progress: 0.96, href: '#contact' },
+    { id: 'contact', label: 'CONTACT', progress: 1.00, href: '#contact' },
   ];
 
   const handleLinkClick = (e, link) => {
