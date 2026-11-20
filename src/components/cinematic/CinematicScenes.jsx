@@ -880,22 +880,14 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           SCENE 04: HALL OF HONORS (3D EXHIBITION GALLERY - SPOTLIGHT AMPHITHEATER)
           Layout: 
           - Model in FOREGROUND CENTER, squarely admiring certificates
-          - 5 Exhibition Pedestals in deep background crescent amphitheater
-          - Overhead gentle ceiling spotlight shining down over the stage
+          - 6 Exhibition Pedestals in deep background crescent amphitheater
+          - Overhead theatrical spotlights shining down over each plinth
           - 100% clean, unobstructed 3D view (direct click on 3D pedestals)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex flex-col items-center justify-end px-4 sm:px-8 lg:px-12 xl:px-16 pb-6 sm:pb-8 transition-opacity duration-300 pointer-events-none"
-        style={{ opacity: s4.opacity, pointerEvents: s4.pointerEvents }}
-      >
-        {/* Bottom subtle hint: leaves the upper 3D wall completely unobstructed for the mounted VERIFIED MILESTONES lettering */}
-        <div className="text-center w-full max-w-xl mx-auto select-none pointer-events-auto">
-          <p className="text-[10.5px] sm:text-xs text-[#dfc58d] font-mono bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#dfc58d]/30 inline-flex items-center gap-2 shadow-xl">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#dfc58d] animate-pulse" />
-            <span>Nhấp trực tiếp vào từng bệ bằng khen 3D để xem hồ sơ xác thực</span>
-          </p>
-        </div>
-      </section>
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+        style={{ opacity: s4.opacity }}
+      />
 
       {/* =========================================================================
           SCENE 05: FINAL TRANSMISSION (CONTACT & QUICK ADMIN DISPATCH)
@@ -1278,60 +1270,63 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       ========================================================================= */}
       {inspectedCert && typeof document !== 'undefined' && createPortal(
         <div 
-          className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 md:p-8 pt-8 sm:pt-12 pb-20 pointer-events-auto overflow-y-auto animate-fadeIn"
+          className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 md:p-8 pt-8 sm:pt-12 pb-20 pointer-events-auto overflow-y-auto animate-fadeIn"
           onClick={() => setInspectedCert(null)}
         >
           <div 
-            className="relative w-full max-w-4xl flex flex-col items-center bg-white border border-black/10 rounded-3xl p-5 sm:p-7 shadow-2xl text-[#111113] my-4 sm:my-8"
+            className="relative w-full max-w-4xl flex flex-col items-center bg-[#111218] border border-white/15 rounded-3xl p-5 sm:p-7 shadow-2xl text-white my-4 sm:my-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setInspectedCert(null)}
-              className="absolute top-4 right-4 p-2 rounded-full bg-black/5 hover:bg-black/10 text-[#555] hover:text-black transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <img 
-              src={inspectedCert.image} 
-              alt={inspectedCert.title} 
-              className="max-h-[65vh] w-auto object-contain rounded-2xl border border-black/10 shadow-lg mb-4" 
-            />
+            {/* Archival Museum Matting Frame (No extra white padding) */}
+            <div className="w-full flex items-center justify-center p-2 sm:p-3 rounded-2xl bg-black/60 border border-white/10 mb-4 shadow-inner">
+              <img 
+                src={inspectedCert.image} 
+                alt={inspectedCert.title} 
+                className="max-h-[65vh] w-auto object-contain rounded-lg shadow-2xl" 
+              />
+            </div>
 
-            <div className="w-full text-left px-2">
+            <div className="w-full text-left px-1">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2">
                   <span className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full ${
                     inspectedCert.category === 'academic'
-                      ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                      : 'bg-indigo-100 text-indigo-800 border border-indigo-200'
+                      ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
+                      : 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/30'
                   }`}>
                     {inspectedCert.category === 'academic' ? '🎓 Chuyên Ngành & Học Thuật' : '🎭 CLB & Kỹ Năng Mềm'}
                   </span>
-                  <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-black/5 text-[#8c7355] border border-black/10">
+                  <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-white/5 text-[#dfc58d] border border-white/10">
                     {inspectedCert.badge}
                   </span>
                 </div>
-                <span className="text-xs font-mono font-semibold text-[#888]">
+                <span className="text-xs font-mono font-semibold text-neutral-400">
                   Năm {inspectedCert.year}
                 </span>
               </div>
 
-              <h3 className="text-base sm:text-xl font-bold text-[#111113] font-sans mb-1">
+              <h3 className="text-base sm:text-xl font-bold text-white font-sans mb-1">
                 {inspectedCert.title}
               </h3>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-[#666] mb-2.5 font-medium">
-                <span>Cấp bởi: <strong className="text-[#222]">{inspectedCert.issuer}</strong></span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-neutral-400 mb-2.5 font-medium">
+                <span>Cấp bởi: <strong className="text-neutral-200">{inspectedCert.issuer}</strong></span>
                 {inspectedCert.recipient && (
-                  <span>Khen tặng: <strong className="text-[#222]">{inspectedCert.recipient}</strong></span>
+                  <span>Khen tặng: <strong className="text-neutral-200">{inspectedCert.recipient}</strong></span>
                 )}
                 {inspectedCert.verificationRef && (
-                  <span className="text-[#8c7355]">Xác thực: <strong>{inspectedCert.verificationRef}</strong></span>
+                  <span className="text-[#dfc58d]">Xác thực: <strong>{inspectedCert.verificationRef}</strong></span>
                 )}
               </div>
 
-              <p className="text-xs sm:text-sm text-[#444] font-sans leading-relaxed bg-black/[0.02] p-3 rounded-2xl border border-black/[0.05]">
+              <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed bg-white/[0.04] p-3 rounded-2xl border border-white/[0.06]">
                 {inspectedCert.description}
               </p>
             </div>

@@ -574,10 +574,10 @@ function createMuseumExhibitionWall(signageTexture) {
   });
 
   // E. 3D Wall-Mounted Signage Plane (VERIFIED MILESTONES)
-  // Mounted directly onto the front face of the wall in perfect camera sightline
+  // Mounted directly onto the front face of the wall in perfect camera sightline (well below top navbar)
   const signageGeo = new THREE.PlaneGeometry(5.6, 1.40);
   const signageMesh = new THREE.Mesh(signageGeo, signageMat);
-  signageMesh.position.set(0, 0.96, wallZ + wallDepth / 2 + 0.008);
+  signageMesh.position.set(0, 0.62, wallZ + wallDepth / 2 + 0.008);
   group.add(signageMesh);
 
   return {
@@ -844,7 +844,9 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       });
       const plinthMesh = new THREE.Mesh(plinthGeo, plinthMat);
       plinthMesh.position.y = ph / 2;
+      plinthMesh.userData = { certData: cert };
       pedestal.add(plinthMesh);
+      clickableMeshes.push(plinthMesh);
 
       // B. Base Dark Trim
       const baseGeo = new THREE.BoxGeometry(pw + 0.04, 0.03, pd + 0.04);
@@ -855,7 +857,9 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       });
       const baseMesh = new THREE.Mesh(baseGeo, baseMat);
       baseMesh.position.y = 0.015;
+      baseMesh.userData = { certData: cert };
       pedestal.add(baseMesh);
+      clickableMeshes.push(baseMesh);
 
       // C. Top Brushed Brass Collar
       const topRimGeo = new THREE.BoxGeometry(pw + 0.02, 0.02, pd + 0.02);
@@ -866,7 +870,9 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       });
       const topRimMesh = new THREE.Mesh(topRimGeo, topRimMat);
       topRimMesh.position.y = ph + 0.01;
+      topRimMesh.userData = { certData: cert };
       pedestal.add(topRimMesh);
+      clickableMeshes.push(topRimMesh);
 
       // D. Subtle Brass Plaque
       const plaqueTex = createPlaqueCanvas(cert.badge, cert.year, cert.title);
@@ -878,7 +884,9 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       });
       const plaqueMesh = new THREE.Mesh(plaqueGeo, plaqueMat);
       plaqueMesh.position.set(0, ph * 0.52, pd / 2 + 0.003);
+      plaqueMesh.userData = { certData: cert };
       pedestal.add(plaqueMesh);
+      clickableMeshes.push(plaqueMesh);
 
       // E. Framed Certificate on Top (Satin Antique Gold, Archival Matte Paper)
       const frameGroup = new THREE.Group();
@@ -911,7 +919,9 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       });
       const matMesh = new THREE.Mesh(matGeo, matMat);
       matMesh.position.set(0, fh / 2, fdepth / 2 + 0.001);
+      matMesh.userData = { certData: cert };
       frameGroup.add(matMesh);
+      clickableMeshes.push(matMesh);
 
       // Certificate Artwork Plane (Archival matte paper, zero glare)
       const certPlaneGeo = new THREE.PlaneGeometry(fw - 0.14, fh - 0.14);
@@ -1072,7 +1082,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
     // Dedicated Overhead Wall Wash Light highlighting the mounted letters
     const wallWashTarget = new THREE.Object3D();
-    wallWashTarget.position.set(0, 0.96, -2.72);
+    wallWashTarget.position.set(0, 0.62, -2.72);
     scene.add(wallWashTarget);
 
     const wallWashSpot = new THREE.SpotLight(0xfff3db, 0.0, 16.0, Math.PI / 3.4, 0.65, 1.1);
@@ -1094,7 +1104,14 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     };
 
     const handlePointerMove = (e) => {
-      if (scene4FactorRef.current < 0.70) {
+      if (scene4FactorRef.current < 0.35) {
+        if (hoveredObject) {
+          document.body.style.cursor = 'default';
+          hoveredObject = null;
+        }
+        return;
+      }
+      if (e.target && e.target.closest && e.target.closest('nav, button, a, input, textarea, [role="button"], [role="dialog"]')) {
         if (hoveredObject) {
           document.body.style.cursor = 'default';
           hoveredObject = null;
@@ -1112,10 +1129,12 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     };
 
     const handleClick = (e) => {
-      // 1. MUST only handle direct clicks on the canvas
-      if (e.target !== renderer.domElement && e.target !== container) return;
-      // 2. MUST only be active when firmly inside Scene 4
-      if (scene4FactorRef.current < 0.70) return;
+      // 1. MUST only be active when firmly inside Scene 4
+      if (scene4FactorRef.current < 0.35) return;
+      // 2. Ignore clicks on top navbar, buttons, modals, interactive UI
+      if (e.target && e.target.closest && e.target.closest('nav, button, a, input, textarea, [role="button"], [role="dialog"]')) {
+        return;
+      }
 
       const hits = getIntersects(e.clientX, e.clientY);
       if (hits.length > 0) {
@@ -1129,8 +1148,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       }
     };
 
-    // Attach click strictly to renderer.domElement so UI clicks never bleed in
-    renderer.domElement.addEventListener('click', handleClick);
+    // Attach click and pointermove to window so direct clicks anywhere in Scene 4 raycast to pedestals
+    window.addEventListener('click', handleClick);
     window.addEventListener('pointermove', handlePointerMove);
 
     // 7. Load /models/character-cinematic.glb with Draco
@@ -1411,9 +1430,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('pointermove', handlePointerMove);
-      if (renderer?.domElement) {
-        renderer.domElement.removeEventListener('click', handleClick);
-      }
+      window.removeEventListener('click', handleClick);
       document.body.style.cursor = 'default';
       if (renderer) {
         renderer.dispose();

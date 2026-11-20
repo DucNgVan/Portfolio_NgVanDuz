@@ -252,7 +252,24 @@ export const githubProjects = [
     tech: ["Node.js", "Express", "PostgreSQL (3NF)", "Redis", "Docker Compose", "JWT Auth", "RESTful APIs"],
     statusBadge: "Backend Complete · Mobile in Progress",
     statusType: "repo",
-    image: "/projects/nomadix-preview.svg",
+    image: "/projects/nomadix-1.png",
+    images: [
+      {
+        url: "/projects/nomadix-1.png",
+        title: "All-in-One Travel Hub",
+        caption: "Nomadix Travel Ecosystem — All-in-One Travel Hub for Flight/Hotel Discovery, Smart Bookings & Dynamic Itineraries"
+      },
+      {
+        url: "/projects/nomadix-2.png",
+        title: "Plan Together Collaborative Itinerary",
+        caption: "Plan Together — Real-Time Collaborative Itinerary Co-Creation, Group Voting & Schedule Sync"
+      },
+      {
+        url: "/projects/nomadix-3.png",
+        title: "Smart Split Group Expenses",
+        caption: "Smart Split & Expense Tracking — Multi-Currency Bill Division, Automatic Debt Simplification & Shared Travel Ledger"
+      }
+    ],
     githubUrl: "https://github.com/DucNgVan/nomadix-travel-platform",
     liveDemo: null,
     problem: "Travelers struggle with fragmented tools for itineraries, bookings, and community reviews, demanding a unified and resilient data service.",
