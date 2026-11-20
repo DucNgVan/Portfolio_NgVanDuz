@@ -577,6 +577,12 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           
           {/* Header */}
           <div className="mb-3.5 w-full">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+                CORE CAPABILITIES // 02
+              </span>
+            </div>
             <h2 
               style={largeTitleParallax}
               className="text-2xl sm:text-4xl lg:text-[40px] font-black font-sans uppercase tracking-tight text-[#111113] leading-none mb-1.5 select-none cursor-default"
@@ -584,12 +590,12 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               Engineering Workflow & <br />
               <span 
                 style={{
-                  backgroundImage: `linear-gradient(${gradientAngle}deg, #0284c7 0%, #8c7355 50%, #c5a880 100%)`,
+                  backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Tech Stack
+                Tech Stack.
               </span>
             </h2>
 
@@ -741,12 +747,29 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       >
         <div className="w-full max-w-lg lg:max-w-[34rem] xl:max-w-[36rem] flex flex-col items-start text-left">
           
+          {/* Artistic Eyebrow Tag */}
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+              FEATURED ARCHIVE // 03
+            </span>
+          </div>
+
           {/* Dynamic Interactive Large Headline */}
           <h2 
             style={largeTitleParallax}
-            className="text-xl sm:text-2xl lg:text-3xl font-black font-sans uppercase tracking-tight text-[#111113] mb-1 select-none cursor-default"
+            className="text-2xl sm:text-3xl lg:text-4xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[0.95] mb-2 select-none cursor-default"
           >
-            System Vault Releases
+            System Vault <br />
+            <span 
+              style={{
+                backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Releases.
+            </span>
           </h2>
 
           <p className="text-[11px] sm:text-xs text-[#66625d] font-sans mb-2">
@@ -899,10 +922,18 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       >
         <div className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start text-left my-auto">
           
+          {/* Artistic Eyebrow Tag */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+              GET IN TOUCH // 05
+            </span>
+          </div>
+
           {/* Dynamic Interactive Large Headline */}
           <h2 
             style={largeTitleParallax}
-            className="text-3xl sm:text-5xl lg:text-6xl font-black font-sans uppercase tracking-tight text-[#111113] mb-3 select-none cursor-default"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[0.95] mb-3 select-none cursor-default"
           >
             Let's Build <br />
             <span 
