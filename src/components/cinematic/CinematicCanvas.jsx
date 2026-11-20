@@ -977,15 +977,15 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       const beamDir = beamVec.clone().normalize();
       const beamQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), beamDir);
 
-      // Theatrical focused spotlight hitting directly and accurately on the certificate and pedestal
-      const pedSpot = new THREE.SpotLight(0xfff3db, 0.0, 16.0, Math.PI / 8.5, 0.45, 1.1);
+      // Theatrical focused museum spotlight hitting directly and exclusively on this certificate and pedestal (no overlap with adjacent plinths)
+      const pedSpot = new THREE.SpotLight(0xfff5e0, 0.0, 9.5, Math.PI / 30, 0.30, 1.2);
       pedSpot.position.copy(lampPos);
       pedSpot.target = spotTarget;
       scene.add(pedSpot);
 
       // F.1 Ceiling Lamp Fixture Canister (Aimed along beamDir)
-      const lampGeo = new THREE.CylinderGeometry(0.11, 0.14, 0.24, 16);
-      lampGeo.translate(0, 0.12, 0);
+      const lampGeo = new THREE.CylinderGeometry(0.10, 0.12, 0.22, 16);
+      lampGeo.translate(0, 0.11, 0);
       const lampMat = new THREE.MeshStandardMaterial({ color: 0x15161c, metalness: 0.85, roughness: 0.35 });
       const lampMesh = new THREE.Mesh(lampGeo, lampMat);
       lampMesh.position.copy(lampPos);
@@ -994,7 +994,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       scene.add(lampMesh);
 
       // F.2 Glowing Lamp Lens (Facing down towards pedestal)
-      const lampLensGeo = new THREE.CircleGeometry(0.10, 16);
+      const lampLensGeo = new THREE.CircleGeometry(0.09, 16);
       const lampLensMat = new THREE.MeshBasicMaterial({ color: 0xfff6e5, transparent: true, opacity: 0.0 });
       const lampLensMesh = new THREE.Mesh(lampLensGeo, lampLensMat);
       lampLensMesh.position.copy(lampPos);
@@ -1002,8 +1002,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       lampLensMesh.visible = false;
       scene.add(lampLensMesh);
 
-      // F.3 Volumetric Downlight Cone Beam (Accurately lands on the pedestal without drifting)
-      const pBeamGeo = new THREE.CylinderGeometry(0.08, 0.65, beamLength, 28, 1, true);
+      // F.3 Volumetric Downlight Cone Beam (Crisp, isolated pencil column landing squarely on this plinth)
+      const pBeamGeo = new THREE.CylinderGeometry(0.06, 0.28, beamLength, 28, 1, true);
       pBeamGeo.translate(0, -beamLength / 2, 0); // Origin at top fixture
       const pBeamMat = new THREE.MeshBasicMaterial({
         map: beamTexture,
@@ -1020,8 +1020,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       pBeamMesh.visible = false;
       scene.add(pBeamMesh);
 
-      // G. Luminous Floor Spotlight Puddle (Luminous warm feathered pool matching h1(18).jpg)
-      const floorPoolGeo = new THREE.CircleGeometry(0.72, 32);
+      // G. Luminous Floor Spotlight Puddle (Focused puddle directly under plinth footprint without overlapping neighbors)
+      const floorPoolGeo = new THREE.CircleGeometry(0.35, 32);
       const floorPoolMat = new THREE.MeshBasicMaterial({
         map: floorSpotTexture,
         transparent: true,
@@ -1035,8 +1035,8 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       floorPoolMesh.visible = false;
       scene.add(floorPoolMesh);
 
-      // H. Deep Plinth Contact & Directional Drop Shadow (Directly beneath plinth base)
-      const shadowGeo = new THREE.PlaneGeometry(0.92, 0.72);
+      // H. Deep Plinth Contact & Directional Drop Shadow (Snug under plinth base)
+      const shadowGeo = new THREE.PlaneGeometry(0.64, 0.46);
       const shadowMat = new THREE.MeshBasicMaterial({
         map: shadowTexture,
         transparent: true,
@@ -1080,13 +1080,13 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     museumWallObj.group.visible = false;
     scene.add(museumWallObj.group);
 
-    // Dedicated Overhead Wall Wash Light highlighting the mounted letters
+    // Dedicated Overhead Wall Wash Light highlighting the mounted letters (close to wall, no forward spill on pedestals)
     const wallWashTarget = new THREE.Object3D();
-    wallWashTarget.position.set(0, 0.62, -2.72);
+    wallWashTarget.position.set(0, 0.62, -2.85);
     scene.add(wallWashTarget);
 
-    const wallWashSpot = new THREE.SpotLight(0xfff3db, 0.0, 16.0, Math.PI / 3.4, 0.65, 1.1);
-    wallWashSpot.position.set(0, 4.88, -1.50);
+    const wallWashSpot = new THREE.SpotLight(0xfff3db, 0.0, 10.0, Math.PI / 6.0, 0.50, 1.2);
+    wallWashSpot.position.set(0, 4.40, -2.45);
     wallWashSpot.target = wallWashTarget;
     scene.add(wallWashSpot);
 
@@ -1289,7 +1289,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         museumWallObj.trimMat.opacity = s4 * 0.98;
         museumWallObj.inlayMat.opacity = s4 * 0.98;
         museumWallObj.signageMat.opacity = s4 * 0.98;
-        wallWashSpot.intensity = s4 * 5.2;
+        wallWashSpot.intensity = s4 * 3.2; // Soft wall wash, leaves pedestals in sharp spotlight contrast
 
         // Smooth elevation & fade animation for museum VIP stanchions & velvet ropes
         museumStanchionsObj.group.visible = true;
@@ -1325,15 +1325,15 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
           node.spotTarget.position.set(cx, cy + node.plinthHeight + 0.22, cz);
           node.spotTarget.updateMatrixWorld();
 
-          // Spotlight & Ceiling Lamp Fixtures (aimed directly at this pedestal)
-          node.spotLight.intensity = s4 * 5.2;
+          // Focused SpotLight hitting directly and exclusively on this pedestal's certificate
+          node.spotLight.intensity = s4 * 6.2;
           node.lampMesh.visible = true;
           node.lampLensMesh.visible = true;
           node.lampLensMat.opacity = s4 * 0.98;
 
-          // Volumetric downlight cone beam
+          // Volumetric downlight cone beam (tight, surgical pencil column)
           node.beamMesh.visible = true;
-          node.beamMat.opacity = s4 * 0.32;
+          node.beamMat.opacity = s4 * 0.28;
 
           // Theatrical floor spotlight puddle & plinth contact shadow
           node.floorPoolMesh.visible = true;
