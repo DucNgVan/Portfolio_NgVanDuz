@@ -17,73 +17,107 @@ import {
 import { useLanguage } from '@/context/LanguageContext';
 
 export const certificatesData = [
+  // ==========================================
+  // NHÓM 1: HỌC TẬP CHUYÊN NGÀNH & ĐỔI MỚI CÔNG NGHỆ
+  // ==========================================
   {
-    id: 'top3-greenwich',
+    id: 'top3_2024',
     titleVi: 'Top 3 Sinh Viên Xuất Sắc Học Kỳ Summer 2024',
     titleEn: 'Top 3 Outstanding Student — Summer Semester 2024',
     issuerVi: 'Đại Học Greenwich Việt Nam (Greenwich International Bachelor)',
     issuerEn: 'University of Greenwich (Vietnam) & FPT Education',
     recipient: 'Nguyen Van Duc (GCD230006)',
     year: '2024',
-    badgeVi: 'HỌC BỔNG XUẤT SẮC',
+    badgeVi: 'TOP 3 TOÀN KHÓA',
     badgeEn: 'TOP 3 HONORS',
-    image: '/certificates/greenwich_top3_2024.jpg',
+    categoryVi: '🎓 Chuyên Ngành & Học Thuật',
+    categoryEn: '🎓 Academic & Tech',
+    image: '/certificates/cert_top3_2024.jpg',
     isRealPhoto: true,
-    descVi: 'Vinh danh thành tích học tập vượt trội, đứng trong Top 3 sinh viên có điểm số cao nhất toàn khóa cử nhân Greenwich.',
+    descVi: 'Vinh danh thành tích học tập vượt trội, đứng trong Top 3 sinh viên có điểm số cao nhất toàn khóa cử nhân Quốc tế Greenwich (Đà Nẵng Campus).',
     descEn: 'Recognized for superior academic excellence, ranking within the top 3 highest GPA students across Greenwich International Bachelor program.',
     verificationRef: 'GKDN240149 / QĐ: 157/QĐ-FPTUDN',
     accentColor: '#d8c8a8',
   },
   {
-    id: 'impact-bootcamp',
-    titleVi: 'Giải Nhì Toàn Quốc — Impact Innovation Bootcamp 2024',
-    titleEn: '2nd Prize Winner — Impact Innovation Bootcamp 2024',
-    issuerVi: 'Bệnh Viện 199 • Bộ Công An',
-    issuerEn: 'Hospital 199 • Ministry of Public Security',
-    recipient: 'Nguyen Van Duc',
-    year: '2024',
+    id: 'best_student_icm_2026',
+    titleVi: 'Thủ Khoa Môn Quản Trị Thông Tin & Nội Dung',
+    titleEn: 'Best Student: Information & Content Management',
+    issuerVi: 'Greenwich International Bachelor Program',
+    issuerEn: 'University of Greenwich (Vietnam)',
+    recipient: 'Nguyen Van Duc (GCD230006)',
+    year: '2026',
+    badgeVi: 'THỦ KHOA MÔN HỌC',
+    badgeEn: 'BEST OF SUBJECT',
+    categoryVi: '🎓 Chuyên Ngành & Học Thuật',
+    categoryEn: '🎓 Academic & Tech',
+    image: '/certificates/cert_best_student_icm_2026.jpg',
+    isRealPhoto: true,
+    descVi: 'Thủ khoa đạt điểm số xuất sắc nhất toàn phân hiệu môn Information and Content Management (COMP1643) kỳ Summer Trimester 2026, chứng nhận bởi TS. Nguyễn Duy Nghiêm.',
+    descEn: 'Valedictorian recognition for achieving the highest grade across the campus in Information and Content Management.',
+    verificationRef: 'QĐ: 181 QH-PPTUDN • GKD2300025',
+    accentColor: '#c5a880',
+  },
+  {
+    id: 'bootcamp_innovation_2025',
+    titleVi: 'Giải Nhì Toàn Quốc — Impact Innovation Bootcamp 2025',
+    titleEn: '2nd Prize Winner — Impact Innovation Bootcamp 2025',
+    issuerVi: 'Greenwich Vietnam & Đổi Mới Sáng Tạo Bệnh Viện',
+    issuerEn: 'Hospital & Healthcare Innovation Council',
+    recipient: 'Nguyen Van Duc (GCD230006)',
+    year: '2025',
     badgeVi: 'GIẢI NHÌ TOÀN QUỐC',
     badgeEn: '2ND PRIZE',
-    image: '/certificates/bootcamp_2nd_prize.jpg',
-    isRealPhoto: false,
-    descVi: 'Giải pháp chuyển đổi số và công nghệ y tế phục vụ cộng đồng, tranh tài cùng hơn 50 đội thi liên viện.',
-    descEn: 'Awarded for digital healthcare transformation and smart workflow innovation, competing against 50+ inter-hospital teams.',
-    verificationRef: '199-BCA/IIB-2024',
+    categoryVi: '🎓 Chuyên Ngành & Học Thuật',
+    categoryEn: '🎓 Academic & Tech',
+    image: '/certificates/cert_bootcamp_innovation_2025.jpg',
+    isRealPhoto: true,
+    descVi: 'Giải pháp chuyển đổi số và công nghệ y tế phục vụ cộng đồng, vinh danh bởi Giám đốc Greenwich ĐN TS. Nguyễn Duy Nghiêm.',
+    descEn: 'Awarded 2nd Prize for digital healthcare transformation and innovation, recognized by Dr. Nguyen Duy Nghiem.',
+    verificationRef: 'Greenwich VN / IIB-2025',
     accentColor: '#38bdf8',
   },
+
+  // ==========================================
+  // NHÓM 2: CLB & KỸ NĂNG MỀM
+  // ==========================================
   {
-    id: 'best-club-gng',
-    titleVi: 'Câu Lạc Bộ Xuất Sắc Nhất Năm 2024 (Chủ Nhiệm CLB)',
-    titleEn: 'Best Club of the Year 2024 — Club President',
-    issuerVi: 'Ban Công Tác Sinh Viên • ĐH Greenwich',
-    issuerEn: 'Office of Student Affairs • University of Greenwich',
-    recipient: 'Nguyen Van Duc (President)',
-    year: '2024',
-    badgeVi: 'LÃNH ĐẠO XUẤT SẮC',
-    badgeEn: 'CLUB PRESIDENT',
-    image: '/certificates/best_club_2024.jpg',
-    isRealPhoto: false,
-    descVi: 'Dẫn dắt Greenwich Newspaper Group (GNG) đạt danh hiệu CLB xuất sắc nhất campus, tổ chức hơn 12 sự kiện lớn.',
-    descEn: 'Led Greenwich Newspaper Group to the premier campus organization award, directing media campaigns and campus initiatives.',
-    verificationRef: 'GNG-PRES/2024-EXC',
-    accentColor: '#a855f7',
-  },
-  {
-    id: 'lg-dream-code',
-    titleVi: 'Chung Kết Toàn Quốc — LG Dream Code Challenge 2024',
-    titleEn: 'National Finalist — LG Dream Code Challenge 2024',
-    issuerVi: 'Tập Đoàn LG Electronics Việt Nam',
-    issuerEn: 'LG Electronics Vietnam',
+    id: 'gnews_club_2024',
+    titleVi: 'Thành Viên Tích Cực — CLB Báo Chí Greenwich (GNews) 2024',
+    titleEn: 'Active Member — Greenwich Newspaper Club (GNews) 2024',
+    issuerVi: 'Ban Công Tác Sinh Viên & Ban Chủ Nhiệm CLB GNews',
+    issuerEn: 'Office of Student Affairs & GNews Club',
     recipient: 'Nguyen Van Duc',
     year: '2024',
-    badgeVi: 'TOP THUẬT TOÁN',
-    badgeEn: 'NATIONAL FINALIST',
-    image: '/certificates/lg_dream_code.jpg',
-    isRealPhoto: false,
-    descVi: 'Vượt qua hàng nghìn thí sinh toàn quốc để góp mặt tại vòng Chung kết thuật toán và cấu trúc dữ liệu nâng cao.',
-    descEn: 'Advanced to the National Finals among thousands of contestants in advanced competitive algorithms and data structures.',
-    verificationRef: 'LG-DCC/VN-2024-FIN',
+    badgeVi: 'CLB BÁO CHÍ',
+    badgeEn: 'MEDIA & JOURNALISM',
+    categoryVi: '🎭 CLB & Kỹ Năng Mềm',
+    categoryEn: '🎭 Club & Soft Skills',
+    image: '/certificates/cert_gnews_club_2024.jpg',
+    isRealPhoto: true,
+    descVi: 'Chứng nhận cống hiến tích cực trong ban kỹ thuật và truyền thông báo chí đại học, tham gia biên tập ấn phẩm công nghệ và sự kiện sinh viên.',
+    descEn: 'Recognized for active contributions to university journalism, media tech production, and campus student publications.',
+    verificationRef: 'GNews Club / CTSV 2024',
     accentColor: '#ec4899',
+  },
+  {
+    id: 'gmc_music_club',
+    titleVi: 'Thành Tích Xuất Sắc — Đêm Nhạc "Under the Baubles" (GMC)',
+    titleEn: 'Outstanding Participation — "Under the Baubles" Musical Night',
+    issuerVi: 'Greenwich Music Club (GMC) & Ban CTSV',
+    issuerEn: 'Greenwich Music Club & Student Affairs',
+    recipient: 'Nguyen Van Duc',
+    year: '2024',
+    badgeVi: 'CLB ÂM NHẠC',
+    badgeEn: 'ARTS & LEADERSHIP',
+    categoryVi: '🎭 CLB & Kỹ Năng Mềm',
+    categoryEn: '🎭 Club & Soft Skills',
+    image: '/certificates/cert_gmc_music_club.jpg',
+    isRealPhoto: true,
+    descVi: 'Vinh danh đóng góp nổi bật trong ban tổ chức và tham gia biểu diễn tại đêm đại nhạc hội "Under the Baubles", khẳng định kỹ năng tổ chức sự kiện và làm việc nhóm.',
+    descEn: 'Recognized for stellar organizational and performance contributions to "Under the Baubles" musical night, demonstrating team synergy and event execution.',
+    verificationRef: 'GMC-UTB / CTSV 2024',
+    accentColor: '#a855f7',
   },
 ];
 
@@ -95,12 +129,13 @@ export const AchievementsGallery3D = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState(null);
 
-  // Frame coordinates in 3D museum space
+  // Frame coordinates in 3D museum space (5 frames)
   const framePositions = useMemo(() => [
-    { x: -3.75, y: 0.1, z: 0 },
-    { x: -1.25, y: 0.1, z: 0 },
-    { x: 1.25, y: 0.1, z: 0 },
-    { x: 3.75, y: 0.1, z: 0 },
+    { x: -5.0, y: 0.1, z: 0 },
+    { x: -2.5, y: 0.1, z: 0 },
+    { x: 0, y: 0.1, z: 0 },
+    { x: 2.5, y: 0.1, z: 0 },
+    { x: 5.0, y: 0.1, z: 0 },
   ], []);
 
   const activeIdxRef = useRef(activeIdx);
@@ -120,7 +155,7 @@ export const AchievementsGallery3D = () => {
     scene.fog = new THREE.FogExp2(0x0c0d11, 0.045);
 
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 40);
-    camera.position.set(0, 0.2, 7.4);
+    camera.position.set(0, 0.2, 8.4);
 
     // 2. Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
@@ -188,9 +223,9 @@ export const AchievementsGallery3D = () => {
       // A. Outer Wooden/Gold Museum Beveled Frame
       const outerFrameGeo = new THREE.BoxGeometry(fw, fh, depth);
       const outerFrameMat = new THREE.MeshStandardMaterial({
-        color: idx === 0 ? 0xc8aa6e : 0x2d2f3b, // Gold frame for Top 3, sleek graphite for others
+        color: idx < 2 ? 0xc8aa6e : (idx === 2 ? 0x38bdf8 : 0x7c3aed), // Gold for Top 3 & Best Student, cyan for Innovation, violet for Club/Skills
         roughness: 0.35,
-        metalness: idx === 0 ? 0.75 : 0.4,
+        metalness: idx < 3 ? 0.75 : 0.45,
       });
       const outerFrame = new THREE.Mesh(outerFrameGeo, outerFrameMat);
       frameGroup.add(outerFrame);
@@ -503,6 +538,9 @@ export const AchievementsGallery3D = () => {
             
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-white/10 text-white border border-white/20">
+                  {lang === 'vi' ? activeCert.categoryVi : activeCert.categoryEn}
+                </span>
                 <span 
                   className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider"
                   style={{

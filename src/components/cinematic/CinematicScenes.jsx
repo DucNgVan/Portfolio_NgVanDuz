@@ -82,6 +82,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const [projectFilter, setProjectFilter] = useState('all');
   const [projectPage, setProjectPage] = useState(0);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const [certCategoryFilter, setCertCategoryFilter] = useState('all'); // 'all', 'academic', 'club_skill'
 
   // Quick Recruiter Message Dispatch State (delivered to Admin Portal)
   const [senderName, setSenderName] = useState('');
@@ -191,43 +192,88 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const gradientAngle = 90 + mx * 45;
 
   const certificates = [
+    // ----------------------------------------------------
+    // NHÓM 1: HỌC TẬP CHUYÊN NGÀNH & ĐỔI MỚI CÔNG NGHỆ
+    // ----------------------------------------------------
     {
-      id: 'top3',
-      title: 'Top 3 Student of Summer 2024',
+      id: 'top3_2024',
+      category: 'academic',
+      categoryLabel: 'Chuyên Ngành & Học Thuật',
+      badge: 'TOP 3 TOÀN KHÓA',
+      title: 'Top 3 Sinh Viên Xuất Sắc — Summer 2024',
+      titleEn: 'Top 3 Outstanding Student — Summer 2024',
       issuer: 'University of Greenwich (Vietnam)',
-      badge: 'TOP 3 HONORS',
-      image: '/certificates/greenwich_top3_2024.jpg',
+      recipient: 'Nguyen Van Duc (GCD230006)',
+      image: '/certificates/cert_top3_2024.jpg',
       year: '2024',
-      description: 'Awarded Top 3 academic excellence honors in Software Engineering for Summer 2024 semester at the University of Greenwich (Vietnam).'
+      verificationRef: 'GKDN240149 • QĐ: 157/QĐ-FPTUDN',
+      description: 'Vinh danh thành tích học tập vượt trội, đứng trong Top 3 sinh viên có điểm GPA cao nhất toàn khóa cử nhân Quốc tế Greenwich (Đà Nẵng Campus).'
     },
     {
-      id: 'bootcamp',
-      title: '2nd Prize Winner — Impact Bootcamp',
-      issuer: 'Hospital 199 • Ministry of Public Security',
-      badge: '2ND PRIZE',
-      image: '/certificates/bootcamp_2nd_prize.jpg',
-      year: '2024',
-      description: 'National 2nd Prize in the Social Innovation & Startup Impact Bootcamp organized by Hospital 199, Ministry of Public Security.'
+      id: 'best_student_icm_2026',
+      category: 'academic',
+      categoryLabel: 'Chuyên Ngành & Học Thuật',
+      badge: 'THỦ KHOA MÔN HỌC',
+      title: 'Thủ Khoa Môn Quản Trị Thông Tin & Nội Dung',
+      titleEn: 'Best Student: Information & Content Management',
+      issuer: 'Greenwich International Bachelor Program',
+      recipient: 'Nguyen Van Duc (GCD230006)',
+      image: '/certificates/cert_best_student_icm_2026.jpg',
+      year: '2026',
+      verificationRef: 'QĐ: 181 QH-PPTUDN • GKD2300025',
+      description: 'Thủ khoa đạt điểm số xuất sắc nhất bộ môn Information and Content Management (COMP1643) kỳ Summer Trimester 2026, chứng nhận bởi Giám đốc Phân hiệu TS. Nguyễn Duy Nghiêm.'
     },
     {
-      id: 'best_club',
-      title: 'Best Club of the Year (President)',
-      issuer: 'Greenwich Newspaper Group',
-      badge: 'LEADERSHIP',
-      image: '/certificates/best_club_2024.jpg',
+      id: 'bootcamp_innovation_2025',
+      category: 'academic',
+      categoryLabel: 'Chuyên Ngành & Học Thuật',
+      badge: 'GIẢI NHÌ TOÀN QUỐC',
+      title: 'Giải Nhì Toàn Quốc — Impact Innovation Bootcamp 2025',
+      titleEn: '2nd Prize Winner — Impact Innovation Bootcamp 2025',
+      issuer: 'Greenwich Vietnam & Đổi Mới Sáng Tạo Bệnh Viện',
+      recipient: 'Nguyen Van Duc (GCD230006)',
+      image: '/certificates/cert_bootcamp_innovation_2025.jpg',
+      year: '2025',
+      verificationRef: 'Director of Da Nang Campus: Dr. Nguyen Duy Nghiem',
+      description: 'Giải Nhì cuộc thi Đổi mới Sáng tạo Công nghệ (Impact Innovation Bootcamp 2025) với giải pháp số hóa và chuyển đổi số quy trình y tế cộng đồng.'
+    },
+
+    // ----------------------------------------------------
+    // NHÓM 2: CLB & KỸ NĂNG MỀM
+    // ----------------------------------------------------
+    {
+      id: 'gnews_club_2024',
+      category: 'club_skill',
+      categoryLabel: 'CLB & Kỹ Năng Mềm',
+      badge: 'CLB BÁO CHÍ',
+      title: 'Thành Viên Tích Cực — CLB Báo Chí GNews 2024',
+      titleEn: 'Active Member — Greenwich Newspaper Club (GNews) 2024',
+      issuer: 'Ban Công Tác Sinh Viên & CLB GNews',
+      recipient: 'Nguyen Van Duc',
+      image: '/certificates/cert_gnews_club_2024.jpg',
       year: '2024',
-      description: 'Honored as President for leading the Best Student Organization of 2024, directing 40+ members across campus technology & media initiatives.'
+      verificationRef: 'Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh & Ban Chủ Nhiệm GNews',
+      description: 'Chứng nhận đóng góp tích cực và nổi bật trong ban kỹ thuật và truyền thông báo chí đại học, tham gia biên tập ấn phẩm và truyền thông sự kiện công nghệ sinh viên.'
     },
     {
-      id: 'lg_code',
-      title: 'National Finalist — Dream Code',
-      issuer: 'LG Electronics Vietnam',
-      badge: 'FINALIST',
-      image: '/certificates/lg_dream_code.jpg',
+      id: 'gmc_music_club',
+      category: 'club_skill',
+      categoryLabel: 'CLB & Kỹ Năng Mềm',
+      badge: 'CLB ÂM NHẠC',
+      title: 'Thành Tích Xuất Sắc — Đêm Nhạc "Under the Baubles"',
+      titleEn: 'Outstanding Participation — "Under the Baubles" Musical Night',
+      issuer: 'Greenwich Music Club (GMC) & Ban CTSV',
+      recipient: 'Nguyen Van Duc',
+      image: '/certificates/cert_gmc_music_club.jpg',
       year: '2024',
-      description: 'National Grand Finalist in the Algorithmic Programming & Technology Innovation Challenge hosted by LG Electronics Vietnam.'
+      verificationRef: 'Chủ nhiệm CLB Lê Tất Chương & Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh',
+      description: 'Vinh danh đóng góp nổi bật trong ban tổ chức và tham gia biểu diễn tại đêm đại nhạc hội "Under the Baubles", khẳng định kỹ năng tổ chức sự kiện, gắn kết đội ngũ và kỹ năng mềm.'
     },
   ];
+
+  const filteredCertificates = certCategoryFilter === 'all' 
+    ? certificates 
+    : certificates.filter((c) => c.category === certCategoryFilter);
 
   const workflowSteps = [
     {
@@ -820,17 +866,53 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             Verified Milestones
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#66625d] font-sans mb-2.5">
+          <p className="text-[11px] sm:text-xs text-[#66625d] font-sans mb-2">
             Click any certificate to inspect full high-resolution credentials:
           </p>
 
-          {/* 4 Certificate Showcase Rows on Right Side */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-            {certificates.map((cert) => (
+          {/* Category Tabs: Chuyên Ngành vs CLB & Kỹ Năng */}
+          <div className="flex items-center gap-1.5 mb-2.5 p-1 rounded-xl bg-black/[0.04] border border-black/[0.06] w-full">
+            <button
+              onClick={() => setCertCategoryFilter('all')}
+              className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                certCategoryFilter === 'all'
+                  ? 'bg-white text-black shadow-sm'
+                  : 'text-[#777] hover:text-black'
+              }`}
+            >
+              Tất cả (5)
+            </button>
+            <button
+              onClick={() => setCertCategoryFilter('academic')}
+              className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                certCategoryFilter === 'academic'
+                  ? 'bg-white text-[#9a6728] shadow-sm'
+                  : 'text-[#777] hover:text-black'
+              }`}
+            >
+              <span>🎓</span>
+              <span>Chuyên Ngành (3)</span>
+            </button>
+            <button
+              onClick={() => setCertCategoryFilter('club_skill')}
+              className={`flex-1 py-1 px-2 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                certCategoryFilter === 'club_skill'
+                  ? 'bg-white text-[#4f46e5] shadow-sm'
+                  : 'text-[#777] hover:text-black'
+              }`}
+            >
+              <span>🎭</span>
+              <span>CLB & Kỹ Năng (2)</span>
+            </button>
+          </div>
+
+          {/* Certificate Showcase Grid on Right Side */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[50vh] overflow-y-auto pr-1">
+            {filteredCertificates.map((cert) => (
               <div
                 key={cert.id}
                 onClick={() => handleOpenCert(cert)}
-                className="group relative rounded-2xl bg-white/95 border border-black/[0.08] hover:border-[#bfa074] p-2.5 sm:p-3 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl cursor-pointer hover:shadow-[0_8px_25px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
+                className="group relative rounded-2xl bg-white/95 border border-black/[0.08] hover:border-[#bfa074] p-2.5 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl cursor-pointer hover:shadow-[0_8px_25px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
               >
                 <div>
                   <div className="relative aspect-[16/9] max-h-24 w-full rounded-xl overflow-hidden mb-1.5 border border-black/[0.08] bg-black/5">
@@ -840,17 +922,24 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-1.5">
-                      <span className="text-[8.5px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/80 text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end justify-between p-1.5">
+                      <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/85 text-white">
                         {cert.badge}
+                      </span>
+                      <span className={`text-[7.5px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                        cert.category === 'academic' 
+                          ? 'bg-[#c5a880]/90 text-black' 
+                          : 'bg-[#6366f1]/90 text-white'
+                      }`}>
+                        {cert.category === 'academic' ? '🎓 Chuyên ngành' : '🎭 CLB'}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-xs sm:text-sm font-bold text-[#111113] group-hover:text-[#8c7355] transition-colors line-clamp-1 mb-0.5">
+                  <h3 className="text-xs font-bold text-[#111113] group-hover:text-[#8c7355] transition-colors line-clamp-1 mb-0.5">
                     {cert.title}
                   </h3>
-                  <p className="text-[10px] text-[#777] font-mono line-clamp-1">
+                  <p className="text-[9.5px] text-[#777] font-mono line-clamp-1">
                     {cert.issuer}
                   </p>
                 </div>
@@ -1282,18 +1371,39 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             />
 
             <div className="w-full text-left px-2">
-              <div className="flex items-center justify-between gap-3 mb-1">
-                <h3 className="text-base sm:text-lg font-bold text-[#111113] font-sans">
-                  {inspectedCert.title}
-                </h3>
-                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-black/5 text-[#8c7355] border border-black/10">
-                  {inspectedCert.badge}
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full ${
+                    inspectedCert.category === 'academic'
+                      ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                      : 'bg-indigo-100 text-indigo-800 border border-indigo-200'
+                  }`}>
+                    {inspectedCert.category === 'academic' ? '🎓 Chuyên Ngành & Học Thuật' : '🎭 CLB & Kỹ Năng Mềm'}
+                  </span>
+                  <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-black/5 text-[#8c7355] border border-black/10">
+                    {inspectedCert.badge}
+                  </span>
+                </div>
+                <span className="text-xs font-mono font-semibold text-[#888]">
+                  Năm {inspectedCert.year}
                 </span>
               </div>
-              <p className="text-xs font-mono text-[#666] mb-2 font-medium">
-                {inspectedCert.issuer} • {inspectedCert.year}
-              </p>
-              <p className="text-xs text-[#444] font-sans leading-relaxed">
+
+              <h3 className="text-base sm:text-xl font-bold text-[#111113] font-sans mb-1">
+                {inspectedCert.title}
+              </h3>
+
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-[#666] mb-2.5 font-medium">
+                <span>Cấp bởi: <strong className="text-[#222]">{inspectedCert.issuer}</strong></span>
+                {inspectedCert.recipient && (
+                  <span>Khen tặng: <strong className="text-[#222]">{inspectedCert.recipient}</strong></span>
+                )}
+                {inspectedCert.verificationRef && (
+                  <span className="text-[#8c7355]">Xác thực: <strong>{inspectedCert.verificationRef}</strong></span>
+                )}
+              </div>
+
+              <p className="text-xs sm:text-sm text-[#444] font-sans leading-relaxed bg-black/[0.02] p-3 rounded-2xl border border-black/[0.05]">
                 {inspectedCert.description}
               </p>
             </div>

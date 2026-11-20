@@ -302,10 +302,11 @@ const INITIAL_SEED_DATA = {
     5: { id: 5, name: 'VAVA CMS (SharePoint Architecture)', count: 142, category: 'CMS' },
   },
   certificateViews: {
-    top3: { name: 'Top 3 Student Greenwich 2024', count: 312 },
-    bootcamp: { name: '2nd Prize Hospital 199 Bootcamp', count: 184 },
-    best_club: { name: 'Best Club of the Year (President)', count: 146 },
-    lg_code: { name: 'National Finalist LG Dream Code', count: 128 },
+    top3_2024: { name: 'Top 3 Student Greenwich 2024', count: 312 },
+    best_student_icm_2026: { name: 'Thủ Khoa Môn Quản Trị Thông Tin & Nội Dung', count: 248 },
+    bootcamp_innovation_2025: { name: 'Giải Nhì Impact Innovation Bootcamp 2025', count: 184 },
+    gnews_club_2024: { name: 'CLB Báo Chí Greenwich (GNews)', count: 156 },
+    gmc_music_club: { name: 'CLB Âm Nhạc (Under the Baubles)', count: 138 },
   },
   deviceBreakdown: {
     Desktop: 68.4,

@@ -57,6 +57,7 @@ export const MobilePortfolio = () => {
   const [techCategoryFilter, setTechCategoryFilter] = useState('all');
   const [projectFilter, setProjectFilter] = useState('all');
   const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const [certCategoryFilter, setCertCategoryFilter] = useState('all'); // 'all', 'academic', 'club_skill'
 
   // Quick Message state
   const [senderName, setSenderName] = useState('');
@@ -208,43 +209,88 @@ export const MobilePortfolio = () => {
   ];
 
   const certificates = [
+    // ----------------------------------------------------
+    // NHÓM 1: HỌC TẬP CHUYÊN NGÀNH & ĐỔI MỚI CÔNG NGHỆ
+    // ----------------------------------------------------
     {
-      id: 'top3',
-      title: 'Top 3 Student Greenwich Vietnam 2024',
-      issuer: 'University of Greenwich Vietnam',
+      id: 'top3_2024',
+      category: 'academic',
+      categoryLabel: 'Chuyên Ngành & Học Thuật',
+      badge: 'TOP 3 TOÀN KHÓA',
+      title: 'Top 3 Sinh Viên Xuất Sắc — Summer 2024',
+      titleEn: 'Top 3 Outstanding Student — Summer 2024',
+      issuer: 'University of Greenwich (Vietnam)',
+      recipient: 'Nguyen Van Duc (GCD230006)',
       year: '2024',
-      badge: 'ACADEMIC EXCELLENCE',
-      image: '/certificates/greenwich_top3_2024.jpg',
-      description: 'Official Certificate of Recognition for achieving Top 3 Student honors at University of Greenwich Vietnam (Da Nang Campus).'
+      image: '/certificates/cert_top3_2024.jpg',
+      verificationRef: 'GKDN240149 • QĐ: 157/QĐ-FPTUDN',
+      description: 'Vinh danh thành tích học tập vượt trội, đứng trong Top 3 sinh viên có điểm GPA cao nhất toàn khóa cử nhân Quốc tế Greenwich (Đà Nẵng Campus).'
     },
     {
-      id: 'bootcamp',
-      title: '2nd Prize Hospital 199 Innovation Bootcamp',
-      issuer: 'Hospital 199 (Ministry of Public Security)',
-      year: '2024',
-      badge: '2ND PRIZE WINNER',
-      image: '/certificates/bootcamp_2nd_prize.jpg',
-      description: 'Won 2nd Prize with healthcare digital transformation solution evaluated by medical professionals and tech leaders.'
+      id: 'best_student_icm_2026',
+      category: 'academic',
+      categoryLabel: 'Chuyên Ngành & Học Thuật',
+      badge: 'THỦ KHOA MÔN HỌC',
+      title: 'Thủ Khoa Môn Quản Trị Thông Tin & Nội Dung',
+      titleEn: 'Best Student: Information & Content Management',
+      issuer: 'Greenwich International Bachelor Program',
+      recipient: 'Nguyen Van Duc (GCD230006)',
+      year: '2026',
+      image: '/certificates/cert_best_student_icm_2026.jpg',
+      verificationRef: 'QĐ: 181 QH-PPTUDN • GKD2300025',
+      description: 'Thủ khoa đạt điểm số xuất sắc nhất bộ môn Information and Content Management (COMP1643) kỳ Summer Trimester 2026, chứng nhận bởi Giám đốc Phân hiệu TS. Nguyễn Duy Nghiêm.'
     },
     {
-      id: 'best_club',
-      title: 'Best Club of the Year (President)',
-      issuer: 'University of Greenwich Vietnam',
+      id: 'bootcamp_innovation_2025',
+      category: 'academic',
+      categoryLabel: 'Chuyên Ngành & Học Thuật',
+      badge: 'GIẢI NHÌ TOÀN QUỐC',
+      title: 'Giải Nhì Toàn Quốc — Impact Innovation Bootcamp 2025',
+      titleEn: '2nd Prize Winner — Impact Innovation Bootcamp 2025',
+      issuer: 'Greenwich Vietnam & Đổi Mới Sáng Tạo Bệnh Viện',
+      recipient: 'Nguyen Van Duc (GCD230006)',
+      year: '2025',
+      image: '/certificates/cert_bootcamp_innovation_2025.jpg',
+      verificationRef: 'Director of Da Nang Campus: Dr. Nguyen Duy Nghiem',
+      description: 'Giải Nhì cuộc thi Đổi mới Sáng tạo Công nghệ (Impact Innovation Bootcamp 2025) với giải pháp số hóa và chuyển đổi số quy trình y tế cộng đồng.'
+    },
+
+    // ----------------------------------------------------
+    // NHÓM 2: CLB & KỸ NĂNG MỀM
+    // ----------------------------------------------------
+    {
+      id: 'gnews_club_2024',
+      category: 'club_skill',
+      categoryLabel: 'CLB & Kỹ Năng Mềm',
+      badge: 'CLB BÁO CHÍ',
+      title: 'Thành Viên Tích Cực — CLB Báo Chí GNews 2024',
+      titleEn: 'Active Member — Greenwich Newspaper Club (GNews) 2024',
+      issuer: 'Ban Công Tác Sinh Viên & CLB GNews',
+      recipient: 'Nguyen Van Duc',
       year: '2024',
-      badge: 'LEADERSHIP EXCELLENCE',
-      image: '/certificates/best_club_2024.jpg',
-      description: 'Awarded Best Club of the Year as President of IT Club, leading 80+ student engineers across tech workshops and hackathons.'
+      image: '/certificates/cert_gnews_club_2024.jpg',
+      verificationRef: 'Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh & Ban Chủ Nhiệm GNews',
+      description: 'Chứng nhận đóng góp tích cực và nổi bật trong ban kỹ thuật và truyền thông báo chí đại học, tham gia biên tập ấn phẩm và truyền thông sự kiện công nghệ sinh viên.'
     },
     {
-      id: 'lg_code',
-      title: 'National Finalist LG Dream Code 2024',
-      issuer: 'LG Electronics Development Center',
+      id: 'gmc_music_club',
+      category: 'club_skill',
+      categoryLabel: 'CLB & Kỹ Năng Mềm',
+      badge: 'CLB ÂM NHẠC',
+      title: 'Thành Tích Xuất Sắc — Đêm Nhạc "Under the Baubles"',
+      titleEn: 'Outstanding Participation — "Under the Baubles" Musical Night',
+      issuer: 'Greenwich Music Club (GMC) & Ban CTSV',
+      recipient: 'Nguyen Van Duc',
       year: '2024',
-      badge: 'NATIONAL FINALIST',
-      image: '/certificates/lg_dream_code.jpg',
-      description: 'Competed with over 500+ top algorithmic programmers nationwide, solving complex distributed logic challenges.'
-    }
+      image: '/certificates/cert_gmc_music_club.jpg',
+      verificationRef: 'Chủ nhiệm CLB Lê Tất Chương & Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh',
+      description: 'Vinh danh đóng góp nổi bật trong ban tổ chức và tham gia biểu diễn tại đêm đại nhạc hội "Under the Baubles", khẳng định kỹ năng tổ chức sự kiện, gắn kết đội ngũ và kỹ năng mềm.'
+    },
   ];
+
+  const filteredCertificates = certCategoryFilter === 'all'
+    ? certificates
+    : certificates.filter((c) => c.category === certCategoryFilter);
 
   const projectGallery = inspectedProject?.images && inspectedProject.images.length > 0
     ? inspectedProject.images
@@ -669,13 +715,49 @@ export const MobilePortfolio = () => {
           <h2 className="text-2xl font-black font-sans uppercase tracking-tight text-[#111113]">
             Verified Honors
           </h2>
-          <p className="text-xs text-[#666] font-sans mt-0.5">
+          <p className="text-xs text-[#666] font-sans mt-0.5 mb-2.5">
             Tap any credential to view verified official certificate:
           </p>
+
+          {/* Category Filter Pills on Mobile */}
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/[0.04] border border-black/[0.06] w-full">
+            <button
+              onClick={() => setCertCategoryFilter('all')}
+              className={`flex-1 py-1 px-1.5 rounded-lg text-[9.5px] font-mono font-bold transition-all text-center ${
+                certCategoryFilter === 'all'
+                  ? 'bg-white text-black shadow-xs'
+                  : 'text-[#666]'
+              }`}
+            >
+              Tất cả (5)
+            </button>
+            <button
+              onClick={() => setCertCategoryFilter('academic')}
+              className={`flex-1 py-1 px-1.5 rounded-lg text-[9.5px] font-mono font-bold transition-all flex items-center justify-center gap-0.5 ${
+                certCategoryFilter === 'academic'
+                  ? 'bg-white text-[#9a6728] shadow-xs'
+                  : 'text-[#666]'
+              }`}
+            >
+              <span>🎓</span>
+              <span>Chuyên Ngành (3)</span>
+            </button>
+            <button
+              onClick={() => setCertCategoryFilter('club_skill')}
+              className={`flex-1 py-1 px-1.5 rounded-lg text-[9.5px] font-mono font-bold transition-all flex items-center justify-center gap-0.5 ${
+                certCategoryFilter === 'club_skill'
+                  ? 'bg-white text-[#4f46e5] shadow-xs'
+                  : 'text-[#666]'
+              }`}
+            >
+              <span>🎭</span>
+              <span>CLB & Kỹ Năng (2)</span>
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-2.5">
-          {certificates.map((cert) => (
+          {filteredCertificates.map((cert) => (
             <div
               key={cert.id}
               onClick={() => handleOpenCert(cert)}
@@ -689,9 +771,16 @@ export const MobilePortfolio = () => {
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute top-1 left-1">
-                    <span className="text-[7.5px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/80 text-white">
+                  <div className="absolute top-1 left-1 flex flex-col gap-1">
+                    <span className="text-[7px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/80 text-white">
                       {cert.badge}
+                    </span>
+                  </div>
+                  <div className="absolute top-1 right-1">
+                    <span className={`text-[7px] font-mono font-bold px-1 py-0.5 rounded ${
+                      cert.category === 'academic' ? 'bg-[#c5a880] text-black' : 'bg-[#6366f1] text-white'
+                    }`}>
+                      {cert.category === 'academic' ? '🎓 Ngành' : '🎭 CLB'}
                     </span>
                   </div>
                 </div>
@@ -974,13 +1063,31 @@ export const MobilePortfolio = () => {
               className="w-full max-h-[50vh] object-contain rounded-2xl border border-black/10 shadow-sm mb-3"
             />
 
+            <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+              <span className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                inspectedCert.category === 'academic'
+                  ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                  : 'bg-indigo-100 text-indigo-800 border border-indigo-200'
+              }`}>
+                {inspectedCert.category === 'academic' ? '🎓 Chuyên Ngành' : '🎭 CLB & Kỹ Năng'}
+              </span>
+              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-black/5 text-[#8c7355] border border-black/10">
+                {inspectedCert.badge}
+              </span>
+            </div>
+
             <h3 className="text-sm font-bold text-[#111113] font-sans mb-1">
               {inspectedCert.title}
             </h3>
-            <p className="text-[10px] font-mono text-[#8c7355] mb-2">
-              {certIssuerBadge(inspectedCert)}
-            </p>
-            <p className="text-xs text-[#555] font-sans leading-relaxed">
+            
+            <div className="text-[10px] font-mono text-[#666] mb-2 space-y-0.5">
+              <p>Cấp bởi: <strong className="text-black">{inspectedCert.issuer}</strong> ({inspectedCert.year})</p>
+              {inspectedCert.verificationRef && (
+                <p className="text-[#8c7355]">Xác thực: {inspectedCert.verificationRef}</p>
+              )}
+            </div>
+
+            <p className="text-xs text-[#555] font-sans leading-relaxed bg-black/[0.02] p-2.5 rounded-xl border border-black/5">
               {inspectedCert.description}
             </p>
           </div>
