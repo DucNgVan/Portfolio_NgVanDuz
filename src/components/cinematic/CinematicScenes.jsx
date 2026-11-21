@@ -86,6 +86,8 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
   const [isCertZoomed, setIsCertZoomed] = useState(false);
   const [certCategoryFilter, setCertCategoryFilter] = useState('all'); // 'all', 'academic', 'club_skill'
@@ -211,24 +213,61 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
     }
   };
 
+  const getCardStep = () => {
+    if (!projectCarouselRef.current) return 360;
+    const firstCard = projectCarouselRef.current.firstElementChild;
+    if (!firstCard) return 360;
+    const gap = window.innerWidth >= 640 ? 20 : 16;
+    return firstCard.offsetWidth + gap;
+  };
+
   const handleCarouselScroll = () => {
     if (!projectCarouselRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = projectCarouselRef.current;
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    const cardWidth = 310;
-    const activeIdx = Math.round(scrollLeft / cardWidth);
+    setCanScrollLeft(scrollLeft > 15);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 15);
+    const step = getCardStep();
+    const activeIdx = Math.round(scrollLeft / (step || 1));
     setActiveProjectIndex(Math.min(activeIdx, Math.max(0, filteredProjects.length - 1)));
   };
 
   const scrollProjects = (direction) => {
     if (!projectCarouselRef.current) return;
-    const cardWidth = 310;
+    const step = getCardStep();
     projectCarouselRef.current.scrollBy({
-      left: direction * cardWidth,
+      left: direction * step,
       behavior: 'smooth',
     });
   };
+
+  const scrollToProject = (index) => {
+    if (!projectCarouselRef.current) return;
+    const step = getCardStep();
+    projectCarouselRef.current.scrollTo({
+      left: index * step,
+      behavior: 'smooth',
+    });
+  };
+
+  // Auto-glide effect: smoothly advances projects every 3.8s, pauses on hover/interaction
+  useEffect(() => {
+    if (!isAutoPlay || isCarouselHovered || filteredProjects.length <= 1) return;
+
+    const interval = setInterval(() => {
+      if (!projectCarouselRef.current) return;
+      const { scrollLeft, scrollWidth, clientWidth } = projectCarouselRef.current;
+      const step = getCardStep();
+      const maxScroll = scrollWidth - clientWidth - 15;
+
+      if (scrollLeft >= maxScroll) {
+        projectCarouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        projectCarouselRef.current.scrollBy({ left: step, behavior: 'smooth' });
+      }
+    }, 3800);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlay, isCarouselHovered, filteredProjects.length]);
 
   const handleCopyEmail = async () => {
     try {
@@ -257,95 +296,95 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
 
   const certificates = [
     // ----------------------------------------------------
-    // NHÓM 1: HỌC TẬP CHUYÊN NGÀNH & ĐỔI MỚI CÔNG NGHỆ
+    // GROUP 1: ACADEMIC EXCELLENCE & TECH INNOVATION
     // ----------------------------------------------------
     {
       id: 'top3_2024',
       category: 'academic',
-      categoryLabel: 'Chuyên Ngành & Học Thuật',
-      badge: 'TOP 3 TOÀN KHÓA',
-      title: 'Top 3 Sinh Viên Xuất Sắc — Summer 2024',
-      titleEn: 'Top 3 Outstanding Student — Summer 2024',
+      categoryLabel: 'Academic & Honors',
+      badge: 'TOP 3 IN COHORT',
+      title: 'Top 3 Outstanding Students — Summer 2024',
+      titleEn: 'Top 3 Outstanding Students — Summer 2024',
       issuer: 'University of Greenwich (Vietnam)',
       recipient: 'Nguyen Van Duc (GCD230006)',
       image: '/certificates/cert_top3_2024.jpg',
       year: '2024',
-      verificationRef: 'GKDN240149 • QĐ: 157/QĐ-FPTUDN',
-      description: 'Vinh danh thành tích học tập vượt trội, đứng trong Top 3 sinh viên có điểm GPA cao nhất toàn khóa cử nhân Quốc tế Greenwich (Đà Nẵng Campus).'
+      verificationRef: 'GKDN240149 • Decision: 157/QĐ-FPTUDN',
+      description: 'Honored for exceptional academic excellence, ranking in the Top 3 highest GPA students across the entire Greenwich International Bachelor cohort (Da Nang Campus).'
     },
     {
       id: 'best_student_icm_2026',
       category: 'academic',
-      categoryLabel: 'Chuyên Ngành & Học Thuật',
-      badge: 'THỦ KHOA MÔN HỌC',
-      title: 'Thủ Khoa Môn Quản Trị Thông Tin & Nội Dung',
-      titleEn: 'Best Student: Information & Content Management',
+      categoryLabel: 'Academic & Honors',
+      badge: 'TOP OF CLASS',
+      title: 'Top Student: Information & Content Management',
+      titleEn: 'Top Student: Information & Content Management',
       issuer: 'Greenwich International Bachelor Program',
       recipient: 'Nguyen Van Duc (GCD230006)',
       image: '/certificates/cert_best_student_icm_2026.jpg',
       year: '2026',
-      verificationRef: 'QĐ: 181 QH-PPTUDN • GKD2300025',
-      description: 'Thủ khoa đạt điểm số xuất sắc nhất bộ môn Information and Content Management (COMP1643) kỳ Summer Trimester 2026, chứng nhận bởi Giám đốc Phân hiệu TS. Nguyễn Duy Nghiêm.'
+      verificationRef: 'Decision: 181 QH-PPTUDN • GKD2300025',
+      description: 'Achieved the highest overall academic score in Information and Content Management (COMP1643) during the Summer Trimester 2026, certified by Campus Director Dr. Nguyen Duy Nghiem.'
     },
     {
       id: 'bootcamp_innovation_2025',
       category: 'academic',
-      categoryLabel: 'Chuyên Ngành & Học Thuật',
-      badge: 'GIẢI NHÌ TOÀN QUỐC',
-      title: 'Giải Nhì Toàn Quốc — Impact Innovation Bootcamp 2025',
+      categoryLabel: 'Academic & Innovation',
+      badge: '2ND PRIZE WINNER',
+      title: '2nd Prize Winner — Impact Innovation Bootcamp 2025',
       titleEn: '2nd Prize Winner — Impact Innovation Bootcamp 2025',
-      issuer: 'Greenwich Vietnam & Đổi Mới Sáng Tạo Bệnh Viện',
+      issuer: 'Greenwich Vietnam & Hospital 199 Innovation Hub',
       recipient: 'Nguyen Van Duc (GCD230006)',
       image: '/certificates/cert_bootcamp_innovation_2025.jpg',
       year: '2025',
-      verificationRef: 'Director of Da Nang Campus: Dr. Nguyen Duy Nghiem',
-      description: 'Giải Nhì cuộc thi Đổi mới Sáng tạo Công nghệ (Impact Innovation Bootcamp 2025) với giải pháp số hóa và chuyển đổi số quy trình y tế cộng đồng.'
+      verificationRef: 'Da Nang Campus Director: Dr. Nguyen Duy Nghiem',
+      description: 'Awarded 2nd Prize at the Impact Innovation Bootcamp 2025 for engineering practical digital transformation and smart public healthcare solutions.'
     },
 
     // ----------------------------------------------------
-    // NHÓM 2: CLB & KỸ NĂNG MỀM / CỐ VẤN
+    // GROUP 2: LEADERSHIP, MENTORSHIP & CLUBS
     // ----------------------------------------------------
     {
       id: 'peer_mentoring_2024',
       category: 'club_skill',
-      categoryLabel: 'CLB & Cố Vấn Học Thuật',
-      badge: 'MENTOR XUẤT SẮC',
-      title: 'Chứng Nhận Mentor Xuất Sắc — Greenwich Peer Mentoring',
+      categoryLabel: 'Leadership & Mentoring',
+      badge: 'OUTSTANDING MENTOR',
+      title: 'Outstanding Mentor — Greenwich Peer Mentoring Club',
       titleEn: 'Certificate of Recognition — Peer Mentoring Club (GPM)',
-      issuer: 'Greenwich Peer Mentoring Club & Ban CTSV',
+      issuer: 'Greenwich Peer Mentoring Club & Student Affairs Dept',
       recipient: 'Nguyen Van Duc',
       image: '/certificates/cert_peer_mentoring_2024.jpg',
       year: '2024',
-      verificationRef: 'Trưởng ngành QTKD: ThS. Nguyễn Minh Hải & Chủ nhiệm GPM: Đinh Văn Thanh Khởi',
-      description: 'Vinh danh đóng góp nổi bật và tích cực với vai trò Mentor hướng dẫn, hỗ trợ học tập và phát triển kỹ năng cho sinh viên khóa mới trong suốt 7 tuần Fall 2024.'
+      verificationRef: 'Head of Business: MSc. Nguyen Minh Hai & GPM President: Dinh Van Thanh Khoi',
+      description: 'Recognized for outstanding mentorship and dedication, coaching and guiding incoming students in academic coursework and technical skills throughout the 7-week Fall 2024 semester.'
     },
     {
       id: 'gnews_club_2024',
       category: 'club_skill',
-      categoryLabel: 'CLB & Kỹ Năng Mềm',
-      badge: 'CLB BÁO CHÍ',
-      title: 'Thành Viên Tích Cực — CLB Báo Chí GNews 2024',
+      categoryLabel: 'Clubs & Soft Skills',
+      badge: 'MEDIA & PRESS',
+      title: 'Active Member — Greenwich Newspaper Club (GNews) 2024',
       titleEn: 'Active Member — Greenwich Newspaper Club (GNews) 2024',
-      issuer: 'Ban Công Tác Sinh Viên & CLB GNews',
+      issuer: 'Student Affairs Department & GNews Editorial Board',
       recipient: 'Nguyen Van Duc',
       image: '/certificates/cert_gnews_club_2024.jpg',
       year: '2024',
-      verificationRef: 'Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh & Ban Chủ Nhiệm GNews',
-      description: 'Chứng nhận đóng góp tích cực và nổi bật trong ban kỹ thuật và truyền thông báo chí đại học, tham gia biên tập ấn phẩm và truyền thông sự kiện công nghệ sinh viên.'
+      verificationRef: 'Head of Student Affairs: Mai Doan Ngoc Tuyet Oanh & GNews Board',
+      description: 'Certified for active contributions to the university technical journalism board, leading content publishing, media production, and student tech event coverage.'
     },
     {
       id: 'gmc_music_club',
       category: 'club_skill',
-      categoryLabel: 'CLB & Kỹ Năng Mềm',
-      badge: 'CLB ÂM NHẠC',
-      title: 'Thành Tích Xuất Sắc — Đêm Nhạc "Under the Baubles"',
-      titleEn: 'Outstanding Participation — "Under the Baubles" Musical Night',
-      issuer: 'Greenwich Music Club (GMC) & Ban CTSV',
+      categoryLabel: 'Clubs & Soft Skills',
+      badge: 'MUSIC & ARTS',
+      title: "Outstanding Performance — 'Under the Baubles' Gala",
+      titleEn: "Outstanding Participation — 'Under the Baubles' Musical Night",
+      issuer: 'Greenwich Music Club (GMC) & Student Affairs Dept',
       recipient: 'Nguyen Van Duc',
       image: '/certificates/cert_gmc_music_club.jpg',
       year: '2024',
-      verificationRef: 'Chủ nhiệm CLB Lê Tất Chương & Trưởng Ban CTSV Mai Đoàn Ngọc Tuyết Oanh',
-      description: 'Vinh danh đóng góp nổi bật trong ban tổ chức và tham gia biểu diễn tại đêm đại nhạc hội "Under the Baubles", khẳng định kỹ năng tổ chức sự kiện, gắn kết đội ngũ và kỹ năng mềm.'
+      verificationRef: 'Club President: Le Tat Chuong & Student Affairs: Mai Doan Ngoc Tuyet Oanh',
+      description: "Honored for distinguished contributions to event management, team coordination, and live musical performance at the annual 'Under the Baubles' gala."
     },
   ];
 
@@ -804,7 +843,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
         className="absolute inset-0 flex items-start px-6 sm:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 lg:pt-26 pb-8 transition-opacity duration-300 pointer-events-auto overflow-hidden"
         style={{ opacity: s3.opacity, pointerEvents: s3.pointerEvents }}
       >
-        <div className="w-full max-w-xl lg:max-w-[44rem] xl:max-w-[48rem] flex flex-col items-start text-left">
+        <div className="w-full max-w-xl lg:max-w-[46rem] xl:max-w-[50rem] flex flex-col items-start text-left">
           
           {/* Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-1">
@@ -832,10 +871,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           </h2>
 
           <p className="text-[10px] sm:text-[11px] text-[#66625d] font-sans mb-2">
-            Nhấp vào từng thẻ để xem chi tiết kiến trúc, hình ảnh chất lượng cao và source code:
+            Click any project to inspect full architecture, interactive 3D demos, and source code:
           </p>
 
-          {/* Category Filter Chips & Carousel Glide Controls */}
+          {/* Category Filter Chips & Carousel Controls */}
           <div className="w-full flex items-center justify-between gap-2 mb-2.5">
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
               {filterCategories.map((cat) => (
@@ -853,37 +892,57 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               ))}
             </div>
 
-            {/* Carousel Navigation Arrows (< >) & Active Indicator */}
-            <div className="flex items-center gap-1 shrink-0 bg-black/5 p-0.5 rounded-xl border border-black/[0.06]">
+            {/* Auto-glide toggle & Arrow Controls (< >) */}
+            <div className="flex items-center gap-1.5 shrink-0">
               <button
-                onClick={() => scrollProjects(-1)}
-                disabled={!canScrollLeft}
-                className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
-                title="Xem dự án trước (Trượt sang trái)"
-                aria-label="Previous project"
+                type="button"
+                onClick={() => setIsAutoPlay(!isAutoPlay)}
+                className={`hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[9px] font-mono font-bold transition-all cursor-pointer border ${
+                  isAutoPlay
+                    ? 'bg-amber-500/10 text-amber-800 border-amber-500/25 shadow-sm'
+                    : 'bg-black/5 text-[#777] border-black/10'
+                }`}
+                title={isAutoPlay ? 'Auto-glide active (pauses on hover)' : 'Auto-glide paused (click to resume)'}
               >
-                <ChevronLeft className="w-3.5 h-3.5" />
+                <span className={`w-1.5 h-1.5 rounded-full ${isAutoPlay ? 'bg-amber-600 animate-pulse' : 'bg-neutral-400'}`} />
+                <span>{isAutoPlay ? 'Auto-Glide' : 'Manual'}</span>
               </button>
-              <span className="text-[9.5px] font-mono font-bold text-[#8c7355] px-1.5 tracking-wider">
-                {activeProjectIndex + 1}/{filteredProjects.length}
-              </span>
-              <button
-                onClick={() => scrollProjects(1)}
-                disabled={!canScrollRight}
-                className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
-                title="Xem dự án tiếp theo (Trượt sang phải)"
-                aria-label="Next project"
-              >
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+
+              <div className="flex items-center gap-1 bg-black/5 p-0.5 rounded-xl border border-black/[0.06]">
+                <button
+                  onClick={() => scrollProjects(-1)}
+                  disabled={!canScrollLeft}
+                  className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
+                  title="Previous project"
+                  aria-label="Previous project"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <span className="text-[9.5px] font-mono font-bold text-[#8c7355] px-1.5 tracking-wider">
+                  {activeProjectIndex + 1}/{filteredProjects.length}
+                </span>
+                <button
+                  onClick={() => scrollProjects(1)}
+                  disabled={!canScrollRight}
+                  className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
+                  title="Next project"
+                  aria-label="Next project"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Horizontal Gliding Carousel Track ("Thẻ dọc chuyển động ngang dần dần") */}
+          {/* Horizontal Gliding Carousel Track - EXACTLY 2 CARDS PER FRAME ON DESKTOP */}
           <div 
             ref={projectCarouselRef}
             onScroll={handleCarouselScroll}
-            className="w-full flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-0.5 select-none"
+            onMouseEnter={() => setIsCarouselHovered(true)}
+            onMouseLeave={() => setIsCarouselHovered(false)}
+            onTouchStart={() => setIsCarouselHovered(true)}
+            onTouchEnd={() => setIsCarouselHovered(false)}
+            className="w-full flex items-stretch gap-4 sm:gap-5 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-0.5 select-none"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {filteredProjects.map((proj, idx) => {
@@ -902,22 +961,22 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 <div 
                   key={proj.id}
                   onClick={() => handleOpenProject(proj)}
-                  className="w-[270px] sm:w-[290px] lg:w-[305px] shrink-0 snap-start flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3 sm:p-3.5 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
+                  className="w-full sm:w-[calc(50%-10px)] shrink-0 snap-start flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3.5 sm:p-4 lg:p-4.5 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_14px_36px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
                 >
                   <div>
                     {/* 1. Top Badges: Project Type + Numeric Index */}
-                    <div className="flex items-center justify-between gap-1.5 mb-2">
+                    <div className="flex items-center justify-between gap-1.5 mb-2.5">
                       {proj.id === 4 ? (
                         <div className="flex items-center gap-1">
-                          <span className="px-2 py-0.5 rounded-full text-[8px] font-mono font-bold tracking-wide uppercase border bg-indigo-500/15 text-indigo-800 border-indigo-500/30">
+                          <span className="px-2 py-0.5 rounded-full text-[8.5px] font-mono font-bold tracking-wide uppercase border bg-indigo-500/15 text-indigo-800 border-indigo-500/30">
                             🎓 Final Year
                           </span>
-                          <span className="px-2 py-0.5 rounded-full text-[8px] font-mono font-bold tracking-wide uppercase border bg-emerald-500/15 text-emerald-800 border-emerald-500/30">
+                          <span className="px-2 py-0.5 rounded-full text-[8.5px] font-mono font-bold tracking-wide uppercase border bg-emerald-500/15 text-emerald-800 border-emerald-500/30">
                             🏛️ University
                           </span>
                         </div>
                       ) : (
-                        <span className={`px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9px] font-mono font-bold tracking-wide uppercase border ${
+                        <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-wide uppercase border ${
                           proj.projectType === 'competition'
                             ? 'bg-amber-500/15 text-amber-800 border-amber-500/30'
                             : proj.projectType === 'final_year'
@@ -929,13 +988,13 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                           {proj.projectType === 'university' && '🏛️ University Project'}
                         </span>
                       )}
-                      <span className="text-[9px] font-mono font-bold text-[#8c7355]">
+                      <span className="text-[9.5px] font-mono font-bold text-[#8c7355]">
                         0{idx + 1}
                       </span>
                     </div>
 
-                    {/* 2. Crisp Mockup Image Preview (Uncropped, high-contrast, zero edge pixelation) */}
-                    <div className="relative aspect-[16/9.5] w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2.5 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
+                    {/* 2. Large Crisp Mockup Image Preview (Uncropped, high-contrast) */}
+                    <div className="relative aspect-[16/9.5] w-full rounded-xl sm:rounded-2xl overflow-hidden mb-3 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
                       {proj.image ? (
                         <img 
                           src={proj.image} 
@@ -958,21 +1017,21 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                     </div>
 
                     {/* 3. Bold Project Title */}
-                    <h3 className="text-xs sm:text-sm font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-1">
+                    <h3 className="text-sm sm:text-base font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-1">
                       {shortTitle}
                     </h3>
 
                     {/* 4. Two-line crisp tagline */}
-                    <p className="text-[10px] sm:text-[10.5px] text-[#555] font-sans line-clamp-2 leading-relaxed mb-2.5 min-h-[30px]">
+                    <p className="text-[11px] sm:text-[11.5px] text-[#555] font-sans line-clamp-2 leading-relaxed mb-3 min-h-[32px]">
                       {proj.tagline || proj.description}
                     </p>
 
                     {/* 5. Core Tech Badges */}
-                    <div className="flex items-center gap-1 overflow-hidden mb-3">
+                    <div className="flex items-center gap-1.5 overflow-hidden mb-3.5">
                       {coreTech.map((t) => (
                         <span 
                           key={t}
-                          className="px-1.5 py-0.5 rounded-md bg-black/[0.04] text-[8.5px] font-mono text-[#555] font-semibold truncate border border-black/[0.04]"
+                          className="px-2 py-0.5 rounded-md bg-black/[0.04] text-[9px] font-mono text-[#555] font-semibold truncate border border-black/[0.04]"
                         >
                           {t}
                         </span>
@@ -981,8 +1040,8 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                   </div>
 
                   {/* 6. Bottom Action Bar: GitHub Logo + Go Live + Details */}
-                  <div className="pt-2 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
-                    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                  <div className="pt-2.5 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
+                    <div className="flex items-center gap-1.5 shrink-0">
                       {/* GitHub Logo button (if has githubUrl) */}
                       {proj.githubUrl && (
                         <a
@@ -991,7 +1050,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
                           className="p-1.5 rounded-full bg-black/[0.05] hover:bg-[#111113] text-[#24292f] hover:text-white transition-all shadow-sm hover:scale-110 flex items-center justify-center cursor-pointer"
-                          title="Xem mã nguồn trên GitHub"
+                          title="View source code on GitHub"
                         >
                           <GithubIcon className="w-3.5 h-3.5 fill-current" />
                         </a>
@@ -1004,8 +1063,8 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
-                          title="Truy cập sản phẩm thực tế (Go Live)"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
+                          title="Open live production platform"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse" />
                           <span>Go Live</span>
@@ -1015,7 +1074,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                     </div>
 
                     {/* Details button */}
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm shrink-0">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[9px] font-mono font-bold transition-all shadow-sm shrink-0">
                       <span>Details</span>
                       <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </span>
@@ -1025,28 +1084,23 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             })}
           </div>
 
-          {/* Glide navigation hint & dot indicators */}
-          <div className="w-full flex items-center justify-between pt-2 px-1 text-[10px] font-mono text-[#777]">
-            <div className="flex items-center gap-1">
+          {/* Glide navigation dot indicators (no Vietnamese text) */}
+          <div className="w-full flex items-center justify-between pt-2.5 px-1 text-[10px] font-mono text-[#777]">
+            <div className="flex items-center gap-1.5">
               {filteredProjects.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
                   type="button"
-                  onClick={() => {
-                    if (projectCarouselRef.current) {
-                      const cardWidth = 310;
-                      projectCarouselRef.current.scrollTo({ left: dotIdx * cardWidth, behavior: 'smooth' });
-                    }
-                  }}
+                  onClick={() => scrollToProject(dotIdx)}
                   className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                    activeProjectIndex === dotIdx ? 'w-5 bg-[#8c7355]' : 'w-1.5 bg-black/15 hover:bg-black/30'
+                    activeProjectIndex === dotIdx ? 'w-6 bg-[#8c7355]' : 'w-2 bg-black/15 hover:bg-black/30'
                   }`}
-                  title={`Go to project ${dotIdx + 1}`}
+                  title={`Project 0${dotIdx + 1}`}
                 />
               ))}
             </div>
-            <span className="text-[9.5px] text-[#888] select-none">
-              ← Vuốt ngang hoặc bấm mũi tên để xem tiếp →
+            <span className="text-[9.5px] font-mono text-[#888] select-none">
+              {activeProjectIndex + 1} of {filteredProjects.length} Projects
             </span>
           </div>
 
@@ -1111,7 +1165,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           {/* Interactive Hint */}
           <p className="text-[10px] sm:text-[11px] text-neutral-400/90 font-sans text-center flex items-center justify-center gap-1.5 select-none mt-0.5">
             <span className="w-1 h-1 rounded-full bg-[#ffd066]/80" />
-            <span>Nhấp trực tiếp vào từng bệ bằng khen 3D để xem hồ sơ xác thực và chứng nhận chi tiết</span>
+            <span>Click directly on any 3D pedestal to inspect official credentials &amp; verification details</span>
           </p>
 
         </div>
@@ -1532,26 +1586,26 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                   type="button"
                   onClick={() => setIsCertZoomed(!isCertZoomed)}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[11px] font-mono text-neutral-200 hover:text-white transition-all cursor-pointer"
-                  title="Phóng to / thu nhỏ ảnh bằng khen"
+                  title="Toggle Zoom In / Out"
                 >
                   <Maximize2 className="w-3 h-3 text-[#ffd066]" />
-                  <span>{isCertZoomed ? 'Thu gọn' : 'Phóng to'}</span>
+                  <span>{isCertZoomed ? 'Fit Screen' : 'Expand'}</span>
                 </button>
                 <a
                   href={inspectedCert.image}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[11px] font-mono text-neutral-200 hover:text-white transition-all cursor-pointer"
-                  title="Mở xem ảnh gốc độ phân giải cao"
+                  title="View full high-resolution certificate"
                 >
                   <ExternalLink className="w-3 h-3 text-[#ffd066]" />
-                  <span>Ảnh gốc nét cao ↗</span>
+                  <span>Raw Image ↗</span>
                 </a>
                 <button
                   type="button"
                   onClick={handleCloseCertModal}
                   className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors cursor-pointer"
-                  aria-label="Đóng bằng khen"
+                  aria-label="Close certificate lightbox"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1562,7 +1616,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             <div 
               className="w-full flex items-center justify-center p-2 sm:p-3 rounded-2xl bg-black/70 border border-white/10 mb-4 shadow-inner overflow-hidden cursor-zoom-in"
               onClick={() => setIsCertZoomed(!isCertZoomed)}
-              title="Nhấp vào để phóng to / thu nhỏ"
+              title="Click to zoom in / out"
             >
               <img 
                 src={inspectedCert.image} 
@@ -1587,14 +1641,14 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                       ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
                       : 'bg-indigo-500/15 text-indigo-300 border border-indigo-500/30'
                   }`}>
-                    {inspectedCert.category === 'academic' ? '🎓 Chuyên Ngành & Học Thuật' : '🎭 CLB & Kỹ Năng Mềm'}
+                    {inspectedCert.category === 'academic' ? '🎓 Academic & Honors' : '🎭 Leadership & Extracurricular'}
                   </span>
                   <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-white/5 text-[#dfc58d] border border-white/10">
                     {inspectedCert.badge}
                   </span>
                 </div>
                 <span className="text-xs font-mono font-semibold text-neutral-400">
-                  Năm {inspectedCert.year}
+                  Year {inspectedCert.year}
                 </span>
               </div>
 
@@ -1603,12 +1657,12 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               </h3>
 
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-neutral-400 mb-2.5 font-medium">
-                <span>Cấp bởi: <strong className="text-neutral-200">{inspectedCert.issuer}</strong></span>
+                <span>Issued by: <strong className="text-neutral-200">{inspectedCert.issuer}</strong></span>
                 {inspectedCert.recipient && (
-                  <span>Khen tặng: <strong className="text-neutral-200">{inspectedCert.recipient}</strong></span>
+                  <span>Conferred to: <strong className="text-neutral-200">{inspectedCert.recipient}</strong></span>
                 )}
                 {inspectedCert.verificationRef && (
-                  <span className="text-[#dfc58d]">Xác thực: <strong>{inspectedCert.verificationRef}</strong></span>
+                  <span className="text-[#dfc58d]">Verification: <strong>{inspectedCert.verificationRef}</strong></span>
                 )}
               </div>
 
