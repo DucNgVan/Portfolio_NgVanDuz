@@ -45,6 +45,7 @@ import {
   VueIcon,
   JavaIcon,
   GitIcon,
+  GithubIcon,
   PostmanIcon,
   FirebaseIcon,
 } from '@/components/ui/TechIcons';
@@ -750,10 +751,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - 100% clean image preview without overlapping badges
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-16 sm:pt-20 pb-6 transition-opacity duration-300 pointer-events-auto"
+        className="absolute inset-0 flex items-start px-8 sm:px-12 lg:px-16 xl:px-20 pt-20 sm:pt-24 lg:pt-26 pb-8 transition-opacity duration-300 pointer-events-auto overflow-hidden"
         style={{ opacity: s3.opacity, pointerEvents: s3.pointerEvents }}
       >
-        <div className="w-full max-w-lg lg:max-w-[36rem] xl:max-w-[40rem] flex flex-col items-start text-left">
+        <div className="w-full max-w-xl lg:max-w-[42rem] xl:max-w-[46rem] flex flex-col items-start text-left">
           
           {/* Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-1">
@@ -766,7 +767,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           {/* Dynamic Interactive Large Headline */}
           <h2 
             style={largeTitleParallax}
-            className="text-2xl sm:text-3xl lg:text-4xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[0.95] mb-1.5 select-none cursor-default"
+            className="text-xl sm:text-2xl lg:text-3xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[1.0] mb-1 select-none cursor-default"
           >
             System Vault <br />
             <span 
@@ -780,12 +781,12 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </span>
           </h2>
 
-          <p className="text-[10.5px] sm:text-xs text-[#66625d] font-sans mb-2.5">
+          <p className="text-[10px] sm:text-[11px] text-[#66625d] font-sans mb-2">
             Nhấp vào từng thẻ để xem chi tiết kiến trúc, hình ảnh chất lượng cao và source code:
           </p>
 
           {/* Category Filter Chips & Pagination Controls */}
-          <div className="w-full flex items-center justify-between gap-2 mb-3">
+          <div className="w-full flex items-center justify-between gap-2 mb-2.5">
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
               {filterCategories.map((cat) => (
                 <button
@@ -830,8 +831,8 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             )}
           </div>
 
-          {/* Project 2x2 Cards Grid - Compact, Clean & Gọn Gàng */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          {/* Project 2x2 Cards Grid - Stable Height Across Pages */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 min-h-[440px] sm:min-h-[460px]">
             {currentProjects.map((proj, idx) => {
               const displayIndex = projectPage * PAGE_SIZE + idx + 1;
 
@@ -860,14 +861,20 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                   className="w-full rounded-2xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-2.5 sm:p-3 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_10px_28px_rgba(0,0,0,0.07)] cursor-pointer flex flex-col justify-between hover:-translate-y-0.5 select-none"
                 >
                   <div>
-                    {/* 1. Clean Mockup Image Preview (NO overlay badges!) */}
-                    <div className="relative aspect-[16/9.5] w-full rounded-xl overflow-hidden mb-2 border border-black/[0.06] bg-neutral-100">
+                    {/* 1. Crisp Mockup Image Preview (Uncropped, high-contrast, zero edge pixelation) */}
+                    <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden mb-2 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
                       {proj.image ? (
                         <img 
                           src={proj.image} 
                           alt={proj.title} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-300"
+                          style={{
+                            imageRendering: '-webkit-optimize-contrast',
+                            transform: 'translateZ(0)',
+                            backfaceVisibility: 'hidden',
+                          }}
                           loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center text-[#888] p-2 text-center">
@@ -883,37 +890,85 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                     </span>
 
                     {/* 3. Bold Project Title */}
-                    <h3 className="text-xs sm:text-sm font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-1">
+                    <h3 className="text-xs sm:text-sm font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-0.5">
                       {shortTitle}
                     </h3>
 
-                    {/* 4. Single-line crisp tagline (short & tidy) */}
+                    {/* 4. Single-line crisp tagline */}
                     <p className="text-[10px] sm:text-[10.5px] text-[#555] font-sans line-clamp-1 leading-snug mb-2">
                       {proj.tagline || proj.description}
                     </p>
                   </div>
 
-                  {/* 5. Minimal Bottom Bar: 2 Core Tech Tags + Details Button */}
+                  {/* 5. Bottom Action Bar: Tech Tags + GitHub Logo + Go Live + Details */}
                   <div className="pt-2 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
                     <div className="flex items-center gap-1 overflow-hidden">
                       {coreTech.map((t) => (
                         <span 
                           key={t}
-                          className="px-2 py-0.5 rounded-md bg-black/[0.04] text-[8.5px] sm:text-[9px] font-mono text-[#444] font-semibold truncate border border-black/[0.04]"
+                          className="px-1.5 py-0.5 rounded-md bg-black/[0.04] text-[8.5px] font-mono text-[#555] font-semibold truncate border border-black/[0.04]"
                         >
                           {t}
                         </span>
                       ))}
                     </div>
 
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[9px] sm:text-[9.5px] font-mono font-bold transition-all shadow-sm shrink-0">
-                      <span>Details</span>
-                      <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </span>
+                    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                      {/* GitHub Logo button (if has githubUrl) */}
+                      {proj.githubUrl && (
+                        <a
+                          href={proj.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1 sm:p-1.5 rounded-full bg-black/[0.05] hover:bg-[#111113] text-[#24292f] hover:text-white transition-all shadow-sm hover:scale-110 flex items-center justify-center cursor-pointer"
+                          title="Xem mã nguồn trên GitHub"
+                        >
+                          <GithubIcon className="w-3.5 h-3.5 fill-current" />
+                        </a>
+                      )}
+
+                      {/* Go Live button (if has liveDemo) */}
+                      {proj.liveDemo && (
+                        <a
+                          href={proj.liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
+                          title="Truy cập sản phẩm thực tế (Go Live)"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse" />
+                          <span>Go Live</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                      )}
+
+                      {/* Details button */}
+                      <span className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm">
+                        <span>Details</span>
+                        <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
             })}
+
+            {/* In-development slot placeholder on Page 2 to preserve clean 2-column balance */}
+            {currentProjects.length === 1 && (
+              <div className="hidden sm:flex w-full rounded-2xl border border-dashed border-black/[0.12] bg-white/40 p-4 flex-col items-center justify-center text-center select-none">
+                <div className="w-8 h-8 rounded-full bg-[#8c7355]/10 flex items-center justify-center mb-2">
+                  <Sparkles className="w-4 h-4 text-[#8c7355]" />
+                </div>
+                <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-[#8c7355] mb-1">
+                  IN ACTIVE DEVELOPMENT
+                </span>
+                <p className="text-[10.5px] text-[#666] font-sans max-w-[210px] leading-snug">
+                  Upcoming distributed backend microservices &amp; AI systems currently in production.
+                </p>
+              </div>
+            )}
           </div>
 
         </div>
