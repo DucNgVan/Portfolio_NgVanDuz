@@ -12,14 +12,48 @@ const Preloader = ({ onComplete }) => {
   const safeComplete = () => {
     if (hasCompletedRef.current) return;
     hasCompletedRef.current = true;
+    window.__preloaderActive = false;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.dispatchEvent(new CustomEvent('intro-complete'));
     onComplete();
   };
 
   useEffect(() => {
+    window.__preloaderActive = true;
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    if (typeof window !== 'undefined' && window.location.hash && window.location.hash !== '#admin') {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Lock page scrolling completely while intro preloader is active
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    const blockScroll = (e) => {
+      if (e.cancelable) e.preventDefault();
+    };
+    window.addEventListener('wheel', blockScroll, { passive: false });
+    window.addEventListener('touchmove', blockScroll, { passive: false });
+
     // 1. Check if user prefers reduced motion; skip immediately
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       safeComplete();
-      return;
+      return () => {
+        window.__preloaderActive = false;
+        document.body.style.overflow = prevBodyOverflow;
+        document.documentElement.style.overflow = prevHtmlOverflow;
+        window.removeEventListener('wheel', blockScroll);
+        window.removeEventListener('touchmove', blockScroll);
+      };
     }
 
     let modelLoaded = typeof window !== 'undefined' && Boolean(window.__cinematicModelLoaded);
@@ -83,8 +117,14 @@ const Preloader = ({ onComplete }) => {
             if (!fadeOutTimerRef.current && !hasCompletedRef.current) {
               fadeOutTimerRef.current = setTimeout(() => {
                 setFadeOut(true);
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
                 setTimeout(() => {
                   safeComplete();
+                  requestAnimationFrame(() => {
+                    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                  });
                 }, 650);
               }, 500);
             }
@@ -104,6 +144,11 @@ const Preloader = ({ onComplete }) => {
     }, 10000);
 
     return () => {
+      window.__preloaderActive = false;
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      window.removeEventListener('wheel', blockScroll);
+      window.removeEventListener('touchmove', blockScroll);
       window.removeEventListener('glb-loaded', handleGlbLoaded);
       window.removeEventListener('load', handleWindowLoad);
       clearTimeout(minTimer);

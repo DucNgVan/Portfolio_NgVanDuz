@@ -19,6 +19,36 @@ import { AdminPortal } from '@/components/admin/AdminPortal';
 function App() {
   const [loading, setLoading] = useState(true);
 
+  // Ensure default view starts at the very top of the page on initial load
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      if (window.location.hash && window.location.hash !== '#admin') {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, []);
+
+  const handlePreloaderComplete = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    setLoading(false);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 60);
+  };
+
   // Responsive device check (< 768px -> Mobile Experience)
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -98,7 +128,7 @@ function App() {
   return (
     <div className="min-h-screen bg-[#f8f7f4] text-[#111113] selection:bg-[#d8c8a8] selection:text-black relative overflow-x-hidden font-sans">
       {/* 1. Preloader Screen */}
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      {loading && <Preloader onComplete={handlePreloaderComplete} />}
 
       {/* 2. Custom Interactive Follower Lens (Desktop Only) */}
       {!isMobile && <CustomCursor />}

@@ -157,7 +157,32 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     }
   }, [smoothScrollToY]);
 
+  // Reset and lock at top (Scene 0) on intro completion & initial load
+  useEffect(() => {
+    const resetToTop = () => {
+      activeAnchorRef.current = 0;
+      activeSceneRef.current = 0;
+      setScrollProgress(0);
+      isSnappingRef.current = false;
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    window.addEventListener('intro-complete', resetToTop);
+    resetToTop();
+
+    return () => {
+      window.removeEventListener('intro-complete', resetToTop);
+    };
+  }, []);
+
   const handleScroll = useCallback(() => {
+    if (window.__preloaderActive) {
+      window.scrollTo(0, 0);
+      setScrollProgress(0);
+      return;
+    }
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     if (totalHeight <= 0) return;
     const progress = Math.max(0, Math.min(1, window.scrollY / totalHeight));
@@ -202,8 +227,8 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
   // 6. Wheel / Trackpad Gesture Controller (Prevents Momentum Overshoot!)
   useEffect(() => {
     const handleWheel = (e) => {
-      // Do not intercept if a modal lightbox is open
-      if (document.body.style.overflow === 'hidden') return;
+      // Do not intercept if preloader is active or a modal lightbox is open
+      if (window.__preloaderActive || document.body.style.overflow === 'hidden') return;
 
       // Do not intercept if user is actively scrolling inside an open modal dialog or scrollable textarea
       const target = e.target;
@@ -249,6 +274,7 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
   // 7. Touch Swiping for Mobile & Tablets
   useEffect(() => {
     const handleTouchStart = (e) => {
+      if (window.__preloaderActive) return;
       if (e.touches.length !== 1) return;
       if (document.body.style.overflow === 'hidden') return;
       const target = e.target;
@@ -263,6 +289,7 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     };
 
     const handleTouchMove = (e) => {
+      if (window.__preloaderActive) return;
       if (!isTouchActiveRef.current) return;
       if (document.body.style.overflow === 'hidden') return;
       const target = e.target;
@@ -314,7 +341,7 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
   // 8. Keyboard Navigation (Arrow Keys, Page Up/Down, Space, Home, End)
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (document.body.style.overflow === 'hidden') return;
+      if (window.__preloaderActive || document.body.style.overflow === 'hidden') return;
       const isEditing =
         ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
         document.activeElement?.isContentEditable;

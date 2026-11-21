@@ -79,6 +79,18 @@ export const MobilePortfolio = () => {
     };
   }, [inspectedProject, inspectedCert, mobileMenuOpen]);
 
+  // Ensure default view starts at top on initial load and intro completion
+  useEffect(() => {
+    const resetToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    window.addEventListener('intro-complete', resetToTop);
+    resetToTop();
+    return () => window.removeEventListener('intro-complete', resetToTop);
+  }, []);
+
   // Track visit on mobile mount
   useEffect(() => {
     analyticsService.trackVisit();
