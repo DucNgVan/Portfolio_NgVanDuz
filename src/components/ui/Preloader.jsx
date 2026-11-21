@@ -30,10 +30,10 @@ const Preloader = ({ onComplete }) => {
       return;
     }
 
-    // Safety fallback: allow the full handwriting animation (~3.35s) + hold (~0.45s) to complete
+    // Safety fallback: allow the handwriting animation (~1.7s) + hold (~0.2s) to complete
     const fallbackTimer = setTimeout(() => {
       startExit(0);
-    }, 4000);
+    }, 2200);
 
     return () => {
       clearTimeout(fallbackTimer);
@@ -75,7 +75,7 @@ const Preloader = ({ onComplete }) => {
               className="apple-ello-path"
               onAnimationEnd={(e) => {
                 if (e.animationName === 'drawAppleEllo') {
-                  startExit(400);
+                  startExit(150);
                 }
               }}
             />

@@ -199,17 +199,12 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
       // Do not intercept if a modal lightbox is open
       if (document.body.style.overflow === 'hidden') return;
 
-      // Do not intercept if scrolling inside a scrollable container (e.g. textarea, select, dialog)
+      // Do not intercept if user is actively scrolling inside an open modal dialog or scrollable textarea
       const target = e.target;
-      if (
-        target &&
-        target.closest &&
-        (target.closest('.overflow-y-auto') ||
-          target.closest('[role="dialog"]') ||
-          target.closest('textarea') ||
-          target.closest('input'))
-      ) {
-        return;
+      if (target && target.closest) {
+        if (target.closest('[role="dialog"]')) return;
+        const textarea = target.closest('textarea');
+        if (textarea && textarea.scrollHeight > textarea.clientHeight) return;
       }
 
       // Intercept wheel to prevent multi-page momentum fling
@@ -247,15 +242,10 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
       if (e.touches.length !== 1) return;
       if (document.body.style.overflow === 'hidden') return;
       const target = e.target;
-      if (
-        target &&
-        target.closest &&
-        (target.closest('.overflow-y-auto') ||
-          target.closest('[role="dialog"]') ||
-          target.closest('textarea') ||
-          target.closest('input'))
-      ) {
-        return;
+      if (target && target.closest) {
+        if (target.closest('[role="dialog"]')) return;
+        const textarea = target.closest('textarea');
+        if (textarea && textarea.scrollHeight > textarea.clientHeight) return;
       }
       touchStartYRef.current = e.touches[0].clientY;
       touchStartXRef.current = e.touches[0].clientX;
@@ -266,15 +256,10 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
       if (!isTouchActiveRef.current) return;
       if (document.body.style.overflow === 'hidden') return;
       const target = e.target;
-      if (
-        target &&
-        target.closest &&
-        (target.closest('.overflow-y-auto') ||
-          target.closest('[role="dialog"]') ||
-          target.closest('textarea') ||
-          target.closest('input'))
-      ) {
-        return;
+      if (target && target.closest) {
+        if (target.closest('[role="dialog"]')) return;
+        const textarea = target.closest('textarea');
+        if (textarea && textarea.scrollHeight > textarea.clientHeight) return;
       }
 
       const deltaY = touchStartYRef.current - e.touches[0].clientY;
@@ -355,16 +340,31 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // 10. Mouse position tracking for camera parallax & dynamic text tilt
+  // 10. Mouse position tracking for camera parallax & dynamic text tilt (RAF-throttled to avoid React render lag)
   useEffect(() => {
+    let rafId = null;
+    let pendingPos = null;
+
     const handleMouseMove = (e) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1;
       const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      setMousePos({ x, y });
+      pendingPos = { x, y };
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          if (pendingPos) {
+            setMousePos(pendingPos);
+          }
+          rafId = null;
+        });
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // 11. Navigation seek handler (Navbar links jump smoothly to scene milestones)

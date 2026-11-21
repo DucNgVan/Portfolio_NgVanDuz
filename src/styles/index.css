@@ -180,11 +180,11 @@
   animation: pencil-draw 2s linear infinite;
 }
 
-/* Official Apple Hello two-stage handwriting animation (Calm, moderate, buttery smooth pace) */
+/* Official Apple Hello two-stage handwriting animation (Fluid, confident, brisk luxury pace) */
 .apple-h1-path {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: drawAppleH1 1.1s cubic-bezier(0.35, 0, 0.25, 1) forwards;
+  animation: drawAppleH1 0.7s cubic-bezier(0.35, 0, 0.25, 1) forwards;
   will-change: stroke-dashoffset;
   filter: drop-shadow(0 2px 12px rgba(216, 200, 168, 0.45));
 }
@@ -192,7 +192,7 @@
 .apple-ello-path {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: drawAppleEllo 2.6s cubic-bezier(0.35, 0, 0.25, 1) 0.75s forwards;
+  animation: drawAppleEllo 1.35s cubic-bezier(0.35, 0, 0.25, 1) 0.35s forwards;
   will-change: stroke-dashoffset;
   filter: drop-shadow(0 2px 12px rgba(216, 200, 168, 0.45));
 }

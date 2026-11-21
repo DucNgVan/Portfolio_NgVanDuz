@@ -552,17 +552,19 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 30);
     camera.position.set(0.0, 0.14, 3.35);
 
-    // 2. WebGL Renderer
+    // 2. WebGL Renderer (High performance with Retina DPR clamping for silky smooth 60/120fps)
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
-        powerPreference: 'default',
+        powerPreference: 'high-performance',
         failIfMajorPerformanceCaveat: false,
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      // Clamping pixel ratio to max 1.6 saves ~37% GPU fragment shader fill-rate on Retina displays without quality loss
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+      renderer.setPixelRatio(dpr);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
       renderer.domElement.style.pointerEvents = 'auto';
@@ -693,6 +695,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     const pedestalNodes = [];
     const clickableMeshes = [];
     const textureLoader = new THREE.TextureLoader();
+    const maxAnisotropy = renderer?.capabilities?.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 16;
     const baseUrl = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') + '/';
 
     // Shared realistic textures for spotlight puddles and plinth shadows
@@ -769,15 +772,15 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       frameGroup.rotation.x = -0.22; // Gentle tilt facing viewer and model
       frameGroup.userData = { certData: cert };
 
-      const fw = 0.70;
-      const fh = 0.48;
+      const fw = 0.74;
+      const fh = 0.50;
       const fdepth = 0.024;
 
       // Outer Beveled Frame (Bright Satin Antique Gold)
       const outerFrameGeo = new THREE.BoxGeometry(fw, fh, fdepth);
       const outerFrameMat = new THREE.MeshStandardMaterial({
-        color: 0xd4b878, // Luminous satin gold frame (was 0x5a4d33)
-        roughness: 0.42,
+        color: 0xd4b878, // Luminous satin gold frame
+        roughness: 0.40,
         metalness: 0.65,
       });
       const outerFrame = new THREE.Mesh(outerFrameGeo, outerFrameMat);
@@ -787,7 +790,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       clickableMeshes.push(outerFrame);
 
       // Inner Matting Board (Dark museum matting board, maximizes contrast)
-      const matGeo = new THREE.PlaneGeometry(fw - 0.08, fh - 0.08);
+      const matGeo = new THREE.PlaneGeometry(fw - 0.06, fh - 0.06);
       const matMat = new THREE.MeshStandardMaterial({
         color: 0x08090f,
         roughness: 0.98,
@@ -798,30 +801,38 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       frameGroup.add(matMesh);
       clickableMeshes.push(matMesh);
 
-      // Certificate Artwork Plane (Archival matte paper with gentle warm self-luminance for clear legibility)
-      const certPlaneGeo = new THREE.PlaneGeometry(fw - 0.14, fh - 0.14);
+      // Certificate Artwork Plane with 16x Anisotropic Filtering & Self-Illumination for Maximum Text Clarity
+      const certPlaneGeo = new THREE.PlaneGeometry(fw - 0.10, fh - 0.10);
       const certMat = new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        roughness: 0.40,
+        roughness: 0.28,
         metalness: 0.0,
-        emissive: 0x242018,
-        emissiveIntensity: 0.28,
+        emissive: 0xffffff,
+        emissiveIntensity: 0.24,
       });
 
       const texUrl = `${baseUrl}${cert.image.replace(/^\//, '')}`;
-      textureLoader.load(
-        texUrl,
-        (tex) => {
-          if (isDisposed) return;
-          tex.colorSpace = THREE.SRGBColorSpace;
-          tex.minFilter = THREE.LinearMipmapLinearFilter;
-          tex.generateMipmaps = true;
-          certMat.map = tex;
-          certMat.needsUpdate = true;
-        },
-        undefined,
-        (err) => console.warn('Cert texture load err:', cert.image, err)
-      );
+      // Stagger texture load slightly after initial mount to eliminate initial load network bottleneck
+      setTimeout(() => {
+        if (isDisposed) return;
+        textureLoader.load(
+          texUrl,
+          (tex) => {
+            if (isDisposed) return;
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.anisotropy = maxAnisotropy;
+            tex.generateMipmaps = true;
+            tex.minFilter = THREE.LinearMipmapLinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            tex.needsUpdate = true;
+            certMat.map = tex;
+            certMat.emissiveMap = tex;
+            certMat.needsUpdate = true;
+          },
+          undefined,
+          (err) => console.warn('Cert texture load err:', cert.image, err)
+        );
+      }, 350 + idx * 80);
 
       const certMesh = new THREE.Mesh(certPlaneGeo, certMat);
       certMesh.position.set(0, fh / 2, fdepth / 2 + 0.003);
@@ -1280,6 +1291,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
     };
 
     window.addEventListener('resize', handleResize);
