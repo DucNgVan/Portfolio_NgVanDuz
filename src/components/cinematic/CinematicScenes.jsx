@@ -278,12 +278,12 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
     } catch {}
   };
 
-  // Generous plateau visibility windows across the extended 900vh scroll
+  // Generous plateau visibility windows across the extended 1050vh scroll
   const s1 = getScenePlateau(scrollProgress, 0.00, 0.00, 0.16, 0.23);
   const s2 = getScenePlateau(scrollProgress, 0.19, 0.26, 0.38, 0.45);
   const s3 = getScenePlateau(scrollProgress, 0.41, 0.48, 0.61, 0.68);
-  const s4 = getScenePlateau(scrollProgress, 0.64, 0.70, 0.82, 0.88);
-  const s5 = getScenePlateau(scrollProgress, 0.84, 0.89, 1.00, 1.00);
+  const s4 = getScenePlateau(scrollProgress, 0.62, 0.68, 0.86, 0.92);
+  const s5 = getScenePlateau(scrollProgress, 0.88, 0.93, 1.00, 1.00);
 
   // Mouse Parallax & Dynamic Color Shift for large typography (small text remains static)
   const mx = mousePos?.x || 0;

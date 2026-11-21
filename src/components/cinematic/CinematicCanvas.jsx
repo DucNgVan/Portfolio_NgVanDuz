@@ -515,7 +515,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       bgColor: new THREE.Color(0xf8f7f4),
     },
     {
-      progress: 0.76,
+      progress: 0.74,
       camPos: new THREE.Vector3(0.0, 0.55, 4.60), // Góc máy cao thoáng bao quát toàn bộ 5 bệ bằng khen và model
       camTarget: new THREE.Vector3(0.0, -0.15, -0.40),
       sideOffset: 0.0,
@@ -523,6 +523,16 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       lightIntensity: 0.70, // Elevated stage light so pedestals and frames are clearly visible & sculpted
       spotIntensity: 6.5,
       bgColor: new THREE.Color(0x020204), // Pure stage black / dark galaxy background
+    },
+    {
+      progress: 0.82,
+      camPos: new THREE.Vector3(0.0, 0.55, 4.60), // Giữ vững góc máy và ánh sáng trong suốt Hall of Honors
+      camTarget: new THREE.Vector3(0.0, -0.15, -0.40),
+      sideOffset: 0.0,
+      modelRotY: -2.356,
+      lightIntensity: 0.70,
+      spotIntensity: 6.5,
+      bgColor: new THREE.Color(0x020204),
     },
     {
       progress: 1.0,
@@ -1110,11 +1120,11 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       
       // Calculate Scene 4 Factor (0 outside, smoothly peaks at 1.0 around 0.76)
       let s4 = 0;
-      if (p >= 0.58 && p <= 0.92) {
-        if (p < 0.72) {
-          s4 = (p - 0.58) / (0.72 - 0.58);
-        } else if (p > 0.80) {
-          s4 = 1 - (p - 0.80) / (0.92 - 0.80);
+      if (p >= 0.58 && p <= 0.94) {
+        if (p < 0.70) {
+          s4 = (p - 0.58) / (0.70 - 0.58);
+        } else if (p > 0.86) {
+          s4 = 1 - (p - 0.86) / (0.94 - 0.86);
         } else {
           s4 = 1.0;
         }

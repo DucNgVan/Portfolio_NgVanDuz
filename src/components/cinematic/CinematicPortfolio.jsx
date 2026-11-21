@@ -49,7 +49,7 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
   }, []);
 
   // 2. Custom Silk-Smooth RAF Scroll with Cubic Ease-In-Out
-  const smoothScrollToY = useCallback((targetY, duration = 750) => {
+  const smoothScrollToY = useCallback((targetY, duration = 800) => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
@@ -81,10 +81,11 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
       } else {
         window.scrollTo(0, targetY);
         animationFrameRef.current = null;
-        // Hold lock for a brief cooldown buffer to swallow trailing trackpad inertia
+        // Hold lock for a cooldown buffer to swallow trailing trackpad inertia
+        const isLateScene = activeAnchorRef.current >= 0.70;
         setTimeout(() => {
           isSnappingRef.current = false;
-        }, 120);
+        }, isLateScene ? 240 : 130);
       }
     };
 
@@ -124,7 +125,11 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     const targetY = Math.round(targetAnchor * totalHeight);
 
     if (Math.abs(targetY - window.scrollY) > 4) {
-      smoothScrollToY(targetY, 750);
+      // The last 2 scenes (Honors & Contact) feature dramatic lighting, camera fly-through and
+      // dark/bright transitions. We allocate a calm, luxurious 1250ms duration so swiping feels deliberate and smooth.
+      const isLateSceneTransition = currentProgress >= 0.65 || targetAnchor >= 0.70;
+      const duration = isLateSceneTransition ? 1250 : 800;
+      smoothScrollToY(targetY, duration);
     }
   }, [getNextAnchor, smoothScrollToY]);
 
@@ -147,7 +152,8 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     // Only snap if not already at the anchor
     if (minDiff > 0.015) {
       activeAnchorRef.current = closestAnchor;
-      smoothScrollToY(Math.round(closestAnchor * totalHeight), 550);
+      const isLate = closestAnchor >= 0.70 || currentProgress >= 0.65;
+      smoothScrollToY(Math.round(closestAnchor * totalHeight), isLate ? 1050 : 600);
     }
   }, [smoothScrollToY]);
 
@@ -213,15 +219,19 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
       // If already in transition cooldown, ignore residual trackpad inertia
       if (isSnappingRef.current) return;
 
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const currentProgress = totalHeight > 0 ? window.scrollY / totalHeight : 0;
+      const isLateScene = currentProgress >= 0.65;
+
       const rawDelta = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY;
       wheelAccumulatorRef.current += rawDelta;
 
       if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
       wheelTimerRef.current = setTimeout(() => {
         wheelAccumulatorRef.current = 0;
-      }, 120);
+      }, isLateScene ? 180 : 120);
 
-      const THRESHOLD = 35; // px swipe sensitivity
+      const THRESHOLD = isLateScene ? 60 : 35; // px swipe sensitivity (higher resistance on late scenes to avoid abrupt jumping)
       if (Math.abs(wheelAccumulatorRef.current) >= THRESHOLD) {
         const direction = wheelAccumulatorRef.current > 0 ? 1 : -1;
         wheelAccumulatorRef.current = 0;
@@ -273,7 +283,11 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
         return;
       }
 
-      const TOUCH_THRESHOLD = 40;
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const currentProgress = totalHeight > 0 ? window.scrollY / totalHeight : 0;
+      const isLateScene = currentProgress >= 0.65;
+      const TOUCH_THRESHOLD = isLateScene ? 60 : 40;
+
       if (Math.abs(deltaY) >= TOUCH_THRESHOLD) {
         if (e.cancelable) e.preventDefault();
         isTouchActiveRef.current = false;
@@ -372,17 +386,18 @@ export const CinematicPortfolio = ({ onSwitchMode = () => {} }) => {
     activeAnchorRef.current = targetPercent;
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     const targetY = Math.round(targetPercent * totalHeight);
-    smoothScrollToY(targetY, 750);
+    const isLate = targetPercent >= 0.70;
+    smoothScrollToY(targetY, isLate ? 1250 : 800);
   };
 
   // 12. Replay from top handler
   const handleReplay = () => {
     activeAnchorRef.current = 0;
-    smoothScrollToY(0, 750);
+    smoothScrollToY(0, 800);
   };
 
   return (
-    <div className="relative min-h-[900vh] bg-[#f8f7f4] text-[#111113] selection:bg-[#d8c8a8] selection:text-black font-sans">
+    <div className="relative min-h-[1050vh] bg-[#f8f7f4] text-[#111113] selection:bg-[#d8c8a8] selection:text-black font-sans">
       {/* 1. Original Clean Menu Bar (as requested by user screenshot) */}
       <Navbar onNavigate={handleSelectScene} scrollProgress={scrollProgress} />
 

@@ -5,7 +5,7 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isDarkSection = scrollProgress >= 0.65 && scrollProgress <= 0.86;
+  const isDarkSection = scrollProgress >= 0.64 && scrollProgress <= 0.90;
 
   useEffect(() => {
     const handleScroll = () => {
