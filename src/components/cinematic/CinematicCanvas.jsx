@@ -1007,8 +1007,18 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     const handleClick = (e) => {
       // 1. MUST only be active when firmly inside Scene 4
       if (scene4FactorRef.current < 0.35) return;
-      // 2. Ignore clicks on top navbar, buttons, modals, interactive UI
-      if (e.target && e.target.closest && e.target.closest('nav, button, a, input, textarea, [role="button"], [role="dialog"]')) {
+
+      // 2. Prevent accidental raycasting when ANY modal is currently open or was closed within the last 450ms
+      if (
+        document.body.style.overflow === 'hidden' ||
+        document.querySelector('[role="dialog"]') ||
+        (window.__modalClosedTimestamp && Date.now() - window.__modalClosedTimestamp < 450)
+      ) {
+        return;
+      }
+
+      // 3. Ignore clicks on top navbar, buttons, modals, interactive UI
+      if (e.target && e.target.closest && e.target.closest('nav, button, a, input, textarea, [role="button"], [role="dialog"], [data-modal]')) {
         return;
       }
 
@@ -1068,9 +1078,15 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
         modelRoot.add(char);
         setModelLoaded(true);
+        window.__cinematicModelLoaded = true;
+        window.dispatchEvent(new CustomEvent('glb-loaded'));
       },
       undefined,
-      (err) => console.warn('Cinematic model load error:', err)
+      (err) => {
+        console.warn('Cinematic model load error:', err);
+        window.__cinematicModelLoaded = true;
+        window.dispatchEvent(new CustomEvent('glb-loaded'));
+      }
     );
 
     // 8. Render Loop with Spline Interpolation, Organic Micro-Breathing & Pedestal Spread

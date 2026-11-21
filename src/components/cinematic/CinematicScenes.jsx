@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { 
   AlertCircle,
@@ -82,7 +82,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const [techCategoryFilter, setTechCategoryFilter] = useState('all'); // 'all', 'backend', 'frontend', 'tools'
   const [selectedProjIndex, setSelectedProjIndex] = useState(0); // 0..4 (Active Cinema Spotlight)
   const [projectFilter, setProjectFilter] = useState('all');
-  const [projectPage, setProjectPage] = useState(0);
+  const projectCarouselRef = useRef(null);
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
   const [isCertZoomed, setIsCertZoomed] = useState(false);
   const [certCategoryFilter, setCertCategoryFilter] = useState('all'); // 'all', 'academic', 'club_skill'
@@ -101,9 +104,28 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
     analyticsService.trackEvent('project_inspect', { projectId: proj.id, title: proj.title });
   };
 
+  const handleCloseProjectModal = (e) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    window.__modalClosedTimestamp = Date.now();
+    setInspectedProject(null);
+  };
+
   const handleOpenCert = (cert) => {
     setInspectedCert(cert);
     analyticsService.trackEvent('cert_inspect', { certId: cert.id, title: cert.title });
+  };
+
+  const handleCloseCertModal = (e) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    window.__modalClosedTimestamp = Date.now();
+    setInspectedCert(null);
+    setIsCertZoomed(false);
   };
 
   // Listen for 3D Pedestal Clicks from CinematicCanvas
@@ -159,26 +181,54 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
     };
   }, [inspectedProject, inspectedCert]);
 
+  const countComp = githubProjects.filter((p) => p.projectType === 'competition').length;
+  const countFinal = githubProjects.filter((p) => p.projectType === 'final_year').length;
+  const countUniv = githubProjects.filter((p) => p.projectType === 'university' || p.id === 4).length;
+
   const filterCategories = [
-    { id: 'all', label: 'ALL (5)' },
-    { id: 'cms', label: 'SHAREPOINT CMS' },
-    { id: 'web', label: 'WEB & 3D' },
-    { id: 'backend', label: 'BACKEND' },
-    { id: 'mobile', label: 'MOBILE' },
+    { id: 'all', label: `All Projects (${githubProjects.length})` },
+    { id: 'competition', label: `Competition (${countComp})` },
+    { id: 'final_year', label: `Final Year (${countFinal})` },
+    { id: 'university', label: `University (${countUniv})` },
   ];
 
   const filteredProjects = githubProjects.filter((proj) => {
     if (projectFilter === 'all') return true;
-    if (projectFilter === 'cms') return proj.id === 5;
-    if (projectFilter === 'web') return proj.id === 1;
-    if (projectFilter === 'backend') return proj.id === 2 || proj.id === 3;
-    if (projectFilter === 'mobile') return proj.id === 4;
-    return true;
+    if (projectFilter === 'university') {
+      return proj.projectType === 'university' || proj.id === 4;
+    }
+    if (projectFilter === 'final_year') {
+      return proj.projectType === 'final_year';
+    }
+    return proj.projectType === projectFilter;
   });
 
-  const PAGE_SIZE = 4;
-  const totalPages = Math.ceil(filteredProjects.length / PAGE_SIZE);
-  const currentProjects = filteredProjects.slice(projectPage * PAGE_SIZE, (projectPage + 1) * PAGE_SIZE);
+  const handleSelectFilter = (filterId) => {
+    setProjectFilter(filterId);
+    setActiveProjectIndex(0);
+    if (projectCarouselRef.current) {
+      projectCarouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleCarouselScroll = () => {
+    if (!projectCarouselRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = projectCarouselRef.current;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    const cardWidth = 310;
+    const activeIdx = Math.round(scrollLeft / cardWidth);
+    setActiveProjectIndex(Math.min(activeIdx, Math.max(0, filteredProjects.length - 1)));
+  };
+
+  const scrollProjects = (direction) => {
+    if (!projectCarouselRef.current) return;
+    const cardWidth = 310;
+    projectCarouselRef.current.scrollBy({
+      left: direction * cardWidth,
+      behavior: 'smooth',
+    });
+  };
 
   const handleCopyEmail = async () => {
     try {
@@ -751,10 +801,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - 100% clean image preview without overlapping badges
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-start px-8 sm:px-12 lg:px-16 xl:px-20 pt-20 sm:pt-24 lg:pt-26 pb-8 transition-opacity duration-300 pointer-events-auto overflow-hidden"
+        className="absolute inset-0 flex items-start px-6 sm:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 lg:pt-26 pb-8 transition-opacity duration-300 pointer-events-auto overflow-hidden"
         style={{ opacity: s3.opacity, pointerEvents: s3.pointerEvents }}
       >
-        <div className="w-full max-w-xl lg:max-w-[42rem] xl:max-w-[46rem] flex flex-col items-start text-left">
+        <div className="w-full max-w-xl lg:max-w-[44rem] xl:max-w-[48rem] flex flex-col items-start text-left">
           
           {/* Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-1">
@@ -785,16 +835,13 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             Nhấp vào từng thẻ để xem chi tiết kiến trúc, hình ảnh chất lượng cao và source code:
           </p>
 
-          {/* Category Filter Chips & Pagination Controls */}
+          {/* Category Filter Chips & Carousel Glide Controls */}
           <div className="w-full flex items-center justify-between gap-2 mb-2.5">
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
               {filterCategories.map((cat) => (
                 <button
                   key={cat.id}
-                  onClick={() => {
-                    setProjectFilter(cat.id);
-                    setProjectPage(0);
-                  }}
+                  onClick={() => handleSelectFilter(cat.id)}
                   className={`px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-bold tracking-wider uppercase transition-all cursor-pointer ${
                     projectFilter === cat.id
                       ? 'bg-[#111113] text-white shadow-sm'
@@ -806,36 +853,40 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               ))}
             </div>
 
-            {totalPages > 1 && (
-              <div className="flex items-center gap-1 shrink-0 bg-black/5 p-0.5 rounded-xl border border-black/[0.06]">
-                <button
-                  onClick={() => setProjectPage((prev) => Math.max(0, prev - 1))}
-                  disabled={projectPage === 0}
-                  className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
-                  title="Previous page"
-                >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                </button>
-                <span className="text-[9.5px] font-mono font-bold text-[#8c7355] px-1.5 tracking-wider">
-                  {projectPage + 1}/{totalPages}
-                </span>
-                <button
-                  onClick={() => setProjectPage((prev) => Math.min(totalPages - 1, prev + 1))}
-                  disabled={projectPage === totalPages - 1}
-                  className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
-                  title="Next page"
-                >
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
+            {/* Carousel Navigation Arrows (< >) & Active Indicator */}
+            <div className="flex items-center gap-1 shrink-0 bg-black/5 p-0.5 rounded-xl border border-black/[0.06]">
+              <button
+                onClick={() => scrollProjects(-1)}
+                disabled={!canScrollLeft}
+                className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
+                title="Xem dự án trước (Trượt sang trái)"
+                aria-label="Previous project"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-[9.5px] font-mono font-bold text-[#8c7355] px-1.5 tracking-wider">
+                {activeProjectIndex + 1}/{filteredProjects.length}
+              </span>
+              <button
+                onClick={() => scrollProjects(1)}
+                disabled={!canScrollRight}
+                className="p-1 rounded-lg hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer text-[#111113]"
+                title="Xem dự án tiếp theo (Trượt sang phải)"
+                aria-label="Next project"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
 
-          {/* Project 2x2 Cards Grid - Stable Height Across Pages */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 min-h-[440px] sm:min-h-[460px]">
-            {currentProjects.map((proj, idx) => {
-              const displayIndex = projectPage * PAGE_SIZE + idx + 1;
-
+          {/* Horizontal Gliding Carousel Track ("Thẻ dọc chuyển động ngang dần dần") */}
+          <div 
+            ref={projectCarouselRef}
+            onScroll={handleCarouselScroll}
+            className="w-full flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-0.5 select-none"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
+            {filteredProjects.map((proj, idx) => {
               // Clean short title
               let shortTitle = proj.title.split('—')[0].trim();
               if (proj.id === 3) shortTitle = 'IT Helpdesk';
@@ -844,13 +895,6 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               if (proj.id === 5) shortTitle = 'VAVA CMS';
               if (proj.id === 4) shortTitle = 'M-Hike Mobile';
 
-              // Clean short category
-              let shortCat = 'WEB & 3D';
-              if (proj.id === 5) shortCat = 'SHAREPOINT CMS';
-              if (proj.id === 2) shortCat = 'BACKEND & CLOUD';
-              if (proj.id === 3) shortCat = 'ENTERPRISE STACK';
-              if (proj.id === 4) shortCat = 'MOBILE APP';
-
               // 2 core tech badges
               const coreTech = proj.tech ? proj.tech.slice(0, 2) : [];
 
@@ -858,16 +902,45 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 <div 
                   key={proj.id}
                   onClick={() => handleOpenProject(proj)}
-                  className="w-full rounded-2xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-2.5 sm:p-3 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_10px_28px_rgba(0,0,0,0.07)] cursor-pointer flex flex-col justify-between hover:-translate-y-0.5 select-none"
+                  className="w-[270px] sm:w-[290px] lg:w-[305px] shrink-0 snap-start flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3 sm:p-3.5 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
                 >
                   <div>
-                    {/* 1. Crisp Mockup Image Preview (Uncropped, high-contrast, zero edge pixelation) */}
-                    <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden mb-2 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
+                    {/* 1. Top Badges: Project Type + Numeric Index */}
+                    <div className="flex items-center justify-between gap-1.5 mb-2">
+                      {proj.id === 4 ? (
+                        <div className="flex items-center gap-1">
+                          <span className="px-2 py-0.5 rounded-full text-[8px] font-mono font-bold tracking-wide uppercase border bg-indigo-500/15 text-indigo-800 border-indigo-500/30">
+                            🎓 Final Year
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full text-[8px] font-mono font-bold tracking-wide uppercase border bg-emerald-500/15 text-emerald-800 border-emerald-500/30">
+                            🏛️ University
+                          </span>
+                        </div>
+                      ) : (
+                        <span className={`px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9px] font-mono font-bold tracking-wide uppercase border ${
+                          proj.projectType === 'competition'
+                            ? 'bg-amber-500/15 text-amber-800 border-amber-500/30'
+                            : proj.projectType === 'final_year'
+                              ? 'bg-indigo-500/15 text-indigo-800 border-indigo-500/30'
+                              : 'bg-emerald-500/15 text-emerald-800 border-emerald-500/30'
+                        }`}>
+                          {proj.projectType === 'competition' && '🏆 Competition Project'}
+                          {proj.projectType === 'final_year' && '🎓 Final Year Project'}
+                          {proj.projectType === 'university' && '🏛️ University Project'}
+                        </span>
+                      )}
+                      <span className="text-[9px] font-mono font-bold text-[#8c7355]">
+                        0{idx + 1}
+                      </span>
+                    </div>
+
+                    {/* 2. Crisp Mockup Image Preview (Uncropped, high-contrast, zero edge pixelation) */}
+                    <div className="relative aspect-[16/9.5] w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2.5 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
                       {proj.image ? (
                         <img 
                           src={proj.image} 
                           alt={proj.title} 
-                          className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-300"
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                           style={{
                             imageRendering: '-webkit-optimize-contrast',
                             transform: 'translateZ(0)',
@@ -884,25 +957,18 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                       )}
                     </div>
 
-                    {/* 2. Micro Category */}
-                    <span className="text-[8.5px] sm:text-[9px] font-mono text-[#8c7355] font-bold tracking-wider uppercase block mb-0.5">
-                      0{displayIndex} // {shortCat}
-                    </span>
-
                     {/* 3. Bold Project Title */}
-                    <h3 className="text-xs sm:text-sm font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-0.5">
+                    <h3 className="text-xs sm:text-sm font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-1">
                       {shortTitle}
                     </h3>
 
-                    {/* 4. Single-line crisp tagline */}
-                    <p className="text-[10px] sm:text-[10.5px] text-[#555] font-sans line-clamp-1 leading-snug mb-2">
+                    {/* 4. Two-line crisp tagline */}
+                    <p className="text-[10px] sm:text-[10.5px] text-[#555] font-sans line-clamp-2 leading-relaxed mb-2.5 min-h-[30px]">
                       {proj.tagline || proj.description}
                     </p>
-                  </div>
 
-                  {/* 5. Bottom Action Bar: Tech Tags + GitHub Logo + Go Live + Details */}
-                  <div className="pt-2 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
-                    <div className="flex items-center gap-1 overflow-hidden">
+                    {/* 5. Core Tech Badges */}
+                    <div className="flex items-center gap-1 overflow-hidden mb-3">
                       {coreTech.map((t) => (
                         <span 
                           key={t}
@@ -912,7 +978,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                         </span>
                       ))}
                     </div>
+                  </div>
 
+                  {/* 6. Bottom Action Bar: GitHub Logo + Go Live + Details */}
+                  <div className="pt-2 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
                     <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                       {/* GitHub Logo button (if has githubUrl) */}
                       {proj.githubUrl && (
@@ -921,7 +990,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1 sm:p-1.5 rounded-full bg-black/[0.05] hover:bg-[#111113] text-[#24292f] hover:text-white transition-all shadow-sm hover:scale-110 flex items-center justify-center cursor-pointer"
+                          className="p-1.5 rounded-full bg-black/[0.05] hover:bg-[#111113] text-[#24292f] hover:text-white transition-all shadow-sm hover:scale-110 flex items-center justify-center cursor-pointer"
                           title="Xem mã nguồn trên GitHub"
                         >
                           <GithubIcon className="w-3.5 h-3.5 fill-current" />
@@ -935,7 +1004,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
                           title="Truy cập sản phẩm thực tế (Go Live)"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse" />
@@ -943,32 +1012,42 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                           <ExternalLink className="w-2.5 h-2.5" />
                         </a>
                       )}
-
-                      {/* Details button */}
-                      <span className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm">
-                        <span>Details</span>
-                        <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </span>
                     </div>
+
+                    {/* Details button */}
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm shrink-0">
+                      <span>Details</span>
+                      <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </span>
                   </div>
                 </div>
               );
             })}
+          </div>
 
-            {/* In-development slot placeholder on Page 2 to preserve clean 2-column balance */}
-            {currentProjects.length === 1 && (
-              <div className="hidden sm:flex w-full rounded-2xl border border-dashed border-black/[0.12] bg-white/40 p-4 flex-col items-center justify-center text-center select-none">
-                <div className="w-8 h-8 rounded-full bg-[#8c7355]/10 flex items-center justify-center mb-2">
-                  <Sparkles className="w-4 h-4 text-[#8c7355]" />
-                </div>
-                <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-[#8c7355] mb-1">
-                  IN ACTIVE DEVELOPMENT
-                </span>
-                <p className="text-[10.5px] text-[#666] font-sans max-w-[210px] leading-snug">
-                  Upcoming distributed backend microservices &amp; AI systems currently in production.
-                </p>
-              </div>
-            )}
+          {/* Glide navigation hint & dot indicators */}
+          <div className="w-full flex items-center justify-between pt-2 px-1 text-[10px] font-mono text-[#777]">
+            <div className="flex items-center gap-1">
+              {filteredProjects.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => {
+                    if (projectCarouselRef.current) {
+                      const cardWidth = 310;
+                      projectCarouselRef.current.scrollTo({ left: dotIdx * cardWidth, behavior: 'smooth' });
+                    }
+                  }}
+                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                    activeProjectIndex === dotIdx ? 'w-5 bg-[#8c7355]' : 'w-1.5 bg-black/15 hover:bg-black/30'
+                  }`}
+                  title={`Go to project ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+            <span className="text-[9.5px] text-[#888] select-none">
+              ← Vuốt ngang hoặc bấm mũi tên để xem tiếp →
+            </span>
           </div>
 
         </div>
@@ -1202,8 +1281,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       ========================================================================= */}
       {inspectedProject && typeof document !== 'undefined' && createPortal(
         <div 
+          role="dialog"
+          aria-modal="true"
           className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 md:p-8 pt-8 sm:pt-12 pb-20 pointer-events-auto overflow-y-auto animate-fadeIn"
-          onClick={() => setInspectedProject(null)}
+          onClick={handleCloseProjectModal}
         >
           <div 
             className="relative w-full max-w-3xl bg-white border border-black/10 rounded-3xl p-5 sm:p-7 md:p-8 shadow-2xl text-[#111113] my-4 sm:my-8"
@@ -1224,7 +1305,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               </div>
 
               <button
-                onClick={() => setInspectedProject(null)}
+                onClick={handleCloseProjectModal}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/5 hover:bg-black/15 text-[#444] hover:text-black transition-all cursor-pointer font-mono text-xs font-bold"
                 aria-label="Close details"
               >
@@ -1410,8 +1491,9 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               )}
 
               <button
-                onClick={() => setInspectedProject(null)}
-                className="ml-auto px-4 py-2 rounded-full text-xs font-mono text-[#777] hover:text-black transition-colors"
+                type="button"
+                onClick={handleCloseProjectModal}
+                className="ml-auto px-4 py-2 rounded-full text-xs font-mono text-[#777] hover:text-black transition-colors cursor-pointer"
               >
                 Close ✕
               </button>
@@ -1427,11 +1509,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       ========================================================================= */}
       {inspectedCert && typeof document !== 'undefined' && createPortal(
         <div 
+          role="dialog"
+          aria-modal="true"
           className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 md:p-8 pt-8 sm:pt-12 pb-20 pointer-events-auto overflow-y-auto animate-fadeIn"
-          onClick={() => {
-            setInspectedCert(null);
-            setIsCertZoomed(false);
-          }}
+          onClick={handleCloseCertModal}
         >
           <div 
             className={`relative w-full flex flex-col items-center bg-[#111218] border border-white/15 rounded-3xl p-4 sm:p-6 shadow-2xl text-white my-4 sm:my-8 transition-all duration-300 ${
@@ -1467,11 +1548,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                   <span>Ảnh gốc nét cao ↗</span>
                 </a>
                 <button
-                  onClick={() => {
-                    setInspectedCert(null);
-                    setIsCertZoomed(false);
-                  }}
+                  type="button"
+                  onClick={handleCloseCertModal}
                   className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors cursor-pointer"
+                  aria-label="Đóng bằng khen"
                 >
                   <X className="w-4 h-4" />
                 </button>
