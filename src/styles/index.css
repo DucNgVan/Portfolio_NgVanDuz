@@ -180,21 +180,19 @@
   animation: pencil-draw 2s linear infinite;
 }
 
-/* Official Apple Hello two-stage handwriting animation (Calm, luxurious, authentic Apple handwriting pace) */
+/* Official Apple Hello progressive handwriting loading stroke */
 .apple-h1-path {
   stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: drawAppleH1 1.1s cubic-bezier(0.35, 0, 0.25, 1) forwards;
   will-change: stroke-dashoffset;
-  filter: drop-shadow(0 2px 12px rgba(216, 200, 168, 0.45));
+  transition: stroke-dashoffset 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 2px 14px rgba(216, 200, 168, 0.45));
 }
 
 .apple-ello-path {
   stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: drawAppleEllo 2.2s cubic-bezier(0.35, 0, 0.25, 1) 0.5s forwards;
   will-change: stroke-dashoffset;
-  filter: drop-shadow(0 2px 12px rgba(216, 200, 168, 0.45));
+  transition: stroke-dashoffset 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 2px 14px rgba(216, 200, 168, 0.45));
 }
 
 @keyframes drawAppleH1 {
