@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "certs:generate": "bash scripts/generate-mtls-certs.sh",
+    "test:mtls": "node scripts/test-mtls-server.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.2",

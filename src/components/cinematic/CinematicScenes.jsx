@@ -479,14 +479,14 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           Layout: Left = Identity & Bio | Center = 3D Character | Right = Detailed Target Roles
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center justify-between px-6 sm:px-8 lg:px-12 xl:px-14 pt-20 sm:pt-24 pb-12 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center justify-between px-4 sm:px-8 lg:px-10 xl:px-14 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 transition-opacity duration-300"
         style={{ opacity: s1.opacity, pointerEvents: s1.pointerEvents }}
       >
         {/* Left Column: Core Identity & Bio */}
-        <div className="w-full md:w-[32%] lg:w-[29%] max-w-[340px] xl:max-w-[390px] flex flex-col items-start text-left pointer-events-auto">
+        <div className="w-full sm:max-w-md lg:w-[30%] xl:w-[28%] max-w-[340px] lg:max-w-[330px] xl:max-w-[380px] flex flex-col items-start text-left pointer-events-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/70 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none">
           
           {/* Artistic Eyebrow Tag */}
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
             <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
               PORTFOLIO // 2025
@@ -496,7 +496,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           {/* Dynamic Interactive Large Headline */}
           <h1 
             style={largeTitleParallax}
-            className="text-4xl sm:text-5xl lg:text-[62px] xl:text-[72px] font-black font-sans uppercase tracking-tight leading-[0.88] text-[#111113] mb-3 select-none cursor-default"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[58px] 2xl:text-[68px] font-black font-sans uppercase tracking-tight leading-[0.90] text-[#111113] mb-2 sm:mb-3 select-none cursor-default"
           >
             Nguyen <br />
             <span 
@@ -561,10 +561,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
         </div>
 
         {/* Center Void: Wide open corridor where the centered 3D character sits with ample clearance */}
-        <div className="hidden md:block flex-1 min-w-[200px] lg:min-w-[280px] pointer-events-none" />
+        <div className="hidden lg:block flex-1 min-w-[140px] xl:min-w-[220px] pointer-events-none" />
 
         {/* Right Column: Detailed Target Roles & Career Objectives */}
-        <div className="hidden md:flex flex-col items-start text-left w-[32%] lg:w-[28%] max-w-[300px] xl:max-w-[320px] pointer-events-auto">
+        <div className="hidden lg:flex flex-col items-start text-left w-[32%] lg:w-[29%] xl:w-[28%] max-w-[290px] lg:max-w-[320px] xl:max-w-[360px] pointer-events-auto">
           
           {/* Section Header */}
           <div className="flex items-center gap-2 mb-2.5">
@@ -662,10 +662,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           Layout: Model on LEFT (cleanly separated), UI on RIGHT
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center justify-end px-6 sm:px-10 lg:px-14 xl:px-20 pt-20 sm:pt-24 pb-10 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center justify-end px-4 sm:px-10 lg:px-14 xl:px-20 pt-16 sm:pt-24 pb-8 sm:pb-10 transition-opacity duration-300"
         style={{ opacity: s2.opacity, pointerEvents: s2.pointerEvents }}
       >
-        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start text-left ml-auto">
+        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start text-left ml-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none">
           
           {/* Header */}
           <div className="mb-3.5 w-full">
@@ -699,7 +699,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           {/* Section 1: 4-Step Engineering Workflow */}
           <div className="w-full mb-4">
             {/* Minimalist Borderless Tabs */}
-            <div className="flex items-center justify-between border-b border-black/[0.08] pb-2 mb-3 w-full">
+            <div className="flex items-center justify-between border-b border-black/[0.08] pb-2 mb-3 w-full overflow-x-auto no-scrollbar gap-2 sm:gap-0">
               {workflowSteps.map((step, idx) => {
                 const isActive = activeWorkflowStep === idx;
                 return (
@@ -709,7 +709,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                       e.stopPropagation();
                       setActiveWorkflowStep(idx);
                     }}
-                    className={`relative pb-1 text-xs font-sans transition-all cursor-pointer flex items-center gap-1.5 ${
+                    className={`shrink-0 sm:shrink relative pb-1 text-xs font-sans transition-all cursor-pointer flex items-center gap-1.5 ${
                       isActive ? 'font-bold text-[#111113]' : 'font-medium text-[#777] hover:text-[#111113]'
                     }`}
                   >
@@ -1176,10 +1176,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           Layout: Model glides to RIGHT (Normal Zoom), UI on the LEFT (Interleaved!)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center px-6 sm:px-12 lg:px-20 xl:px-24 pt-20 sm:pt-24 pb-12 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center px-4 sm:px-12 lg:px-20 xl:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 transition-opacity duration-300"
         style={{ opacity: s5.opacity, pointerEvents: s5.pointerEvents }}
       >
-        <div className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start text-left my-auto">
+        <div className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start text-left my-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none">
           
           {/* Artistic Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-2">

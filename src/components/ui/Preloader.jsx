@@ -25,7 +25,7 @@ const Preloader = ({ onComplete }) => {
     if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    if (typeof window !== 'undefined' && window.location.hash && window.location.hash !== '#admin') {
+    if (typeof window !== 'undefined' && window.location.hash) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -56,7 +56,8 @@ const Preloader = ({ onComplete }) => {
       };
     }
 
-    let modelLoaded = typeof window !== 'undefined' && Boolean(window.__cinematicModelLoaded);
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 1024;
+    let modelLoaded = typeof window !== 'undefined' && (isMobileDevice || Boolean(window.__cinematicModelLoaded));
     let windowLoaded = typeof document !== 'undefined' && document.readyState === 'complete';
     let minTimeElapsed = false;
     let isCompleting = false;
@@ -77,11 +78,11 @@ const Preloader = ({ onComplete }) => {
       window.addEventListener('load', handleWindowLoad);
     }
 
-    // Minimum display timer so the handwriting flow can be admired (~2.5s)
+    // Snappy minimum display timer so the handwriting flow can be admired without delaying the user
     const minTimer = setTimeout(() => {
       minTimeElapsed = true;
       checkReadyState();
-    }, 2500);
+    }, isMobileDevice ? 1200 : 1800);
 
     // Progressive counter tied to handwriting:
     // Natural organic deceleration as it approaches 90% while assets download
@@ -135,13 +136,13 @@ const Preloader = ({ onComplete }) => {
       }
     }, 60);
 
-    // Safety fallback: if network stalls, do not trap user indefinitely (max 10s)
+    // Safety fallback: if network stalls, do not trap user indefinitely (max 3.5s)
     const safetyMaxTimer = setTimeout(() => {
       modelLoaded = true;
       windowLoaded = true;
       minTimeElapsed = true;
       isCompleting = true;
-    }, 10000);
+    }, isMobileDevice ? 2500 : 3600);
 
     return () => {
       window.__preloaderActive = false;

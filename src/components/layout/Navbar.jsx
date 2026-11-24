@@ -6,6 +6,7 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isDarkSection = scrollProgress >= 0.64 && scrollProgress <= 0.90;
+  const showBrand = scrollProgress >= 0.08 || isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,19 +61,19 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between relative">
           
-          {/* Left Brand: nguyenvanduc cursive signature matching user screenshot */}
+          {/* Left Brand: nguyenvanduc cursive signature - elegantly fades out when hero title is visible to prevent collision */}
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, { progress: 0.0, href: '#hero' })}
-            className={`font-hand font-semibold text-3xl sm:text-4xl transition-colors tracking-normal cursor-pointer z-10 ${
+            className={`font-hand font-semibold text-3xl sm:text-4xl transition-all duration-300 tracking-normal cursor-pointer z-10 ${
               isDarkSection ? 'text-white hover:text-[#d8c8a8]' : 'text-[#111113] hover:text-[#8c7355]'
-            }`}
+            } ${showBrand ? 'opacity-100 translate-x-0 pointer-events-auto' : 'opacity-0 -translate-x-3 pointer-events-none'}`}
           >
             nguyenvanduc
           </a>
 
-          {/* Center Navigation Links matching user screenshot (centered perfectly to never collide with 3D model) */}
-          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 lg:gap-9">
+          {/* Center Navigation Links matching user screenshot (spaced generously on wide displays) */}
+          <nav className="hidden xl:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 2xl:gap-9">
             {navLinks.map((link) => {
               const isHonorsActive = isDarkSection && link.id === 'honors';
               return (
@@ -97,7 +98,7 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
           {/* Right Hamburger Menu Icon */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className={`p-2 rounded-full transition-colors cursor-pointer z-10 ${
+            className={`p-2 rounded-full transition-colors cursor-pointer z-10 xl:hidden ${
               isDarkSection ? 'hover:bg-white/10 text-white' : 'hover:bg-black/5 text-[#111113]'
             }`}
             aria-label="Toggle navigation menu"
@@ -108,9 +109,9 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Responsive Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#f8f7f4]/95 backdrop-blur-2xl flex flex-col justify-center items-center p-8 md:hidden animate-fadeIn">
+        <div className="fixed inset-0 z-40 bg-[#f8f7f4]/95 backdrop-blur-2xl flex flex-col justify-center items-center p-8 xl:hidden animate-fadeIn">
           <nav className="flex flex-col items-center gap-7 text-center">
             {navLinks.map((link) => (
               <a

@@ -90,7 +90,7 @@ export const CustomCursor = () => {
       {/* Precision Center Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#111113] pointer-events-none z-[10000] transition-opacity duration-200"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#111113] pointer-events-none z-[10000] transition-opacity duration-200"
         style={{
           opacity: 0,
           transform: 'translate3d(-200px, -200px, 0) translate(-50%, -50%)',
@@ -98,14 +98,13 @@ export const CustomCursor = () => {
         }}
       />
 
-      {/* Circular Follower Lens that shifts colors within its radius via mix-blend-difference */}
+      {/* Elegant Luxury Follower Ring (No text blocking, crisp & modern) */}
       <div
         ref={lensRef}
-        className="fixed top-0 left-0 w-16 h-16 sm:w-20 sm:h-20 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-opacity duration-200"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9999] border border-[#8c7355]/40 bg-[#8c7355]/[0.03] transition-opacity duration-200"
         style={{
           opacity: 0,
-          backgroundColor: '#ffffff',
-          boxShadow: '0 0 25px rgba(255, 255, 255, 0.4)',
+          boxShadow: '0 0 15px rgba(216, 200, 168, 0.25)',
           transform: 'translate3d(-200px, -200px, 0) translate(-50%, -50%) scale(1)',
           willChange: 'transform, opacity',
         }}

@@ -486,7 +486,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
   const keyframes = [
     {
       progress: 0.0,
-      camPos: new THREE.Vector3(0.0, 0.08, 4.40),
+      camPos: new THREE.Vector3(0.0, 0.08, 4.75),
       camTarget: new THREE.Vector3(0.0, 0.02, 0),
       sideOffset: 0.0,
       modelRotY: 0.0,
@@ -554,12 +554,16 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     let height = window.innerHeight;
     let isDisposed = false;
 
-    // 1. Scene & Camera
+    // 1. Scene & Camera (Adaptive FOV for Portrait Phones & Widescreen Displays)
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf8f7f4);
     scene.fog = new THREE.FogExp2(0xf8f7f4, 0.02);
 
-    const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 30);
+    const initialAspect = width / height;
+    const baseFov = 36;
+    const initialFov = initialAspect < 1.0 ? baseFov + (1.0 - initialAspect) * 14 : baseFov;
+
+    const camera = new THREE.PerspectiveCamera(initialFov, initialAspect, 0.1, 30);
     camera.position.set(0.0, 0.14, 3.35);
 
     // 2. WebGL Renderer (High performance with Retina DPR clamping for silky smooth 60/120fps)
@@ -1048,7 +1052,7 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     window.addEventListener('click', handleClick);
     window.addEventListener('pointermove', handlePointerMove);
 
-    // 7. Load /models/character-cinematic.glb with Draco
+    // 7. Load /models/character.glb with Draco support
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath(`${baseUrl}draco/`);
 
@@ -1056,9 +1060,20 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
     loader.setDRACOLoader(dracoLoader);
 
     let baseModelScale = 1.0;
+    let modelMaxDim = 1.0;
+
+    const calcResponsiveScale = () => {
+      const w = window.innerWidth;
+      const factor = w >= 1600 ? 2.20 
+                   : w >= 1366 ? 2.00 
+                   : w >= 1024 ? 1.80 
+                   : w >= 768  ? 1.60 
+                   : 1.38;
+      return factor / (modelMaxDim || 1.0);
+    };
 
     loader.load(
-      `${baseUrl}models/character-cinematic.glb`,
+      `${baseUrl}models/character.glb`,
       (gltf) => {
         if (isDisposed) return;
         const char = gltf.scene;
@@ -1073,15 +1088,13 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
         char.position.y = -center.y - 0.08;
         char.position.z = -center.z;
 
-        const maxDim = Math.max(size.x, size.y, size.z);
-        baseModelScale = 2.45 / maxDim;
+        modelMaxDim = Math.max(size.x, size.y, size.z);
+        baseModelScale = calcResponsiveScale();
         modelRoot.scale.set(baseModelScale, baseModelScale, baseModelScale);
 
         char.traverse((child) => {
           if (child.isMesh && child.material) {
-            child.material.side = THREE.FrontSide;
-            child.material.roughness = 0.88; // Soft matte fabric on character, zero plastic glare
-            child.material.metalness = 0.02;
+            child.material.side = THREE.DoubleSide;
             child.material.needsUpdate = true;
           }
         });
@@ -1101,14 +1114,14 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
     // 8. Render Loop with Spline Interpolation, Organic Micro-Breathing & Pedestal Spread
     let animId;
-    const clock = new THREE.Clock();
-    const currentCamPos = new THREE.Vector3(0.0, 0.08, 4.40);
+    const startTime = performance.now();
+    const currentCamPos = new THREE.Vector3(0.0, 0.08, 4.75);
     const currentTarget = new THREE.Vector3(0.0, 0.02, 0);
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) * 0.001;
 
       // Particle subtle drifting
       if (particles) {
@@ -1263,11 +1276,10 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       const targetLook = new THREE.Vector3().lerpVectors(k1.camTarget, k2.camTarget, smoothT);
       const targetModelRotY = THREE.MathUtils.lerp(k1.modelRotY, k2.modelRotY, smoothT);
 
-      // Dynamic Interleaved Framing
+      // Dynamic Interleaved Framing (Active across Desktop, Tablet & Phone!)
       const targetSideOffset = THREE.MathUtils.lerp(k1.sideOffset, k2.sideOffset, smoothT);
-      const isWideScreen = window.innerWidth >= 1024;
-      const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-      const responsiveScale = isWideScreen ? 1.0 : (isTablet ? 0.6 : 0.0);
+      const curW = window.innerWidth;
+      const responsiveScale = curW >= 1280 ? 1.0 : curW >= 1024 ? 0.85 : curW >= 768 ? 0.60 : 0.38;
 
       targetCamPos.x += targetSideOffset * responsiveScale;
       targetLook.x += targetSideOffset * responsiveScale;
@@ -1314,10 +1326,16 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       if (!container || isDisposed) return;
       width = window.innerWidth;
       height = window.innerHeight;
-      camera.aspect = width / height;
+      const aspect = width / height;
+      camera.aspect = aspect;
+      camera.fov = aspect < 1.0 ? baseFov + (1.0 - aspect) * 14 : baseFov;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+      if (modelRoot && modelMaxDim > 0) {
+        baseModelScale = calcResponsiveScale();
+        modelRoot.scale.set(baseModelScale, baseModelScale, baseModelScale);
+      }
     };
 
     window.addEventListener('resize', handleResize);

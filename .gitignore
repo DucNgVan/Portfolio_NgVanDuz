@@ -56,6 +56,10 @@ Thumbs.db
 .agents/
 .gemini/
 
+# mTLS Certificates & Private Keys (Never commit secrets to git)
+certs/*
+!certs/README.md
+
 # Large uncompressed 3D assets
 public/models/*-raw.glb
 public/models/*-original.glb
