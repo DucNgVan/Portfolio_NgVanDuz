@@ -1064,11 +1064,26 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
 
     const calcResponsiveScale = () => {
       const w = window.innerWidth;
-      const factor = w >= 1600 ? 2.20 
-                   : w >= 1366 ? 2.00 
-                   : w >= 1024 ? 1.80 
-                   : w >= 768  ? 1.60 
-                   : 1.38;
+      const h = window.innerHeight;
+      const isLandscapePhone = h <= 520 && w > h;
+      const isPortraitPhone = w < 768 && h >= w;
+
+      let factor;
+      if (isLandscapePhone) {
+        factor = 1.10; // Perfectly proportioned for short landscape phone screens
+      } else if (isPortraitPhone) {
+        factor = 1.28; // Elegant, crisp framing on portrait phones
+      } else if (w >= 1600) {
+        factor = 2.20;
+      } else if (w >= 1366) {
+        factor = 2.00;
+      } else if (w >= 1024) {
+        factor = 1.80;
+      } else if (w >= 768) {
+        factor = 1.55;
+      } else {
+        factor = 1.35;
+      }
       return factor / (modelMaxDim || 1.0);
     };
 
@@ -1279,10 +1294,39 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       // Dynamic Interleaved Framing (Active across Desktop, Tablet & Phone!)
       const targetSideOffset = THREE.MathUtils.lerp(k1.sideOffset, k2.sideOffset, smoothT);
       const curW = window.innerWidth;
+      const curH = window.innerHeight;
+      const isLandscapePhone = curH <= 520 && curW > curH;
+      const isPortraitPhone = curW < 768 && curH >= curW;
+
       const responsiveScale = curW >= 1280 ? 1.0 : curW >= 1024 ? 0.85 : curW >= 768 ? 0.60 : 0.38;
 
       targetCamPos.x += targetSideOffset * responsiveScale;
       targetLook.x += targetSideOffset * responsiveScale;
+
+      // Specialized camera framing adjustments for Landscape Phones & Portrait Phones
+      if (isLandscapePhone) {
+        // Landscape phone: pull camera back slightly to prevent vertical cropping, shift model cleanly to right/left
+        targetCamPos.z *= 1.12;
+        targetCamPos.y += 0.04;
+        if (p < 0.20) {
+          // In Scene 1: Shift camera left so character is positioned on right half
+          targetCamPos.x -= 0.58;
+          targetLook.x -= 0.58;
+        }
+      } else if (isPortraitPhone) {
+        // Portrait phone:
+        if (p < 0.20) {
+          // In Scene 1: Center character heroically with breathing room
+          targetCamPos.y = 0.10;
+          targetCamPos.z = 4.55;
+          targetLook.y = 0.02;
+        } else if (p >= 0.65 && p <= 0.88) {
+          // In Scene 4 (Hall of Honors): pull back & elevate camera so all 6 pedestals are visible in portrait!
+          targetCamPos.z = 5.75;
+          targetCamPos.y = 0.82;
+          targetLook.y = -0.15;
+        }
+      }
 
       // Mouse parallax
       const mx = mousePosRef.current.x * 0.15;
@@ -1338,12 +1382,19 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       }
     };
 
+    const handleOrientationChange = () => {
+      setTimeout(handleResize, 100);
+      setTimeout(handleResize, 350);
+    };
+
     window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientationChange);
 
     return () => {
       isDisposed = true;
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleOrientationChange);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('click', handleClick);
       document.body.style.cursor = 'default';

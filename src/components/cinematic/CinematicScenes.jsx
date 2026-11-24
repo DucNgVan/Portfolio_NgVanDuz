@@ -92,6 +92,25 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const [isCertZoomed, setIsCertZoomed] = useState(false);
   const [certCategoryFilter, setCertCategoryFilter] = useState('all'); // 'all', 'academic', 'club_skill'
 
+  // Mobile Orientation Detection & Cinematic Rotation Hint
+  const [isPortraitMobile, setIsPortraitMobile] = useState(false);
+  const [dismissedRotateHint, setDismissedRotateHint] = useState(false);
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      const isMobile = window.innerWidth < 768 || ('ontouchstart' in window);
+      const isPortrait = window.innerHeight >= window.innerWidth;
+      setIsPortraitMobile(isMobile && isPortrait);
+    };
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
+
   // Quick Recruiter Message Dispatch State (delivered to Admin Portal)
   const [senderName, setSenderName] = useState('');
   const [senderContact, setSenderContact] = useState('');
@@ -476,19 +495,22 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
       
       {/* =========================================================================
           SCENE 01: PROLOGUE
-          Layout: Left = Identity & Bio | Center = 3D Character | Right = Detailed Target Roles
+          Layout: 
+          - Desktop: Left = Identity & Bio | Center = 3D Character | Right = Detailed Target Roles
+          - Portrait Phone: Top = Brand & Role | Center = 100% UNCOVERED 3D Model | Bottom = Badges & Status
+          - Landscape Phone: Left 46% = Compact Brand | Right 54% = 3D Character (Zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center justify-between px-4 sm:px-8 lg:px-10 xl:px-14 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 transition-opacity duration-300"
+        className="absolute inset-0 flex max-md:portrait:flex-col max-md:portrait:justify-between max-md:portrait:items-start items-center justify-between px-4 sm:px-8 lg:px-10 xl:px-14 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-md:portrait:pt-14 max-md:portrait:pb-4 short:pt-9 short:pb-2 short:px-6 transition-opacity duration-300"
         style={{ opacity: s1.opacity, pointerEvents: s1.pointerEvents }}
       >
-        {/* Left Column: Core Identity & Bio */}
-        <div className="w-full sm:max-w-md lg:w-[30%] xl:w-[28%] max-w-[340px] lg:max-w-[330px] xl:max-w-[380px] flex flex-col items-start text-left pointer-events-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/70 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none">
+        {/* Left Column / Top Brand Section on Portrait */}
+        <div className="w-full sm:max-w-md lg:w-[30%] xl:w-[28%] max-w-[340px] lg:max-w-[330px] xl:max-w-[380px] short:w-[46%] short:max-w-[420px] flex flex-col items-start text-left pointer-events-auto p-0 sm:p-0 rounded-2xl sm:rounded-none bg-transparent sm:bg-transparent backdrop-blur-none sm:backdrop-blur-none border-none sm:border-none shadow-none sm:shadow-none short:p-0 short:bg-transparent short:border-none short:shadow-none">
           
           {/* Artistic Eyebrow Tag */}
-          <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
+          <div className="flex items-center gap-2 mb-1 sm:mb-2 short:mb-0.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
-            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+            <span className="text-[10px] short:text-[8.5px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
               PORTFOLIO // 2025
             </span>
           </div>
@@ -496,9 +518,9 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           {/* Dynamic Interactive Large Headline */}
           <h1 
             style={largeTitleParallax}
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[58px] 2xl:text-[68px] font-black font-sans uppercase tracking-tight leading-[0.90] text-[#111113] mb-2 sm:mb-3 select-none cursor-default"
+            className="text-2xl sm:text-4xl lg:text-5xl xl:text-[58px] 2xl:text-[68px] short:text-2xl short:leading-none short:mb-1 font-black font-sans uppercase tracking-tight leading-[0.90] text-[#111113] mb-1.5 sm:mb-3 select-none cursor-default"
           >
-            Nguyen <br />
+            Nguyen <br className="short:hidden" />
             <span 
               style={{
                 backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
@@ -511,51 +533,46 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           </h1>
 
           {/* Role badge */}
-          <div className="flex items-center gap-2 mb-3.5">
-            <span className="px-3 py-1 rounded-full bg-[#111113] text-white font-mono text-[10px] sm:text-[11px] font-bold tracking-wider uppercase shadow-sm">
+          <div className="flex items-center gap-2 mb-2 sm:mb-3.5 short:mb-1">
+            <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#111113] text-white font-mono text-[9.5px] sm:text-[11px] font-bold tracking-wider uppercase shadow-sm">
               Full-Stack Software Engineer
             </span>
-            <span className="text-[11px] font-mono text-[#8c7355] font-semibold">
+            <span className="text-[10px] sm:text-[11px] font-mono text-[#8c7355] font-semibold">
               // Backend & 3D
             </span>
           </div>
 
           {/* Bio text */}
-          <p className="text-xs sm:text-[13px] text-[#4a4845] font-sans font-normal leading-relaxed mb-3.5">
+          <p className="text-xs sm:text-[13px] short:text-[10px] short:leading-tight short:mb-1 text-[#4a4845] font-sans font-normal leading-relaxed mb-2 sm:mb-3.5 line-clamp-3 short:line-clamp-2">
             Final-year Software Engineering student at <strong className="text-[#111113] font-semibold">University of Greenwich</strong>. Specializing in modular backend architectures (PostgreSQL 3NF, Redis, Docker) and interactive 3D web platforms (Next.js 14, Three.js).
           </p>
 
-          {/* Editorial Credentials Strip (Fills vertical void artistically) */}
-          <div className="grid grid-cols-3 gap-2 py-2.5 my-1 border-y border-black/[0.08] w-full text-left">
+          {/* Editorial Credentials Strip (Hidden in portrait top, moved to bottom on portrait) */}
+          <div className="hidden sm:grid grid-cols-3 gap-2 py-2 sm:py-2.5 my-1 short:py-0.5 short:my-0.5 border-y border-black/[0.08] w-full text-left">
             <div>
-              <span className="block text-[9px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Degree</span>
-              <span className="text-xs font-bold text-[#111113] font-sans">BSc (Hons)</span>
+              <span className="block text-[8.5px] sm:text-[9px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Degree</span>
+              <span className="text-xs short:text-[10.5px] font-bold text-[#111113] font-sans">BSc (Hons)</span>
             </div>
             <div>
-              <span className="block text-[9px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Standing</span>
-              <span className="text-xs font-bold text-[#111113] font-sans">Top 3 '24</span>
+              <span className="block text-[8.5px] sm:text-[9px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Standing</span>
+              <span className="text-xs short:text-[10.5px] font-bold text-[#111113] font-sans">Top 3 '24</span>
             </div>
             <div>
-              <span className="block text-[9px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Focus</span>
-              <span className="text-xs font-bold text-[#111113] font-sans">Full-Stack</span>
+              <span className="block text-[8.5px] sm:text-[9px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Focus</span>
+              <span className="text-xs short:text-[10.5px] font-bold text-[#111113] font-sans">Full-Stack</span>
             </div>
           </div>
 
-          {/* Status Pills */}
-          <div className="flex flex-wrap items-center gap-2 mt-3 mb-1">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-black/[0.08] text-[11px] font-mono text-[#555] shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+          {/* Status Pills (Desktop & Landscape) */}
+          <div className="hidden sm:flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 mb-1 short:mt-1 short:gap-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white/90 border border-black/[0.08] text-[10px] sm:text-[11px] short:text-[9px] font-mono text-[#555] shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               Da Nang, Vietnam
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-[11px] font-mono text-emerald-800 font-bold shadow-[0_2px_8px_rgba(16,185,129,0.1)]">
+            <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-emerald-50 border border-emerald-300 text-[10px] sm:text-[11px] short:text-[9px] font-mono text-emerald-800 font-bold shadow-[0_2px_8px_rgba(16,185,129,0.1)]">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Available for Internship
             </span>
-          </div>
-
-          {/* Mobile-only Desired Roles Tag */}
-          <div className="md:hidden mt-2 px-3 py-1.5 rounded-xl bg-white/80 border border-black/[0.07] text-[10px] font-mono text-[#666]">
-            <span className="text-[#8c7355] font-bold">🎯 Target:</span> Backend Intern • Full-Stack Intern • SE Intern
           </div>
 
         </div>
@@ -563,7 +580,43 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
         {/* Center Void: Wide open corridor where the centered 3D character sits with ample clearance */}
         <div className="hidden lg:block flex-1 min-w-[140px] xl:min-w-[220px] pointer-events-none" />
 
-        {/* Right Column: Detailed Target Roles & Career Objectives */}
+        {/* Portrait Mobile ONLY: Floating Bottom Info Bar (Leaves Center 100% CLEAR for 3D Character) */}
+        <div className="md:hidden max-md:portrait:flex hidden flex-col w-full mt-auto pointer-events-auto bg-white/85 backdrop-blur-md rounded-2xl border border-black/[0.08] p-3 shadow-lg">
+          {/* Credentials Strip */}
+          <div className="grid grid-cols-3 gap-2 pb-2 mb-2 border-b border-black/[0.06] w-full text-center">
+            <div>
+              <span className="block text-[8.5px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Degree</span>
+              <span className="text-[11px] font-bold text-[#111113] font-sans">BSc (Hons)</span>
+            </div>
+            <div>
+              <span className="block text-[8.5px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Standing</span>
+              <span className="text-[11px] font-bold text-[#111113] font-sans">Top 3 '24</span>
+            </div>
+            <div>
+              <span className="block text-[8.5px] font-mono text-[#8c7355] uppercase tracking-wider font-semibold">Focus</span>
+              <span className="text-[11px] font-bold text-[#111113] font-sans">Full-Stack</span>
+            </div>
+          </div>
+
+          {/* Status Pills */}
+          <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/5 text-[9.5px] font-mono text-[#444]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              Da Nang, Vietnam
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-[9.5px] font-mono text-emerald-800 font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Available for Internship
+            </span>
+          </div>
+
+          {/* Mobile Desired Roles */}
+          <div className="text-[9.5px] font-mono text-[#666] text-center pt-1 border-t border-black/[0.05]">
+            <span className="text-[#8c7355] font-bold">🎯 Target:</span> Backend Intern • Full-Stack Intern • SE Intern
+          </div>
+        </div>
+
+        {/* Right Column: Detailed Target Roles & Career Objectives (Desktop Only) */}
         <div className="hidden lg:flex flex-col items-start text-left w-[32%] lg:w-[29%] xl:w-[28%] max-w-[290px] lg:max-w-[320px] xl:max-w-[360px] pointer-events-auto">
           
           {/* Section Header */}
@@ -659,27 +712,30 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
 
       {/* =========================================================================
           SCENE 02: WORKSTATION CORE (ENGINEERING WORKFLOW & TECH STACK)
-          Layout: Model on LEFT (cleanly separated), UI on RIGHT
+          Layout: 
+          - Desktop: Model on LEFT (cleanly separated), UI on RIGHT
+          - Portrait Phone: Bottom Sheet (leaves upper 52% open for character)
+          - Landscape Phone: Right 50% compact panel (zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center justify-end px-4 sm:px-10 lg:px-14 xl:px-20 pt-16 sm:pt-24 pb-8 sm:pb-10 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center justify-end px-4 sm:px-10 lg:px-14 xl:px-20 pt-16 sm:pt-24 pb-8 sm:pb-10 max-md:portrait:pt-14 max-md:portrait:pb-4 short:pt-8 short:pb-2 short:px-6 transition-opacity duration-300"
         style={{ opacity: s2.opacity, pointerEvents: s2.pointerEvents }}
       >
-        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start text-left ml-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none">
+        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start text-left ml-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none max-md:portrait:fixed max-md:portrait:bottom-3 max-md:portrait:inset-x-3 max-md:portrait:max-h-[48vh] max-md:portrait:overflow-y-auto max-md:portrait:rounded-2xl max-md:portrait:p-3.5 max-md:portrait:bg-white/95 max-md:portrait:border max-md:portrait:border-black/10 max-md:portrait:shadow-2xl short:p-0 short:bg-transparent short:border-none short:shadow-none short:max-w-[480px]">
           
           {/* Header */}
-          <div className="mb-3.5 w-full">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="mb-2 sm:mb-3.5 short:mb-1 w-full">
+            <div className="flex items-center gap-2 mb-1 sm:mb-2 short:mb-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
-              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+              <span className="text-[10px] short:text-[8.5px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
                 CORE CAPABILITIES // 02
               </span>
             </div>
             <h2 
               style={largeTitleParallax}
-              className="text-2xl sm:text-4xl lg:text-[40px] font-black font-sans uppercase tracking-tight text-[#111113] leading-none mb-1.5 select-none cursor-default"
+              className="text-xl sm:text-4xl lg:text-[40px] short:text-lg short:leading-none font-black font-sans uppercase tracking-tight text-[#111113] leading-none mb-1 sm:mb-1.5 select-none cursor-default"
             >
-              Engineering Workflow & <br />
+              Engineering Workflow & <br className="short:hidden" />
               <span 
                 style={{
                   backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
@@ -691,15 +747,15 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               </span>
             </h2>
 
-            <p className="text-xs text-[#66625d] font-sans leading-relaxed">
+            <p className="text-xs short:hidden text-[#66625d] font-sans leading-relaxed">
               Proven 4-stage engineering lifecycle synthesized from 5 production & capstone systems, powered by modern tooling:
             </p>
           </div>
 
           {/* Section 1: 4-Step Engineering Workflow */}
-          <div className="w-full mb-4">
+          <div className="w-full mb-3 sm:mb-4 short:mb-1.5">
             {/* Minimalist Borderless Tabs */}
-            <div className="flex items-center justify-between border-b border-black/[0.08] pb-2 mb-3 w-full overflow-x-auto no-scrollbar gap-2 sm:gap-0">
+            <div className="flex items-center justify-between border-b border-black/[0.08] pb-1.5 sm:pb-2 mb-2 sm:mb-3 short:pb-0.5 short:mb-1 w-full overflow-x-auto no-scrollbar gap-2 sm:gap-0">
               {workflowSteps.map((step, idx) => {
                 const isActive = activeWorkflowStep === idx;
                 return (
@@ -709,16 +765,16 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                       e.stopPropagation();
                       setActiveWorkflowStep(idx);
                     }}
-                    className={`shrink-0 sm:shrink relative pb-1 text-xs font-sans transition-all cursor-pointer flex items-center gap-1.5 ${
+                    className={`shrink-0 sm:shrink relative pb-1 text-xs short:text-[10px] font-sans transition-all cursor-pointer flex items-center gap-1 sm:gap-1.5 ${
                       isActive ? 'font-bold text-[#111113]' : 'font-medium text-[#777] hover:text-[#111113]'
                     }`}
                   >
-                    <span className={`text-[10px] font-mono ${isActive ? 'text-[#8c7355] font-bold' : 'text-[#999]'}`}>
+                    <span className={`text-[10px] short:text-[8.5px] font-mono ${isActive ? 'text-[#8c7355] font-bold' : 'text-[#999]'}`}>
                       {step.step}
                     </span>
                     <span>{step.short}</span>
                     {isActive && (
-                      <span className="absolute bottom-[-9px] left-0 right-0 h-[2px] bg-[#8c7355] rounded-full" />
+                      <span className="absolute bottom-[-7px] sm:bottom-[-9px] left-0 right-0 h-[2px] bg-[#8c7355] rounded-full" />
                     )}
                   </button>
                 );
@@ -726,28 +782,28 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </div>
 
             {/* Phase Content (Soft background without nested boxes) */}
-            <div className="w-full p-3.5 sm:p-4 rounded-2xl bg-white/70 border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.02)] backdrop-blur-md">
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-black/[0.05]">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono font-bold text-[#8c7355] uppercase tracking-wider">
+            <div className="w-full p-3 sm:p-4 short:p-2 rounded-xl sm:rounded-2xl bg-white/70 border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.02)] backdrop-blur-md">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 mb-1.5 sm:mb-2 pb-1.5 sm:pb-2 border-b border-black/[0.05]">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="text-[9.5px] sm:text-[10px] font-mono font-bold text-[#8c7355] uppercase tracking-wider">
                     Phase {workflowSteps[activeWorkflowStep].step} ·
                   </span>
-                  <h3 className="text-xs sm:text-sm font-bold font-sans text-[#111113]">
+                  <h3 className="text-xs sm:text-sm short:text-[11px] font-bold font-sans text-[#111113]">
                     {workflowSteps[activeWorkflowStep].title}
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono text-[#777]">
+                <span className="text-[9.5px] sm:text-[10px] font-mono text-[#777]">
                   Proven in: <strong className="text-[#111113] font-medium">{workflowSteps[activeWorkflowStep].provenIn}</strong>
                 </span>
               </div>
 
-              <p className="text-xs text-[#444] font-sans leading-relaxed mb-2.5">
+              <p className="text-[11px] sm:text-xs short:text-[10px] text-[#444] font-sans leading-relaxed mb-2 short:mb-1 short:line-clamp-2">
                 {workflowSteps[activeWorkflowStep].detail}
               </p>
 
-              {/* Clean Inline Deliverables (Zero nested box frames!) */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-sans text-[#444] pt-1 border-t border-black/[0.04]">
-                <span className="font-mono text-[#8c7355] font-semibold text-[10px] uppercase tracking-wider">Deliverables:</span>
+              {/* Clean Inline Deliverables */}
+              <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-0.5 sm:gap-y-1 text-[10px] sm:text-[11px] short:text-[9px] font-sans text-[#444] pt-1 border-t border-black/[0.04]">
+                <span className="font-mono text-[#8c7355] font-semibold text-[9.5px] sm:text-[10px] uppercase tracking-wider">Deliverables:</span>
                 {workflowSteps[activeWorkflowStep].deliverables.map((item, dIdx) => (
                   <span key={dIdx} className="inline-flex items-center gap-1 text-[#333]">
                     <span className="text-[#8c7355] font-bold">✓</span>
@@ -760,15 +816,15 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
 
           {/* Section 2: Tech Stack (Clean, Airy Icon Grid) */}
           <div className="w-full">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-1.5 sm:mb-2 short:mb-1">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#111113]">
+                <span className="text-[10px] sm:text-[11px] short:text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#111113]">
                   // Tech Stack Toolkit
                 </span>
               </div>
 
-              {/* Clean text filter tabs (No box frames) */}
-              <div className="flex items-center gap-2 text-[11px] font-mono">
+              {/* Clean text filter tabs */}
+              <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] short:text-[9px] font-mono">
                 {[
                   { id: 'all', label: 'All' },
                   { id: 'backend', label: 'Backend' },
@@ -792,31 +848,31 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               </div>
             </div>
 
-            {/* Grid of 16 Tech Icons (Airy, borderless chips with soft active tint) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+            {/* Grid of 16 Tech Icons */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 short:grid-cols-4 gap-1 sm:gap-1.5 short:gap-1">
               {filteredTechStack.map((tech) => {
                 const Icon = tech.icon;
                 const isRelatedToActiveStep = workflowSteps[activeWorkflowStep].techKeys.includes(tech.name);
                 return (
                   <div
                     key={tech.name}
-                    className={`group flex items-center gap-2 px-2.5 py-1.5 rounded-xl transition-all duration-200 cursor-default ${
+                    className={`group flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 short:py-0.5 short:px-1.5 rounded-lg sm:rounded-xl transition-all duration-200 cursor-default ${
                       isRelatedToActiveStep
                         ? 'bg-[#8c7355]/10 text-[#111113] ring-1 ring-[#bfa074]/35 shadow-sm'
                         : 'hover:bg-black/[0.035] text-[#555]'
                     }`}
                     title={`${tech.name} · ${tech.tag}`}
                   >
-                    <div className="w-5 h-5 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110">
-                      <Icon className="w-4 h-4" />
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110">
+                      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
                     <div className="flex flex-col min-w-0">
-                      <span className={`text-[11px] font-sans truncate leading-tight group-hover:text-[#8c7355] transition-colors ${
+                      <span className={`text-[10px] sm:text-[11px] short:text-[9px] font-sans truncate leading-tight group-hover:text-[#8c7355] transition-colors ${
                         isRelatedToActiveStep ? 'font-bold text-[#111113]' : 'font-medium text-[#222]'
                       }`}>
                         {tech.name}
                       </span>
-                      <span className="text-[9px] font-mono text-[#777] truncate leading-tight">
+                      <span className="text-[8.5px] sm:text-[9px] short:text-[7.5px] font-mono text-[#777] truncate leading-tight">
                         {tech.tag}
                       </span>
                     </div>
@@ -831,24 +887,21 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
 
       {/* =========================================================================
           SCENE 03: SYSTEM VAULT (PROJECTS)
-          Layout: 5-Project Architectural Showcase (All 5 Projects Visible & Interactive)
-      ========================================================================= */}
-      {/* =========================================================================
-          SCENE 03: SYSTEM VAULT (PROJECTS)
-          Layout: Clean, compact 2x2 cards grid with category filters and pagination
-          - Minimal, tidy typography without heavy walls of text
-          - 100% clean image preview without overlapping badges
+          Layout: 
+          - Desktop: 2-Card Gliding Frame with Category Filters
+          - Portrait Phone: Full-width Swipeable Touch Cards
+          - Landscape Phone: Horizontal Split Cards (Zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-start px-6 sm:px-10 lg:px-14 xl:px-16 pt-20 sm:pt-24 lg:pt-26 pb-8 transition-opacity duration-300 pointer-events-auto overflow-hidden"
+        className="absolute inset-0 flex items-start px-4 sm:px-10 lg:px-14 xl:px-16 pt-16 sm:pt-24 lg:pt-26 pb-6 max-md:portrait:pt-14 max-md:portrait:px-3 short:pt-8 short:pb-1 short:px-6 transition-opacity duration-300 pointer-events-auto overflow-hidden"
         style={{ opacity: s3.opacity, pointerEvents: s3.pointerEvents }}
       >
         <div className="w-full max-w-xl lg:max-w-[46rem] xl:max-w-[50rem] flex flex-col items-start text-left">
           
           {/* Eyebrow Tag */}
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-1 short:mb-0.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
-            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+            <span className="text-[10px] short:text-[8px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
               FEATURED ARCHIVE // 03
             </span>
           </div>
@@ -856,9 +909,9 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           {/* Dynamic Interactive Large Headline */}
           <h2 
             style={largeTitleParallax}
-            className="text-xl sm:text-2xl lg:text-3xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[1.0] mb-1 select-none cursor-default"
+            className="text-xl sm:text-2xl lg:text-3xl short:text-base short:mb-0.5 font-black font-sans uppercase tracking-tight text-[#111113] leading-[1.0] mb-1 select-none cursor-default"
           >
-            System Vault <br />
+            System Vault <br className="short:hidden" />
             <span 
               style={{
                 backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
@@ -870,18 +923,18 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </span>
           </h2>
 
-          <p className="text-[10px] sm:text-[11px] text-[#66625d] font-sans mb-2">
+          <p className="text-[10px] sm:text-[11px] short:hidden text-[#66625d] font-sans mb-1.5 sm:mb-2">
             Click any project to inspect full architecture, interactive 3D demos, and source code:
           </p>
 
           {/* Category Filter Chips & Carousel Controls */}
-          <div className="w-full flex items-center justify-between gap-2 mb-2.5">
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          <div className="w-full flex items-center justify-between gap-2 mb-2 sm:mb-2.5 short:mb-1">
+            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-0.5">
               {filterCategories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => handleSelectFilter(cat.id)}
-                  className={`px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-bold tracking-wider uppercase transition-all cursor-pointer ${
+                  className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8.5px] sm:text-[10px] short:text-[8px] font-mono font-bold tracking-wider uppercase transition-all cursor-pointer ${
                     projectFilter === cat.id
                       ? 'bg-[#111113] text-white shadow-sm'
                       : 'bg-black/5 hover:bg-black/10 text-[#666]'
@@ -918,7 +971,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
-                <span className="text-[9.5px] font-mono font-bold text-[#8c7355] px-1.5 tracking-wider">
+                <span className="text-[9.5px] short:text-[8.5px] font-mono font-bold text-[#8c7355] px-1.5 tracking-wider">
                   {activeProjectIndex + 1}/{filteredProjects.length}
                 </span>
                 <button
@@ -934,7 +987,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </div>
           </div>
 
-          {/* Horizontal Gliding Carousel Track - EXACTLY 2 CARDS PER FRAME ON DESKTOP */}
+          {/* Horizontal Gliding Carousel Track */}
           <div 
             ref={projectCarouselRef}
             onScroll={handleCarouselScroll}
@@ -942,7 +995,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             onMouseLeave={() => setIsCarouselHovered(false)}
             onTouchStart={() => setIsCarouselHovered(true)}
             onTouchEnd={() => setIsCarouselHovered(false)}
-            className="w-full flex items-stretch gap-4 sm:gap-5 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-0.5 select-none"
+            className="w-full flex items-stretch gap-3 sm:gap-5 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-1.5 sm:py-2 px-0.5 select-none short:py-0.5"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {filteredProjects.map((proj, idx) => {
@@ -961,123 +1014,126 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 <div 
                   key={proj.id}
                   onClick={() => handleOpenProject(proj)}
-                  className="w-full sm:w-[calc(50%-10px)] shrink-0 snap-start flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3.5 sm:p-4 lg:p-4.5 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_14px_36px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
+                  className="w-[86vw] sm:w-[calc(50%-10px)] short:w-[410px] shrink-0 snap-center sm:snap-start flex flex-col short:flex-row short:items-center short:gap-3 justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3 sm:p-4 lg:p-4.5 short:p-2.5 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_14px_36px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
                 >
-                  <div>
-                    {/* 1. Top Badges: Project Type + Numeric Index */}
-                    <div className="flex items-center justify-between gap-1.5 mb-2.5">
-                      {proj.id === 4 ? (
-                        <div className="flex items-center gap-1">
-                          <span className="px-2 py-0.5 rounded-full text-[8.5px] font-mono font-bold tracking-wide uppercase border bg-indigo-500/15 text-indigo-800 border-indigo-500/30">
-                            🎓 Final Year
-                          </span>
-                          <span className="px-2 py-0.5 rounded-full text-[8.5px] font-mono font-bold tracking-wide uppercase border bg-emerald-500/15 text-emerald-800 border-emerald-500/30">
-                            🏛️ University
-                          </span>
-                        </div>
-                      ) : (
-                        <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-wide uppercase border ${
-                          proj.projectType === 'competition'
-                            ? 'bg-amber-500/15 text-amber-800 border-amber-500/30'
-                            : proj.projectType === 'final_year'
-                              ? 'bg-indigo-500/15 text-indigo-800 border-indigo-500/30'
-                              : 'bg-emerald-500/15 text-emerald-800 border-emerald-500/30'
-                        }`}>
-                          {proj.projectType === 'competition' && '🏆 Competition Project'}
-                          {proj.projectType === 'final_year' && '🎓 Final Year Project'}
-                          {proj.projectType === 'university' && '🏛️ University Project'}
-                        </span>
-                      )}
-                      <span className="text-[9.5px] font-mono font-bold text-[#8c7355]">
-                        0{idx + 1}
-                      </span>
-                    </div>
-
-                    {/* 2. Large Crisp Mockup Image Preview (Uncropped, high-contrast) */}
-                    <div className="relative aspect-[16/9.5] w-full rounded-xl sm:rounded-2xl overflow-hidden mb-3 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
-                      {proj.image ? (
-                        <img 
-                          src={proj.image} 
-                          alt={proj.title} 
-                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                          style={{
-                            imageRendering: '-webkit-optimize-contrast',
-                            transform: 'translateZ(0)',
-                            backfaceVisibility: 'hidden',
-                          }}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-[#888] p-2 text-center">
-                          <ImageIcon className="w-5 h-5 mb-0.5 text-[#bfa074]" />
-                          <span className="text-[9px] font-mono font-bold tracking-wider">PREVIEW</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* 3. Bold Project Title */}
-                    <h3 className="text-sm sm:text-base font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-1">
-                      {shortTitle}
-                    </h3>
-
-                    {/* 4. Two-line crisp tagline */}
-                    <p className="text-[11px] sm:text-[11.5px] text-[#555] font-sans line-clamp-2 leading-relaxed mb-3 min-h-[32px]">
-                      {proj.tagline || proj.description}
-                    </p>
-
-                    {/* 5. Core Tech Badges */}
-                    <div className="flex items-center gap-1.5 overflow-hidden mb-3.5">
-                      {coreTech.map((t) => (
-                        <span 
-                          key={t}
-                          className="px-2 py-0.5 rounded-md bg-black/[0.04] text-[9px] font-mono text-[#555] font-semibold truncate border border-black/[0.04]"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                  {/* Left Mockup Image Preview */}
+                  <div className="relative aspect-[16/9.5] w-full short:w-36 short:h-24 short:shrink-0 short:mb-0 rounded-xl sm:rounded-2xl overflow-hidden mb-2.5 sm:mb-3 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
+                    {proj.image ? (
+                      <img 
+                        src={proj.image} 
+                        alt={proj.title} 
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                        style={{
+                          imageRendering: '-webkit-optimize-contrast',
+                          transform: 'translateZ(0)',
+                          backfaceVisibility: 'hidden',
+                        }}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center text-[#888] p-2 text-center">
+                        <ImageIcon className="w-5 h-5 mb-0.5 text-[#bfa074]" />
+                        <span className="text-[9px] font-mono font-bold tracking-wider">PREVIEW</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* 6. Bottom Action Bar: GitHub Logo + Go Live + Details */}
-                  <div className="pt-2.5 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      {/* GitHub Logo button (if has githubUrl) */}
-                      {proj.githubUrl && (
-                        <a
-                          href={proj.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-full bg-black/[0.05] hover:bg-[#111113] text-[#24292f] hover:text-white transition-all shadow-sm hover:scale-110 flex items-center justify-center cursor-pointer"
-                          title="View source code on GitHub"
-                        >
-                          <GithubIcon className="w-3.5 h-3.5 fill-current" />
-                        </a>
-                      )}
+                  {/* Right Content / Bottom Content Column */}
+                  <div className="flex-1 min-w-0 flex flex-col justify-between">
+                    <div>
+                      {/* Top Badges */}
+                      <div className="flex items-center justify-between gap-1.5 mb-1.5 sm:mb-2.5 short:mb-0.5">
+                        {proj.id === 4 ? (
+                          <div className="flex items-center gap-1">
+                            <span className="px-2 py-0.5 rounded-full text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wide uppercase border bg-indigo-500/15 text-indigo-800 border-indigo-500/30">
+                              🎓 Final Year
+                            </span>
+                            <span className="px-2 py-0.5 rounded-full text-[8px] sm:text-[8.5px] font-mono font-bold tracking-wide uppercase border bg-emerald-500/15 text-emerald-800 border-emerald-500/30">
+                              🏛️ University
+                            </span>
+                          </div>
+                        ) : (
+                          <span className={`px-2 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[9px] font-mono font-bold tracking-wide uppercase border ${
+                            proj.projectType === 'competition'
+                              ? 'bg-amber-500/15 text-amber-800 border-amber-500/30'
+                              : proj.projectType === 'final_year'
+                                ? 'bg-indigo-500/15 text-indigo-800 border-indigo-500/30'
+                                : 'bg-emerald-500/15 text-emerald-800 border-emerald-500/30'
+                          }`}>
+                            {proj.projectType === 'competition' && '🏆 Competition Project'}
+                            {proj.projectType === 'final_year' && '🎓 Final Year Project'}
+                            {proj.projectType === 'university' && '🏛️ University Project'}
+                          </span>
+                        )}
+                        <span className="text-[9px] sm:text-[9.5px] font-mono font-bold text-[#8c7355]">
+                          0{idx + 1}
+                        </span>
+                      </div>
 
-                      {/* Go Live button (if has liveDemo) */}
-                      {proj.liveDemo && (
-                        <a
-                          href={proj.liveDemo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
-                          title="Open live production platform"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse" />
-                          <span>Go Live</span>
-                          <ExternalLink className="w-2.5 h-2.5" />
-                        </a>
-                      )}
+                      {/* Bold Project Title */}
+                      <h3 className="text-xs sm:text-base short:text-xs font-black font-sans uppercase tracking-tight text-[#111113] group-hover:text-[#8c7355] transition-colors truncate mb-0.5 sm:mb-1">
+                        {shortTitle}
+                      </h3>
+
+                      {/* Tagline */}
+                      <p className="text-[10px] sm:text-[11.5px] short:text-[9.5px] text-[#555] font-sans line-clamp-2 short:line-clamp-1 leading-relaxed mb-2 sm:mb-3 short:mb-1 min-h-[24px] sm:min-h-[32px] short:min-h-0">
+                        {proj.tagline || proj.description}
+                      </p>
+
+                      {/* Core Tech Badges */}
+                      <div className="flex items-center gap-1 sm:gap-1.5 overflow-hidden mb-2 sm:mb-3.5 short:mb-1.5">
+                        {coreTech.map((t) => (
+                          <span 
+                            key={t}
+                            className="px-1.5 sm:px-2 py-0.5 rounded-md bg-black/[0.04] text-[8.5px] sm:text-[9px] font-mono text-[#555] font-semibold truncate border border-black/[0.04]"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Details button */}
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[9px] font-mono font-bold transition-all shadow-sm shrink-0">
-                      <span>Details</span>
-                      <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </span>
+                    {/* Bottom Action Bar: GitHub Logo + Go Live + Details */}
+                    <div className="pt-2 sm:pt-2.5 short:pt-1 border-t border-black/[0.06] flex items-center justify-between gap-1.5">
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {/* GitHub Logo button (if has githubUrl) */}
+                        {proj.githubUrl && (
+                          <a
+                            href={proj.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-1 sm:p-1.5 rounded-full bg-black/[0.05] hover:bg-[#111113] text-[#24292f] hover:text-white transition-all shadow-sm hover:scale-110 flex items-center justify-center cursor-pointer"
+                            title="View source code on GitHub"
+                          >
+                            <GithubIcon className="w-3.5 h-3.5 fill-current" />
+                          </a>
+                        )}
+
+                        {/* Go Live button (if has liveDemo) */}
+                        {proj.liveDemo && (
+                          <a
+                            href={proj.liveDemo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm hover:scale-105 cursor-pointer"
+                            title="Open live production platform"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse" />
+                            <span>Go Live</span>
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        )}
+                      </div>
+
+                      {/* Details button */}
+                      <span className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#111113] group-hover:bg-[#8c7355] text-white text-[8.5px] sm:text-[9px] font-mono font-bold transition-all shadow-sm shrink-0">
+                        <span>Details</span>
+                        <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
@@ -1117,16 +1173,16 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - 100% clean, unobstructed 3D view (direct click on 3D pedestals)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex flex-col items-center justify-start pt-20 sm:pt-24 px-4 sm:px-8 pointer-events-none transition-opacity duration-300"
+        className="absolute inset-0 flex flex-col items-center justify-start pt-16 sm:pt-24 px-4 sm:px-8 max-md:portrait:pt-14 max-md:portrait:px-3 short:pt-8 short:px-4 pointer-events-none transition-opacity duration-300"
         style={{ opacity: s4.opacity }}
       >
         {/* Top Centered Header - Gloriously Illuminated with Specular Border & Neon Gold Glow */}
         <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center select-none pointer-events-none animate-fadeIn">
           
           {/* Eyebrow Tag with Pulsing Gold Orb */}
-          <div className="flex items-center justify-center gap-2 mb-2 select-none">
+          <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2 short:mb-0.5 select-none">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ffd066] shadow-[0_0_10px_#ffd066] animate-pulse" />
-            <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.25em] uppercase text-[#f7db99] font-bold drop-shadow-[0_0_6px_rgba(255,208,102,0.5)]">
+            <span className="text-[9.5px] sm:text-[11px] short:text-[8px] font-mono tracking-[0.25em] uppercase text-[#f7db99] font-bold drop-shadow-[0_0_6px_rgba(255,208,102,0.5)]">
               ACADEMIC &amp; LEADERSHIP ARCHIVE // 04
             </span>
           </div>
@@ -1137,7 +1193,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
               ...largeTitleParallax,
               textShadow: '0 0 16px rgba(255, 230, 160, 0.85), 0 0 35px rgba(255, 208, 102, 0.6), 0 0 60px rgba(216, 180, 90, 0.35)',
             }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black font-sans uppercase tracking-[0.08em] leading-none mb-2.5 select-none cursor-default text-center"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-[54px] short:text-xl short:mb-0.5 font-black font-sans uppercase tracking-[0.08em] leading-none mb-1.5 sm:mb-2.5 select-none cursor-default text-center"
           >
             <span 
               className="bg-clip-text text-transparent bg-gradient-to-r from-[#ffffff] via-[#fff4d0] to-[#f0c766]"
@@ -1151,19 +1207,19 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           </h2>
 
           {/* Elegant Architectural Gold Divider with Center Diamond Emblem */}
-          <div className="flex items-center justify-center gap-3 w-full max-w-md mx-auto mb-2 opacity-90 select-none">
+          <div className="flex items-center justify-center gap-3 w-full max-w-md mx-auto mb-1.5 sm:mb-2 short:mb-0.5 opacity-90 select-none">
             <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#ffd066]/80 to-[#ffd066]" />
-            <span className="text-[#ffe494] text-[11px] drop-shadow-[0_0_8px_#ffd066]">✦</span>
+            <span className="text-[#ffe494] text-[10px] sm:text-[11px] drop-shadow-[0_0_8px_#ffd066]">✦</span>
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#ffd066]/80 to-[#ffd066]" />
           </div>
 
           {/* Subtitle / Curatorial Citation */}
-          <p className="text-[11px] sm:text-[12px] font-mono tracking-[0.16em] text-[#f7e6c4] uppercase text-center max-w-lg mx-auto drop-shadow-[0_0_10px_rgba(255,230,160,0.5)] mb-1.5 select-none">
+          <p className="text-[10px] sm:text-[12px] short:text-[8.5px] font-mono tracking-[0.16em] text-[#f7e6c4] uppercase text-center max-w-lg mx-auto drop-shadow-[0_0_10px_rgba(255,230,160,0.5)] mb-1 sm:mb-1.5 short:mb-0.5 select-none">
             Honors, Scholarships &amp; Student Leadership • 2024 — 2026
           </p>
 
           {/* Interactive Hint */}
-          <p className="text-[10px] sm:text-[11px] text-neutral-400/90 font-sans text-center flex items-center justify-center gap-1.5 select-none mt-0.5">
+          <p className="text-[9.5px] sm:text-[11px] short:text-[8px] text-neutral-400/90 font-sans text-center flex items-center justify-center gap-1.5 select-none mt-0.5">
             <span className="w-1 h-1 rounded-full bg-[#ffd066]/80" />
             <span>Click directly on any 3D pedestal to inspect official credentials &amp; verification details</span>
           </p>
@@ -1173,54 +1229,110 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
 
       {/* =========================================================================
           SCENE 05: FINAL TRANSMISSION (CONTACT & QUICK ADMIN DISPATCH)
-          Layout: Model glides to RIGHT (Normal Zoom), UI on the LEFT (Interleaved!)
+          Layout: 
+          - Desktop: Model glides to RIGHT, UI on the LEFT
+          - Portrait Phone: Compact Contact Card
+          - Landscape Phone: 2-Column Split (Zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center px-4 sm:px-12 lg:px-20 xl:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center px-4 sm:px-12 lg:px-20 xl:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 max-md:portrait:pt-14 max-md:portrait:pb-4 short:pt-8 short:pb-2 short:px-6 transition-opacity duration-300"
         style={{ opacity: s5.opacity, pointerEvents: s5.pointerEvents }}
       >
-        <div className="w-full max-w-xl lg:max-w-2xl flex flex-col items-start text-left my-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none">
+        <div className="w-full max-w-xl lg:max-w-2xl short:max-w-4xl flex flex-col short:flex-row short:items-start short:gap-6 items-start text-left my-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none short:p-0 short:bg-transparent short:border-none short:shadow-none">
           
-          {/* Artistic Eyebrow Tag */}
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
-            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
-              GET IN TOUCH // 05
-            </span>
+          {/* Left Column in Landscape: Title, Bio & Socials */}
+          <div className="short:w-[45%] flex flex-col items-start">
+            {/* Artistic Eyebrow Tag */}
+            <div className="flex items-center gap-2 mb-1.5 sm:mb-2 short:mb-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8c7355]" />
+              <span className="text-[10px] short:text-[8px] font-mono tracking-[0.2em] uppercase text-[#8c7355] font-bold">
+                GET IN TOUCH // 05
+              </span>
+            </div>
+
+            {/* Dynamic Interactive Large Headline */}
+            <h2 
+              style={largeTitleParallax}
+              className="text-2xl sm:text-5xl lg:text-6xl short:text-xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[0.95] mb-2 sm:mb-3 short:mb-1 select-none cursor-default"
+            >
+              Let's Build <br className="short:hidden" />
+              <span 
+                style={{
+                  backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Together.
+              </span>
+            </h2>
+
+            <p className="text-xs sm:text-sm short:text-[10px] short:leading-snug text-[#4a4845] font-sans leading-relaxed mb-3 sm:mb-4 short:mb-1.5 max-w-md line-clamp-3 short:line-clamp-2">
+              Available for software engineering internships, backend challenges, and modern full-stack collaborations.
+            </p>
+
+            {/* Interactive Email Copy Box (Desktop & Landscape Left Column) */}
+            <div className="w-full max-w-lg short:max-w-none p-2.5 sm:p-3 short:p-1.5 rounded-xl sm:rounded-2xl bg-white/90 border border-black/[0.08] backdrop-blur-xl mb-2.5 sm:mb-3 short:mb-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+              <span className="text-[9px] sm:text-[10px] short:text-[8px] font-mono text-[#888] block mb-0.5 font-semibold">DIRECT INBOX</span>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-xs sm:text-sm short:text-xs font-mono font-bold text-[#111113] selection:bg-[#d8c8a8]">
+                  {personalInfo.email}
+                </span>
+                <button
+                  onClick={handleCopyEmail}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/[0.05] hover:bg-black/10 text-[#111113] text-xs font-mono font-bold transition-all cursor-pointer"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied!' : 'Copy'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Social Links & Resume Download */}
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 text-[11px] sm:text-xs short:text-[9.5px] font-mono text-[#666] mb-3 sm:mb-5 short:mb-1.5 font-medium">
+              <a href="tel:0788551709" className="hover:text-black transition-colors">078.855.1709</a>
+              <span>•</span>
+              <a 
+                href={personalInfo.resumeUrl} 
+                download 
+                onClick={() => analyticsService.trackEvent('cv_download')}
+                className="text-[#8c7355] hover:text-black transition-colors underline font-bold"
+              >
+                CV (PDF)
+              </a>
+              <span>•</span>
+              <a href={personalInfo.github} target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+                GitHub
+              </a>
+              <span>•</span>
+              <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+                LinkedIn
+              </a>
+            </div>
+
+            {/* Bottom Controls: Replay Journey */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={onReplay}
+                className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 short:py-1 short:px-3 rounded-full bg-[#1a1a1a] hover:bg-black text-white font-mono font-bold text-[11px] sm:text-xs short:text-[9.5px] transition-all shadow-xl cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <RotateCcw className="w-3.5 h-3.5 text-[#d8c8a8]" />
+                <span>REPLAY JOURNEY</span>
+              </button>
+            </div>
           </div>
 
-          {/* Dynamic Interactive Large Headline */}
-          <h2 
-            style={largeTitleParallax}
-            className="text-3xl sm:text-5xl lg:text-6xl font-black font-sans uppercase tracking-tight text-[#111113] leading-[0.95] mb-3 select-none cursor-default"
-          >
-            Let's Build <br />
-            <span 
-              style={{
-                backgroundImage: `linear-gradient(${gradientAngle}deg, #111113 0%, #8c7355 50%, #c5a880 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Together.
-            </span>
-          </h2>
-
-          <p className="text-xs sm:text-sm text-[#4a4845] font-sans leading-relaxed mb-4 max-w-md">
-            Available for software engineering internships, backend challenges, and modern full-stack collaborations.
-          </p>
-
-          {/* Recruiter & Visitor Quick Direct Message Box (Dispatched to Admin Portal) */}
-          <div className="w-full max-w-lg p-3.5 sm:p-4 rounded-2xl bg-white/95 border border-black/[0.08] backdrop-blur-xl mb-4 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-            <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-black/[0.06]">
+          {/* Right Column in Landscape / Bottom Section: Recruiter & Visitor Quick Direct Message Box */}
+          <div className="w-full max-w-lg short:w-[55%] short:max-w-sm p-3 sm:p-4 short:p-2.5 rounded-xl sm:rounded-2xl bg-white/95 border border-black/[0.08] backdrop-blur-xl mb-3 sm:mb-4 short:mb-0 shadow-[0_8px_30px_rgba(0,0,0,0.04)] mt-3 sm:mt-0">
+            <div className="flex items-center justify-between mb-2 sm:mb-2.5 short:mb-1 pb-1.5 sm:pb-2 border-b border-black/[0.06]">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10.5px] font-mono font-bold uppercase tracking-wider text-[#111113] flex items-center gap-1.5">
+                <span className="text-[10px] sm:text-[10.5px] short:text-[9px] font-mono font-bold uppercase tracking-wider text-[#111113] flex items-center gap-1.5">
                   <MessageSquare className="w-3 h-3 text-[#8c7355]" />
                   <span>Contact for Work</span>
                 </span>
               </div>
-              <span className="text-[9.5px] font-mono text-[#888]">Direct contact for work & opportunities</span>
+              <span className="text-[9px] sm:text-[9.5px] font-mono text-[#888]">Direct contact for work & opportunities</span>
             </div>
 
             {messageSent ? (
@@ -1229,21 +1341,21 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 <span>Message dispatched successfully! Duc will review your inquiry and get back to you shortly.</span>
               </div>
             ) : (
-              <form onSubmit={handleSendQuickMessage} className="space-y-2">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <form onSubmit={handleSendQuickMessage} className="space-y-1.5 sm:space-y-2 short:space-y-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 short:gap-1">
                   <input
                     type="text"
                     value={senderName}
                     onChange={(e) => setSenderName(e.target.value)}
-                    placeholder="Your Name or Company (e.g. KMS, VNG)"
-                    className="w-full px-3 py-1.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-xs font-sans text-[#111113] placeholder-[#888] focus:outline-none focus:border-[#8c7355] focus:bg-white transition-all"
+                    placeholder="Your Name or Company"
+                    className="w-full px-2.5 sm:px-3 py-1 sm:py-1.5 short:py-1 rounded-lg sm:rounded-xl bg-black/[0.03] border border-black/[0.08] text-[11px] sm:text-xs font-sans text-[#111113] placeholder-[#888] focus:outline-none focus:border-[#8c7355] focus:bg-white transition-all"
                   />
                   <input
                     type="text"
                     value={senderContact}
                     onChange={(e) => setSenderContact(e.target.value)}
                     placeholder="Email / Phone / LinkedIn"
-                    className="w-full px-3 py-1.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-xs font-sans text-[#111113] placeholder-[#888] focus:outline-none focus:border-[#8c7355] focus:bg-white transition-all"
+                    className="w-full px-2.5 sm:px-3 py-1 sm:py-1.5 short:py-1 rounded-lg sm:rounded-xl bg-black/[0.03] border border-black/[0.08] text-[11px] sm:text-xs font-sans text-[#111113] placeholder-[#888] focus:outline-none focus:border-[#8c7355] focus:bg-white transition-all"
                   />
                 </div>
 
@@ -1253,7 +1365,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                     value={quickMessage}
                     onChange={(e) => setQuickMessage(e.target.value)}
                     placeholder="Brief message, job opportunity, or technical inquiry..."
-                    className="w-full px-3 py-1.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-xs font-sans text-[#111113] placeholder-[#888] focus:outline-none focus:border-[#8c7355] focus:bg-white transition-all resize-none"
+                    className="w-full px-2.5 sm:px-3 py-1 sm:py-1.5 short:py-0.5 rounded-lg sm:rounded-xl bg-black/[0.03] border border-black/[0.08] text-[11px] sm:text-xs font-sans text-[#111113] placeholder-[#888] focus:outline-none focus:border-[#8c7355] focus:bg-white transition-all resize-none"
                   />
                 </div>
 
@@ -1262,11 +1374,11 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 )}
 
                 <div className="flex items-center justify-between pt-0.5">
-                  <span className="text-[9.5px] text-[#888] font-mono">End-to-end encrypted dispatch</span>
+                  <span className="text-[9px] sm:text-[9.5px] short:text-[8px] text-[#888] font-mono">Encrypted dispatch</span>
                   <button
                     type="submit"
                     disabled={messageSending}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#111113] hover:bg-black text-white font-mono font-bold text-xs transition-all shadow-md cursor-pointer hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 sm:py-1.5 short:py-0.5 short:px-2.5 rounded-lg sm:rounded-xl bg-[#111113] hover:bg-black text-white font-mono font-bold text-[11px] sm:text-xs short:text-[9.5px] transition-all shadow-md cursor-pointer hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                   >
                     <Send className="w-3 h-3 text-[#d8c8a8]" />
                     <span>{messageSending ? 'Sending...' : 'Contact for Work'}</span>
@@ -1673,6 +1785,24 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           </div>
         </div>,
         document.body
+      )}
+
+      {/* Floating Cinematic Landscape Recommendation Pill (Shown on Portrait Mobile) */}
+      {isPortraitMobile && !dismissedRotateHint && (
+        <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/92 text-white border border-[#c5a880]/50 shadow-2xl backdrop-blur-md animate-pulse">
+          <span className="text-xs">📱</span>
+          <span className="text-[10.5px] font-mono tracking-wide text-[#f4efe8]">
+            Xoay ngang màn hình để trải nghiệm rạp chiếu 3D
+          </span>
+          <button 
+            type="button"
+            onClick={() => setDismissedRotateHint(true)}
+            className="ml-1 p-0.5 text-neutral-400 hover:text-white rounded-full text-xs font-mono cursor-pointer"
+            title="Đóng thông báo"
+          >
+            ✕
+          </button>
+        </div>
       )}
 
     </div>

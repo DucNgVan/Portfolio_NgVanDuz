@@ -7,6 +7,10 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        'short': { raw: '(max-height: 520px) and (orientation: landscape)' },
+        'tall': { raw: '(min-height: 521px)' },
+      },
       colors: {
         cream: {
           50: '#FAF8F5',
