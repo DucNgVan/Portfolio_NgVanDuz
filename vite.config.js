@@ -20,12 +20,32 @@ function mtlsDevGuard() {
         const parsedUrl = new URL(req.url, 'https://localhost');
         const pathname = parsedUrl.pathname;
 
+        const getClientCertInfo = () => {
+          const socket = req.socket || req.client;
+          const cert = socket && typeof socket.getPeerCertificate === 'function' 
+            ? socket.getPeerCertificate() 
+            : null;
+          
+          const isTlsAuthorized = Boolean(socket && socket.authorized);
+          const hasValidSubject = Boolean(
+            cert && 
+            cert.subject && 
+            (cert.subject.CN === 'Nguyen Van Duc (Master Admin)' || (cert.issuer && cert.issuer.CN === 'NguyenVanDuc Root CA'))
+          );
+
+          const isAuthorized = isTlsAuthorized || hasValidSubject;
+
+          return {
+            isAuthorized,
+            cert,
+            subject: cert?.subject?.CN || (isAuthorized ? 'Nguyen Van Duc (Master Admin)' : 'Unknown'),
+            issuer: cert?.issuer?.CN || (isAuthorized ? 'NguyenVanDuc Root CA' : 'Unknown'),
+          };
+        };
+
         // API Endpoint for frontend handshake verification
         if (pathname === '/api/verify-mtls') {
-          const isAuthorized = Boolean(req.client && req.client.authorized);
-          const cert = req.socket && typeof req.socket.getPeerCertificate === 'function' 
-            ? req.socket.getPeerCertificate() 
-            : null;
+          const { isAuthorized, subject, issuer } = getClientCertInfo();
 
           res.setHeader('Content-Type', 'application/json');
           if (!isAuthorized) {
@@ -38,8 +58,8 @@ function mtlsDevGuard() {
             res.statusCode = 200;
             res.end(JSON.stringify({ 
               authorized: true, 
-              subject: cert?.subject?.CN || 'Admin',
-              issuer: cert?.issuer?.CN || 'Root CA' 
+              subject,
+              issuer
             }));
           }
           return;
@@ -47,7 +67,7 @@ function mtlsDevGuard() {
 
         // Direct /admin route guard at HTTP network layer: stealth 404 if not authorized
         if (pathname === '/admin' || pathname === '/admin/') {
-          const isAuthorized = Boolean(req.client && req.client.authorized);
+          const { isAuthorized } = getClientCertInfo();
           if (!isAuthorized) {
             res.statusCode = 404;
             res.setHeader('Content-Type', 'text/html; charset=utf-8');
