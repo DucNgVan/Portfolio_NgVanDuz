@@ -4,7 +4,10 @@ import FluidEffect from '@src/components/canvas/fluid/effect/FluidEffect';
 import { useIsomorphicLayoutEffect } from '@src/hooks/useIsomorphicLayoutEffect';
 
 const FluidEffectWrapper = forwardRef((props, ref) => {
-  const effect = useMemo(() => new FluidEffect(props), [JSON.stringify(props)]);
+  const effect = useMemo(
+    () => new FluidEffect(props),
+    [props.fluidColor, props.intensity, props.backgroundColor, props.tFluid],
+  );
 
   useIsomorphicLayoutEffect(
     () => () => {

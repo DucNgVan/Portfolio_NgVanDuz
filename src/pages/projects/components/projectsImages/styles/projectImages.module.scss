@@ -3,13 +3,13 @@
 .root {
   position: relative;
   background-color: var(--white);
-  padding-top: calc(var(--layout-columns-gap) * 3);
+  padding-top: calc(var(--layout-columns-gap) * 5.5);
   padding-bottom: calc(var(--layout-columns-gap) * 4);
   border-radius: var(--layout-columns-gap);
   box-shadow: none;
 
   @include mobile {
-    padding-top: calc(var(--layout-columns-gap) * 2);
+    padding-top: calc(var(--layout-columns-gap) * 3);
     padding-bottom: calc(var(--layout-columns-gap) * 2);
     border-radius: calc(var(--layout-columns-gap) * 0.5);
   }

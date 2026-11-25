@@ -32,14 +32,31 @@ function Page({ id }) {
   const currentProject = useMemo(() => projects[projectIndex], [projectIndex]);
 
   const updateCSSVariables = (project) => {
-    gsap.set('html', {
-      '--black': project.primary,
-      '--white': project.secondary,
-      '--accentColor': project.accentColor,
-      '--fillColor': project.fillColor,
-      '--menuColor': project.menuColor,
-      '--menuFontColor': project.menuFontColor,
-    });
+    const isDark =
+      (typeof document !== 'undefined' &&
+        document.documentElement.getAttribute('data-theme') === 'dark') ||
+      (typeof window !== 'undefined' &&
+        localStorage.getItem('theme') === 'dark');
+
+    if (isDark) {
+      gsap.set('html', {
+        '--black': '#f0f4f1',
+        '--white': '#111216',
+        '--accentColor': '#1c1d22',
+        '--fillColor': project?.accentColor || '#ff6a3d',
+        '--menuColor': '#28282b',
+        '--menuFontColor': '#ffffff',
+      });
+    } else {
+      gsap.set('html', {
+        '--black': project.primary,
+        '--white': project.secondary,
+        '--accentColor': project.accentColor,
+        '--fillColor': project.fillColor,
+        '--menuColor': project.menuColor,
+        '--menuFontColor': project.menuFontColor,
+      });
+    }
   };
 
   useIsomorphicLayoutEffect(() => {
@@ -66,15 +83,37 @@ function Page({ id }) {
   }, [isMobile, isLoading, windowSize.width]);
 
   useEffect(() => {
-    if (currentProject) {
+    if (!currentProject) return;
+
+    const applyTheme = () => {
       updateCSSVariables(currentProject);
       setFluidColor(currentProject.fluidColor);
-    }
+    };
+
+    applyTheme();
+
+    const observer = new MutationObserver(() => {
+      applyTheme();
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
     return () => {
-      ['--black', '--white', '--accentColor', '--fillColor', '--menuColor', '--menuFontColor'].forEach((prop) => {
+      observer.disconnect();
+      [
+        '--black',
+        '--white',
+        '--accentColor',
+        '--fillColor',
+        '--menuColor',
+        '--menuFontColor',
+      ].forEach((prop) => {
         document.documentElement.style.removeProperty(prop);
       });
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const isDark =
+        document.documentElement.getAttribute('data-theme') === 'dark';
       setFluidColor(isDark ? '#ff6a3d' : '#d7d7d4');
     };
   }, [currentProject]);
