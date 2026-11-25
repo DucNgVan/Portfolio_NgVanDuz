@@ -54,16 +54,17 @@
     position: relative;
     flex: 1 1 auto;
     height: 1px;
+    min-height: 320px;
     width: 100%;
     box-shadow: 0 0 0 1vw var(--white);
-
     border-radius: var(--layout-columns-gap);
+    overflow: hidden;
 
     @include mobile {
       width: 100%;
       flex: 1 1 auto;
-      min-height: 0;
-      height: auto;
+      min-height: 280px;
+      height: 46svh;
       box-shadow: 0 0 0 2vw var(--white);
       border-radius: calc(var(--layout-columns-gap) * 0.5);
     }
