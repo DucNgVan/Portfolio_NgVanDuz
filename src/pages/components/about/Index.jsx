@@ -45,8 +45,9 @@ function About() {
       <Image
         priority
         src="/giats/front.webp"
-        sizes="100%"
+        sizes="(max-width: 768px) 80vw, 35vw"
         fill
+        style={{ objectFit: 'cover' }}
         alt="Nguyen Van Duc"
       />
     </div>

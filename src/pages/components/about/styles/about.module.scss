@@ -58,13 +58,29 @@
     }
     .imageContainer {
       height: 53vw;
+      width: calc(53vw * 2415 / 3912);
+      max-width: 100%;
+      aspect-ratio: 2415 / 3912;
       position: relative;
       grid-column: 9 / 17;
+      justify-self: center;
+      margin: 0 auto;
+      overflow: hidden;
+
       @include mobile {
-        height: 110vw;
+        height: auto;
+        width: 80%;
+        max-width: 320px;
+        aspect-ratio: 2415 / 3912;
         grid-column: 1 / 7;
+        margin: 0 auto;
       }
+
       > img {
+        object-fit: cover;
+        width: 100% !important;
+        height: 100% !important;
+
         @include mobile {
           border-radius: calc(var(--layout-columns-gap) * 0.5);
         }
