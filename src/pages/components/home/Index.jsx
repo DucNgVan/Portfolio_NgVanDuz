@@ -267,8 +267,8 @@ function Home() {
         {!isMobile && (
           <h6 className={clsx('h6', styles.rightContainer)}>
             Software Engineering Student at University of Greenwich (Vietnam) ·
-            Top 3 Student 2024. Crafting resilient full-stack applications and
-            immersive interactive web experiences.
+            Top 3 GPA (2024). Passionate about web development, APIs, and
+            interactive 3D experiences — ready for an internship opportunity.
           </h6>
         )}
       </div>
@@ -312,8 +312,8 @@ function Home() {
         <div className={styles.rightContainerMobile}>
           <h6 className="h6">
             Software Engineering Student at University of Greenwich (Vietnam) ·
-            Top 3 Student 2024. Crafting resilient full-stack applications and
-            immersive interactive web experiences.
+            Top 3 GPA (2024). Passionate about web development, APIs, and
+            interactive 3D experiences — ready for an internship opportunity.
           </h6>
         </div>
       )}

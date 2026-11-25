@@ -16,10 +16,10 @@ function Quote() {
       <h3 ref={textRef} className={clsx(styles.text, 'h3')}>
         {!isLoading && (
           <TextOpacity textRef={textRef.current} trigger={rootRef.current}>
-            When architecting scalable distributed applications, choosing the
-            right foundations is paramount. I combine resilient software
-            principles, clean architecture, and modern interfaces to turn
-            ambitious visions into robust production systems.
+            Every meaningful engineering journey starts with strong fundamentals
+            and a willingness to build hands-on. I focus on writing clean,
+            maintainable code across web and backend systems — eager to learn
+            from experienced mentors and grow through real-world challenges.
           </TextOpacity>
         )}
       </h3>

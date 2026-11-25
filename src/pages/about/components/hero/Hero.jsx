@@ -49,7 +49,7 @@ function Hero() {
     <section ref={rootRef} className={clsx(styles.root, 'layout-block-inner')}>
       <header className={styles.titleContainer}>
         <h2 className={clsx(styles.title, 'h2')}>
-          Creating pixel-perfect interfaces from design to deployment.
+          Software Engineering student eager to learn, build, and contribute.
         </h2>
       </header>
       <div className={styles.wrapper}>

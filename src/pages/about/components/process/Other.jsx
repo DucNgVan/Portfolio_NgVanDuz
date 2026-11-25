@@ -205,7 +205,7 @@ const Other = memo(({ setPortals }) => {
     <section ref={rootRef} className={clsx(styles.root, 'layout-block-inner')}>
       <div className={styles.topContainer}>
         <h1 className={clsx(styles.text, 'h1')}>
-          <AppearByWords>Process</AppearByWords>
+          <AppearByWords>Approach</AppearByWords>
         </h1>
       </div>
 

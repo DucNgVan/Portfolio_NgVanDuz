@@ -66,14 +66,14 @@ function About() {
         {isMobile ? renderImageContainer() : null}
         <div className={clsx(styles.descWrapper)} ref={animatedImageRef}>
           <AppearTitle>
-            <div className="p-l">“My engineering journey as a software</div>
+            <div className="p-l">“As a software engineering student preparing</div>
             <div className="p-l">
-              developer empowers me to solve complex problems
+              for my first professional internship, I focus on turning
             </div>
             <div className="p-l">
-              creatively and efficiently, building resilient
+              classroom theory into practical applications — from interactive
             </div>
-            <div className="p-l">systems and successful project outcomes”</div>
+            <div className="p-l">3D web interfaces to robust relational backends”</div>
           </AppearTitle>
         </div>
         {!isMobile ? renderImageContainer() : null}
@@ -81,36 +81,32 @@ function About() {
           {!isMobile ? (
             <AppearTitle key="desktop-descWrapperBottom">
               <h6 className="h6">
-                A passionate software engineer hailing from Da Nang, Vietnam.
+                Software Engineering undergraduate at University of Greenwich (Da Nang).
               </h6>
               <h6 className="h6">
-                Studying BSc (Hons) Software Engineering at Greenwich. With a
+                Actively seeking an Internship in Frontend, Backend, or Fullstack development.
               </h6>
               <h6 className="h6">
-                strong dedication to creating seamless user experiences. I
-                specialize
+                Hands-on project experience with Next.js, Three.js, Node.js, PostgreSQL (3NF),
               </h6>
               <h6 className="h6">
-                in bringing high-performance web applications to life with clean
+                and Docker. Top 3 GPA student eager to learn and contribute to production products.
               </h6>
-              <h6 className="h6">and efficient, scalable code.</h6>
             </AppearTitle>
           ) : (
             <AppearTitle key="mobile-descWrapperBottom">
               <h6 className="h6">
-                A passionate software engineer hailing from Da Nang, Vietnam.
+                Software Engineering undergraduate at Greenwich Vietnam (Da Nang),
               </h6>
               <h6 className="h6">
-                Studying BSc (Hons) Software Engineering at Greenwich. With a
+                actively seeking an Internship in Frontend or Fullstack development.
               </h6>
               <h6 className="h6">
-                strong dedication to creating seamless user experiences. I
-                specialize
+                Hands-on project experience with Next.js, Three.js, Node.js, and PostgreSQL.
               </h6>
               <h6 className="h6">
-                in bringing high-performance web applications to life with clean
+                Top 3 GPA student eager to learn from experienced mentors.
               </h6>
-              <h6 className="h6">and efficient, scalable code.</h6>
             </AppearTitle>
           )}
           <div className={clsx(styles.buttonContainer)}>

@@ -6,18 +6,18 @@ import Process from '@src/pages/about/components/process/Process';
 import CustomHead from '@src/components/dom/CustomHead';
 
 const seo = {
-  title: 'Nguyen Van Duc - About',
+  title: 'Nguyen Van Duc - About & Internship Profile',
   description:
-    'Learn about my journey, values, academic achievements at Greenwich, and commitment to engineering quality web and app solutions.',
+    'Software Engineering undergraduate at University of Greenwich Vietnam (Da Nang) actively seeking an internship. Discover my hands-on projects, technical skills, and academic honors.',
   keywords: [
     'Nguyen Van Duc',
-    'About Nguyen Van Duc',
-    'About me',
-    'Software Engineer Journey',
-    'Greenwich Vietnam',
-    'Fullstack Developer',
-    'Developer Profile',
-    'Quality Web Solutions',
+    'Nguyen Van Duc Portfolio',
+    'Software Engineering Student',
+    'Software Engineer Intern',
+    'Frontend Intern',
+    'Fullstack Intern',
+    'Greenwich Vietnam Da Nang',
+    'DUCNGVAN',
   ],
 };
 function Page() {

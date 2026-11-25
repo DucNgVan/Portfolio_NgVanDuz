@@ -11,116 +11,128 @@ function Overview() {
       <div className={styles.title}>
         {isMobile ? (
           <AppearTitle key="mobile-queto">
-            <h3 className="h3">The front-end developer&apos;s role </h3>
+            <h3 className="h3">Every great engineer begins with</h3>
             <h3 className="h3">
-              is like a kind host, <span className="medium">ensuring</span>
+              solid fundamentals, <span className="medium">curiosity</span>
             </h3>
             <h3 className="h3">
-              visitors have a <span className="medium">smooth</span> and
+              to learn, and the <span className="medium">humility</span> to turn
             </h3>
             <h3 className="h3">
-              <span className="medium">enjoyable</span> experience.
+              every code review into <span className="medium">growth</span>.
             </h3>
           </AppearTitle>
         ) : (
           <AppearTitle key="desktop-queto">
             <h3 className="h3">
-              The front-end developer&apos;s role is like a
+              Every great engineer begins with solid
             </h3>
             <h3 className="h3">
-              kind host, <span className="medium">ensuring</span> visitors have
+              fundamentals, <span className="medium">curiosity</span> to learn, and the
             </h3>
             <h3 className="h3">
-              a <span className="medium">smooth</span> and{' '}
-              <span className="medium">enjoyable</span> experience.
+              <span className="medium">humility</span> to turn every code review into{' '}
+              <span className="medium">growth</span>.
             </h3>
           </AppearTitle>
         )}
       </div>
       <div className={clsx(styles.text, 'p-l', styles.myStory)}>
         <AppearTitle>
-          <span>Some words</span>
+          <span>About Me</span>
         </AppearTitle>
       </div>
       <div className={styles.desc}>
         {!isMobile ? (
           <AppearTitle key="desktop-overview">
             <h6 className="h6">
-              Hey there! I&apos;m a software engineering student from Da Nang,
-              Vietnam with a{' '}
+              Hi, I&apos;m Nguyen Van Duc — an undergraduate studying Software Engineering
+              at University of Greenwich
             </h6>
             <h6 className="h6">
-              passion for architecting reliable digital systems. I study
-              software
+              (Da Nang, Vietnam). I am currently preparing for my first professional
+              internship opportunity.
             </h6>
             <h6 className="h6">
-              engineering at University of Greenwich (Vietnam) to deepen my
-              expertise in building
+              Rather than just studying theory, I love applying computer science fundamentals
+              directly into functional,
             </h6>
             <h6 className="h6">
-              modern web applications, scalable APIs, and interactive 3D
-              interfaces.
-            </h6>
-            <h6 className={clsx(styles.paddingTop, 'h6')}>
-              Ranked in Top 3 highest GPA students at Greenwich (2024), awarded
-              Best Student in
-            </h6>
-            <h6 className="h6">
-              COMP1643 (2026), and 2nd Place Winner at Impact Innovation
-              Bootcamp (2025).
-            </h6>
-            <h6 className="h6">
-              I love combining engineering precision with creative visual
-              excellence.
-            </h6>
-            <h6 className={clsx(styles.paddingTop, 'h6')}>
-              When I&apos;m not immersed in code, I enjoy continuous learning,
-              competitive problem solving,
-            </h6>
-            <h6 className="h6">
-              and collaborating on impactful open-source and real-world
-              technology initiatives.
+              end-to-end software applications across web, backend, and mobile stacks.
             </h6>
 
             <h6 className={clsx(styles.paddingTop, 'h6')}>
-              I&apos;m looking forward to collaborating and engineering
-              something great!
+              What I&apos;ve built through coursework and real-world projects:
+            </h6>
+            <h6 className="h6">
+              · Interactive 3D Web: Built Nét Studio with Next.js 14 and Three.js 3D product customizers.
+            </h6>
+            <h6 className="h6">
+              · Backend & Database Architecture: Built Nomadix (FYP) with Node.js, Express, a 28-table 3NF PostgreSQL DB, Redis caching, and Docker.
+            </h6>
+            <h6 className="h6">
+              · Fullstack & Mobile: Developed IT Helpdesk (Vue.js 3 + MongoDB) and M-Hike (Android Java & React Native).
+            </h6>
+            <h6 className="h6">
+              · Workflow Automation: Automated volunteer & donation scheduling on SharePoint & Power Automate for Vava Da Nang.
+            </h6>
+
+            <h6 className={clsx(styles.paddingTop, 'h6')}>
+              Academic achievements include Top 3 Highest GPA Student at Greenwich (2024),
+              Best Student in COMP1643
+            </h6>
+            <h6 className="h6">
+              (Networking & Systems), 2nd Place at Impact Innovation Bootcamp (2024),
+              and leading the Greenwich IT Club.
+            </h6>
+
+            <h6 className={clsx(styles.paddingTop, 'h6')}>
+              I am actively looking for an Internship in Frontend, Backend, or Fullstack development
+              where I can learn
+            </h6>
+            <h6 className="h6">
+              from senior engineers, absorb best practices, and contribute enthusiastically to production code.
             </h6>
             <h6 className={clsx(styles.paddingTop, 'h6')}>Nguyen Van Duc.</h6>
           </AppearTitle>
         ) : (
           <AppearTitle key="mobile-overview">
             <h6 className="h6">
-              Hey there! I&apos;m a software engineering student from Da Nang,
-              Vietnam
+              Hi, I&apos;m Nguyen Van Duc — an undergraduate studying Software Engineering
             </h6>
             <h6 className="h6">
-              with a passion for architecting reliable digital systems. I study
+              at University of Greenwich (Da Nang, Vietnam), actively seeking my first internship.
             </h6>
             <h6 className="h6">
-              software engineering at University of Greenwich (Vietnam) to
-              deepen
+              I love turning computer science fundamentals into practical applications across web and backend.
             </h6>
-            <h6 className="h6">
-              my expertise in building modern web apps and scalable APIs.
-            </h6>
+
             <h6 className={clsx(styles.paddingTop, 'h6')}>
-              Ranked in Top 3 highest GPA students at Greenwich (2024)
-            </h6>
-            <h6 className="h6">and awarded Best Student in COMP1643 (2026).</h6>
-            <h6 className="h6">
-              I love combining engineering precision with creative excellence.
-            </h6>
-            <h6 className={clsx(styles.paddingTop, 'h6')}>
-              When I&apos;m not immersed in code, I enjoy continuous learning
+              Hands-on project experience:
             </h6>
             <h6 className="h6">
-              and collaborating on impactful real-world technology projects.
+              · 3D Web: Nét Studio (Next.js 14, Three.js WebGL).
             </h6>
+            <h6 className="h6">
+              · Backend: Nomadix FYP (Node.js, PostgreSQL 3NF, Redis, Docker).
+            </h6>
+            <h6 className="h6">
+              · Fullstack & Mobile: IT Helpdesk (Vue.js 3 + MongoDB) and M-Hike (Android Java).
+            </h6>
+
             <h6 className={clsx(styles.paddingTop, 'h6')}>
-              I&apos;m looking forward to collaborating and creating something
+              Ranked Top 3 GPA at Greenwich (2024), Best Student in COMP1643,
             </h6>
-            <h6 className="h6">great!</h6>
+            <h6 className="h6">
+              and 2nd Place at Impact Innovation Bootcamp.
+            </h6>
+
+            <h6 className={clsx(styles.paddingTop, 'h6')}>
+              Eager to join an engineering team as an intern, learn from mentors,
+            </h6>
+            <h6 className="h6">
+              and contribute to real-world software.
+            </h6>
             <h6 className={clsx(styles.paddingTop, 'h6')}>Nguyen Van Duc.</h6>
           </AppearTitle>
         )}
