@@ -20,83 +20,42 @@ const CHAIN_X = 706;
 const PULL_MAX = 44;
 const PULL_TRIGGER = 16;
 
-const css = `
-.dsk{
-  --bg:#eef2ee; --ink:#1f2326; --accent:#d9471f; --screen:#f7faf6;
-  --glow:rgba(255,205,120,0); --cup:#d9471f;
-  position:relative; width:100%; height:100%; min-height:260px;
-  display:flex; align-items:flex-end; justify-content:center;
-  background:var(--bg); color:var(--ink); border-radius:var(--layout-columns-gap, 24px); overflow:hidden;
-  transition:background .7s ease, color .7s ease; user-select:none; -webkit-user-select:none;
-}
-.dsk[data-theme="dark"]{
-  --bg:#0f0f14; --ink:#e9ece6; --accent:#ff6a3d; --screen:#1a1a22;
-  --glow:rgba(255,205,120,1); --cup:#ff6a3d;
-}
-.dsk svg{ width:100%; height:100%; display:block; overflow:visible; }
-.dsk .beam{ opacity:0; transition:opacity .6s ease; }
-.dsk[data-theme="dark"] .beam{ opacity:1; }
-.dsk .bulb{ fill:var(--bg); transition:fill .4s ease; }
-.dsk[data-theme="dark"] .bulb{ fill:#ffe3a0; }
-.dsk .screen{ fill:var(--screen); transition:fill .7s ease; }
-.dsk .code-text{
-  font:500 11px/1.45 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  fill:var(--ink); stroke:none; opacity:.9; transition:fill .7s ease;
-  letter-spacing:-0.2px;
-}
-.dsk .code-text .tag{ fill:var(--accent); }
-.dsk .code-text .dim{ opacity:.55; }
-.dsk .caret{ fill:var(--accent); stroke:none; }
-.dsk .paper{ fill:var(--bg); transition:fill .7s ease; }
-.dsk .chain{ cursor:grab; touch-action:none; outline:none; }
-.dsk .chain.dragging{ cursor:grabbing; }
-.dsk .chain-move{ transition:transform .55s cubic-bezier(.25,1.9,.45,.8); }
-.dsk .chain.dragging .chain-move{ transition:none; }
-.dsk .chain:focus-visible .bead{ stroke:var(--accent); stroke-width:3.5; }
-.dsk .cursor{ animation:dskBlink 1s steps(1) infinite; }
-.dsk .steam{ stroke-dasharray:4 7; animation:dskSteam 2.4s linear infinite; }
-.dsk .hint{
-  position:absolute; right:clamp(12px,6%,70px); bottom:14px; font:600 13px/1 system-ui,sans-serif;
-  color:var(--ink); opacity:.55; pointer-events:none;
-}
-@keyframes dskBlink{ 50%{ opacity:0 } }
-@keyframes dskSteam{ to{ stroke-dashoffset:-22 } }
-@media (prefers-reduced-motion:reduce){
-  .dsk .cursor,.dsk .steam{ animation:none } .dsk .chain-move{ transition:none }
-}
-`;
-
 export default function DeskScene({
   defaultTheme = "light",
   onThemeChange,
   syncDocument = true,
 }) {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("theme");
-      if (saved === "light" || saved === "dark") return saved;
-    }
-    return defaultTheme;
-  });
+  const [theme, setTheme] = useState(defaultTheme);
+  const [mounted, setMounted] = useState(false);
   const [pull, setPull] = useState(0);
   const [dragging, setDragging] = useState(false);
   const svgRef = useRef(null);
   const drag = useRef({ startY: 0, scale: 1, moved: 0 });
 
   useEffect(() => {
-    if (syncDocument) {
+    setMounted(true);
+    const saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
+      if (syncDocument) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+      onThemeChange?.(saved);
+    }
+  }, [syncDocument]);
+
+  useEffect(() => {
+    if (mounted && syncDocument) {
       document.documentElement.setAttribute("data-theme", theme);
     }
-  }, [theme, syncDocument]);
+  }, [theme, mounted, syncDocument]);
 
   const toggle = () => {
     setTheme((t) => {
       const next = t === "light" ? "dark" : "light";
-      if (typeof window !== "undefined") {
-        try {
-          localStorage.setItem("theme", next);
-        } catch (e) {}
-      }
+      try {
+        localStorage.setItem("theme", next);
+      } catch (e) {}
       onThemeChange?.(next);
       return next;
     });
@@ -132,9 +91,11 @@ export default function DeskScene({
   };
 
   return (
-    <div className="dsk" data-theme={theme}>
-      <style>{css}</style>
-
+    <div
+      className="dsk"
+      data-theme={mounted ? theme : defaultTheme}
+      suppressHydrationWarning
+    >
       <svg
         ref={svgRef}
         viewBox="0 0 900 430"
@@ -226,7 +187,7 @@ export default function DeskScene({
             role="button"
             tabIndex={0}
             aria-label="Giật dây đèn để đổi chế độ sáng / tối"
-            aria-pressed={theme === "dark"}
+            aria-pressed={mounted ? theme === "dark" : false}
             onPointerDown={onDown}
             onPointerMove={onMove}
             onPointerUp={onUp}
@@ -250,8 +211,8 @@ export default function DeskScene({
         <circle className="beam" cx="710" cy="196" r="34" fill="#ffd98a" opacity=".25" />
       </svg>
 
-      <span className="hint" aria-hidden="true">
-        {theme === "light" ? "Kéo dây để bật đèn" : "Kéo dây để tắt đèn"}
+      <span className="hint" aria-hidden="true" suppressHydrationWarning>
+        {mounted && theme === "dark" ? "Kéo dây để tắt đèn" : "Kéo dây để bật đèn"}
       </span>
     </div>
   );
