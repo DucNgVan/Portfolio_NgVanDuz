@@ -72,7 +72,7 @@ function Fluid({ mainRef, fluidColor }) {
   );
 
   useFrame(() => {
-    if (!meshRef.current || !postRef.current) return;
+    if (!meshRef.current || !postRef.current || !size.width || !size.height) return;
 
     while (splatStack.current.length > 0) {
       const { mouseX, mouseY, velocityX, velocityY } = splatStack.current.pop();

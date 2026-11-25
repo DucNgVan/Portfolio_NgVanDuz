@@ -141,13 +141,12 @@ function MyApp({ Component, pageProps, router }) {
               antialias: false,
               stencil: false,
               depth: false,
-              pixelRatio: 0.1,
             }}
             style={{ mixBlendMode: 'difference', background: 'black' }}
             linear
             className={styles.canvasContainer}
             eventSource={mainRef.current}
-            dpr={[0.1, 0.5]}
+            dpr={[0.5, 1]}
           >
             <EffectComposer>
               <Fluid fluidColor={fluidColor} mainRef={mainRef} />
