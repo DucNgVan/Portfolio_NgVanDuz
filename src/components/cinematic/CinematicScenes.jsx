@@ -92,25 +92,6 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
   const [isCertZoomed, setIsCertZoomed] = useState(false);
   const [certCategoryFilter, setCertCategoryFilter] = useState('all'); // 'all', 'academic', 'club_skill'
 
-  // Mobile Orientation Detection & Cinematic Rotation Hint
-  const [isPortraitMobile, setIsPortraitMobile] = useState(false);
-  const [dismissedRotateHint, setDismissedRotateHint] = useState(false);
-
-  useEffect(() => {
-    const checkOrientation = () => {
-      const isMobile = window.innerWidth < 768 || ('ontouchstart' in window);
-      const isPortrait = window.innerHeight >= window.innerWidth;
-      setIsPortraitMobile(isMobile && isPortrait);
-    };
-    checkOrientation();
-    window.addEventListener('resize', checkOrientation);
-    window.addEventListener('orientationchange', checkOrientation);
-    return () => {
-      window.removeEventListener('resize', checkOrientation);
-      window.removeEventListener('orientationchange', checkOrientation);
-    };
-  }, []);
-
   // Quick Recruiter Message Dispatch State (delivered to Admin Portal)
   const [senderName, setSenderName] = useState('');
   const [senderContact, setSenderContact] = useState('');
@@ -501,11 +482,11 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - Landscape Phone: Left 46% = Compact Brand | Right 54% = 3D Character (Zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex max-md:portrait:flex-col max-md:portrait:justify-between max-md:portrait:items-start items-center justify-between px-4 sm:px-8 lg:px-10 xl:px-14 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-md:portrait:pt-14 max-md:portrait:pb-4 short:pt-9 short:pb-2 short:px-6 transition-opacity duration-300"
+        className="absolute inset-0 flex portrait-phone:flex-col portrait-phone:justify-between portrait-phone:items-start items-center justify-between px-4 sm:px-8 lg:px-10 xl:px-14 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 portrait-phone:pt-14 portrait-phone:pb-4 short:pt-11 short:pb-2 short:px-8 transition-opacity duration-300"
         style={{ opacity: s1.opacity, pointerEvents: s1.pointerEvents }}
       >
         {/* Left Column / Top Brand Section on Portrait */}
-        <div className="w-full sm:max-w-md lg:w-[30%] xl:w-[28%] max-w-[340px] lg:max-w-[330px] xl:max-w-[380px] short:w-[46%] short:max-w-[420px] flex flex-col items-start text-left pointer-events-auto p-0 sm:p-0 rounded-2xl sm:rounded-none bg-transparent sm:bg-transparent backdrop-blur-none sm:backdrop-blur-none border-none sm:border-none shadow-none sm:shadow-none short:p-0 short:bg-transparent short:border-none short:shadow-none">
+        <div className="w-full sm:max-w-md lg:w-[30%] xl:w-[28%] max-w-[340px] lg:max-w-[330px] xl:max-w-[380px] short:w-[46%] short:max-w-[400px] flex flex-col items-start text-left pointer-events-auto p-0 sm:p-0 rounded-2xl sm:rounded-none bg-transparent sm:bg-transparent backdrop-blur-none sm:backdrop-blur-none border-none sm:border-none shadow-none sm:shadow-none short:p-0 short:bg-transparent short:border-none short:shadow-none">
           
           {/* Artistic Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-1 sm:mb-2 short:mb-0.5">
@@ -542,8 +523,8 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
             </span>
           </div>
 
-          {/* Bio text */}
-          <p className="text-xs sm:text-[13px] short:text-[10px] short:leading-tight short:mb-1 text-[#4a4845] font-sans font-normal leading-relaxed mb-2 sm:mb-3.5 line-clamp-3 short:line-clamp-2">
+          {/* Bio text (Hidden on portrait-phone to give full air to 3D character) */}
+          <p className="text-xs sm:text-[13px] short:text-[10px] short:leading-tight short:mb-1 text-[#4a4845] font-sans font-normal leading-relaxed mb-2 sm:mb-3.5 line-clamp-3 short:line-clamp-2 portrait-phone:hidden">
             Final-year Software Engineering student at <strong className="text-[#111113] font-semibold">University of Greenwich</strong>. Specializing in modular backend architectures (PostgreSQL 3NF, Redis, Docker) and interactive 3D web platforms (Next.js 14, Three.js).
           </p>
 
@@ -581,7 +562,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
         <div className="hidden lg:block flex-1 min-w-[140px] xl:min-w-[220px] pointer-events-none" />
 
         {/* Portrait Mobile ONLY: Floating Bottom Info Bar (Leaves Center 100% CLEAR for 3D Character) */}
-        <div className="md:hidden max-md:portrait:flex hidden flex-col w-full mt-auto pointer-events-auto bg-white/85 backdrop-blur-md rounded-2xl border border-black/[0.08] p-3 shadow-lg">
+        <div className="md:hidden portrait-phone:flex hidden flex-col w-full mt-auto pointer-events-auto bg-white/85 backdrop-blur-md rounded-2xl border border-black/[0.08] p-3 shadow-lg">
           {/* Credentials Strip */}
           <div className="grid grid-cols-3 gap-2 pb-2 mb-2 border-b border-black/[0.06] w-full text-center">
             <div>
@@ -718,10 +699,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - Landscape Phone: Right 50% compact panel (zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center justify-end px-4 sm:px-10 lg:px-14 xl:px-20 pt-16 sm:pt-24 pb-8 sm:pb-10 max-md:portrait:pt-14 max-md:portrait:pb-4 short:pt-8 short:pb-2 short:px-6 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center justify-end px-4 sm:px-10 lg:px-14 xl:px-20 pt-16 sm:pt-24 pb-8 sm:pb-10 portrait-phone:pt-14 portrait-phone:pb-4 short:pt-11 short:pb-2 short:px-8 transition-opacity duration-300"
         style={{ opacity: s2.opacity, pointerEvents: s2.pointerEvents }}
       >
-        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start text-left ml-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none max-md:portrait:fixed max-md:portrait:bottom-3 max-md:portrait:inset-x-3 max-md:portrait:max-h-[48vh] max-md:portrait:overflow-y-auto max-md:portrait:rounded-2xl max-md:portrait:p-3.5 max-md:portrait:bg-white/95 max-md:portrait:border max-md:portrait:border-black/10 max-md:portrait:shadow-2xl short:p-0 short:bg-transparent short:border-none short:shadow-none short:max-w-[480px]">
+        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start text-left ml-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none portrait-phone:fixed portrait-phone:bottom-3 portrait-phone:inset-x-3 portrait-phone:max-h-[48vh] portrait-phone:overflow-y-auto portrait-phone:rounded-2xl portrait-phone:p-3.5 portrait-phone:bg-white/95 portrait-phone:border portrait-phone:border-black/10 portrait-phone:shadow-2xl short:w-[50%] short:max-w-[430px] short:p-2.5 short:bg-white/85 short:backdrop-blur-md short:rounded-2xl short:border short:border-black/[0.06] short:shadow-lg">
           
           {/* Header */}
           <div className="mb-2 sm:mb-3.5 short:mb-1 w-full">
@@ -893,10 +874,10 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - Landscape Phone: Horizontal Split Cards (Zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-start px-4 sm:px-10 lg:px-14 xl:px-16 pt-16 sm:pt-24 lg:pt-26 pb-6 max-md:portrait:pt-14 max-md:portrait:px-3 short:pt-8 short:pb-1 short:px-6 transition-opacity duration-300 pointer-events-auto overflow-hidden"
+        className="absolute inset-0 flex portrait-phone:flex-col portrait-phone:justify-between items-start px-4 sm:px-10 lg:px-14 xl:px-16 pt-16 sm:pt-24 lg:pt-26 pb-6 portrait-phone:pt-14 portrait-phone:pb-4 portrait-phone:px-3 short:pt-11 short:pb-1 short:px-8 transition-opacity duration-300 pointer-events-auto overflow-hidden"
         style={{ opacity: s3.opacity, pointerEvents: s3.pointerEvents }}
       >
-        <div className="w-full max-w-xl lg:max-w-[46rem] xl:max-w-[50rem] flex flex-col items-start text-left">
+        <div className="w-full max-w-xl lg:max-w-[46rem] xl:max-w-[50rem] portrait-phone:w-full portrait-phone:mt-auto short:w-[50%] short:max-w-[430px] flex flex-col items-start text-left">
           
           {/* Eyebrow Tag */}
           <div className="flex items-center gap-2 mb-1 short:mb-0.5">
@@ -1014,7 +995,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 <div 
                   key={proj.id}
                   onClick={() => handleOpenProject(proj)}
-                  className="w-[86vw] sm:w-[calc(50%-10px)] short:w-[410px] shrink-0 snap-center sm:snap-start flex flex-col short:flex-row short:items-center short:gap-3 justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3 sm:p-4 lg:p-4.5 short:p-2.5 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_14px_36px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
+                  className="w-[86vw] sm:w-[calc(50%-10px)] short:w-full short:max-w-[420px] shrink-0 snap-center sm:snap-start flex flex-col short:flex-row short:items-center short:gap-3 justify-between rounded-2xl sm:rounded-3xl bg-white/95 hover:bg-white border border-black/[0.08] hover:border-[#bfa074] p-3 sm:p-4 lg:p-4.5 short:p-2 transition-all duration-300 backdrop-blur-xl group hover:shadow-[0_14px_36px_rgba(0,0,0,0.08)] cursor-pointer hover:-translate-y-1 select-none"
                 >
                   {/* Left Mockup Image Preview */}
                   <div className="relative aspect-[16/9.5] w-full short:w-36 short:h-24 short:shrink-0 short:mb-0 rounded-xl sm:rounded-2xl overflow-hidden mb-2.5 sm:mb-3 border border-black/[0.08] bg-[#f5f3ee] flex items-center justify-center">
@@ -1173,7 +1154,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - 100% clean, unobstructed 3D view (direct click on 3D pedestals)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex flex-col items-center justify-start pt-16 sm:pt-24 px-4 sm:px-8 max-md:portrait:pt-14 max-md:portrait:px-3 short:pt-8 short:px-4 pointer-events-none transition-opacity duration-300"
+        className="absolute inset-0 flex flex-col items-center justify-start pt-16 sm:pt-24 px-4 sm:px-8 portrait-phone:pt-14 portrait-phone:px-3 short:pt-11 short:px-4 pointer-events-none transition-opacity duration-300"
         style={{ opacity: s4.opacity }}
       >
         {/* Top Centered Header - Gloriously Illuminated with Specular Border & Neon Gold Glow */}
@@ -1235,7 +1216,7 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           - Landscape Phone: 2-Column Split (Zero vertical cutoff)
       ========================================================================= */}
       <section 
-        className="absolute inset-0 flex items-center px-4 sm:px-12 lg:px-20 xl:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 max-md:portrait:pt-14 max-md:portrait:pb-4 short:pt-8 short:pb-2 short:px-6 transition-opacity duration-300"
+        className="absolute inset-0 flex items-center px-4 sm:px-12 lg:px-20 xl:px-24 pt-16 sm:pt-24 pb-8 sm:pb-12 portrait-phone:pt-14 portrait-phone:pb-4 short:pt-11 short:pb-2 short:px-8 transition-opacity duration-300"
         style={{ opacity: s5.opacity, pointerEvents: s5.pointerEvents }}
       >
         <div className="w-full max-w-xl lg:max-w-2xl short:max-w-4xl flex flex-col short:flex-row short:items-start short:gap-6 items-start text-left my-auto p-4 sm:p-0 rounded-2xl sm:rounded-none bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-black/[0.04] sm:border-none shadow-sm sm:shadow-none short:p-0 short:bg-transparent short:border-none short:shadow-none">
@@ -1386,56 +1367,6 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
                 </div>
               </form>
             )}
-          </div>
-
-          {/* Interactive Email Copy Box */}
-          <div className="w-full max-w-lg p-3 rounded-2xl bg-white/90 border border-black/[0.08] backdrop-blur-xl mb-3 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-            <span className="text-[10px] font-mono text-[#888] block mb-0.5 font-semibold">DIRECT INBOX</span>
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-xs sm:text-sm font-mono font-bold text-[#111113] selection:bg-[#d8c8a8]">
-                {personalInfo.email}
-              </span>
-              <button
-                onClick={handleCopyEmail}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/[0.05] hover:bg-black/10 text-[#111113] text-xs font-mono font-bold transition-all cursor-pointer"
-              >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copied ? 'Copied!' : 'Copy'}</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Social Links & Resume Download */}
-          <div className="flex flex-wrap items-center gap-3.5 text-xs font-mono text-[#666] mb-5 font-medium">
-            <a href="tel:0788551709" className="hover:text-black transition-colors">078.855.1709</a>
-            <span>•</span>
-            <a 
-              href={personalInfo.resumeUrl} 
-              download 
-              onClick={() => analyticsService.trackEvent('cv_download')}
-              className="text-[#8c7355] hover:text-black transition-colors underline font-bold"
-            >
-              CV (PDF)
-            </a>
-            <span>•</span>
-            <a href={personalInfo.github} target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-              GitHub
-            </a>
-            <span>•</span>
-            <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-              LinkedIn
-            </a>
-          </div>
-
-          {/* Bottom Controls: Replay Journey */}
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={onReplay}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1a1a1a] hover:bg-black text-white font-mono font-bold text-xs transition-all shadow-xl cursor-pointer hover:scale-105 active:scale-95"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-[#d8c8a8]" />
-              <span>REPLAY JOURNEY (SCROLL TO TOP)</span>
-            </button>
           </div>
 
         </div>
@@ -1785,24 +1716,6 @@ export const CinematicScenes = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 },
           </div>
         </div>,
         document.body
-      )}
-
-      {/* Floating Cinematic Landscape Recommendation Pill (Shown on Portrait Mobile) */}
-      {isPortraitMobile && !dismissedRotateHint && (
-        <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/92 text-white border border-[#c5a880]/50 shadow-2xl backdrop-blur-md animate-pulse">
-          <span className="text-xs">📱</span>
-          <span className="text-[10.5px] font-mono tracking-wide text-[#f4efe8]">
-            Xoay ngang màn hình để trải nghiệm rạp chiếu 3D
-          </span>
-          <button 
-            type="button"
-            onClick={() => setDismissedRotateHint(true)}
-            className="ml-1 p-0.5 text-neutral-400 hover:text-white rounded-full text-xs font-mono cursor-pointer"
-            title="Đóng thông báo"
-          >
-            ✕
-          </button>
-        </div>
       )}
 
     </div>

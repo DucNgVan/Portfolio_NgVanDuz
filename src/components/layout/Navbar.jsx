@@ -53,10 +53,10 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 select-none ${
           isDarkSection
-            ? 'bg-[#0a0b10]/85 backdrop-blur-md border-b border-white/10 py-3.5 sm:py-4 px-4 sm:px-10 lg:px-14 shadow-md short:py-1.5 short:px-6'
+            ? 'bg-[#0a0b10]/85 backdrop-blur-md border-b border-white/10 py-3.5 sm:py-4 px-4 sm:px-10 lg:px-14 shadow-md short:py-1 short:px-6'
             : isScrolled
-            ? 'bg-[#f8f7f4]/90 backdrop-blur-md border-b border-black/[0.05] py-3.5 sm:py-4 px-4 sm:px-10 lg:px-14 shadow-sm short:py-1.5 short:px-6'
-            : 'bg-transparent py-4 sm:py-6 px-4 sm:px-10 lg:px-14 short:py-1.5 short:px-6'
+            ? 'bg-[#f8f7f4]/90 backdrop-blur-md border-b border-black/[0.05] py-3.5 sm:py-4 px-4 sm:px-10 lg:px-14 shadow-sm short:py-1 short:px-6'
+            : 'bg-transparent py-4 sm:py-6 px-4 sm:px-10 lg:px-14 short:py-1 short:px-6'
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between relative">
@@ -65,7 +65,7 @@ export const Navbar = ({ onNavigate = null, scrollProgress = 0 }) => {
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, { progress: 0.0, href: '#hero' })}
-            className={`font-hand font-semibold text-2xl sm:text-3xl lg:text-4xl short:text-xl transition-all duration-300 tracking-normal cursor-pointer z-10 ${
+            className={`font-hand font-semibold text-2xl sm:text-3xl lg:text-4xl short:text-lg transition-all duration-300 tracking-normal cursor-pointer z-10 ${
               isDarkSection ? 'text-white hover:text-[#d8c8a8]' : 'text-[#111113] hover:text-[#8c7355]'
             } ${showBrand ? 'opacity-100 translate-x-0 pointer-events-auto' : 'opacity-0 -translate-x-3 pointer-events-none'}`}
           >

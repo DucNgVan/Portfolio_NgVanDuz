@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const CustomCursor = () => {
   const dotRef = useRef(null);
@@ -7,11 +7,19 @@ export const CustomCursor = () => {
   const trailPos = useRef({ x: -200, y: -200 });
   const isHoveredRef = useRef(false);
   const isVisibleRef = useRef(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   useEffect(() => {
-    // Check if user prefers reduced motion
+    // Detect touch / mobile device or reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (prefersReducedMotion || isCoarse || hasTouch) {
+      setIsTouchDevice(true);
+      return;
+    }
+    setIsTouchDevice(false);
 
     let animationFrameId;
 
@@ -39,7 +47,10 @@ export const CustomCursor = () => {
 
     const onMouseEnter = () => setVisibility(true);
     const onMouseLeave = () => setVisibility(false);
-    const onTouchStart = () => setVisibility(false);
+    const onTouchStart = () => {
+      setVisibility(false);
+      setIsTouchDevice(true);
+    };
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseenter', onMouseEnter);
@@ -85,6 +96,8 @@ export const CustomCursor = () => {
     };
   }, []);
 
+  if (isTouchDevice) return null;
+
   return (
     <>
       {/* Precision Center Dot */}
@@ -98,7 +111,7 @@ export const CustomCursor = () => {
         }}
       />
 
-      {/* Elegant Luxury Follower Ring (No text blocking, crisp & modern) */}
+      {/* Elegant Luxury Follower Ring */}
       <div
         ref={lensRef}
         className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9999] border border-[#8c7355]/40 bg-[#8c7355]/[0.03] transition-opacity duration-200"

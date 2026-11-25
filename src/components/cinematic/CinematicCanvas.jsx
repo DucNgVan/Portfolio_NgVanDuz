@@ -1330,11 +1330,29 @@ export const CinematicCanvas = ({ scrollProgress = 0, mousePos = { x: 0, y: 0 } 
       targetLook.x += targetSideOffset * responsiveScale;
 
       if (isLandscapePhone) {
-        targetCamPos.z *= 1.12;
-        targetCamPos.y += 0.04;
+        targetCamPos.z *= 1.10;
+        targetCamPos.y += 0.02;
         if (p < 0.20) {
-          targetCamPos.x -= 0.58;
-          targetLook.x -= 0.58;
+          // Scene 1 (Hero): Camera shifts LEFT so model sits on the RIGHT
+          targetCamPos.x -= 0.68;
+          targetLook.x -= 0.68;
+        } else if (p >= 0.20 && p < 0.45) {
+          // Scene 2 (Workflow & Tech Stack): Camera shifts RIGHT so model sits on the LEFT
+          targetCamPos.x += 0.82;
+          targetLook.x += 0.82;
+        } else if (p >= 0.45 && p < 0.65) {
+          // Scene 3 (Projects Vault): Camera shifts LEFT so model sits on the RIGHT
+          targetCamPos.x -= 0.82;
+          targetLook.x -= 0.82;
+        } else if (p >= 0.65 && p <= 0.88) {
+          // Scene 4 (Hall of Honors): Elevated camera framing 6 pedestals
+          targetCamPos.z = 4.80;
+          targetCamPos.y = 0.50;
+          targetLook.y = -0.15;
+        } else if (p > 0.88) {
+          // Scene 5 (Contact): Centered deep background framing
+          targetCamPos.z = 4.30;
+          targetCamPos.y = 0.16;
         }
       } else if (isPortraitPhone) {
         if (p < 0.20) {

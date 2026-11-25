@@ -8,8 +8,9 @@ export default {
   theme: {
     extend: {
       screens: {
-        'short': { raw: '(max-height: 520px) and (orientation: landscape)' },
+        'short': { raw: '(max-height: 520px)' },
         'tall': { raw: '(min-height: 521px)' },
+        'portrait-phone': { raw: '(max-width: 767px) and (orientation: portrait)' },
       },
       colors: {
         cream: {
