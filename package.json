@@ -11,15 +11,20 @@
     "test:mtls": "node scripts/test-mtls-server.js"
   },
   "dependencies": {
+    "@react-three/drei": "^9.117.3",
+    "@react-three/fiber": "^8.17.10",
     "@supabase/supabase-js": "^2.119.2",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.7",
     "gsap": "^3.15.1",
     "lucide-react": "^1.16.0",
+    "maath": "^0.10.8",
     "pg": "^8.23.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-parallax-tilt": "^1.7.361",
+    "react-vertical-timeline-component": "^4.0.0",
     "tailwind-merge": "^3.0.2",
     "three": "^0.187.0",
     "three-stdlib": "^2.36.1"

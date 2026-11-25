@@ -8,11 +8,18 @@ export default {
   theme: {
     extend: {
       screens: {
+        'xs': '450px',
         'short': { raw: '(max-height: 520px)' },
         'tall': { raw: '(min-height: 521px)' },
         'portrait-phone': { raw: '(max-width: 767px) and (orientation: portrait)' },
       },
       colors: {
+        primary: "#050816",
+        secondary: "#aaa6c3",
+        tertiary: "#151030",
+        "black-100": "#100d25",
+        "black-200": "#090325",
+        "white-100": "#f3f3f3",
         cream: {
           50: '#FAF8F5',
           100: '#F4EFEA',
@@ -33,6 +40,12 @@ export default {
           700: '#222222',
           600: '#333333',
         },
+      },
+      boxShadow: {
+        card: "0px 35px 120px -15px #211e35",
+      },
+      backgroundImage: {
+        "hero-pattern": "url('/src/assets/herobg.png')",
       },
       fontFamily: {
         display: ['Bebas Neue', 'Anton', 'sans-serif'],
