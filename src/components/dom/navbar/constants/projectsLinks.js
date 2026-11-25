@@ -1,22 +1,22 @@
 const projectsLinks = [
   {
-    title: 'Nét Studio (3D)',
+    title: 'Net-s Studio (2026)',
     href: '/projects/project1',
   },
   {
-    title: 'Nomadix (Backend)',
+    title: 'Nomadix (2027)',
     href: '/projects/project2',
   },
   {
-    title: 'VAVA CMS',
+    title: 'Vava Da Nang (2025)',
     href: '/projects/project3',
   },
   {
-    title: 'IT Helpdesk (MEVN)',
+    title: 'IT Helpdesk (2023)',
     href: '/projects/project4',
   },
   {
-    title: 'M-Hike (Mobile)',
+    title: 'M-Hike (2024)',
     href: '/projects/project5',
   },
 ];

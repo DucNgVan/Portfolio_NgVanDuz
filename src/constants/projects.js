@@ -1,10 +1,10 @@
 const projects = [
   {
     id: 'project1',
-    title: 'Nét Studio — 3D Ocean Craft',
+    title: 'Net-s Studio — 3D Ocean Craft',
     img: '/projects/net-s-1.jpg',
     link: '/projects/project1',
-    date: '2024',
+    date: '2026',
     company: "VecomNet's Tsunami Team",
     liveLink: 'https://www.net-s.id.vn/',
     primary: '#0B192C',
@@ -37,7 +37,7 @@ const projects = [
     title: 'Nomadix — Travel Platform',
     img: '/projects/nomadix-1.png',
     link: '/projects/project2',
-    date: '2024',
+    date: '2027',
     company: 'Final Year Capstone (FYP)',
     liveLink: 'https://github.com/DucNgVan/nomadix-travel-platform',
     primary: '#1E1B4B',
@@ -72,10 +72,10 @@ const projects = [
   },
   {
     id: 'project3',
-    title: 'VAVA CMS — SharePoint Portal',
+    title: 'Vava Da Nang — SharePoint Portal',
     img: '/projects/vava-cms-1.jpg',
     link: '/projects/project3',
-    date: '2024',
+    date: '2025',
     company: 'University of Greenwich',
     liveLink:
       'https://uogcloud.sharepoint.com/:u:/r/sites/Coursework_SharePoint_Greenwich_VavaDN-S-CAM/SitePages/HomePage.aspx?d=weaf2501dab044352939bae04571f1104&csf=1&web=1&e=nVycl5',
@@ -119,7 +119,7 @@ const projects = [
     title: 'IT Helpdesk Response Library',
     img: '/projects/helpdesk-1.jpg',
     link: '/projects/project4',
-    date: '2024',
+    date: '2023',
     company: 'MEVN Stack Project',
     liveLink: 'https://github.com/DucNgVan/helpdesk-response-library-mevn',
     primary: '#0F172A',
