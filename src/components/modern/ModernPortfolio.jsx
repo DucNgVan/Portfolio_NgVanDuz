@@ -29,6 +29,7 @@ import { Github, Linkedin } from '@/components/ui/BrandIcons';
 import Navbar from '@/components/layout/Navbar';
 import KineticCanvas from './KineticCanvas';
 import HeroTerminal from './HeroTerminal';
+import OrbitProjectStage from './OrbitProjectStage';
 import ProjectModal from './ProjectModal';
 import CertificateModal from './CertificateModal';
 
@@ -653,152 +654,10 @@ export const ModernPortfolio = () => {
       </section>
 
       {/* =========================================================================
-          SECTION 4: FEATURED PRODUCTION PROJECTS
+          SECTION 4: FEATURED PRODUCTION PROJECTS (3D CYLINDRICAL ORBIT CAROUSEL)
       ========================================================================= */}
-      <section id="projects" className="relative py-24 px-4 sm:px-8 lg:px-14 max-w-7xl mx-auto z-10 border-t border-white/[0.06]">
-        
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
-          <div>
-            <div className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-[#d8c8a8] mb-2">
-              // 04 · SELECTED WORK
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-syne">
-              Engineered Projects & Systems
-            </h2>
-            <p className="text-neutral-400 text-sm sm:text-base max-w-xl mt-3 font-light">
-              High-impact solutions with verified codebases, 3D WebGL renderers, relational database schemas, and live production URLs.
-            </p>
-          </div>
-
-          {/* Project Category Filter Pills */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-full bg-white/[0.04] border border-white/10 self-start overflow-x-auto scrollbar-none">
-            {[
-              { id: 'all', label: 'All (05)' },
-              { id: 'competition', label: 'Production / Live' },
-              { id: 'capstone', label: 'Capstone / FYP' },
-              { id: 'enterprise', label: 'Enterprise CMS' },
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setProjectCategory(tab.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer whitespace-nowrap ${
-                  projectCategory === tab.id
-                    ? 'bg-[#d8c8a8] text-black font-semibold shadow-md'
-                    : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Projects Cards Grid */}
-        <div className="space-y-10 sm:space-y-12">
-          {filteredProjects.map((proj, idx) => (
-            <div
-              key={proj.id}
-              className="p-6 sm:p-8 lg:p-10 rounded-3xl bg-white/[0.025] hover:bg-white/[0.04] border border-white/10 hover:border-[#d8c8a8]/40 transition-all duration-300 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center group"
-            >
-              {/* Left Column: 16:9 Thumbnail Preview */}
-              <div 
-                className="lg:col-span-6 rounded-2xl overflow-hidden border border-white/10 bg-black/60 relative cursor-pointer"
-                onClick={() => setSelectedProject(proj)}
-              >
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img
-                    src={proj.image}
-                    alt={proj.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
-                  <span className="flex items-center gap-2 text-xs font-mono text-[#d8c8a8] bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15">
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>Click to Inspect Architecture & Gallery</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Right Column: Project Metadata */}
-              <div className="lg:col-span-6 space-y-4 text-left">
-                <div className="flex items-center gap-3">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#d8c8a8] px-2.5 py-0.5 rounded-full bg-[#d8c8a8]/10 border border-[#d8c8a8]/30">
-                    {proj.projectTypeLabel}
-                  </span>
-                  <span className="text-xs font-mono text-emerald-400">
-                    {proj.statusBadge}
-                  </span>
-                </div>
-
-                <h3 
-                  className="text-2xl sm:text-3xl font-bold text-white font-syne group-hover:text-[#d8c8a8] transition-colors cursor-pointer"
-                  onClick={() => setSelectedProject(proj)}
-                >
-                  {proj.title}
-                </h3>
-
-                <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed">
-                  {proj.tagline || proj.description}
-                </p>
-
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {proj.tech.slice(0, 5).map((t, i) => (
-                    <span
-                      key={i}
-                      className="text-xs font-mono px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                  {proj.tech.length > 5 && (
-                    <span className="text-xs font-mono px-2 py-1 text-neutral-500">
-                      +{proj.tech.length - 5} more
-                    </span>
-                  )}
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10">
-                  <button
-                    onClick={() => setSelectedProject(proj)}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono tracking-wider uppercase transition-colors cursor-pointer"
-                  >
-                    <Eye className="w-4 h-4 text-[#d8c8a8]" />
-                    <span>Inspect Details</span>
-                  </button>
-
-                  {proj.liveDemo && (
-                    <a
-                      href={proj.liveDemo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-[#d8c8a8] text-black font-semibold text-xs font-mono tracking-wider uppercase hover:brightness-110 transition-all cursor-pointer shadow-md"
-                    >
-                      <span>Live Demo</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-
-                  {proj.githubUrl && (
-                    <a
-                      href={proj.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-white/20 hover:border-white text-neutral-300 hover:text-white text-xs font-mono transition-colors cursor-pointer"
-                    >
-                      <GithubIcon className="w-4 h-4" />
-                      <span>Code</span>
-                    </a>
-                  )}
-                </div>
-
-              </div>
-            </div>
-          ))}
-        </div>
-
+      <section id="projects" className="relative z-10 border-t border-white/[0.06]">
+        <OrbitProjectStage onSelectProject={(proj) => setSelectedProject(proj)} />
       </section>
 
       {/* =========================================================================
