@@ -57,12 +57,12 @@ const Preloader = ({ onComplete }) => {
     }
 
     const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 1024;
-    let modelLoaded = typeof window !== 'undefined' && (isMobileDevice || Boolean(window.__cinematicModelLoaded));
+    let modelLoaded = true; // Fast & smooth preloader without heavy 3D GLB wait
     let windowLoaded = typeof document !== 'undefined' && document.readyState === 'complete';
     let minTimeElapsed = false;
     let isCompleting = false;
 
-    // Handle GLB 3D model loaded event from CinematicCanvas
+    // Handle GLB 3D model loaded event (retained for backward compatibility)
     const handleGlbLoaded = () => {
       modelLoaded = true;
       checkReadyState();
@@ -78,11 +78,11 @@ const Preloader = ({ onComplete }) => {
       window.addEventListener('load', handleWindowLoad);
     }
 
-    // Snappy minimum display timer so the handwriting flow can be admired without delaying the user
+    // Snappy minimum display timer so the handwriting signature can be admired without delaying the user
     const minTimer = setTimeout(() => {
       minTimeElapsed = true;
       checkReadyState();
-    }, isMobileDevice ? 1200 : 1800);
+    }, 900);
 
     // Progressive counter tied to handwriting:
     // Natural organic deceleration as it approaches 90% while assets download

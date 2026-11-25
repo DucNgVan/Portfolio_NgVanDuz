@@ -7,8 +7,8 @@ import { Navbar } from '@/components/layout';
 // Modular UI components
 import { CustomCursor, Preloader, PrivacyConsentBanner, NotFound } from '@/components/ui';
 
-// Unified 3D Cinematic Portfolio for All Screen Sizes
-import { CinematicPortfolio } from '@/components/cinematic';
+// Modern Creative Engineering Portfolio (No 3D Model, Smooth Document Scroll, High-Performance)
+import { ModernPortfolio } from '@/components/modern';
 
 // Standalone Secured Admin & Analytics Portal
 import { AdminPortal } from '@/components/admin/AdminPortal';
@@ -139,15 +139,15 @@ function App() {
   const isFinePointer = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
   return (
-    <div className="min-h-screen bg-[#f8f7f4] text-[#111113] selection:bg-[#d8c8a8] selection:text-black relative overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-[#08090d] text-[#ededed] selection:bg-[#d8c8a8] selection:text-black relative overflow-x-hidden font-sans">
       {/* 1. Preloader Screen */}
       {loading && <Preloader onComplete={handlePreloaderComplete} />}
 
       {/* 2. Custom Interactive Follower Lens (Fine pointer devices only) */}
       {isFinePointer && <CustomCursor />}
 
-      {/* 3. Unified 3D Cinematic Portfolio for All Devices (Mobile, Tablet, Desktop) */}
-      <CinematicPortfolio />
+      {/* 3. Modern Creative Engineering Portfolio (No 3D Model, Smooth Document Scroll, High-Performance) */}
+      <ModernPortfolio />
 
       {/* 4. Privacy & Consent Notice for Anonymous Telemetry */}
       <PrivacyConsentBanner />
