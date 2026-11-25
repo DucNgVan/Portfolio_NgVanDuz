@@ -1,6 +1,7 @@
 import AppearByWords from '@src/components/animationComponents/appearByWords/Index';
 import AppearTitle from '@src/components/animationComponents/appearTitle/Index';
 import Badge from '@src/pages/components/clients/components/Badge';
+import ButtonLink from '@src/components/animationComponents/buttonLink/Index';
 import clsx from 'clsx';
 import { gsap } from 'gsap';
 import styles from '@src/pages/components/clients/styles/clients.module.scss';
@@ -57,7 +58,7 @@ function Clients() {
   return (
     <section ref={rootRef} className={clsx(styles.root, 'layout-grid-inner')}>
       <h1 className={clsx(styles.sectionTitle, 'h1')}>
-        <AppearByWords>Clients</AppearByWords>
+        <AppearByWords>Honors & Awards</AppearByWords>
       </h1>
       {isMobile ? <div className={styles.mobileEmpty} /> : null}
       {isMobile ? (
@@ -234,6 +235,9 @@ function Clients() {
           </div>
         </>
       ) : null}
+      <div className={styles.ctaContainer}>
+        <ButtonLink href="/certificates" label="VIEW ALL CERTIFICATES & HONORS" />
+      </div>
     </section>
   );
 }

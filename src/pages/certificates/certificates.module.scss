@@ -1,0 +1,320 @@
+@import '@src/styles/functions';
+
+.root {
+  position: relative;
+  width: 100%;
+  background-color: var(--white);
+  padding-bottom: calc(var(--layout-columns-gap) * 6);
+  min-height: 100vh;
+}
+
+.titleContainer {
+  position: relative;
+  width: 100%;
+  background-color: var(--white);
+  padding-top: calc(var(--layout-columns-gap) * 5);
+  padding-bottom: calc(var(--layout-columns-gap) * 3);
+
+  .headerBadge {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 0.06);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: calc(var(--layout-columns-gap) * 0.75);
+    color: var(--black);
+  }
+
+  .title {
+    position: relative;
+    color: var(--black);
+    margin-bottom: calc(var(--layout-columns-gap) * 0.5);
+  }
+
+  .subtitle {
+    max-width: 650px;
+    opacity: 0.8;
+    color: var(--black);
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(var(--layout-columns-gap) * 2);
+  width: 100%;
+  margin-top: calc(var(--layout-columns-gap) * 2);
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: calc(var(--layout-columns-gap) * 1.5);
+  }
+}
+
+.card {
+  position: relative;
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: calc(var(--layout-columns-gap) * 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+
+    .imageWrapper img {
+      transform: scale(1.03);
+    }
+
+    .viewOverlay {
+      opacity: 1;
+    }
+  }
+
+  @include mobile {
+    border-radius: calc(var(--layout-columns-gap) * 0.5);
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  background-color: #f0f0f0;
+  overflow: hidden;
+
+  img {
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.viewOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+
+  .viewBadge {
+    padding: 0.6rem 1.2rem;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.cardContent {
+  padding: calc(var(--layout-columns-gap) * 1.25);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.category {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+}
+
+.year {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.cardTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+}
+
+.issuer {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.decision {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-family: monospace;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  width: max-content;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.tag {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.55rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  color: #334155;
+  font-weight: 500;
+}
+
+/* Modal Lightbox */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: pointer;
+
+  @include mobile {
+    padding: 1rem;
+  }
+}
+
+.modalContent {
+  position: relative;
+  max-width: 900px;
+  max-height: 90vh;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: #f8fafc;
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .closeBtn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    color: #64748b;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      color: #0f172a;
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.modalImageContainer {
+  position: relative;
+  width: 100%;
+  max-height: 70vh;
+  height: 60vh;
+  background: #000000;
+
+  img {
+    object-fit: contain;
+  }
+}
+
+.modalFooter {
+  padding: 1rem 1.5rem;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .modalMeta {
+    font-size: 0.88rem;
+    color: #475569;
+  }
+
+  .modalLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: underline;
+  }
+}

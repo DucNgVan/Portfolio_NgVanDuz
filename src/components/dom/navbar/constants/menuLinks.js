@@ -12,6 +12,10 @@ const menuLinks = [
     href: '/projects',
   },
   {
+    title: 'Certificates',
+    href: '/certificates',
+  },
+  {
     title: 'Contact',
     href: undefined,
   },

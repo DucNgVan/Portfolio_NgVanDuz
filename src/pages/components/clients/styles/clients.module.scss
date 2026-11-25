@@ -236,4 +236,19 @@
     grid-column: 12 / 17;
     background-color: var(--white);
   }
+
+  .ctaContainer {
+    grid-column: 1 / 17;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: calc(var(--layout-columns-gap) * 4) 0 calc(var(--layout-columns-gap) * 3) 0;
+    background-color: var(--white);
+    position: relative;
+    z-index: 5;
+    @include mobile {
+      grid-column: 1 / 7;
+      padding: calc(var(--layout-columns-gap) * 3) 0;
+    }
+  }
 }
