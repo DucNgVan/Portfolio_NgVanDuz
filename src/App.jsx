@@ -7,8 +7,8 @@ import { Navbar } from '@/components/layout';
 // Modular UI components
 import { CustomCursor, Preloader, PrivacyConsentBanner, NotFound } from '@/components/ui';
 
-// Adrian Hajdin 3D Developer Portfolio Architecture
-import { Portfolio3D } from '@/components/portfolio3d';
+// Giats Award-Winning Portfolio Architecture for Nguyen Van Duc
+import { GiatsPortfolio } from '@/components/giats/GiatsPortfolio';
 
 // Standalone Secured Admin & Analytics Portal
 import { AdminPortal } from '@/components/admin/AdminPortal';
@@ -146,8 +146,8 @@ function App() {
       {/* 2. Custom Interactive Follower Lens (Fine pointer devices only) */}
       {isFinePointer && <CustomCursor />}
 
-      {/* 3. Adrian Hajdin 3D Developer Portfolio for Nguyen Van Duc */}
-      <Portfolio3D />
+      {/* 3. Giats-style Award-Winning Portfolio for Nguyen Van Duc */}
+      <GiatsPortfolio />
 
       {/* 4. Privacy & Consent Notice for Anonymous Telemetry */}
       <PrivacyConsentBanner />
