@@ -183,7 +183,7 @@ export const testimonials = [
     designation: "Campus Director",
     company: "University of Greenwich (Vietnam)",
     image: "/certificates/cert_top3_2024.jpg",
-    ref: "Decision: 157/QĐ-FPTUDN",
+    decisionRef: "Decision: 157/QĐ-FPTUDN",
   },
   {
     testimonial:
@@ -192,7 +192,7 @@ export const testimonials = [
     designation: "Campus Director",
     company: "Greenwich International Bachelor",
     image: "/certificates/cert_best_student_icm_2026.jpg",
-    ref: "Decision: 181 QH-PPTUDN",
+    decisionRef: "Decision: 181 QH-PPTUDN",
   },
   {
     testimonial:
@@ -201,7 +201,7 @@ export const testimonials = [
     designation: "Evaluation Committee",
     company: "199 Hospital & Greenwich Vietnam",
     image: "/certificates/cert_bootcamp_innovation_2025.jpg",
-    ref: "Bootcamp Certificate 2025",
+    decisionRef: "Bootcamp Certificate 2025",
   },
 ];
 

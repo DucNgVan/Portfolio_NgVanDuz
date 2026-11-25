@@ -14,7 +14,7 @@ const FeedbackCard = ({
   designation,
   company,
   image,
-  ref: decisionRef,
+  decisionRef,
   onOpenCert,
 }) => (
   <motion.div
