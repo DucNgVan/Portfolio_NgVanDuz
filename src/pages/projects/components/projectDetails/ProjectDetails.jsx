@@ -4,10 +4,22 @@ import clsx from 'clsx';
 import styles from '@src/pages/projects/components/projectDetails/styles/projectDetails.module.scss';
 
 function ProjectDetails({ project }) {
+  const isLiveDemo =
+    project.isLive ||
+    (project.liveLink && !project.liveLink.includes('github.com'));
+
   return (
     <div className={styles.root}>
+      {isLiveDemo ? (
+        <div className={styles.liveBadge}>
+          <span className={styles.liveDot} />
+          LIVE DEMO
+        </div>
+      ) : null}
       <h3 className={clsx(styles.title, 'h3')}>{project.title}</h3>
-      <h4 className={clsx(styles.date, 'h4')}>({project.date})</h4>
+      <h4 className={clsx(styles.date, 'h4')}>
+        ({project.date}) {project.company ? `· ${project.company}` : ''}
+      </h4>
       <div className={styles.others}>
         <div className={styles.desc}>
           {project.desc.map((des, index) => (
@@ -21,7 +33,7 @@ function ProjectDetails({ project }) {
             <ButtonLink
               target
               href={project.liveLink}
-              label="VISIT LIVE SITE"
+              label={isLiveDemo ? 'VISIT LIVE SITE' : 'VIEW GITHUB REPO'}
             />
           </div>
         ) : null}

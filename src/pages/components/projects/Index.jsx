@@ -102,7 +102,14 @@ function Projects() {
               >
                 <div className={clsx(styles.container, 'layout-grid-inner')}>
                   <div className={styles.projectsDetails}>
-                    <h6 className="h6">{project.date}</h6>
+                    <div className={styles.metaRow}>
+                      <h6 className="h6">{project.date}</h6>
+                      {project.isLive ? (
+                        <span className={styles.liveTag}>
+                          <span className={styles.liveDot} /> LIVE DEMO
+                        </span>
+                      ) : null}
+                    </div>
                     <h3 className="h3">{project.title}</h3>
                   </div>
                   <div className={styles.imageContainer}>

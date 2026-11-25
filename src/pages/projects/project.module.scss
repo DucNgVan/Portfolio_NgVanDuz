@@ -3,10 +3,13 @@
 .root {
   position: relative;
   padding-top: 0px;
+  background-color: var(--white) !important;
+  box-shadow: 0 0 0 calc(var(--layout-columns-gap) * 2) var(--white);
 
   .leftContainer {
     height: 100svh;
     grid-column: 1 / 7;
+    background-color: var(--white);
     box-shadow:
       0 0 0 var(--layout-columns-gap) var(--white),
       0 calc(var(--layout-columns-gap) * 10) 0 0 var(--white);
@@ -18,8 +21,16 @@
 
   .rightContainer {
     grid-column: 7 / 17;
+    background-color: var(--white);
+    box-shadow:
+      0 0 0 var(--layout-columns-gap) var(--white),
+      0 calc(var(--layout-columns-gap) * 10) 0 0 var(--white);
+    border-radius: var(--layout-columns-gap);
+    overflow: hidden;
+
     @include mobile {
       grid-column: 1 / 7;
+      border-radius: calc(var(--layout-columns-gap) * 0.5);
     }
   }
 }

@@ -78,13 +78,13 @@ function ProjectImages({ project }) {
   );
 
   return (
-    <section className={clsx(styles.root, 'layout-grid-inner')}>
+    <div className={clsx(styles.root, 'layout-grid-inner')}>
       {project.images.map((image, index) => (
         <Fragment key={`${project.title}-image-${index}`}>
           {renderMediaContainer({ ...image, index, title: project.title })}
         </Fragment>
       ))}
-    </section>
+    </div>
   );
 }
 
