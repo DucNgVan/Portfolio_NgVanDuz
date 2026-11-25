@@ -71,15 +71,11 @@ function Page({ id }) {
       setFluidColor(currentProject.fluidColor);
     }
     return () => {
-      updateCSSVariables({
-        primary: '#28282b',
-        secondary: '#f0f4f1',
-        accentColor: '#f9f9f9',
-        fillColor: '#f2ffbd',
-        menuColor: '#28282b',
-        menuFontColor: '#f0f4f1',
+      ['--black', '--white', '--accentColor', '--fillColor', '--menuColor', '--menuFontColor'].forEach((prop) => {
+        document.documentElement.style.removeProperty(prop);
       });
-      setFluidColor('#d7d7d4');
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      setFluidColor(isDark ? '#ff6a3d' : '#d7d7d4');
     };
   }, [currentProject]);
 

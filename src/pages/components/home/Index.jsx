@@ -17,6 +17,15 @@ function Home() {
     useShallow((state) => [state.setFluidColor]),
   );
 
+  useIsomorphicLayoutEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') {
+        setFluidColor('#ff6a3d');
+      }
+    }
+  }, [setFluidColor]);
+
   const handleThemeChange = (newTheme) => {
     if (newTheme === 'dark') {
       setFluidColor('#ff6a3d');

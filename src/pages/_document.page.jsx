@@ -5,6 +5,11 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
+            }}
+          />
           <link
             href="/fonts/NeueHaasDisplayBold.woff2"
             as="font"

@@ -134,7 +134,7 @@ const Other = memo(({ setPortals }) => {
   const handleMouseEnter = useCallback((index, optionIndex, option) => {
     if (typeof window !== 'undefined') {
       gsap.to(optionTitlesRef.current[index][optionIndex], {
-        color: '#28282b',
+        color: 'var(--black)',
         duration: 0.35,
         ease: 'none',
       });

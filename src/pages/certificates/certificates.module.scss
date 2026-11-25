@@ -318,3 +318,76 @@
     text-decoration: underline;
   }
 }
+
+:global(html[data-theme='dark']) {
+  .card {
+    background-color: #181920;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .imageWrapper {
+    background-color: #121318;
+  }
+
+  .cardTitle {
+    color: #f1f5f9;
+  }
+
+  .issuer {
+    color: #cbd5e1;
+  }
+
+  .desc {
+    color: #94a3b8;
+  }
+
+  .year {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .tag {
+    background: #242630;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+  }
+
+  .decision {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.35);
+  }
+
+  .modalContent {
+    background: #181920;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .modalHeader {
+    background: #121318;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    h3 {
+      color: #f1f5f9;
+    }
+
+    .closeBtn {
+      color: #94a3b8;
+      &:hover {
+        color: #f1f5f9;
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+
+  .modalFooter {
+    background: #121318;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    .modalMeta {
+      color: #94a3b8;
+    }
+  }
+}
+

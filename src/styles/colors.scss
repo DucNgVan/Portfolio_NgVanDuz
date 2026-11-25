@@ -12,7 +12,17 @@ $colors: (
 html {
   @each $name, $color in $colors {
     --#{$name}: #{$color};
-    // for safari use case: https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
-    // --#{$name}-transparent: #{color.change($color, $alpha: 0)};
   }
+  color: var(--black);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
+
+html[data-theme='dark'] {
+  --white: #111216;
+  --black: #f0f4f1;
+  --menuColor: #f0f4f1;
+  --accentColor: #1c1d22;
+  --fillColor: #ff6a3d;
+  --menuFontColor: #111216;
+}
+

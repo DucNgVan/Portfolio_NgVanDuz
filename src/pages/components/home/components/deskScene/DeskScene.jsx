@@ -40,8 +40,9 @@ const css = `
 .dsk[data-theme="dark"] .bulb{ fill:#ffe3a0; }
 .dsk .screen{ fill:var(--screen); transition:fill .7s ease; }
 .dsk .code-text{
-  font:500 14px ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  fill:var(--ink); stroke:none; opacity:.85; transition:fill .7s ease;
+  font:500 11px/1.45 ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  fill:var(--ink); stroke:none; opacity:.9; transition:fill .7s ease;
+  letter-spacing:-0.2px;
 }
 .dsk .code-text .tag{ fill:var(--accent); }
 .dsk .code-text .dim{ opacity:.55; }
@@ -70,19 +71,32 @@ export default function DeskScene({
   onThemeChange,
   syncDocument = true,
 }) {
-  const [theme, setTheme] = useState(defaultTheme);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme");
+      if (saved === "light" || saved === "dark") return saved;
+    }
+    return defaultTheme;
+  });
   const [pull, setPull] = useState(0);
   const [dragging, setDragging] = useState(false);
   const svgRef = useRef(null);
   const drag = useRef({ startY: 0, scale: 1, moved: 0 });
 
   useEffect(() => {
-    if (syncDocument) document.documentElement.setAttribute("data-theme", theme);
+    if (syncDocument) {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
   }, [theme, syncDocument]);
 
   const toggle = () => {
     setTheme((t) => {
       const next = t === "light" ? "dark" : "light";
+      if (typeof window !== "undefined") {
+        try {
+          localStorage.setItem("theme", next);
+        } catch (e) {}
+      }
       onThemeChange?.(next);
       return next;
     });
@@ -133,6 +147,9 @@ export default function DeskScene({
             <stop offset="0" stopColor="#ffd98a" stopOpacity="0.5" />
             <stop offset="1" stopColor="#ffd98a" stopOpacity="0.03" />
           </linearGradient>
+          <clipPath id="screenClip">
+            <rect x="264" y="110" width="262" height="146" rx="4" />
+          </clipPath>
         </defs>
 
         {/* chùm sáng của đèn (chỉ hiện ở dark mode) */}
@@ -168,21 +185,21 @@ export default function DeskScene({
           <rect className="paper" x="250" y="96" width="290" height="174" rx="10" />
           <rect className="screen" x="264" y="110" width="262" height="146" rx="4" />
           {/* code trên màn hình */}
-          <g className="code-text">
-            <text x="280" y="130"><tspan className="tag">{"<DucNgVan>"}</tspan></text>
-            <text x="296" y="151">
+          <g className="code-text" clipPath="url(#screenClip)">
+            <text x="274" y="132"><tspan className="tag">{"<DucNgVan>"}</tspan></text>
+            <text x="282" y="152">
               <tspan className="tag">{"<h1>"}</tspan>Software Engineering<tspan className="tag">{"</h1>"}</tspan>
             </text>
-            <text x="296" y="172">
+            <text x="282" y="172">
               <tspan className="dim">{"{"}</tspan>projects.map(p <tspan className="tag">{"=>"}</tspan>
             </text>
-            <text x="312" y="193">
-              <tspan className="tag">{"<Project"}</tspan> key=<tspan className="dim">{"{p.id}"}</tspan> <tspan className="tag">{"/>"}</tspan>
+            <text x="294" y="192">
+              <tspan className="tag">{"<Project"}</tspan> key=<tspan className="dim">{"{p}"}</tspan> <tspan className="tag">{"/>"}</tspan>
             </text>
-            <text x="296" y="214"><tspan className="dim">{")}"}</tspan></text>
-            <text x="280" y="235"><tspan className="tag">{"</DucNgVan>"}</tspan></text>
-            <text x="280" y="252" className="dim">{"// ready for internship"}</text>
-            <rect className="caret cursor" x="364" y="223" width="8" height="15" />
+            <text x="282" y="212"><tspan className="dim">{")}"}</tspan></text>
+            <text x="274" y="232"><tspan className="tag">{"</DucNgVan>"}</tspan></text>
+            <text x="274" y="248" className="dim">{"// ready for internship"}</text>
+            <rect className="caret cursor" x="424" y="238" width="7" height="12" />
           </g>
 
           {/* bàn phím + chuột */}
