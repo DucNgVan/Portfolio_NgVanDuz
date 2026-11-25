@@ -123,10 +123,10 @@ function Footer() {
               <Link
                 aria-label="Send email"
                 scroll={false}
-                href="mailto:ducngvan04@gmail.com"
+                href="mailto:ducnva.wk@gmail.com"
               >
                 <h4 className={clsx(styles.email, 'h4')}>
-                  ducngvan04@gmail.com
+                  ducnva.wk@gmail.com
                 </h4>
               </Link>
               {/* class="link__graphic link__graphic--slide" */}

@@ -13,7 +13,7 @@ This project is built on top of the award-winning architecture of [giats-portfol
 - **Name:** Nguyễn Văn Đức (Duc)
 - **Role:** Software Engineering Student & Full-Stack Developer
 - **University:** University of Greenwich (Greenwich Vietnam - Da Nang)
-- **Email:** [ducngvan04@gmail.com](mailto:ducngvan04@gmail.com)
+- **Email:** [ducnva.wk@gmail.com](mailto:ducnva.wk@gmail.com)
 - **Location:** Da Nang, Vietnam
 - **Honors:**
   - 🏆 **Top 3 Excellent Students 2024** - Greenwich Vietnam (Decision 157/QĐ-FPTUDN)

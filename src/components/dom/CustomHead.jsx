@@ -12,11 +12,11 @@ const getSchema = () => ({
   jobTitle: 'Software Engineering Student & Full-Stack Developer',
   url: SITE_URL,
   image: OG_IMAGE,
-  email: 'mailto:ducngvan04@gmail.com',
+  email: 'mailto:ducnva.wk@gmail.com',
   sameAs: [
     'https://www.linkedin.com/in/ducngvan',
     'https://github.com/DucNgVan',
-    'https://facebook.com/ducngvan04',
+    'https://www.facebook.com/17thsepmmrs',
   ],
   alumniOf: [
     { '@type': 'Organization', name: 'University of Greenwich' },

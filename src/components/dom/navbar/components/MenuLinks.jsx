@@ -208,7 +208,7 @@ function MenuLinks() {
             <Link
               aria-label="Send email"
               scroll={false}
-              href="mailto:ducngvan04@gmail.com"
+              href="mailto:ducnva.wk@gmail.com"
             >
               <span>GET IN TOUCH</span>
             </Link>
