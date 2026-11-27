@@ -23,7 +23,9 @@ const GoTop = dynamic(() => import('@src/components/dom/GoTop'), {
 function Footer() {
   const isMobile = useIsMobile();
   const footerRef = useRef();
-  const [isLoading] = useStore(useShallow((state) => [state.isLoading]));
+  const [isLoading, setIsContactOpen] = useStore(
+    useShallow((state) => [state.isLoading, state.setIsContactOpen]),
+  );
   const windowSize = useWindowSize();
 
   useIsomorphicLayoutEffect(() => {
@@ -124,6 +126,10 @@ function Footer() {
                 aria-label="Send email"
                 scroll={false}
                 href="mailto:ducnva.wk@gmail.com"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsContactOpen(true);
+                }}
               >
                 <h4 className={clsx(styles.email, 'h4')}>
                   ducnva.wk@gmail.com

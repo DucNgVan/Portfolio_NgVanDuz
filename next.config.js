@@ -3,7 +3,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  pageExtensions: ['page.jsx'],
+  pageExtensions: ['page.jsx', 'page.js'],
   experimental: {
     // optimizeCss: true,
     // nextScriptWorkers: true,

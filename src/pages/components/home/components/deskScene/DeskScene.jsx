@@ -101,7 +101,7 @@ export default function DeskScene({
         viewBox="0 0 900 430"
         preserveAspectRatio="xMidYMax meet"
         role="img"
-        aria-label="Bàn học có máy tính và đèn học. Kéo dây đèn để đổi giao diện sáng hoặc tối."
+        aria-label="Desk with computer and lamp. Pull the lamp cord to toggle light or dark theme."
       >
         <defs>
           <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
@@ -186,7 +186,7 @@ export default function DeskScene({
             className={`chain${dragging ? " dragging" : ""}`}
             role="button"
             tabIndex={0}
-            aria-label="Giật dây đèn để đổi chế độ sáng / tối"
+            aria-label="Pull lamp cord to toggle light or dark theme"
             aria-pressed={mounted ? theme === "dark" : false}
             onPointerDown={onDown}
             onPointerMove={onMove}
@@ -212,7 +212,7 @@ export default function DeskScene({
       </svg>
 
       <span className="hint" aria-hidden="true" suppressHydrationWarning>
-        {mounted && theme === "dark" ? "Kéo dây để tắt đèn" : "Kéo dây để bật đèn"}
+        {mounted && theme === "dark" ? "Pull cord to turn off light" : "Pull cord to turn on light"}
       </span>
     </div>
   );

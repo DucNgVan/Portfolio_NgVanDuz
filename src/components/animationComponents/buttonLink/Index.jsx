@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import styles from '@src/components/animationComponents/buttonLink/buttonLink.module.scss';
 
-function ButtonLink({ href, label, target = false }) {
+function ButtonLink({ href = '#', label, target = false, onClick }) {
   const buttonRef = useRef(null);
   const spanRef = useRef(null);
   const relsRef = useRef({ relX: 0, relY: 0 });
@@ -44,6 +44,18 @@ function ButtonLink({ href, label, target = false }) {
     });
   }, []);
 
+  const handleClick = useCallback(
+    (e) => {
+      if (onClick) {
+        if (!href || href === '#' || href.startsWith('mailto:')) {
+          e.preventDefault();
+        }
+        onClick(e);
+      }
+    },
+    [onClick, href],
+  );
+
   return (
     <Link
       target={target ? '_blank' : undefined}
@@ -51,6 +63,7 @@ function ButtonLink({ href, label, target = false }) {
       aria-label={label}
       scroll={false}
       href={href}
+      onClick={handleClick}
     >
       <button
         type="button"

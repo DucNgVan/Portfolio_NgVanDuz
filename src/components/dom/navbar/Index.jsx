@@ -13,7 +13,9 @@ import { useStore } from '@src/store';
 function Navbar() {
   const isMobile = useIsMobile();
   const router = useRouter();
-  const [lenis] = useStore(useShallow((state) => [state.lenis]));
+  const [lenis, setIsContactOpen] = useStore(
+    useShallow((state) => [state.lenis, state.setIsContactOpen]),
+  );
 
   const scrollToPosition = useCallback(
     (position, duration = 1.5) => {
@@ -50,6 +52,7 @@ function Navbar() {
           <div className={styles.rightContainer}>
             {!isMobile && (
               <ButtonLink
+                onClick={() => setIsContactOpen(true)}
                 href="mailto:ducnva.wk@gmail.com"
                 label="GET IN TOUCH"
               />

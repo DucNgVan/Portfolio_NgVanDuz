@@ -19,11 +19,12 @@ function MenuLinks() {
     }),
   );
   const isMobile = useIsMobile();
-  const [isMenuOpen, setIsMenuOpen, lenis, isLoading] = useStore((state) => [
+  const [isMenuOpen, setIsMenuOpen, lenis, isLoading, setIsContactOpen] = useStore((state) => [
     state.isMenuOpen,
     state.setIsMenuOpen,
     state.lenis,
     state.isLoading,
+    state.setIsContactOpen,
   ]);
   const menuRef = useRef();
   const menuLinksItemsRef = useRef([]);
@@ -209,6 +210,11 @@ function MenuLinks() {
               aria-label="Send email"
               scroll={false}
               href="mailto:ducnva.wk@gmail.com"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMenuOpen(false);
+                setIsContactOpen(true);
+              }}
             >
               <span>GET IN TOUCH</span>
             </Link>

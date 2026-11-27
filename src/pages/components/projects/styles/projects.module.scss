@@ -69,7 +69,7 @@
               > h6,
               h3 {
                 color: #ffffff;
-                text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 1px 4px rgba(0, 0, 0, 0.95);
+                text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.98);
               }
             }
           }
@@ -77,11 +77,11 @@
         .canvas {
           will-change: transform;
           transition: opacity 0.6s cubic-bezier(0.4, 0, 0.1, 1);
-          opacity: 0.55;
+          opacity: 0.22;
 
           > img {
-            filter: blur(8px) brightness(0.75);
-            transform: scale(1.08);
+            filter: blur(52px) brightness(0.32) saturate(1.2);
+            transform: scale(1.15);
           }
         }
       }
@@ -171,23 +171,25 @@
             position: absolute;
 
             grid-column: 9 / 17;
-            width: 100%; /* or any other value */
-            aspect-ratio: 1920 / 900;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             border-radius: var(--layout-columns-gap);
-            @include mobile {
-              width: 83%;
+            overflow: hidden;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
 
+            @include mobile {
+              width: 86%;
               top: 50%;
               left: 50%;
               transform: translate(-50%, -50%);
             }
             > img {
               box-shadow: 0 0 0 0.01vw rgb(40, 40, 43, 0.3);
-              object-fit: fill;
+              object-fit: cover;
+              border-radius: var(--layout-columns-gap);
               @include mobile {
-                border-radius: calc(var(--layout-columns-gap) * 0.25);
+                border-radius: calc(var(--layout-columns-gap) * 0.35);
               }
-              border-radius: calc(var(--layout-columns-gap) * 0.5);
             }
           }
         }
@@ -196,7 +198,7 @@
       .canvas {
         will-change: transform;
         transition: opacity 0.6s cubic-bezier(0.4, 0, 0.1, 1);
-        opacity: 0.42;
+        opacity: 0.16;
         overflow: hidden;
 
         bottom: 0;
@@ -211,9 +213,9 @@
           inset: 0;
           background: linear-gradient(
             90deg,
-            rgba(0, 0, 0, 0.72) 0%,
-            rgba(0, 0, 0, 0.4) 55%,
-            rgba(0, 0, 0, 0.15) 100%
+            rgba(10, 10, 14, 0.95) 0%,
+            rgba(10, 10, 14, 0.78) 50%,
+            rgba(10, 10, 14, 0.45) 100%
           );
           z-index: 1;
           pointer-events: none;
@@ -222,8 +224,8 @@
         > img {
           border-radius: 0px !important;
           object-fit: cover;
-          filter: blur(6px) brightness(0.7);
-          transform: scale(1.06);
+          filter: blur(48px) brightness(0.28) saturate(1.2);
+          transform: scale(1.15);
           transition: filter 0.6s ease, transform 0.6s ease;
         }
 

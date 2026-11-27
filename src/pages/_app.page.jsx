@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import { useMemo, useRef } from 'react';
 
 import { Analytics } from '@vercel/analytics/react';
+import ContactModal from '@src/components/dom/contactModal/ContactModal';
 import Background from '@src/components/canvas/background/Index';
 import { Canvas } from '@react-three/fiber';
 import { EffectComposer } from '@react-three/postprocessing';
@@ -101,6 +102,7 @@ function MyApp({ Component, pageProps, router }) {
         </div>
         <Scrollbar />
         <Navbar />
+        <ContactModal />
         <Analytics />
       </>
     ),

@@ -14,4 +14,6 @@ export const useStore = create((set) => ({
   setFluidColor: (fluidColor) => set({ fluidColor }),
   isAbout: false,
   setIsAbout: (isAbout) => set({ isAbout }),
+  isContactOpen: false,
+  setIsContactOpen: (isContactOpen) => set({ isContactOpen }),
 }));
