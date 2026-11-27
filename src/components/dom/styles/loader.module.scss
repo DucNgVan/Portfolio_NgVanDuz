@@ -45,18 +45,6 @@
           fill: none;
         }
       }
-
-      .subtitle {
-        margin-top: calc(var(--layout-columns-gap) * 1.5);
-        font-size: clamp(0.85rem, 1.1vw, 1.15rem);
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: var(--black, #1d1d1f);
-        opacity: 0;
-        transform: translateY(12px);
-        text-align: center;
-      }
     }
   }
 
